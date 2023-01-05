@@ -35,6 +35,7 @@ namespace YourNoteUWP
             DBCreation.NotesTableCreation();
             DBCreation.SharedNotesTableCreation();
             DBCreation.RecentSearchesTableCreation();
+            DBCreation.NoteColorTableCreation();
         }
 
         /// <summary>

@@ -49,7 +49,10 @@ namespace YourNoteUWP
                 "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
             };
 
-            notesDisplayContent.Background = GetSolidColorBrush(DBFetch.GetNoteColor(notesTemplate.noteId));
+            string noteColor = DBFetch.GetNoteColor(DBCreation.notesColorTableName, notesTemplate.noteId);
+            if (noteColor == "")
+                noteColor = l[r];
+            notesDisplayContent.Background = GetSolidColorBrush(noteColor);
 
 
     }

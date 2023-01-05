@@ -99,6 +99,8 @@
                                                     
             />
                  <Popup x:ConnectionId='20' 
+                    
+                    
                 Name="SuggestionsPopup"
                    IsOpen="False"
                    RelativePanel.AlignBottomWith="SearchTextBox"
@@ -255,10 +257,11 @@
                     Style="{StaticResource NoteGridView}"
                     ItemContainerStyle="{StaticResource NoteGridViewItem}"
                                                                    
-                                      
+                                     
                     
                     >
-                        <GridView.ItemTemplate>
+                        
+                            <GridView.ItemTemplate>
                             <DataTemplate                       >
                                 <local:NotesDataTemplate/>
                             </DataTemplate>

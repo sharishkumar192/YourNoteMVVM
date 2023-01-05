@@ -215,7 +215,7 @@ namespace YourNoteUWP
                 SuggestionsPopup.IsOpen = false;
 
                 Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content");
-                long noteId = DBUpdation.InsertNewNote(note);
+                note.noteId = DBUpdation.InsertNewNote(note);
 
                 Random random = new Random();
                 int r = random.Next(0, 4);
@@ -224,13 +224,8 @@ namespace YourNoteUWP
                 "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
             };
 
-                DBUpdation.InsertNotesColor(DBCreation.NoteColorTable(noteId, l[r]));
-             
-
-
-
-
-                note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
+                DBUpdation.InsertNotesColor(DBCreation.notesColorTableName, note.noteId, l[r]);
+                //note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
 
 
                 this.Content = new NoteDisplay(note, currentUser);

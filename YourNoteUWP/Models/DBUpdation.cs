@@ -212,6 +212,35 @@ namespace YourNoteUWP {
 
         }
 
+
+
+        public static void InsertNotesColor(string tableName, long noteId, string color)
+        {
+            SQLiteConnection conn = DBCreation.CreateConnection();
+            conn.Open();
+            try
+            {
+
+
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = conn.CreateCommand();
+                
+                    sqlite_cmd.CommandText = $"INSERT INTO {tableName}(noteId, noteColor) VALUES ('{noteId}', '{color}');";
+                
+                sqlite_cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
     }
 }
 

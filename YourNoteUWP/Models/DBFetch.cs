@@ -563,37 +563,37 @@ namespace YourNoteUWP
         }
 
         //Getting the NoteId for the Note
-        public static long GetNoteId(string tableName)
-        {
-            long noteId = 0;
-            try
-            {
+        //public static long GetNoteId(string tableName)
+        //{
+        //    long noteId = 0;
+        //    try
+        //    {
 
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                SQLiteDataReader sqlite_datareader;
+        //        SQLiteConnection conn = DBCreation.CreateConnection();
+        //        conn.Open();
+        //        SQLiteCommand sqlite_cmd;
+        //        SQLiteDataReader sqlite_datareader;
 
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT COUNT(*) FROM {tableName}";
+        //        sqlite_cmd = conn.CreateCommand();
+        //        sqlite_cmd.CommandText = $"SELECT COUNT(*) FROM {tableName}";
 
-                sqlite_datareader = sqlite_cmd.ExecuteReader();
-                while (sqlite_datareader.Read())
-                {
-                    noteId = (long)sqlite_datareader.GetValue(0);
+        //        sqlite_datareader = sqlite_cmd.ExecuteReader();
+        //        while (sqlite_datareader.Read())
+        //        {
+        //            noteId = (long)sqlite_datareader.GetValue(0);
 
 
-                }
-                sqlite_datareader.Close();
-                conn.Close();
+        //        }
+        //        sqlite_datareader.Close();
+        //        conn.Close();
 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
-            return noteId;
-        }
+        //    }
+        //    return noteId;
+        //}
 
         //Getting the Notes for the NoteId
         public static ObservableCollection<Note> GetNotes(string tableName, List<long> noteIds)
@@ -718,6 +718,43 @@ namespace YourNoteUWP
             }
 
             return isExist;
+        }
+
+
+        //Get the color of the note to set in in the grid item background
+        public static string GetNoteColor(string tableName, long noteId)
+        {
+            string color = "";
+           SQLiteConnection conn = DBCreation.CreateConnection();
+            conn.Open();
+            try
+            {
+
+                SQLiteCommand sqlite_cmd;
+                SQLiteDataReader sqlite_datareader;
+
+                sqlite_cmd = conn.CreateCommand();
+                sqlite_cmd.CommandText = $"SELECT noteColor FROM {tableName} where noteId={noteId}";
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    color = sqlite_datareader.GetString(0);
+           
+                }
+                sqlite_datareader.Close();
+                conn.Close();
+
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return color;
+
         }
 
     }

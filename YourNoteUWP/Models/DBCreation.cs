@@ -15,7 +15,9 @@ namespace YourNoteUWP
         public static string userTableName = "UserTable",
             notesTableName = "NotesTable",
             sharedTableName = "ShareTable",
-        recentSearchesTableName = "RecentSearchTable";
+        recentSearchesTableName = "RecentSearchTable",
+            notesColorTableName = "NotesColorTable"
+            ;
         public static void UserTableCreation()
         {
             // SQLiteConnection sqlite_conn = CreateConnection();
@@ -177,5 +179,36 @@ namespace YourNoteUWP
 
             }
             }
+
+
+
+        public static void NoteColorTableCreation()
+        {
+            SQLiteConnection conn = DBCreation.CreateConnection();
+            conn.Open();
+            SQLiteCommand sqlite_cmd;
+            try
+            {
+                string table =
+  $"CREATE TABLE if not exists {notesColorTableName}" +
+  $"(noteId INTEGER PRIMARY KEY," +
+  $"noteColor  VARCHAR(6)," +
+  $"FOREIGN KEY(noteId) REFERENCES {notesTableName}(noteId))";
+                sqlite_cmd = conn.CreateCommand();
+                sqlite_cmd.CommandText = table;
+                sqlite_cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                conn.Close();
+
+            }
+        }
+
     }
-}
+    }
+
