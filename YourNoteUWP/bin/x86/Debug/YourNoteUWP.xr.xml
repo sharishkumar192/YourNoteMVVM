@@ -35,25 +35,24 @@
       <RootProperty Name="FontSize" />
       <RootProperty Name="Style" />
       <RootProperty Name="Name" />
-      <RootProperty Name="FontFamily" />
-      <RootProperty Name="TextWrapping" />
-      <RootProperty Name="Visibility" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="FontStyle" />
+      <RootProperty Name="FontFamily" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Padding" />
       <RootProperty Name="IsHitTestVisible" />
       <RootProperty Name="TextAlignment" />
+      <RootProperty Name="TextWrapping" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.BindExtension">
       <RootProperty Name="Mode" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
-      <RootProperty Name="Name" />
       <RootProperty Name="RowDefinitions" />
       <RootProperty Name="Children" />
+      <RootProperty Name="Name" />
       <RootProperty Name="Background" />
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="Resources" />
@@ -94,39 +93,36 @@
       <RootMethod Name="GetRightOf" />
       <RootMethod Name="SetRightOf" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.SplitView">
-      <RootProperty Name="Name" />
-      <RootProperty Name="DisplayMode" />
-      <RootProperty Name="OpenPaneLength" />
-      <RootProperty Name="CompactPaneLength" />
-      <RootProperty Name="Pane" />
-      <RootProperty Name="Content" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Button">
-      <RootProperty Name="Name" />
-      <RootProperty Name="Style" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Content" />
+    <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">
+      <RootProperty Name="IsPaneOpen" />
+      <RootProperty Name="PaneDisplayMode" />
+      <RootProperty Name="IsBackButtonVisible" />
       <RootProperty Name="FontSize" />
-      <RootProperty Name="Flyout" />
-      <RootProperty Name="FontFamily" />
-      <RootEvent Name="Click" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ListBox">
-      <RootProperty Name="Name" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="SelectionMode" />
-      <RootProperty Name="SelectedIndex" />
-      <RootProperty Name="Items" />
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="IsSettingsVisible" />
+      <RootProperty Name="IsPaneVisible" />
+      <RootProperty Name="IsPaneToggleButtonVisible" />
+      <RootProperty Name="MenuItems" />
+      <RootProperty Name="PaneFooter" />
+      <RootProperty Name="Content" />
       <RootEvent Name="SelectionChanged" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ListBoxItem">
+    <RootType FullName="Windows.UI.Xaml.Controls.NavigationViewItem">
+      <RootProperty Name="Name" />
+      <RootProperty Name="IsSelected" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="Tag" />
+      <RootProperty Name="Icon" />
+      <RootProperty Name="Foreground" />
+      <RootEvent Name="Tapped" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Glyph" />
+      <RootProperty Name="Foreground" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="Name" />
       <RootProperty Name="Content" />
-      <RootProperty Name="Background" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
       <RootProperty Name="Name" />
@@ -145,6 +141,8 @@
       <RootProperty Name="Source" />
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
+      <RootEvent Name="PointerEntered" />
+      <RootEvent Name="PointerExited" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="Name" />
@@ -206,6 +204,13 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="CornerRadius" />
       <RootEvent Name="ItemClick" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListBox">
+      <RootProperty Name="Name" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="SelectionMode" />
+      <RootEvent Name="SelectionChanged" />
     </RootType>
     <RootType FullName="YourNoteUWP.AccountPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
@@ -286,6 +291,18 @@
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Name" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Flyout" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Foreground" />
+      <RootEvent Name="Click" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.PasswordBox">
       <RootProperty Name="SelectionHighlightColor" />
       <RootProperty Name="SelectionFlyout" />
@@ -306,6 +323,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.AutoSuggestBox">
       <RootProperty Name="TextBoxStyle" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListBoxItem" />
     <RootType FullName="Windows.UI.Xaml.Setter">
       <RootProperty Name="Property" />
       <RootProperty Name="Value" />

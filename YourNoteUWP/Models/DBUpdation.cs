@@ -98,25 +98,39 @@ namespace YourNoteUWP {
         }
 
         //Creates new note 
-         public static void InsertNewNote(Note newnote)
+         public static long InsertNewNote(Note newnote)
         {
+            long noteId = -1; 
             try
             {
                 SQLiteConnection conn = DBCreation.CreateConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
+                SQLiteDataReader sqlite_datareader;
                 sqlite_cmd = conn.CreateCommand();
                 sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content) VALUES ('{newnote.userId}','{newnote.title}','{newnote.content}');";
                 sqlite_cmd.ExecuteNonQuery();
+
+                sqlite_cmd = conn.CreateCommand();
+                sqlite_cmd.CommandText = $"SELECT * from {DBCreation.notesTableName} order by noteId DESC LIMIT 1 ";
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while(sqlite_datareader.Read())
+                noteId = sqlite_datareader.GetInt64(0);
+
+                sqlite_datareader.Close();
                 conn.Close();
+               
 
 
-            }
+                    
+
+
+                }
             catch (Exception)
             {
                 Console.WriteLine("The Note already exists");
             }
-
+            return noteId;
   
         }
 
@@ -170,6 +184,34 @@ namespace YourNoteUWP {
                 Console.WriteLine("Notes Already Shared");
             }
         }
+    
+        //Delete the Note
+        public static void DeleteNote(string tableName, long noteId)
+        {  SQLiteConnection conn = DBCreation.CreateConnection();
+            conn.Open();
+            SQLiteCommand sqlite_cmd;
+            sqlite_cmd = conn.CreateCommand();
+
+            try
+            {
+                sqlite_cmd.CommandText = $"DELETE FROM {tableName} WHERE noteId = {noteId};";
+                sqlite_cmd.ExecuteNonQuery();
+                conn.Close();
+
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("The Note already exists");
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+
     }
 }
 

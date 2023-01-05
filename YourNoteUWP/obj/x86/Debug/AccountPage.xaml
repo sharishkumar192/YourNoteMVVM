@@ -57,8 +57,7 @@
     </Page.Resources>
 
 
-    <Grid x:ConnectionId='8'
-        Name="Casd"
+    <Grid
         >
 
         <Grid.RowDefinitions>
@@ -70,23 +69,25 @@
             Grid.Row="0"
             >
             
-            <Image x:ConnectionId='25' 
-                Source="Assets/123.png"
+            <Image x:ConnectionId='17' 
+                Source="Assets/LockScreenLogo.scale-200.png"
                 Height="64"
                 Width="64"
                 RelativePanel.AlignLeftWithPanel="True" 
                 Name="userImage" 
+                                                         
+                                                       
                 />
 
 
             <!--<Auto Suggestion Box>-->
 
-            <RelativePanel x:ConnectionId='26'
+            <RelativePanel x:ConnectionId='18'
                 
                 RelativePanel.AlignRightWithPanel="True"
                 Name="CustomAutoSuggestBox"
                 >
-                <TextBox x:ConnectionId='27'
+                <TextBox x:ConnectionId='19'
             CornerRadius="12"
 
             Height="50"
@@ -97,13 +98,14 @@
 
                                                     
             />
-                 <Popup x:ConnectionId='28' 
+                 <Popup x:ConnectionId='20' 
                 Name="SuggestionsPopup"
                    IsOpen="False"
                    RelativePanel.AlignBottomWith="SearchTextBox"
                 IsLightDismissEnabled="False"
+                    
                    >
-                    <Grid x:ConnectionId='29'
+                    <Grid x:ConnectionId='21'
                         Background="#041322"
 
                   Name="PopUpContainer"
@@ -112,15 +114,15 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel x:ConnectionId='30'
+                        <StackPanel x:ConnectionId='22'
                         Name="RecentlySearchedContainer"
                         
                         >
-                            <TextBlock x:ConnectionId='34'
+                            <TextBlock x:ConnectionId='26'
                                 Name="RecentSuggestedHeader"
                             Text="Recently Search Notes : "
                             />
-                            <ListBox x:ConnectionId='35'
+                            <ListBox x:ConnectionId='27'
                     
                     Name="RecentSuggestedContent"
 
@@ -135,16 +137,16 @@
                         </StackPanel>
 
 
-                        <StackPanel x:ConnectionId='31'
+                        <StackPanel x:ConnectionId='23'
                          Grid.Row="1"
                         Name="SearchBoxContainer"
                         
                         >
-                            <TextBlock x:ConnectionId='32'
+                            <TextBlock x:ConnectionId='24'
                                 Name="SearchBoxContainerHeader"
                             Text="Titles: "
                             />
-                            <ListView x:ConnectionId='33'
+                            <ListView x:ConnectionId='25'
                             Height="200"
                             Name="SearchBoxContainerContent"
                             Style="{StaticResource SearchContainerStyle}"
@@ -164,91 +166,87 @@
 
         </RelativePanel>
 
-        
 
-            <SplitView x:ConnectionId='9'
-
+        <NavigationView x:ConnectionId='8' 
+  
+            x:Name="Navigation"
             Grid.Row="1"
-            Name="SplitViewz"
-                       DisplayMode="CompactInline"
-                       OpenPaneLength="180"
-            CompactPaneLength="64"
-                
+            IsPaneOpen="False"
+            PaneDisplayMode="LeftCompact"
+                                                          
+            IsBackButtonVisible="Collapsed"
+            FontSize="50"
+            IsSettingsVisible="True"
+            IsPaneVisible="True"
+            IsPaneToggleButtonVisible="False"
+           
                       >
+                <NavigationView.MenuItems
 
-                <SplitView.Pane>
-
-            <ListBox x:ConnectionId='10'
-                      Background="#091a2f"
-                             Name="HamburgerOptions" 
-                             SelectionMode="Single"  
-                                                                                 
-                              SelectedIndex="0"
                     >
 
 
-
-                        <ListBoxItem x:ConnectionId='11'  Name="PersonalContent" 
-                                  >
-                        <StackPanel>
-                            <TextBlock x:ConnectionId='20' 
-                               HorizontalAlignment="Center"
-                                Name="PersonalContentIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xE8D4;" />
-                            <TextBlock x:ConnectionId='21' Name="PersonalContentText" HorizontalAlignment="Left" FontSize="12" Text="Personal" 
-                                       Visibility="Collapsed"
-                                       />
-                        </StackPanel>
-                    </ListBoxItem>
-
-
-                    <ListBoxItem x:ConnectionId='12'  Name="SharedContent" 
-                                  >
-                        <StackPanel>
-                            <TextBlock x:ConnectionId='18' 
-                                  HorizontalAlignment="Center"
-                                Name="SharedContentIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xEBDA;" />
-                            <TextBlock x:ConnectionId='19' Name="SharedContentText" FontSize="12" Text="Shared"  HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </ListBoxItem>
-
-
-                    <ListBoxItem x:ConnectionId='13'  Name="NoteCreation" 
-
-                                  >
-                        <StackPanel>
-                            <TextBlock x:ConnectionId='16' 
-                                HorizontalAlignment="Center"
-                                Name="NoteCreationIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xF56E;" />
-                            <TextBlock x:ConnectionId='17' FontSize="12" HorizontalAlignment="Left" Name ="NoteCreationText" Text="New Note"  TextWrapping="WrapWholeWords"/>
-                        </StackPanel>
-                    </ListBoxItem>
+                <NavigationViewItem x:ConnectionId='9' 
+                    IsSelected="True"
+                    Name="PersonalContent"
                     
-        
+                    Content="Personal" Tag="Personal">
+                        <NavigationViewItem.Icon>
+                            <FontIcon 
+                                    FontFamily="Segoe MDL2 Assets" 
+                                    Glyph="&#xE8D4;"
+                                    />
+                        </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                    
 
-                <ListBoxItem x:ConnectionId='14'  Name="PreviousPage" 
-                               
-                              
-                              Background="Red"
-                                  >
-                    <StackPanel>
-                            <TextBlock x:ConnectionId='15' HorizontalAlignment="Center"
-                                
-                                Name="PreviousPageIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xF56E;"  />
-                            <TextBlock FontSize="12" Text="Logout"  HorizontalAlignment="Left" TextWrapping="WrapWholeWords"/>
-                    </StackPanel>
-                </ListBoxItem>
+                    <NavigationViewItem x:ConnectionId='10' 
+                        Name="SharedContent"
+                        Content="Shared" Tag="Shared">
+                        <NavigationViewItem.Icon>
+                            <FontIcon 
+                                FontFamily="Segoe MDL2 Assets" 
+                                Glyph="&#xEBDA;"
+                                />
+                        </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                </ListBox>
+                <NavigationViewItem x:ConnectionId='11' 
+                        Name="NoteCreation"
+                        Content="Add Note" 
+                        Tag="Add a New Note" 
+                        >
+                    <NavigationViewItem.Icon>
+                        <FontIcon 
+                                FontFamily="Segoe MDL2 Assets" 
+                                Glyph="&#xF164;"
+                                />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            
+            <NavigationView.PaneFooter>
 
-            </SplitView.Pane>
-            <SplitView.Content
-                >
+                <NavigationViewItem x:ConnectionId='12' 
+                                                 
+                    Name="LogoutContent"
+                    Foreground="Red"
+                    Content="Logout" Tag="Logout" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets"  Foreground="Red" Glyph="&#xF3B1;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                <!--<Frame Name="MFrame">-->
-                    <!--Grid View-->
 
+            </NavigationView.PaneFooter>
+            
+            
+            <NavigationView.Content>
 
-                    <GridView x:ConnectionId='22' 
+                <Frame x:ConnectionId='13'
+                    Name="mFrame"
+                    >
+                    <GridView x:ConnectionId='14' 
                     IsItemClickEnabled="True"
                                                     
                     Name="NotesData"
@@ -267,13 +265,10 @@
                         </GridView.ItemTemplate>
                     </GridView>
 
-                <!--</Frame>-->
-            </SplitView.Content>
+                </Frame>
+            </NavigationView.Content>
+        </NavigationView>
 
-        </SplitView>
-        <Button
-           
-            />
 
     </Grid>
 

@@ -153,6 +153,7 @@
                     RelativePanel.AlignRightWithPanel="True"
                     Click="noteDeleteButton_Click"
                     FontFamily="Segoe MDL2 Assets" 
+                    Foreground="Red"
                     Content="&#xE107;" 
                 />
 

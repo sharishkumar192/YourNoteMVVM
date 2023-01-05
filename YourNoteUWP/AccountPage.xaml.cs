@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
@@ -52,6 +53,8 @@ namespace YourNoteUWP
             recentNotes = Note.GetRecentNotes();
             if(recentNotes == null )
                 recentNotes = new ObservableCollection<Note>();
+            PersonalContent.IsHitTestVisible = true
+;                PersonalContent.IsHoldingEnabled = true;
         }
 
         //Change the value of the Selected Note -> To prevent the firing event of the AutoSuggestionBox TextChanged after choosing the options
@@ -74,65 +77,20 @@ namespace YourNoteUWP
 
 
         //When an item in the SplitView Panel is clicked
-        public void HamburgerOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-                if (PersonalContent.IsSelected)
-                {
-                  
-                notesFeeder.Clear();
-                notesFeeder = Note.GetPersonalNotes(currentUser);
-                NotesData.ItemsSource = notesFeeder;
-                PersonalContentText.Visibility = Visibility.Collapsed;
-                SharedContentText.Visibility = Visibility.Visible;
-                SearchTextBox.Text = "";
-                selectedNote = new Note("", "", "");
-                SuggestionsPopup.IsOpen = false;
-
-            }
-                else if (SharedContent.IsSelected)
-                {
-                notesFeeder.Clear();
-               notesFeeder = Note.GetSharedNotes(currentUser);
-                NotesData.ItemsSource = notesFeeder;
-                SharedContentText.Visibility = Visibility.Collapsed;
-                PersonalContentText.Visibility = Visibility.Visible;
-                selectedNote = new Note("", "", "");
-                SearchTextBox.Text = "";
-                SuggestionsPopup.IsOpen = false;
-            }
-                else if(NoteCreation.IsSelected)
-            {
-                SuggestionsPopup.IsOpen = false;
-
-                Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content");
-                DBUpdation.InsertNewNote(note);
-
-                note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
-
-
-                this.Content = new NoteDisplay(note, currentUser);
-            }
-                else if(PreviousPage.IsSelected)
-            {
-                this.Content = new LogInPage();
-            }
-            
-
-        }
 
         private void userImage_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-           Casd.Background = new SolidColorBrush(Windows.UI.Colors.Red);
-                SplitViewz.IsPaneOpen = true;
+          
+               // Navigation.IsPaneOpen = true;
 
 
         }
 
         private void userImage_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            Casd.Background = new SolidColorBrush(Windows.UI.Colors.White);
+
             //SplitViewz.IsPaneOpen = false;
-                SplitViewz.IsPaneOpen = false;
+                //Navigation.IsPaneOpen = false;
 
         }
 
@@ -227,5 +185,69 @@ namespace YourNoteUWP
             DBUpdation.UpdateLoginCount(DBCreation.recentSearchesTableName, note);
             this.Content = new NoteDisplay(note, currentUser);
         }
+
+        private void Navigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (PersonalContent.IsSelected)
+            {
+
+                notesFeeder.Clear();
+                notesFeeder = Note.GetPersonalNotes(currentUser);
+                NotesData.ItemsSource = notesFeeder;
+
+                SearchTextBox.Text = "";
+                selectedNote = new Note("", "", "");
+                SuggestionsPopup.IsOpen = false;
+
+            }
+            else if (SharedContent.IsSelected)
+            {
+                notesFeeder.Clear();
+                notesFeeder = Note.GetSharedNotes(currentUser);
+                NotesData.ItemsSource = notesFeeder;
+   
+                selectedNote = new Note("", "", "");
+                SearchTextBox.Text = "";
+                SuggestionsPopup.IsOpen = false;
+            }
+            else if (NoteCreation.IsSelected)
+            {
+                SuggestionsPopup.IsOpen = false;
+
+                Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content");
+                long noteId = DBUpdation.InsertNewNote(note);
+
+                Random random = new Random();
+                int r = random.Next(0, 4);
+                List<string> l = new List<string>()
+            {
+                "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
+            };
+
+                DBUpdation.InsertNotesColor(DBCreation.NoteColorTable(noteId, l[r]));
+             
+
+
+
+
+                note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
+
+
+                this.Content = new NoteDisplay(note, currentUser);
+
+
+            }
+
+
+        }
+
+        private void LogoutContent_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.Content = new LogInPage();
+        }
+
+
+
+
     }
 }

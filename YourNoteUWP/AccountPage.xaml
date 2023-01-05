@@ -58,7 +58,6 @@
 
 
     <Grid
-        Name="Casd"
         >
 
         <Grid.RowDefinitions>
@@ -71,11 +70,13 @@
             >
             
             <Image 
-                Source="Assets/123.png"
+                Source="Assets/LockScreenLogo.scale-200.png"
                 Height="64"
                 Width="64"
                 RelativePanel.AlignLeftWithPanel="True" 
                 Name="userImage" 
+                PointerEntered="userImage_PointerEntered"
+                PointerExited="userImage_PointerExited"
                 />
 
 
@@ -98,10 +99,13 @@
             TextChanged="SearchTextBox_TextChanged" 
             />
                  <Popup 
+                    
+                    
                 Name="SuggestionsPopup"
                    IsOpen="False"
                    RelativePanel.AlignBottomWith="SearchTextBox"
                 IsLightDismissEnabled="False"
+                    
                    >
                     <Grid
                         Background="#041322"
@@ -164,90 +168,86 @@
 
         </RelativePanel>
 
-        
 
-            <SplitView
-
+        <NavigationView 
+  
+            x:Name="Navigation"
             Grid.Row="1"
-            Name="SplitViewz"
-                       DisplayMode="CompactInline"
-                       OpenPaneLength="180"
-            CompactPaneLength="64"
-                
+            IsPaneOpen="False"
+            PaneDisplayMode="LeftCompact"
+            SelectionChanged="Navigation_SelectionChanged"
+            IsBackButtonVisible="Collapsed"
+            FontSize="50"
+            IsSettingsVisible="True"
+            IsPaneVisible="True"
+            IsPaneToggleButtonVisible="False"
+           
                       >
+                <NavigationView.MenuItems
 
-                <SplitView.Pane>
-
-            <ListBox
-                      Background="#091a2f"
-                             Name="HamburgerOptions" 
-                             SelectionMode="Single"  
-                             SelectionChanged="HamburgerOptions_SelectionChanged"
-                              SelectedIndex="0"
                     >
 
 
-
-                        <ListBoxItem  Name="PersonalContent" 
-                                  >
-                        <StackPanel>
-                            <TextBlock 
-                               HorizontalAlignment="Center"
-                                Name="PersonalContentIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xE8D4;" />
-                            <TextBlock Name="PersonalContentText" HorizontalAlignment="Left" FontSize="12" Text="Personal" 
-                                       Visibility="Collapsed"
-                                       />
-                        </StackPanel>
-                    </ListBoxItem>
-
-
-                    <ListBoxItem  Name="SharedContent" 
-                                  >
-                        <StackPanel>
-                            <TextBlock 
-                                  HorizontalAlignment="Center"
-                                Name="SharedContentIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xEBDA;" />
-                            <TextBlock Name="SharedContentText" FontSize="12" Text="Shared"  HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </ListBoxItem>
-
-
-                    <ListBoxItem  Name="NoteCreation" 
-
-                                  >
-                        <StackPanel>
-                            <TextBlock 
-                                HorizontalAlignment="Center"
-                                Name="NoteCreationIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xF56E;" />
-                            <TextBlock FontSize="12" HorizontalAlignment="Left" Name ="NoteCreationText" Text="New Note"  TextWrapping="WrapWholeWords"/>
-                        </StackPanel>
-                    </ListBoxItem>
+                <NavigationViewItem 
+                    IsSelected="True"
+                    Name="PersonalContent"
                     
-        
+                    Content="Personal" Tag="Personal">
+                        <NavigationViewItem.Icon>
+                            <FontIcon 
+                                    FontFamily="Segoe MDL2 Assets" 
+                                    Glyph="&#xE8D4;"
+                                    />
+                        </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                    
 
-                <ListBoxItem  Name="PreviousPage" 
-                               
-                              
-                              Background="Red"
-                                  >
-                    <StackPanel>
-                            <TextBlock HorizontalAlignment="Center"
-                                
-                                Name="PreviousPageIcon" FontSize="20"   FontFamily="Segoe MDL2 Assets" Text="&#xF56E;"  />
-                            <TextBlock FontSize="12" Text="Logout"  HorizontalAlignment="Left" TextWrapping="WrapWholeWords"/>
-                    </StackPanel>
-                </ListBoxItem>
+                    <NavigationViewItem 
+                        Name="SharedContent"
+                        Content="Shared" Tag="Shared">
+                        <NavigationViewItem.Icon>
+                            <FontIcon 
+                                FontFamily="Segoe MDL2 Assets" 
+                                Glyph="&#xEBDA;"
+                                />
+                        </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                </ListBox>
+                <NavigationViewItem 
+                        Name="NoteCreation"
+                        Content="Add Note" 
+                        Tag="Add a New Note" 
+                        >
+                    <NavigationViewItem.Icon>
+                        <FontIcon 
+                                FontFamily="Segoe MDL2 Assets" 
+                                Glyph="&#xF164;"
+                                />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            
+            <NavigationView.PaneFooter>
 
-            </SplitView.Pane>
-            <SplitView.Content
-                >
+                <NavigationViewItem 
+                    Tapped="LogoutContent_Tapped"
+                    Name="LogoutContent"
+                    Foreground="Red"
+                    Content="Logout" Tag="Logout" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets"  Foreground="Red" Glyph="&#xF3B1;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                <!--<Frame Name="MFrame">-->
-                    <!--Grid View-->
 
+            </NavigationView.PaneFooter>
+            
+            
+            <NavigationView.Content>
 
+                <Frame
+                    Name="mFrame"
+                    >
                     <GridView 
                     IsItemClickEnabled="True"
                     ItemClick="NotesData_ItemClick" 
@@ -257,23 +257,21 @@
                     Style="{StaticResource NoteGridView}"
                     ItemContainerStyle="{StaticResource NoteGridViewItem}"
                     ItemsSource="{x:Bind notesFeeder, Mode=OneWay}"
-                                      
+                                     
                     
                     >
-                        <GridView.ItemTemplate>
+                        
+                            <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:Note">
                                 <local:NotesDataTemplate/>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
 
-                <!--</Frame>-->
-            </SplitView.Content>
+                </Frame>
+            </NavigationView.Content>
+        </NavigationView>
 
-        </SplitView>
-        <Button
-           
-            />
 
     </Grid>
 

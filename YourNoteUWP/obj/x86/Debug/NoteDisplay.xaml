@@ -56,7 +56,7 @@
                 Grid.Row="0">
 
 
-                <TextBox x:ConnectionId='12'
+                <TextBox x:ConnectionId='13'
                 
                     Name="titleOfNote"
                     IsTapEnabled="True"
@@ -94,18 +94,18 @@
                    >
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock x:ConnectionId='9' 
+                        <TextBlock x:ConnectionId='10' 
                     Margin="0,0,10,0"
                     Name="noteShareButtonImage" 
                     FontFamily="Segoe MDL2 Assets" 
                     Text="&#xE165;" 
                     VerticalAlignment="Center"/>
-                        <TextBlock x:ConnectionId='10' Name="noteShareButtonText" Text="Share"/>
+                        <TextBlock x:ConnectionId='11' Name="noteShareButtonText" Text="Share"/>
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout>
                             <Grid>
-                                <ListView x:ConnectionId='11' 
+                                <ListView x:ConnectionId='12' 
                 Name="usersToShareView"
                 Margin="20"
                 HorizontalAlignment="Center"
@@ -144,8 +144,18 @@
                     VerticalAlignment="Top" 
                 />
 
-
-
+                <!-- Note Delete Button -->
+                <Button x:ConnectionId='9' 
+                
+                    Style="{StaticResource AccountPageButton}"
+                    Name="noteDeleteButton" 
+                    FontSize="25" 
+                    RelativePanel.AlignRightWithPanel="True"
+                                                  
+                    FontFamily="Segoe MDL2 Assets" 
+                    Foreground="Red"
+                    Content="&#xE107;" 
+                />
 
             </RelativePanel>
 

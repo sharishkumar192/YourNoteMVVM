@@ -29,8 +29,8 @@ namespace YourNoteUWP
     public sealed partial class NoteDisplay : Page
     {
         ObservableCollection<YourNoteUWP.Models.User> usersToShare;
-        Models.User noteOwner;
-        Models.Note displayNote;
+        Models.User noteOwner = null;
+        Models.Note displayNote = null;
         private string oldTitle;
         private string oldContent;
         DispatcherTimer dispatcherTimer;
@@ -54,7 +54,6 @@ namespace YourNoteUWP
             titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
             contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
         }
-
 
         private void noteCloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -189,7 +188,8 @@ namespace YourNoteUWP
 
         private void noteDeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            DBUpdation.DeleteNote(DBCreation.notesTableName, displayNote.noteId);
+            this.Content = new AccountPage(noteOwner);
         }
     }
 
