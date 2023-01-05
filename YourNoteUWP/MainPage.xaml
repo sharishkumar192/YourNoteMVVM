@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="YourNoteUWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:YourNoteUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#092642"
+   >
+
+
+    <ScrollViewer
+        Name="SignUpPageScrollViewer"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+        >
+        <Grid >
+
+            <RelativePanel>
+
+                <TextBlock 
+             Grid.Row="0"
+            Name="Title" 
+            Foreground="#f6fafe"
+            Style="{StaticResource TitleTextBlockStyle}"
+                     RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Text="Your Note" 
+            FontSize="50"
+            HorizontalAlignment="Center" 
+            />
+           
+            </RelativePanel>
+
+
+
+            <RelativePanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            >
+
+                <Button 
+                Style="{StaticResource HomePageButton}"
+                Name="SignUp" 
+                Content="Sign Up" 
+                Click="SignUp_Click" 
+                />
+                <Button    
+                Style="{StaticResource HomePageButton}"
+                Name="SignIn" 
+                RelativePanel.Below="SignUp"
+                Content="Sign In" 
+                Click="SignIn_Click" 
+
+               />
+
+
+
+
+            </RelativePanel>
+
+        </Grid>
+    </ScrollViewer>
+</Page>

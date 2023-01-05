@@ -1,0 +1,180 @@
+﻿<!--MinHeight="900"
+        MinWidth="900"-->
+<Page x:ConnectionId='1'
+    x:Class="YourNoteUWP.NoteDisplay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:YourNoteUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:data="using:YourNoteUWP.Models" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Page.Resources>
+        <DataTemplate x:Key="shareUser"                       >
+                <StackPanel x:ConnectionId='3' 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center" 
+                >
+                    <StackPanel Margin="10" >
+                        <TextBlock x:ConnectionId='4'                         
+                               HorizontalAlignment="Left" 
+                               Foreground="Red"
+                                    
+                               FontSize="25" />
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
+    </Page.Resources>
+
+
+
+
+
+
+
+    <Grid x:ConnectionId='5' 
+        Name="Chumma"
+        Background="Wheat"
+        >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <Grid      
+                Grid.Row="0">
+
+
+                <TextBox x:ConnectionId='12'
+                
+                    Name="titleOfNote"
+                    IsTapEnabled="True"
+                    Text="Title"
+                                               
+                    Style="{StaticResource TextBoxWithoutDelete}"
+                    FontSize="25"
+                    Foreground="Red"
+                    Background="Black"
+                    Height="45"
+                    Margin="15"
+                    IsReadOnly="True"
+                    HorizontalAlignment="Stretch"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                />
+
+
+
+
+
+            </Grid>
+
+            <RelativePanel
+                 Grid.Row="1"
+                  
+                >
+                <!-- Note Share Button -->
+                <Button x:ConnectionId='7'    
+                    RelativePanel.AlignLeftWithPanel="True"
+                    Style="{StaticResource AccountPageButton}"
+                    Name="noteShareButton" 
+                    FontSize="25" 
+                                                  HorizontalAlignment="Left" 
+                   >
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock x:ConnectionId='9' 
+                    Margin="0,0,10,0"
+                    Name="noteShareButtonImage" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    Text="&#xE165;" 
+                    VerticalAlignment="Center"/>
+                        <TextBlock x:ConnectionId='10' Name="noteShareButtonText" Text="Share"/>
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout>
+                            <Grid>
+                                <ListView x:ConnectionId='11' 
+                Name="usersToShareView"
+                Margin="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                                                   
+                IsItemClickEnabled="True"
+                                                   
+                ItemTemplate="{StaticResource shareUser}"
+                BorderThickness="10"
+                CornerRadius="15"
+                BorderBrush="Beige"
+                Background="Beige"
+                Width="350"
+                Height="400"
+
+                />
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+
+
+                </Button>
+
+
+                <!-- Note Close Button -->
+                <Button x:ConnectionId='8' 
+                
+                    Style="{StaticResource AccountPageButton}"
+                    Name="noteCloseButton" 
+                    FontSize="25" 
+                    RelativePanel.RightOf="noteShareButton"
+                                                 
+                    FontFamily="Segoe MDL2 Assets" 
+                    Content="&#xE106;" 
+                    HorizontalAlignment="Right"  
+                    VerticalAlignment="Top" 
+                />
+
+
+
+
+            </RelativePanel>
+
+         
+
+        </Grid>
+
+
+
+
+        <TextBox x:ConnectionId='6' 
+            Name="contentOfNote"
+            Grid.Row="1"
+            FontSize="25"
+
+            Style="{StaticResource TextBoxWithoutDelete}"
+            Text="Content"    
+            IsReadOnly="True"
+            IsTapEnabled="True"
+            TextWrapping="Wrap"
+                                         
+            Margin="20"
+            Foreground="Red"
+            Background="Black"
+            >
+        </TextBox>
+
+
+
+    </Grid>
+</Page>
+
