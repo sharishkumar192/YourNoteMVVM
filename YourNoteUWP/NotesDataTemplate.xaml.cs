@@ -21,11 +21,63 @@ namespace YourNoteUWP
 {
     public sealed partial class NotesDataTemplate : UserControl
     {
+       // private static bool loadOnce = false;
 
-        public Note notesTemplate { get { return this.DataContext as Note; } }
 
-        private SolidColorBrush GetSolidColorBrush(string hex)
+        public void SetColor()
         {
+            if (this.DataContext != null)
+                notesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+        }
+        public Note notesTemplate
+        {
+
+             
+            get
+            {
+                // loadOnce = true;
+               // SetColor();
+                return this.DataContext as Note;
+
+                
+
+            }
+        }
+
+
+        public NotesDataTemplate()
+        {
+            this.InitializeComponent();
+
+            //if (notesTemplate != null)
+            //{
+            //          
+            //}
+
+
+
+
+            this.DataContextChanged += NotesDataTemplate_DataContextChanged;
+            //if (loadOnce == true)
+            //{
+
+            //   
+            //}
+           
+
+        }
+
+        private void NotesDataTemplate_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            if(notesTemplate != null)
+                notesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+            Bindings.Update();
+        }
+
+        private static SolidColorBrush GetSolidColorBrush(string hex)
+        {
+            if (hex == null)
+                hex = "#fdefad" ;
             hex = hex.Replace("#", string.Empty);
             byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
             byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
@@ -34,27 +86,10 @@ namespace YourNoteUWP
             return myBrush;
         }
 
-    
-
-        public NotesDataTemplate()
-        {
-
-            this.InitializeComponent();
-            this.DataContextChanged += (s, e) => Bindings.Update();
-
-            Random random = new Random();
-            int r = random.Next(0, 4);
-            List<string> l = new List<string>()
-            {
-                "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
-            };
-
-            string noteColor = DBFetch.GetNoteColor(DBCreation.notesColorTableName, notesTemplate.noteId);
-            if (noteColor == "")
-                noteColor = l[r];
-            notesDisplayContent.Background = GetSolidColorBrush(noteColor);
 
 
-    }
+       //public event RoutedEventHandler loadOnce;
+
+
     }
 }

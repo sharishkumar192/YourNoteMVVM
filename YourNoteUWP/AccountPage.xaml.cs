@@ -46,13 +46,18 @@ namespace YourNoteUWP
             loggedUser.name = DBFetch.GetName(DBCreation.userTableName, loggedUser);
             currentUser = new Models.User(loggedUser.emailId, loggedUser.password);
           
-            // nameOfTheUser.Text += loggedUser.name;
-            //newNoteButton.Visibility = Visibility.Visible;
+
+
+            //Grid View ItemSource
             notesFeeder = Note.GetPersonalNotes(currentUser);
+
+            //Auto Suggestion Box Content ItemSources
             notesForSearch = DBFetch.ReadAllNotesOfUser(DBCreation.notesTableName, DBCreation.sharedTableName, currentUser);
             recentNotes = Note.GetRecentNotes();
             if(recentNotes == null )
                 recentNotes = new ObservableCollection<Note>();
+
+
             PersonalContent.IsHitTestVisible = true
 ;                PersonalContent.IsHoldingEnabled = true;
         }
@@ -167,7 +172,7 @@ namespace YourNoteUWP
             //            notesFeeder.Add(selectedNote);
             //            NotesData.ItemsSource = notesFeeder;
 
-            DBUpdation.UpdateLoginCount(DBCreation.recentSearchesTableName, note);
+            DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
             this.Content = new NoteDisplay(note, currentUser);
 
         }
@@ -182,7 +187,7 @@ namespace YourNoteUWP
 //            notesFeeder.Clear();
 //            notesFeeder.Add(selectedNote);
 //            NotesData.ItemsSource = notesFeeder;
-            DBUpdation.UpdateLoginCount(DBCreation.recentSearchesTableName, note);
+            DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
             this.Content = new NoteDisplay(note, currentUser);
         }
 
@@ -196,7 +201,7 @@ namespace YourNoteUWP
                 NotesData.ItemsSource = notesFeeder;
 
                 SearchTextBox.Text = "";
-                selectedNote = new Note("", "", "");
+                selectedNote = new Note("", "", "", "");
                 SuggestionsPopup.IsOpen = false;
 
             }
@@ -206,17 +211,13 @@ namespace YourNoteUWP
                 notesFeeder = Note.GetSharedNotes(currentUser);
                 NotesData.ItemsSource = notesFeeder;
    
-                selectedNote = new Note("", "", "");
+                selectedNote = new Note("", "", "", "");
                 SearchTextBox.Text = "";
                 SuggestionsPopup.IsOpen = false;
             }
             else if (NoteCreation.IsSelected)
             {
                 SuggestionsPopup.IsOpen = false;
-
-                Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content");
-                note.noteId = DBUpdation.InsertNewNote(note);
-
                 Random random = new Random();
                 int r = random.Next(0, 4);
                 List<string> l = new List<string>()
@@ -224,7 +225,11 @@ namespace YourNoteUWP
                 "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
             };
 
-                DBUpdation.InsertNotesColor(DBCreation.notesColorTableName, note.noteId, l[r]);
+
+                Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content", l[r]);
+                DBUpdation.InsertNewNote(note);
+
+           
                 //note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
 
 

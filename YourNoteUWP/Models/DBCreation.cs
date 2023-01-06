@@ -15,9 +15,7 @@ namespace YourNoteUWP
         public static string userTableName = "UserTable",
             notesTableName = "NotesTable",
             sharedTableName = "ShareTable",
-        recentSearchesTableName = "RecentSearchTable",
-            notesColorTableName = "NotesColorTable"
-            ;
+        recentSearchesTableName = "RecentSearchTable" ;
         public static void UserTableCreation()
         {
             // SQLiteConnection sqlite_conn = CreateConnection();
@@ -97,6 +95,7 @@ namespace YourNoteUWP
 
                 SQLiteConnection conn = DBCreation.CreateConnection();
                 conn.Open();
+                string noteColor = "#c3e9fd";
                 // create table newsh(id integer, FOREIGN KEY(id) REFERENCES Newsh1(uid));
                 SQLiteCommand sqlite_cmd;
                 string table =
@@ -105,6 +104,7 @@ namespace YourNoteUWP
   $"noteId INTEGER PRIMARY KEY AUTOINCREMENT," +
   $"title VARCHAR(10000)," +
   $"content VARCHAR(1000), " +
+  $"noteColor VARCHAR(7),  " +
   $"FOREIGN KEY(userId) REFERENCES {DBCreation.userTableName}(emailId))";
                               sqlite_cmd = conn.CreateCommand();
                 sqlite_cmd.CommandText = table;
@@ -182,32 +182,7 @@ namespace YourNoteUWP
 
 
 
-        public static void NoteColorTableCreation()
-        {
-            SQLiteConnection conn = DBCreation.CreateConnection();
-            conn.Open();
-            SQLiteCommand sqlite_cmd;
-            try
-            {
-                string table =
-  $"CREATE TABLE if not exists {notesColorTableName}" +
-  $"(noteId INTEGER PRIMARY KEY," +
-  $"noteColor  VARCHAR(6)," +
-  $"FOREIGN KEY(noteId) REFERENCES {notesTableName}(noteId))";
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = table;
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
-
-            }
-            catch (Exception)
-            { }
-            finally
-            {
-                conn.Close();
-
-            }
-        }
+       
 
     }
     }

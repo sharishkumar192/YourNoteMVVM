@@ -110,6 +110,8 @@ namespace YourNoteUWP
             return noOfColumns;
         }
 
+
+        //Get the Note if the Note Id is present in the Shared Note Id -> Denoting that the note is been shared to the user
         public static ObservableCollection<Note> ReadAllNotes(string tableName, Dictionary<long, bool> sharedNoteIds)
         {
 
@@ -130,11 +132,13 @@ namespace YourNoteUWP
                 notes = new ObservableCollection<Models.Note>();
                 while (sqlite_datareader.Read())
                 {
+                    string userId = sqlite_datareader.GetString(0);
                     long noteId = (long)sqlite_datareader.GetValue(1);
                     string title = sqlite_datareader.GetString(2);
                     string content = sqlite_datareader.GetString(3);
+                    string noteColor = sqlite_datareader.GetString(4);
                     if (sharedNoteIds.ContainsKey(noteId) == true)
-                        notes.Add(new Note(noteId, title, content));
+                        notes.Add(new Note(userId, noteId, title, content, noteColor));
                     //  Console.WriteLine("CHECK : " + userId+ " " + ownerId + " " + nId + " " + noteId );
                 }
                 sqlite_datareader.Close();
@@ -191,11 +195,13 @@ namespace YourNoteUWP
                 notes = new ObservableCollection<Models.Note>();
                 while (sqlite_datareader.Read())
                 {
+                    string userId = sqlite_datareader.GetString(0);
                     long noteId = (long)sqlite_datareader.GetValue(1);
                     string title = sqlite_datareader.GetString(2);
                     string content = sqlite_datareader.GetString(3);
-                    notes.Add(new Note(noteId, title, content));
-                    //  Console.WriteLine("CHECK : " + userId+ " " + ownerId + " " + nId + " " + noteId );
+                    string noteColor = sqlite_datareader.GetString(4);
+                    notes.Add(new Note(userId, noteId, title, content, noteColor));
+        
                 }
                 sqlite_datareader.Close();
                 conn.Close();
@@ -215,7 +221,7 @@ namespace YourNoteUWP
         // It reads the content from a particular note using note id 
         public static Note ReadNotesData(string ownerId, string sharedUserId, string noteId, string tablename)
         {
-            Note note = new Note(" ", " ", " ");
+            Note note = new Note(" ", " ", " ", " ");
 
             try
             {
@@ -237,7 +243,7 @@ namespace YourNoteUWP
                     if (ownerId == userId && nId == noteId)
                     {
                         //  sharedUserId = ownerId + "_" + sharedUserId;
-                        note = new Note(sharedUserId, sqlite_datareader.GetString(2), sqlite_datareader.GetString(3));
+                        note = new Note(sharedUserId, sqlite_datareader.GetString(2), sqlite_datareader.GetString(3), sqlite_datareader.GetString(4));
                         //    Console.WriteLine("INSIDE READING OF DATA and CHANGING THE USER ID "+note.user_Note_Id+ " " + ownerId + " " + sharedUserId + " " + noteId );
                         break;
                     }
@@ -614,10 +620,12 @@ namespace YourNoteUWP
                     
                     while (sqlite_datareader.Read())
                     {
+                        string userId = sqlite_datareader.GetString(0);
                         long noteId = (long)sqlite_datareader.GetValue(1);
                         string title = sqlite_datareader.GetString(2);
                         string content = sqlite_datareader.GetString(3);
-                        notes.Add(new Note(noteId, title, content));
+                        string noteColor = sqlite_datareader.GetString(4);
+                        notes.Add(new Note(userId, noteId, title, content, noteColor));
                     }
                     sqlite_datareader.Close();
                 }

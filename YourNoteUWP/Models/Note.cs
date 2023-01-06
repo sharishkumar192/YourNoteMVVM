@@ -13,12 +13,15 @@ namespace YourNoteUWP.Models
         public long noteId;
         public string title;
         public string content;
-
-        public Note(long noteId, string title, string content)
+        public string noteColor;
+        public Note(string userId, long noteId, string title, string content, string noteColor)
         {
+            this.userId = userId;   
             this.noteId = noteId;
             this.title = title;
             this.content = content;
+            this.noteColor = noteColor;
+            
         }
 
         public Note(Note copyNote)
@@ -27,11 +30,12 @@ namespace YourNoteUWP.Models
             this.title = copyNote.title;
             this.content = copyNote.content;
         }
-        public Note(string userId, string title, string content)
+        public Note(string userId, string title, string content, string noteColor)
         {
             this.userId = userId;
             this.title = title;
             this.content = content;
+            this.noteColor = noteColor;
         }
 
         public static ObservableCollection<Note> GetPersonalNotes(User user)

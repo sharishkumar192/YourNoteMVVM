@@ -131,6 +131,7 @@
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />
+    <Compile Include="Models\ExceptionHandlerService.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="NoteDisplay.xaml.cs">

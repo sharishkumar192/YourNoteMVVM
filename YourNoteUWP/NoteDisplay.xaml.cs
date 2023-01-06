@@ -188,7 +188,7 @@ namespace YourNoteUWP
 
         private void noteDeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            DBUpdation.DeleteNote(DBCreation.notesTableName, displayNote.noteId);
+            DBUpdation.DeleteNote(DBCreation.notesTableName, DBCreation.sharedTableName, displayNote);
             this.Content = new AccountPage(noteOwner);
         }
     }

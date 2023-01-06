@@ -261,9 +261,12 @@
                     
                     >
                         
-                            <GridView.ItemTemplate>
+                            <GridView.ItemTemplate
+                                >
                             <DataTemplate x:DataType="data:Note">
                                 <local:NotesDataTemplate/>
+
+
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>

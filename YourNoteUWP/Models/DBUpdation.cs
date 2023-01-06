@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Windows.Graphics.Printing.PrintTicket;
 using Windows.System;
 using YourNoteUWP;
 using YourNoteUWP.Models;
@@ -39,7 +40,7 @@ namespace YourNoteUWP {
 
 
         //Updates the recent search count of the note
-        public static void UpdateLoginCount(string tableName, Note note)
+        public static void UpdateRecentSearchedCount(string tableName, Note note)
         {
             SQLiteConnection conn = DBCreation.CreateConnection();
             conn.Open();
@@ -98,39 +99,29 @@ namespace YourNoteUWP {
         }
 
         //Creates new note 
-         public static long InsertNewNote(Note newnote)
+         public static void InsertNewNote(Note newNote)
         {
-            long noteId = -1; 
+            SQLiteConnection conn = DBCreation.CreateConnection();
+            conn.Open();
+            SQLiteCommand sqlite_cmd;
+            sqlite_cmd = conn.CreateCommand();
+
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                SQLiteDataReader sqlite_datareader;
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content) VALUES ('{newnote.userId}','{newnote.title}','{newnote.content}');";
+                  sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content,noteColor) VALUES ('{newNote.userId}','{newNote.title}','{newNote.content}', '{newNote.noteColor}');";
                 sqlite_cmd.ExecuteNonQuery();
 
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * from {DBCreation.notesTableName} order by noteId DESC LIMIT 1 ";
-                sqlite_datareader = sqlite_cmd.ExecuteReader();
-                while(sqlite_datareader.Read())
-                noteId = sqlite_datareader.GetInt64(0);
-
-                sqlite_datareader.Close();
-                conn.Close();
-               
-
-
-                    
-
-
+             
+              conn.Close();
                 }
             catch (Exception)
             {
                 Console.WriteLine("The Note already exists");
             }
-            return noteId;
+            finally
+            {
+                conn.Close();
+            }
   
         }
 
@@ -186,23 +177,33 @@ namespace YourNoteUWP {
         }
     
         //Delete the Note
-        public static void DeleteNote(string tableName, long noteId)
-        {  SQLiteConnection conn = DBCreation.CreateConnection();
+        public static void DeleteNote(string notesTableName, string sharedTableName, Note noteToDelete)
+        {  
+            
+            
+            SQLiteConnection conn = DBCreation.CreateConnection();
             conn.Open();
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = conn.CreateCommand();
 
             try
             {
-                sqlite_cmd.CommandText = $"DELETE FROM {tableName} WHERE noteId = {noteId};";
+                sqlite_cmd.CommandText = $"DELETE FROM {notesTableName} WHERE noteId = {noteToDelete.noteId};";
                 sqlite_cmd.ExecuteNonQuery();
+                
+                
+                //sqlite_cmd=conn.CreateCommand();
+                //sqlite_cmd.CommandText = $"DELETE FROM {sharedTableName} WHERE ownerId = {noteToDelete.userId} and sharedNoteId={noteToDelete.noteId}";
+                //sqlite_cmd.ExecuteNonQuery(); 
+                
+                
                 conn.Close();
 
 
             }
             catch (Exception)
             {
-                Console.WriteLine("The Note already exists");
+                
             }
             finally
             {
@@ -214,32 +215,7 @@ namespace YourNoteUWP {
 
 
 
-        public static void InsertNotesColor(string tableName, long noteId, string color)
-        {
-            SQLiteConnection conn = DBCreation.CreateConnection();
-            conn.Open();
-            try
-            {
-
-
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                
-                    sqlite_cmd.CommandText = $"INSERT INTO {tableName}(noteId, noteColor) VALUES ('{noteId}', '{color}');";
-                
-                sqlite_cmd.ExecuteNonQuery();
-
-            }
-            catch (Exception)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-        }
+      
 
     }
 }

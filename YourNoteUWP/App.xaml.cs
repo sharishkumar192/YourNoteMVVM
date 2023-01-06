@@ -31,11 +31,18 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            //User details Table
             DBCreation.CreateUserTable();
+
+            //Notes details Table
             DBCreation.NotesTableCreation();
+            
+            //Shared Notes
             DBCreation.SharedNotesTableCreation();
+            
+            //Recent searches
             DBCreation.RecentSearchesTableCreation();
-            DBCreation.NoteColorTableCreation();
         }
 
         /// <summary>

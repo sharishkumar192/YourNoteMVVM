@@ -75,10 +75,11 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid x:ConnectionId='7' 
-            
+         
             Name="notesDisplayContent"
             Height="126"
             >
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
