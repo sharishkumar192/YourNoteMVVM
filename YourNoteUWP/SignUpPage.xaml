@@ -32,32 +32,46 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-        
 
-                    <TextBox
+            <StackPanel
+                
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+            
+            <TextBox
                     Name="NameBoxContent"
                     Style="{StaticResource SignUpTextBox}"
                     Header="Enter Your Name :"
                     HorizontalAlignment="Center" 
+                TextChanged="NameBox_TextChanged"
                     MinHeight="100"
                     MinWidth="150"
                         FontSize="25"
+                LostFocus="NameBoxContent_LostFocus"
                     MaxHeight="200"
                     MaxWidth="500"
+
                     Text=""/>
 
 
-      
+                <ProgressRing Name="NameProgress" IsActive="True" Visibility="Collapsed"/>
+              
+            </StackPanel>
 
 
 
 
-
-
-                    <TextBox 
-                        Grid.Row="1"
+            <StackPanel 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Grid.Row="1"
+                Orientation="Horizontal">
+          
+            <TextBox 
+                       
                         Style="{StaticResource SignUpTextBox}"
-                        Name="EmailBoxContent"
+                        Name="EmailBox"
                         Header="Enter Your Email Id :"
                         HorizontalAlignment="Center"
                        
@@ -66,10 +80,33 @@
                     MaxHeight="200"
                     MaxWidth="500"
                         FontSize="25"
-                        TextChanged="EmailBoxContent_TextChanged"
+                LostFocus="EmailBox_LostFocus"
+                        TextChanged="EmailBox_TextChanged"
+               
                     />
 
+                <ProgressRing
+                    Name="EmailProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
+                    />
+                <CheckBox
+                    IsEnabled="True"
+                    Name="EmailCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Name="EmailToolTip"
+                                 Content=""
+                                 
+                                 />
+                    </ToolTipService.ToolTip>
+                </CheckBox>
 
+
+            </StackPanel>
 
 
 
@@ -81,21 +118,48 @@
                     </Grid.RowDefinitions>
 
 
-                    <PasswordBox 
+                <StackPanel Orientation="Horizontal"
+                            
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                            >
+
+                <PasswordBox 
                       
                         Style="{StaticResource SignUpPasswordBox}"
-                        Name="passwordBox" 
+                        Name="PasswordBox" 
                         PasswordRevealMode="Hidden"
                         Header="Enter Your Password :"
-                        PasswordChanged="passwordBox_PasswordChanged"
+                        PasswordChanged="PasswordBox_PasswordChanged"
                         HorizontalAlignment="Center"
                         PlaceholderText="Enter The Password"
+                    LostFocus="PasswordBox_LostFocus"
                         
 
                     />
+                    <ProgressRing
+                    Name="PasswordProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
+                    />
+                    <CheckBox
+                    IsEnabled="True"
+                    Name="PasswordCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                        <ToolTipService.ToolTip>
+                            <ToolTip Name="PasswordToolTip"
+                                 Content=""
+                                 
+                                 />
+                        </ToolTipService.ToolTip>
+                    </CheckBox>
 
+                </StackPanel>
 
-                    <CheckBox 
+                <CheckBox 
                          Grid.Row="1"
                          FontSize="25"
                          HorizontalAlignment="Center"
@@ -112,30 +176,55 @@
 
 
 
-      
 
 
 
+            <StackPanel
+                Grid.Row="3"
+                
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                >
 
                 <PasswordBox 
-                    Grid.Row="3"
+                    
                     Style="{StaticResource SignUpPasswordBox}"
-                    Name ="repasswordBox"
+                    Name ="RPasswordBox"
                     MinHeight="100"
                     MinWidth="150"
                     MaxHeight="200"
                     MaxWidth="500"
                     Header="Reenter Your Password"
                     HorizontalAlignment="Center"
+                    LostFocus="RPasswordBox_LostFocus"
                     PasswordChanged="RepasswordBox_PasswordChanged"
                     />
 
 
-                <TextBlock 
-                        Style="{StaticResource SignUpTextBlocks}"
-                        Grid.Row="1"
-                        Name="statusTextForRePasswordBox"  
+                <ProgressRing
+                    Name="RPasswordProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
                     />
+                <CheckBox
+                    IsEnabled="True"
+                    Name="RPasswordCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Name="RPasswordToolTip"
+                                 Content=""
+                                 
+                                 />
+                    </ToolTipService.ToolTip>
+                </CheckBox>
+
+
+            </StackPanel>
+
 
 
 

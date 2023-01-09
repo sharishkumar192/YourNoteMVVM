@@ -60,21 +60,21 @@ namespace YourNoteUWP
 
 
 
-        private void EmailBoxContent_TextChanged(object sender, TextChangedEventArgs e)
+        private void EmailBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (EmailBoxContent.Text.Length != 0 && User.IsValidEmail(EmailBoxContent.Text) == false)
+            if (EmailBox.Text.Length != 0 && User.IsValidEmail(EmailBox.Text) == false)
             {
-                EmailBoxContent.Description = "Provide A Proper Email";
+                EmailBox.Description = "Provide A Proper Email";
             }
             else
             {
-                EmailBoxContent.Description = "";
+                EmailBox.Description = "";
             }
         }
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
         {
-            User user = new Models.User(EmailBoxContent.Text, passwordBox.Password);
+            User user = new Models.User(EmailBox.Text, passwordBox.Password);
             if (DBFetch.CheckUser(DBCreation.userTableName, user) == true)
             {
                 user.loginCount++;
@@ -98,7 +98,7 @@ namespace YourNoteUWP
         {
             var user = (User)e.ClickedItem;
 
-            EmailBoxContent.Text = user.emailId;
+            EmailBox.Text = user.emailId;
 
         }
 

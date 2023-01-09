@@ -188,15 +188,17 @@ namespace YourNoteUWP {
 
             try
             {
-                sqlite_cmd.CommandText = $"DELETE FROM {notesTableName} WHERE noteId = {noteToDelete.noteId};";
+                
+
+                sqlite_cmd.CommandText = $"DELETE FROM {notesTableName} WHERE userId = \"{noteToDelete.userId}\" and noteId = {noteToDelete.noteId};";
                 sqlite_cmd.ExecuteNonQuery();
-                
-                
-                //sqlite_cmd=conn.CreateCommand();
-                //sqlite_cmd.CommandText = $"DELETE FROM {sharedTableName} WHERE ownerId = {noteToDelete.userId} and sharedNoteId={noteToDelete.noteId}";
-                //sqlite_cmd.ExecuteNonQuery(); 
-                
-                
+
+          
+                sqlite_cmd = conn.CreateCommand();
+                sqlite_cmd.CommandText = $"DELETE FROM {sharedTableName} WHERE ownerId = \"{noteToDelete.userId}\" and sharedNoteId={noteToDelete.noteId};" ;
+                sqlite_cmd.ExecuteNonQuery();
+
+
                 conn.Close();
 
 

@@ -32,32 +32,42 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-        
 
-                    <TextBox x:ConnectionId='3'
+            <StackPanel
+                
+                Orientation="Horizontal">
+            
+            <TextBox x:ConnectionId='18'
                     Name="NameBoxContent"
                     Style="{StaticResource SignUpTextBox}"
                     Header="Enter Your Name :"
                     HorizontalAlignment="Center" 
+                                                 
                     MinHeight="100"
                     MinWidth="150"
                         FontSize="25"
+                                                    
                     MaxHeight="200"
                     MaxWidth="500"
+
                     Text=""/>
 
 
-      
+                <ProgressRing x:ConnectionId='19' Name="NameProgress" IsActive="True" Visibility="Collapsed"/>
+              
+            </StackPanel>
 
 
 
 
-
-
-                    <TextBox x:ConnectionId='4' 
-                        Grid.Row="1"
+            <StackPanel 
+                Grid.Row="1"
+                Orientation="Horizontal">
+          
+            <TextBox x:ConnectionId='14' 
+                       
                         Style="{StaticResource SignUpTextBox}"
-                        Name="EmailBoxContent"
+                        Name="EmailBox"
                         Header="Enter Your Email Id :"
                         HorizontalAlignment="Center"
                        
@@ -66,10 +76,33 @@
                     MaxHeight="200"
                     MaxWidth="500"
                         FontSize="25"
-                                                                 
+                                              
+                                                          
+               
                     />
 
+                <ProgressRing x:ConnectionId='15'
+                    Name="EmailProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
+                    />
+                <CheckBox x:ConnectionId='16'
+                    IsEnabled="True"
+                    Name="EmailCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:ConnectionId='17' Name="EmailToolTip"
+                                 Content=""
+                                 
+                                 />
+                    </ToolTipService.ToolTip>
+                </CheckBox>
 
+
+            </StackPanel>
 
 
 
@@ -81,21 +114,44 @@
                     </Grid.RowDefinitions>
 
 
-                    <PasswordBox x:ConnectionId='9' 
+                <StackPanel Orientation="Horizontal">
+
+                <PasswordBox x:ConnectionId='10' 
                       
                         Style="{StaticResource SignUpPasswordBox}"
-                        Name="passwordBox" 
+                        Name="PasswordBox" 
                         PasswordRevealMode="Hidden"
                         Header="Enter Your Password :"
                                                                      
                         HorizontalAlignment="Center"
                         PlaceholderText="Enter The Password"
+                                                     
                         
 
                     />
+                    <ProgressRing x:ConnectionId='11'
+                    Name="PasswordProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
+                    />
+                    <CheckBox x:ConnectionId='12'
+                    IsEnabled="True"
+                    Name="PasswordCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:ConnectionId='13' Name="PasswordToolTip"
+                                 Content=""
+                                 
+                                 />
+                        </ToolTipService.ToolTip>
+                    </CheckBox>
 
+                </StackPanel>
 
-                    <CheckBox x:ConnectionId='10' 
+                <CheckBox x:ConnectionId='9' 
                          Grid.Row="1"
                          FontSize="25"
                          HorizontalAlignment="Center"
@@ -112,30 +168,52 @@
 
 
 
-      
 
 
 
+            <StackPanel
+                Grid.Row="3"
+                    Orientation="Horizontal"
+                >
 
                 <PasswordBox x:ConnectionId='5' 
-                    Grid.Row="3"
+                    
                     Style="{StaticResource SignUpPasswordBox}"
-                    Name ="repasswordBox"
+                    Name ="RPasswordBox"
                     MinHeight="100"
                     MinWidth="150"
                     MaxHeight="200"
                     MaxWidth="500"
                     Header="Reenter Your Password"
                     HorizontalAlignment="Center"
+                                                      
                                                                    
                     />
 
 
-                <TextBlock x:ConnectionId='6' 
-                        Style="{StaticResource SignUpTextBlocks}"
-                        Grid.Row="1"
-                        Name="statusTextForRePasswordBox"  
+                <ProgressRing x:ConnectionId='6'
+                    Name="RPasswordProgress"
+                    IsActive="True"
+                    Visibility="Collapsed"
                     />
+                <CheckBox x:ConnectionId='7'
+                    IsEnabled="True"
+                    Name="RPasswordCheck"
+                    IsChecked="True"
+                    Visibility="Collapsed"
+              Style="{StaticResource ValidateCheckBox}"
+                    >
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:ConnectionId='8' Name="RPasswordToolTip"
+                                 Content=""
+                                 
+                                 />
+                    </ToolTipService.ToolTip>
+                </CheckBox>
+
+
+            </StackPanel>
+
 
 
 
@@ -150,7 +228,7 @@
             </Grid.ColumnDefinitions>
 
 
-                <Button x:ConnectionId='7' 
+                <Button x:ConnectionId='3' 
                     Name="SignUpBackButton"
                     Style="{StaticResource HomePageButton}"
                     HorizontalAlignment="Center"
@@ -160,7 +238,7 @@
                     Content="Back"
                 />
 
-            <Button x:ConnectionId='8' 
+            <Button x:ConnectionId='4' 
                 Grid.Column="1"
                 Name="SignUpButton"
                 Style="{StaticResource HomePageButton}"

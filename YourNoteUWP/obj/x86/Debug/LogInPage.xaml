@@ -77,7 +77,7 @@
                 </Grid.RowDefinitions>
 
                     <TextBox x:ConnectionId='9' 
-            Name="EmailBoxContent"
+            Name="EmailBox"
                         Height="150"
                         Width="400"
                         Header="Enter Your Email Id:"
@@ -87,7 +87,7 @@
                              BorderBrush="White"
                              CornerRadius="15"
 
-                                                             
+                                                      
                            HorizontalAlignment="Center"
                        PlaceholderText="xyz@email.com"
                              PlaceholderForeground="#96B9DE"
@@ -130,6 +130,7 @@
                     <CheckBox x:ConnectionId='13'
                         Grid.Row="2"
                         FontSize="25"
+                        
                         HorizontalAlignment="Center"
                         Name="revealModeCheckBox"
                         Content="Show password"
@@ -267,8 +268,8 @@ called ContactListViewTemplate, defined in a Page.Resources section. -->
             Grid.Column="1"
                 >
                 <TextBox
-            Name="EmailBoxContent"
-                TextChanged="EmailBoxContent_TextChanged"
+            Name="EmailBox"
+                TextChanged="EmailBox_TextChanged"
                     />
                 <TextBlock x:Name="statusTextForEmailBox"  
                             

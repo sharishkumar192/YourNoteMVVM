@@ -26,9 +26,11 @@ namespace YourNoteUWP.Models
 
         public Note(Note copyNote)
         {
+            this.userId = copyNote.userId;
             this.noteId = copyNote.noteId;
             this.title = copyNote.title;
             this.content = copyNote.content;
+            this.noteColor = copyNote.noteColor;
         }
         public Note(string userId, string title, string content, string noteColor)
         {

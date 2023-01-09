@@ -43,6 +43,8 @@ namespace YourNoteUWP
             
             //Recent searches
             DBCreation.RecentSearchesTableCreation();
+
+           // DBUpdation.DeleteNote("", "", new Note("", "", "", ""));
         }
 
         /// <summary>
