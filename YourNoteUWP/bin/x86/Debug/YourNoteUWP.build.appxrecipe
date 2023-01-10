@@ -58,6 +58,9 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\123.png">
       <PackagePath>Assets\123.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\download.png">
+      <PackagePath>Assets\download.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>

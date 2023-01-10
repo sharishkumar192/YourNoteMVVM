@@ -38,11 +38,12 @@ namespace YourNoteUWP
         public AccountPage()
         {
             this.InitializeComponent();
-
+            Navigation.IsPaneOpen = false;
         }
         public AccountPage(Models.User loggedUser)
         {
             this.InitializeComponent();
+            Navigation.IsPaneOpen = false;
             loggedUser.name = DBFetch.GetName(DBCreation.userTableName, loggedUser);
             currentUser = new Models.User(loggedUser.emailId, loggedUser.password);
           
@@ -86,7 +87,7 @@ namespace YourNoteUWP
         private void userImage_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
           
-               // Navigation.IsPaneOpen = true;
+                Navigation.IsPaneOpen = true;
 
 
         }
@@ -95,7 +96,7 @@ namespace YourNoteUWP
         {
 
             //SplitViewz.IsPaneOpen = false;
-                //Navigation.IsPaneOpen = false;
+                Navigation.IsPaneOpen = false;
 
         }
 
@@ -116,8 +117,7 @@ namespace YourNoteUWP
                     var suitableItems = new ObservableCollection<Note>();
                     var splitText = contentOfTextBox.Text.Split(" ");
 
-                    RecentlySearchedContainer.Visibility = Visibility.Collapsed;
-                    SearchBoxContainer.Visibility = Visibility.Visible;
+                
 
 
                     foreach (var eachNote in notesForSearch)
@@ -143,9 +143,7 @@ namespace YourNoteUWP
                 }
                 else
                 {
-                    RecentlySearchedContainer.Visibility = Visibility.Visible;
-                    SearchBoxContainer.Visibility = Visibility.Collapsed;
-
+                    
                         notesFeeder.Clear();
                         if (SharedContent.IsSelected == false)
                             notesFeeder = Note.GetPersonalNotes(currentUser);

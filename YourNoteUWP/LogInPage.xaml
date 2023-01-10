@@ -139,6 +139,7 @@
                         Unchecked="RevealModeCheckbox_Changed"    
                     />
 
+                    
 
                     <TextBlock 
                         Grid.Row="3"

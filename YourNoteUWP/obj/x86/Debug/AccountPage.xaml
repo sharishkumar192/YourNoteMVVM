@@ -69,100 +69,19 @@
             Grid.Row="0"
             >
             
-            <Image x:ConnectionId='17' 
-                Source="Assets/LockScreenLogo.scale-200.png"
+            <Image x:ConnectionId='23' 
+                Source="Assets/download.png"
                 Height="64"
                 Width="64"
                 RelativePanel.AlignLeftWithPanel="True" 
                 Name="userImage" 
+
                                                          
                                                        
                 />
 
 
-            <!--<Auto Suggestion Box>-->
-
-            <RelativePanel x:ConnectionId='18'
-                
-                RelativePanel.AlignRightWithPanel="True"
-                Name="CustomAutoSuggestBox"
-                >
-                <TextBox x:ConnectionId='19'
-            CornerRadius="12"
-
-            Height="50"
-            Width="300"
-            Name="SearchTextBox"
-            Background="Black"
-            Foreground="Red"
-
-                                                    
-            />
-                 <Popup x:ConnectionId='20' 
-                    
-                    
-                Name="SuggestionsPopup"
-                   IsOpen="False"
-                   RelativePanel.AlignBottomWith="SearchTextBox"
-                IsLightDismissEnabled="False"
-                    
-                   >
-                    <Grid x:ConnectionId='21'
-                        Background="#041322"
-
-                  Name="PopUpContainer"
-                  >
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <StackPanel x:ConnectionId='22'
-                        Name="RecentlySearchedContainer"
-                        
-                        >
-                            <TextBlock x:ConnectionId='26'
-                                Name="RecentSuggestedHeader"
-                            Text="Recently Search Notes : "
-                            />
-                            <ListBox x:ConnectionId='27'
-                    
-                    Name="RecentSuggestedContent"
-
-                                                          
-                           ItemTemplate="{StaticResource RecentlySuggested}"
-                            SelectionMode="Single"
-                                                                                      
-                            >
-                                
-                            </ListBox>
-
-                        </StackPanel>
-
-
-                        <StackPanel x:ConnectionId='23'
-                         Grid.Row="1"
-                        Name="SearchBoxContainer"
-                        
-                        >
-                            <TextBlock x:ConnectionId='24'
-                                Name="SearchBoxContainerHeader"
-                            Text="Titles: "
-                            />
-                            <ListView x:ConnectionId='25'
-                            Height="200"
-                            Name="SearchBoxContainerContent"
-                            Style="{StaticResource SearchContainerStyle}"
-                           ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
-                                                                 
-                           IsItemClickEnabled="True"
-                                                                           
-                            ItemTemplate="{StaticResource SearchTitle}"
-                            />
-                        </StackPanel>
-                    </Grid>
-
-                </Popup>
-            </RelativePanel>
+            
 
 
 
@@ -174,19 +93,95 @@
             x:Name="Navigation"
             Grid.Row="1"
             IsPaneOpen="False"
-            PaneDisplayMode="LeftCompact"
+            PaneDisplayMode="Left"
                                                           
             IsBackButtonVisible="Collapsed"
             FontSize="50"
-            IsSettingsVisible="True"
-            IsPaneVisible="True"
+            IsSettingsVisible="False"
             IsPaneToggleButtonVisible="False"
+
            
                       >
-                <NavigationView.MenuItems
+
+
+            <NavigationView.MenuItems
 
                     >
 
+              
+                
+                
+                <NavigationViewItem>
+                    <!--<Auto Suggestion Box>-->
+
+                    <RelativePanel x:ConnectionId='12'
+                
+                RelativePanel.AlignRightWithPanel="True"
+                Name="CustomAutoSuggestBox"
+                >
+                        <TextBox x:ConnectionId='13'
+            CornerRadius="12"
+
+            Height="50"
+            Width="300"
+            Name="SearchTextBox"
+            Background="Black"
+            Foreground="Red"
+            PlaceholderText="Search By Title"
+                                                    
+            />
+                        <Popup x:ConnectionId='14' 
+                    
+                    
+                Name="SuggestionsPopup"
+                   IsOpen="False"
+                   RelativePanel.AlignBottomWith="SearchTextBox"
+                IsLightDismissEnabled="False"
+                    
+                   >
+                            <Grid x:ConnectionId='15'
+                        Background="#041322"
+
+                  Name="PopUpContainer"
+                  >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+
+                                    <ListBox x:ConnectionId='16'
+                    
+                    Name="RecentSuggestedContent"
+
+                                                          
+                           ItemTemplate="{StaticResource RecentlySuggested}"
+                            SelectionMode="Single"
+                                                                                      
+                            >
+
+                                    </ListBox>
+
+                        
+
+
+                                    <ListView x:ConnectionId='17'
+                                        Grid.Row="1"
+                            Height="200"
+                            Name="SearchBoxContainerContent"
+                            Style="{StaticResource SearchContainerStyle}"
+                           ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
+                                                                 
+                           IsItemClickEnabled="True"
+                                                                           
+                            ItemTemplate="{StaticResource SearchTitle}"
+                            />
+
+                            </Grid>
+
+                        </Popup>
+                    </RelativePanel>
+                </NavigationViewItem>
 
                 <NavigationViewItem x:ConnectionId='9' 
                     IsSelected="True"
@@ -229,7 +224,7 @@
             
             <NavigationView.PaneFooter>
 
-                <NavigationViewItem x:ConnectionId='12' 
+                <NavigationViewItem x:ConnectionId='18' 
                                                  
                     Name="LogoutContent"
                     Foreground="Red"
@@ -245,10 +240,10 @@
             
             <NavigationView.Content>
 
-                <Frame x:ConnectionId='13'
+                <Frame x:ConnectionId='19'
                     Name="mFrame"
                     >
-                    <GridView x:ConnectionId='14' 
+                    <GridView x:ConnectionId='20' 
                     IsItemClickEnabled="True"
                                                     
                     Name="NotesData"

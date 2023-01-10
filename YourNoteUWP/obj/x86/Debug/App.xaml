@@ -10,8 +10,12 @@
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="TextControlHeaderForeground" Color="#325673" />
-            
-            
+
+        
+
+            <Style TargetType="Page" >
+                <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicWindowBrush}"/>
+            </Style>
 
         </ResourceDictionary>
 

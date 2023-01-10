@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#092642"
-   >
+     Background="{ThemeResource SystemControlAcrylicWindowPage}">
+   
 
 
     <ScrollViewer x:ConnectionId='2'
@@ -29,7 +29,7 @@
             FontSize="50"
             HorizontalAlignment="Center" 
             />
-           
+
             </RelativePanel>
 
 
@@ -56,9 +56,7 @@
 
 
 
-
             </RelativePanel>
-
         </Grid>
     </ScrollViewer>
 </Page>

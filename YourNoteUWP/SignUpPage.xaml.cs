@@ -37,78 +37,26 @@ namespace YourNoteUWP
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-          
 
+            NameBox_LostFocus(sender, e);
+            EmailBox_LostFocus(sender, e);
+            PasswordBox_LostFocus(sender, e);
+            RPasswordBox_LostFocus(sender, e);
+           
 
-            //if (NameBoxContent.Text.Length == 0)
-            //{
-            //    NameBoxContent.Description = "Please Enter The Name!";
-            //}
-            //else
-            //{
-            //    NameBoxContent.Description = "";
-            //}
-
-
-            //if (EmailBox.Text.Length == 0)
-            //{
-            //    EmailBox.Description = "Please Enter The Email Id!";
-            //}
-            //else if (DBFetch.CheckValidEmail(DBCreation.userTableName, EmailBox.Text)== true )
-            //{
-            //    EmailBox.Description = "The Email Id Already Exists!";
-            //}
-            //else
-            //{
-            //    EmailBox.Description = "";
-                
-            //}
-
-
-            //if (passwordBox.Password.Length == 0)
-            //{
-            //    passwordBox.Description = "Please Enter The Password";
-            //}
-            //else
-            //{
-            //    passwordBox.Description = "";
-            //}
-
-
-            //if (repasswordBox.Password.Length == 0)
-            //{
-            //    repasswordBox.Description = "Please ReType The Password";
-            //}
-            //else if (passwordBox.Password != repasswordBox.Password && repasswordBox.Password.Length != 0)
-            //{
-            //    repasswordBox.Description = "The Password Is Not Matching!";
-            //}
-            //else
-            //    repasswordBox.Description = "";
-
-            //if (NameBoxContent.Text.Length != 0 &&
-
-            //    EmailBox.Text.Length != 0 &&
-
-            //        passwordBox.Password.Length != 0 &&
-
-            //    repasswordBox.Password.Length != 0  &&  
-
-            //    string.Compare(RPasswordBox.Password, RPpasswordBox.Password) == 0
-
-            //    )
-    
+            if (NameToolTip.Visibility == Visibility.Visible &&
+                EmailToolTip.Visibility == Visibility.Collapsed &&
+                       PasswordBoxToolTip.Visibility == Visibility.Collapsed &&
+                       RPasswordBoxToolTip.Visibility == Visibility.Collapsed)
+        
             {
 
-
-
-
-                 User user = new User(NameBoxContent.Text, EmailBox.Text,RPasswordBox.Password);
+                User user = new User(NameBoxContent.Text, EmailBox.Text, RPasswordBox.Password);
                 DBUpdation.InsertNewUser(user);
                 this.Content = new LogInPage();
-
             }
-            
+
+
 
         }
     
@@ -126,47 +74,64 @@ namespace YourNoteUWP
 
         private void NameBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            NameProgress.Visibility = Visibility.Collapsed;
+            if(NameBoxContent.Text.Length==0)
+            {
+                NameCheck.Visibility = Visibility.Visible;
+                NameBoxToolTip.Content = NameToolTip.Content = "The Name cant be empty";
+            }
+            else
+            {
+                NameCheck.Visibility = Visibility.Collapsed;
+                NameBoxToolTip.Content = NameToolTip.Content =  "";
+            }
         }
         private void NameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            NameProgress.Visibility = Visibility.Visible;
+            NameCheck.Visibility = Visibility.Collapsed;
         }
         private void EmailBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (EmailBox.Text.Length != 0 && User.IsValidEmail(EmailBox.Text) == false)
+            if (EmailBox.Text.Length == 0 || ( EmailBox.Text.Length != 0 && User.IsValidEmail(EmailBox.Text) == false))
             {
-                EmailProgress.Visibility = Visibility.Collapsed;
                 EmailCheck.Visibility = Visibility.Visible;
-                EmailToolTip.Content = "asdasdsadasd";
+                EmailBoxToolTip.Content = EmailToolTip.Content = "Enter a Valid Email Id";
+            }
+
+            else if (EmailBox.Text.Length != 0 && DBFetch.CheckValidEmail(DBCreation.userTableName, EmailBox.Text) == true)
+            {
+                EmailCheck.Visibility = Visibility.Visible;
+                EmailBoxToolTip.Content = EmailToolTip.Content = "The Email Id Already Exists!";
             }
             else
             {
                 EmailCheck.Visibility = Visibility.Collapsed;
-                EmailProgress.Visibility = Visibility.Collapsed;
-                EmailToolTip.Content = "";
+                EmailBoxToolTip.Visibility = Visibility.Collapsed;  
+                EmailBoxToolTip.Content = EmailToolTip.Content = "";
 
             }
         }
         private void EmailBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            EmailProgress.Visibility = Visibility.Visible;
             EmailCheck.Visibility = Visibility.Collapsed;
         }
 
         private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (PasswordBox.Password.Length <3 )
+            if ( PasswordBox.Password.Length <= 2)
             {
-                PasswordProgress.Visibility = Visibility.Collapsed;
                 PasswordCheck.Visibility = Visibility.Visible;
-                PasswordToolTip.Content = "asdasdsadasd";
+                PasswordBoxToolTip.Content = PasswordToolTip.Content = "The Length of the Password must be greater than 2";
+            }
+            else if (PasswordBox.Password.Length != RPasswordBox.Password.Length && PasswordBox.Password != RPasswordBox.Password)
+            {
+                RPasswordCheck.Visibility = Visibility.Visible;
+                RPasswordBoxToolTip.Content = RPasswordToolTip.Content = "Password did not match";
             }
             else
             {
                 PasswordCheck.Visibility = Visibility.Collapsed;
-                PasswordProgress.Visibility = Visibility.Collapsed;
-                PasswordToolTip.Content = "";
+                PasswordBoxToolTip.Visibility = Visibility.Collapsed;
+                PasswordBoxToolTip.Content = PasswordToolTip.Content = "";
 
             }
 
@@ -174,23 +139,25 @@ namespace YourNoteUWP
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
-            PasswordProgress.Visibility = Visibility.Visible;
             PasswordCheck.Visibility = Visibility.Collapsed;
         }
 
         private void RPasswordBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (PasswordBox.Password != RPasswordBox.Password )
+            
+            if (PasswordBox.Password.Length==0 || (PasswordBox.Password.Length!= RPasswordBox.Password.Length  && PasswordBox.Password != RPasswordBox.Password))
             {
-                RPasswordProgress.Visibility = Visibility.Collapsed;
+                
                 RPasswordCheck.Visibility = Visibility.Visible;
-                RPasswordToolTip.Content = "asdasdsadasd";
+                RPasswordBoxToolTip.Content = RPasswordToolTip.Content = "Password did not match";
+                PasswordCheck.Visibility = Visibility.Visible;
+                RPasswordBoxToolTip.Content = RPasswordToolTip.Content = "The Length of the Password must be greater than 2";
             }
             else
             {
                 RPasswordCheck.Visibility = Visibility.Collapsed;
-                RPasswordProgress.Visibility = Visibility.Collapsed;
-                RPasswordToolTip.Content = "";
+                RPasswordBoxToolTip.Visibility = Visibility.Collapsed;
+                RPasswordBoxToolTip.Content = RPasswordToolTip.Content = "";
 
             }
         }
@@ -211,14 +178,12 @@ namespace YourNoteUWP
         private void RepasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
-            RPasswordProgress.Visibility = Visibility.Visible;
             RPasswordCheck.Visibility = Visibility.Collapsed;
 
         }
 
         private void NameBoxContent_LostFocus(object sender, RoutedEventArgs e)
         {
-            NameProgress.Visibility = Visibility.Collapsed; 
         }
 
 

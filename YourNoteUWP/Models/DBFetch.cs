@@ -540,7 +540,7 @@ namespace YourNoteUWP
         //Checks the email Id which the currentUser enters already exists or not 
         public static bool CheckValidEmail(string tableName, string emailId)
         {
-            bool check = true;
+            bool check = false;
             try
             {
                 SQLiteConnection conn = DBCreation.CreateConnection();
@@ -549,11 +549,11 @@ namespace YourNoteUWP
                 SQLiteDataReader sqlite_datareader;
 
                 sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where sharedUserId='{emailId}'";
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where emailId=\"{emailId}\" ";
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 while (sqlite_datareader.Read())
                 {
-                    check = false;
+                    check = true;
                 }
                 sqlite_datareader.Close();
                 conn.Close();

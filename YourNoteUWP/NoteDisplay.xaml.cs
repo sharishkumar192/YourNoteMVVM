@@ -146,8 +146,8 @@ namespace YourNoteUWP
             contentOfNote.IsReadOnly = false;
             if(contentOfNote.IsReadOnly == false)
             {
-                titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-                contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
+               // titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
+               // contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
             }
             //noteSaveButton.Visibility = Visibility.Visible;
             oldContent = displayNote.content;
@@ -172,12 +172,11 @@ namespace YourNoteUWP
             //var text = MyTextBox.Text;
 
 
-            contentOfNote.IsReadOnly = true;
-            titleOfNote.IsReadOnly = true;
-            if (titleOfNote.IsReadOnly != false)
-                titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-            if (contentOfNote.IsReadOnly != false)
-                contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+
+            //if (titleOfNote.IsReadOnly != false)
+            //    titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+            //if (contentOfNote.IsReadOnly != false)
+            //    contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             
             displayNote.title = titleOfNote.Text;
             displayNote.content = contentOfNote.Text;
@@ -191,6 +190,8 @@ namespace YourNoteUWP
             DBUpdation.DeleteNote(DBCreation.notesTableName, DBCreation.sharedTableName, displayNote);
             this.Content = new AccountPage(noteOwner);
         }
+
+
     }
 
 }

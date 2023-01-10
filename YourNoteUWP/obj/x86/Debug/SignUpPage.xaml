@@ -7,255 +7,291 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="#092642"
+
     >
     <ScrollViewer x:ConnectionId='2'
-        Name="SignUpPageScrollViewer"
-        HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Auto"
-        >
-    <Grid 
-      
+    Name="SignUpPageScrollViewer"
+    HorizontalScrollBarVisibility="Auto"
+    VerticalScrollBarVisibility="Auto"
+>
+        <Grid 
+
         CornerRadius="12"
         BorderBrush="#174276"
-          Background="#174276"
+        Background="#174276"
         BorderThickness="2"
-        
         HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        >
+        VerticalAlignment="Center"                 
+    >
 
-        <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBox x:ConnectionId='3'
+                Grid.Row="0"
+                Margin="20"
+                Name="NameBoxContent"
+                Style="{StaticResource SignUpTextBox}"
+                HorizontalAlignment="Center" 
+                                                 
+                MinHeight="100"
+                MinWidth="150"
+                FontSize="25"
+                                                    
+                MaxHeight="200" 
+                MaxWidth="500"
+                PlaceholderText="Enter Your Name"
+                Text="">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='21' Name="NameBoxToolTip"
+                                Content=""
+                             Visibility="Visible"
+
+                                />
+                </ToolTipService.ToolTip>
+            </TextBox>
+
+
+            <FontIcon x:ConnectionId='4'
+                        Grid.Row="0"
+                        Name="NameCheck"              
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0,0,20,0"
+                        Visibility="Collapsed"
+                        Glyph="&#x0021;"
+                        FontFamily="Amiri"
+                
+                        FontSize="50"
+                >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='20' Name="NameToolTip"
+                             Visibility="Visible"
+                                Content=""
+                                />
+                </ToolTipService.ToolTip>
+            </FontIcon>
+
+
+
+
+            <TextBox x:ConnectionId='5' 
+                Grid.Row="1"
+                PlaceholderText="Enter Your Email Id"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource SignUpTextBox}"
+                Name="EmailBox"
+                MinHeight="100"
+                MinWidth="150"
+                MaxHeight="200"
+                MaxWidth="500"
+                FontSize="25"
+                                              
+                                                  
+
+            >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='19'
+                        Visibility="Collapsed"
+                        Name="EmailBoxToolTip"
+                        Content=""
+
+                     />
+                </ToolTipService.ToolTip>
+            </TextBox>
+
+
+
+
+
+            <FontIcon x:ConnectionId='6' 
+                Grid.Row="1"
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Center"
+                Margin="0,0,20,0"
+                Name="EmailCheck"
+                Glyph="&#x0021;"
+                FontFamily="Amiri"
+                FontSize="50"
+                Visibility="Collapsed"
+            >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='18' 
+                        Visibility="Visible"
+                        Name="EmailToolTip"
+                        Content=""
+
+                     />
+                </ToolTipService.ToolTip>
+
+            </FontIcon>
+
+
+            <Grid   
+                Grid.Row="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
 
-            <StackPanel
-                
-                Orientation="Horizontal">
-            
-            <TextBox x:ConnectionId='18'
-                    Name="NameBoxContent"
-                    Style="{StaticResource SignUpTextBox}"
-                    Header="Enter Your Name :"
-                    HorizontalAlignment="Center" 
-                                                 
-                    MinHeight="100"
-                    MinWidth="150"
-                        FontSize="25"
-                                                    
-                    MaxHeight="200"
-                    MaxWidth="500"
-
-                    Text=""/>
 
 
-                <ProgressRing x:ConnectionId='19' Name="NameProgress" IsActive="True" Visibility="Collapsed"/>
-              
-            </StackPanel>
+                <PasswordBox x:ConnectionId='13' 
+
+                            Style="{StaticResource SignUpPasswordBox}"
+                            Name="PasswordBox" 
+                            PasswordRevealMode="Hidden"
+                            Header="Enter Your Password :"
+                                                                         
+                            HorizontalAlignment="Center"
+                            PlaceholderText="Enter The Password"
+                                                             
 
 
-
-
-            <StackPanel 
-                Grid.Row="1"
-                Orientation="Horizontal">
-          
-            <TextBox x:ConnectionId='14' 
-                       
-                        Style="{StaticResource SignUpTextBox}"
-                        Name="EmailBox"
-                        Header="Enter Your Email Id :"
-                        HorizontalAlignment="Center"
-                       
-                     MinHeight="100"
-                    MinWidth="150"
-                    MaxHeight="200"
-                    MaxWidth="500"
-                        FontSize="25"
-                                              
-                                                          
-               
-                    />
-
-                <ProgressRing x:ConnectionId='15'
-                    Name="EmailProgress"
-                    IsActive="True"
-                    Visibility="Collapsed"
-                    />
-                <CheckBox x:ConnectionId='16'
-                    IsEnabled="True"
-                    Name="EmailCheck"
-                    IsChecked="True"
-                    Visibility="Collapsed"
-              Style="{StaticResource ValidateCheckBox}"
                     >
                     <ToolTipService.ToolTip>
-                        <ToolTip x:ConnectionId='17' Name="EmailToolTip"
-                                 Content=""
-                                 
-                                 />
+                        <ToolTip x:ConnectionId='17' 
+                        Name="PasswordBoxToolTip"
+                        Content=""
+                            Visibility="Visible"
+
+
+                     />
                     </ToolTipService.ToolTip>
-                </CheckBox>
-
-
-            </StackPanel>
+                </PasswordBox>
 
 
 
-            <Grid   Grid.Row="2">
+                <FontIcon x:ConnectionId='14'
+                            Name="PasswordCheck"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,20,0"
+                            Visibility="Collapsed"
+                            Glyph="&#x0021;"
+                            FontFamily="Amiri"
+                            FontSize="50"
+                    >
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:ConnectionId='16' Name="PasswordToolTip"
+                            Content=""
+                                 Visibility="Visible"
 
-                    <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    </Grid.RowDefinitions>
+
+                            />
+                    </ToolTipService.ToolTip>
+                </FontIcon>
 
 
-                <StackPanel Orientation="Horizontal">
+                <CheckBox x:ConnectionId='15' 
+                            Grid.Row="1"
+                            FontSize="25"
+                            HorizontalAlignment="Center"
+                            Name="revealModeCheckBox" Content="Show password" IsChecked="False"
+                                                                 
+                                                                  
+                    />
 
-                <PasswordBox x:ConnectionId='10' 
-                      
+
+
+            </Grid>
+
+
+            <PasswordBox x:ConnectionId='7' 
+                        Grid.Row="3"
                         Style="{StaticResource SignUpPasswordBox}"
-                        Name="PasswordBox" 
-                        PasswordRevealMode="Hidden"
-                        Header="Enter Your Password :"
-                                                                     
+                        Name ="RPasswordBox"
+                        MinHeight="100"
+                        MinWidth="150"
+                        MaxHeight="200"
+                        MaxWidth="500"
+                        Header="Reenter Your Password"
                         HorizontalAlignment="Center"
-                        PlaceholderText="Enter The Password"
-                                                     
-                        
-
-                    />
-                    <ProgressRing x:ConnectionId='11'
-                    Name="PasswordProgress"
-                    IsActive="True"
-                    Visibility="Collapsed"
-                    />
-                    <CheckBox x:ConnectionId='12'
-                    IsEnabled="True"
-                    Name="PasswordCheck"
-                    IsChecked="True"
-                    Visibility="Collapsed"
-              Style="{StaticResource ValidateCheckBox}"
-                    >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:ConnectionId='13' Name="PasswordToolTip"
-                                 Content=""
-                                 
-                                 />
-                        </ToolTipService.ToolTip>
-                    </CheckBox>
-
-                </StackPanel>
-
-                <CheckBox x:ConnectionId='9' 
-                         Grid.Row="1"
-                         FontSize="25"
-                         HorizontalAlignment="Center"
-                         Name="revealModeCheckBox" Content="Show password" IsChecked="False"
-                                                              
-                                                              
-                    >
-
-
-            </CheckBox>
-
-
-        </Grid>
-
-
-
-
-
-
-            <StackPanel
-                Grid.Row="3"
-                    Orientation="Horizontal"
+                                                          
+                                                                       
                 >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='12' Name="RPasswordBoxToolTip"
+                             Visibility="Visible"
 
-                <PasswordBox x:ConnectionId='5' 
-                    
-                    Style="{StaticResource SignUpPasswordBox}"
-                    Name ="RPasswordBox"
-                    MinHeight="100"
-                    MinWidth="150"
-                    MaxHeight="200"
-                    MaxWidth="500"
-                    Header="Reenter Your Password"
-                    HorizontalAlignment="Center"
-                                                      
-                                                                   
-                    />
+                                Content=""
+                                />
+                </ToolTipService.ToolTip>
+            </PasswordBox>
 
 
-                <ProgressRing x:ConnectionId='6'
-                    Name="RPasswordProgress"
-                    IsActive="True"
-                    Visibility="Collapsed"
-                    />
-                <CheckBox x:ConnectionId='7'
-                    IsEnabled="True"
-                    Name="RPasswordCheck"
-                    IsChecked="True"
-                    Visibility="Collapsed"
-              Style="{StaticResource ValidateCheckBox}"
-                    >
-                    <ToolTipService.ToolTip>
-                        <ToolTip x:ConnectionId='8' Name="RPasswordToolTip"
-                                 Content=""
-                                 
-                                 />
-                    </ToolTipService.ToolTip>
-                </CheckBox>
 
+            <FontIcon x:ConnectionId='8'
+                        Grid.Row="3"
+                        Name="RPasswordCheck"              
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0,0,20,0"
+                        Visibility="Collapsed"
+                        Glyph="&#x0021;"
+                        FontFamily="Amiri"
+                        FontSize="50"
+                >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:ConnectionId='11' Name="RPasswordToolTip"
+                             Visibility="Visible"
 
-            </StackPanel>
-
+                                Content=""
+                                />
+                </ToolTipService.ToolTip>
+            </FontIcon>
 
 
 
             <Grid 
                 Grid.Row="4" 
                 VerticalAlignment="Center"
-                      >
+            >
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
 
-                <Button x:ConnectionId='3' 
-                    Name="SignUpBackButton"
-                    Style="{StaticResource HomePageButton}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Grid.Column="0"
-                                                  
-                    Content="Back"
-                />
+                <Button x:ConnectionId='9' 
+                            Name="SignUpBackButton"
+                            Style="{StaticResource HomePageButton}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Grid.Column="0"
+                                                          
+                            Content="Back"
+                    />
 
-            <Button x:ConnectionId='4' 
-                Grid.Column="1"
-                Name="SignUpButton"
-                Style="{StaticResource HomePageButton}"
-                                          
-                Content="Create Account"/>
+                <Button x:ConnectionId='10' 
+                            Grid.Column="1"
+                            Name="SignUpButton"
+                            Style="{StaticResource HomePageButton}"
+                                                      
+                            Content="Create Account"
+                    />
+
+
+            </Grid>
 
 
         </Grid>
 
-            
 
-    </Grid>
+
 
     </ScrollViewer>
-
-
-
 
 
 </Page>
