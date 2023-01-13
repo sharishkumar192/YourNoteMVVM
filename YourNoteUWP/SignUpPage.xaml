@@ -6,19 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#092642"
+   
 
     >
     <ScrollViewer
-    Name="SignUpPageScrollViewer"
+    Name="signUpPageScrollViewer"
     HorizontalScrollBarVisibility="Auto"
     VerticalScrollBarVisibility="Auto"
 >
         <Grid 
 
         CornerRadius="12"
-        BorderBrush="#174276"
-        Background="#174276"
+        BorderBrush="{ThemeResource Dark3}"
+        Background="{ThemeResource Light2}"
         BorderThickness="2"
         HorizontalAlignment="Center"
         VerticalAlignment="Center"                 
@@ -36,21 +36,21 @@
 
             <TextBox
                 Grid.Row="0"
-                Margin="20"
-                Name="NameBoxContent"
-                Style="{StaticResource SignUpTextBox}"
+                Margin="0,10,0,20"
+                Name="nameBox"
+                Style="{StaticResource TextBoxStyle}"
                 HorizontalAlignment="Center" 
-                TextChanged="NameBox_TextChanged"
+                TextChanged="nameBox_TextChanged"
                 MinHeight="100"
                 MinWidth="150"
                 FontSize="25"
-                LostFocus="NameBoxContent_LostFocus"
+                LostFocus="nameBox_LostFocus"
                 MaxHeight="200" 
                 MaxWidth="500"
                 PlaceholderText="Enter Your Name"
                 Text="">
                 <ToolTipService.ToolTip>
-                    <ToolTip Name="NameBoxToolTip"
+                    <ToolTip Name="nameBoxToolTip"
                                 Content=""
                              Visibility="Visible"
 
@@ -61,18 +61,11 @@
 
             <FontIcon
                         Grid.Row="0"
-                        Name="NameCheck"              
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="0,0,20,0"
-                        Visibility="Collapsed"
-                        Glyph="&#x0021;"
-                        FontFamily="Amiri"
-                
-                        FontSize="50"
+                        Name="nameCheck"              
+                        Style="{StaticResource BoxCheck}"
                 >
                 <ToolTipService.ToolTip>
-                    <ToolTip Name="NameToolTip"
+                    <ToolTip Name="nameToolTip"
                              Visibility="Visible"
                                 Content=""
                                 />
@@ -84,24 +77,25 @@
 
             <TextBox 
                 Grid.Row="1"
+                 Margin="0,0,0,20"
                 PlaceholderText="Enter Your Email Id"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Style="{StaticResource SignUpTextBox}"
-                Name="EmailBox"
+                Style="{StaticResource TextBoxStyle}"
+                Name="emailBox"
                 MinHeight="100"
                 MinWidth="150"
                 MaxHeight="200"
                 MaxWidth="500"
                 FontSize="25"
-                LostFocus="EmailBox_LostFocus"
-                TextChanged="EmailBox_TextChanged"
+                LostFocus="emailBox_LostFocus"
+                TextChanged="emailBox_TextChanged"
 
             >
                 <ToolTipService.ToolTip>
                     <ToolTip
                         Visibility="Collapsed"
-                        Name="EmailBoxToolTip"
+                        Name="emailBoxToolTip"
                         Content=""
 
                      />
@@ -114,19 +108,13 @@
 
             <FontIcon 
                 Grid.Row="1"
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Center"
-                Margin="0,0,20,0"
-                Name="EmailCheck"
-                Glyph="&#x0021;"
-                FontFamily="Amiri"
-                FontSize="50"
-                Visibility="Collapsed"
+                Style="{StaticResource BoxCheck}"
+                Name="emailCheck"
             >
                 <ToolTipService.ToolTip>
                     <ToolTip 
                         Visibility="Visible"
-                        Name="EmailToolTip"
+                        Name="emailToolTip"
                         Content=""
 
                      />
@@ -136,7 +124,9 @@
 
 
             <Grid   
-                Grid.Row="2">
+                Grid.Row="2"
+                Margin="0,0,0,20"
+                >
 
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -148,20 +138,19 @@
 
                 <PasswordBox 
 
-                            Style="{StaticResource SignUpPasswordBox}"
-                            Name="PasswordBox" 
+                            Style="{StaticResource PasswordBoxStyle}"
+                            Name="passwordBox" 
                             PasswordRevealMode="Hidden"
-                            Header="Enter Your Password :"
-                            PasswordChanged="PasswordBox_PasswordChanged"
+                            PasswordChanged="passwordBox_PasswordChanged"
                             HorizontalAlignment="Center"
                             PlaceholderText="Enter The Password"
-                            LostFocus="PasswordBox_LostFocus"
+                            LostFocus="passwordBox_LostFocus"
 
 
                     >
                     <ToolTipService.ToolTip>
                         <ToolTip 
-                        Name="PasswordBoxToolTip"
+                        Name="passwordBoxToolTip"
                         Content=""
                             Visibility="Visible"
 
@@ -173,17 +162,11 @@
 
 
                 <FontIcon
-                            Name="PasswordCheck"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="0,0,20,0"
-                            Visibility="Collapsed"
-                            Glyph="&#x0021;"
-                            FontFamily="Amiri"
-                            FontSize="50"
+                            Name="passwordCheck"
+                            Style="{StaticResource BoxCheck}"
                     >
                     <ToolTipService.ToolTip>
-                        <ToolTip Name="PasswordToolTip"
+                        <ToolTip Name="passwordToolTip"
                             Content=""
                                  Visibility="Visible"
 
@@ -198,8 +181,8 @@
                             FontSize="25"
                             HorizontalAlignment="Center"
                             Name="revealModeCheckBox" Content="Show password" IsChecked="False"
-                            Checked="RevealModeCheckbox_Changed" 
-                            Unchecked="RevealModeCheckbox_Changed"
+                            Checked="revealModeCheckbox_Changed" 
+                            Unchecked="revealModeCheckbox_Changed"
                     />
 
 
@@ -208,20 +191,21 @@
 
 
             <PasswordBox 
+                Margin="0,0,0,10"
                         Grid.Row="3"
-                        Style="{StaticResource SignUpPasswordBox}"
-                        Name ="RPasswordBox"
+                        Style="{StaticResource PasswordBoxStyle}"
+                        Name ="rPasswordBox"
+                        PasswordRevealMode="Hidden"
                         MinHeight="100"
                         MinWidth="150"
                         MaxHeight="200"
                         MaxWidth="500"
-                        Header="Reenter Your Password"
                         HorizontalAlignment="Center"
-                        LostFocus="RPasswordBox_LostFocus"
-                        PasswordChanged="RepasswordBox_PasswordChanged"
+                        LostFocus="rPasswordBox_LostFocus"
+                        PasswordChanged="repasswordBox_PasswordChanged"
                 >
                 <ToolTipService.ToolTip>
-                    <ToolTip Name="RPasswordBoxToolTip"
+                    <ToolTip Name="rPasswordBoxToolTip"
                              Visibility="Visible"
 
                                 Content=""
@@ -233,17 +217,11 @@
 
             <FontIcon
                         Grid.Row="3"
-                        Name="RPasswordCheck"              
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="0,0,20,0"
-                        Visibility="Collapsed"
-                        Glyph="&#x0021;"
-                        FontFamily="Amiri"
-                        FontSize="50"
+                        Name="rPasswordCheck"              
+                        Style="{StaticResource BoxCheck}"
                 >
                 <ToolTipService.ToolTip>
-                    <ToolTip Name="RPasswordToolTip"
+                    <ToolTip Name="rPasswordToolTip"
                              Visibility="Visible"
 
                                 Content=""
@@ -265,20 +243,20 @@
 
 
                 <Button 
-                            Name="SignUpBackButton"
-                            Style="{StaticResource HomePageButton}"
+                            Name="signUpBackButton"
+                            Style="{StaticResource ButtonStyle}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Grid.Column="0"
-                            Click="SignUpBackButton_Click"
+                            Click="signUpBackButton_Click"
                             Content="Back"
                     />
 
                 <Button 
                             Grid.Column="1"
-                            Name="SignUpButton"
-                            Style="{StaticResource HomePageButton}"
-                            Click="SignUpButton_Click"
+                            Name="signUpButton"
+                            Style="{StaticResource ButtonStyle}"
+                            Click="signUpButton_Click"
                             Content="Create Account"
                     />
 

@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:data="using:YourNoteUWP.Models" 
     mc:Ignorable="d"
-    Background="#174276"
+    Background="{ThemeResource Light1}"
     >
 
     <!--<Page.Resources>
@@ -71,6 +71,7 @@
             
 
             <Image 
+                
                 Source="Assets/download.png"
                 Height="64"
                 Width="64"
@@ -94,13 +95,13 @@
             x:Name="Navigation"
             Grid.Row="1"
             IsPaneOpen="False"
-            PaneDisplayMode="Left"
+            PaneDisplayMode="LeftCompact"
             SelectionChanged="Navigation_SelectionChanged"
             IsBackButtonVisible="Collapsed"
             FontSize="50"
             IsSettingsVisible="False"
             IsPaneToggleButtonVisible="False"
-
+            
            
                       >
 
@@ -239,12 +240,13 @@
             </NavigationView.PaneFooter>
             
             
-            <NavigationView.Content>
+            <NavigationView.Content
+                
+                >
 
-                <Frame
-                    Name="mFrame"
-                    >
+            
                     <GridView 
+                       
                     IsItemClickEnabled="True"
                     ItemClick="NotesData_ItemClick" 
                     Name="NotesData"
@@ -267,7 +269,7 @@
                         </GridView.ItemTemplate>
                     </GridView>
 
-                </Frame>
+           
             </NavigationView.Content>
         </NavigationView>
 

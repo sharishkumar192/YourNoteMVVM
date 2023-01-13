@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-     Background="{ThemeResource SystemControlAcrylicWindowPage}">
-   
-
+  Background="{ThemeResource Light1}"
+    >
 
     <ScrollViewer x:ConnectionId='2'
-        Name="SignUpPageScrollViewer"
+        Name="homePageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto"
         >
@@ -21,12 +20,12 @@
 
                 <TextBlock x:ConnectionId='5' 
              Grid.Row="0"
-            Name="Title" 
-            Foreground="#f6fafe"
+            Name="Title"
             Style="{StaticResource TitleTextBlockStyle}"
                      RelativePanel.AlignHorizontalCenterWithPanel="True"
             Text="Your Note" 
             FontSize="50"
+                    Foreground="{ThemeResource Dark1}"
             HorizontalAlignment="Center" 
             />
 
@@ -40,15 +39,15 @@
             >
 
                 <Button x:ConnectionId='3' 
-                Style="{StaticResource HomePageButton}"
-                Name="SignUp" 
+                Style="{ThemeResource ButtonStyle}"
+                Name="signUp" 
                 Content="Sign Up" 
                                      
                 />
                 <Button x:ConnectionId='4'    
-                Style="{StaticResource HomePageButton}"
-                Name="SignIn" 
-                RelativePanel.Below="SignUp"
+                Style="{ThemeResource ButtonStyle}"
+                Name="signIn" 
+                RelativePanel.Below="signUp"
                 Content="Sign In" 
                                      
 

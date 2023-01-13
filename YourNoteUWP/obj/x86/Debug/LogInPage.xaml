@@ -7,11 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:data="using:YourNoteUWP.Models" 
     mc:Ignorable="d"
-  Background="#092642"
     >
 
     <Page.Resources>
-        <DataTemplate x:Key="EmailIdOfUsers"                       
+        <DataTemplate x:Key="emailIdOfUsers"                       
                      
                       >
             <Grid x:ConnectionId='3'
@@ -30,7 +29,7 @@
 
                 <TextBlock x:ConnectionId='5' 
                     Grid.Row="1"
-                                            
+                                           
                     HorizontalAlignment="Left"
                     Style="{StaticResource SignUpTextBlocks}" 
                      />
@@ -38,99 +37,132 @@
             </Grid>
 
         </DataTemplate>
-      
+
     </Page.Resources>
 
     <ScrollViewer x:ConnectionId='6'
-        Name="SignUpPageScrollViewer"
+        Name="logInPageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto"
         >
         <Grid
-       BorderBrush="#174276"
-            Background="#174276"
-        BorderThickness="10"
+       BorderBrush="{ThemeResource Dark3}"
+            Background="{ThemeResource Light2}"
+        BorderThickness="2"
         CornerRadius="12"
         HorizontalAlignment="Center"
         >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition  />
-            <ColumnDefinition  />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="5*"/>
+                <ColumnDefinition  Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <Grid Grid.Column="0">
 
-
-        <Grid Grid.Column="0"
-              >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <Grid 
-                Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                    <TextBox x:ConnectionId='9' 
-            Name="EmailBox"
-                        Height="150"
-                        Width="400"
-                        Header="Enter Your Email Id:"
-                     
-                                FontSize="25"
-                    BorderThickness="2"  
-                             BorderBrush="White"
-                             CornerRadius="15"
-
-                                                      
-                           HorizontalAlignment="Center"
-                       PlaceholderText="xyz@email.com"
-                             PlaceholderForeground="#96B9DE"
-                          Style="{StaticResource SignUpTextBox}"
-
-                        >
-
-
-                    </TextBox>
-
-                     
-
-
-
-
-
-
-
-
-                <Grid Grid.Row="1">
+                <Grid 
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                >
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
 
 
-                    <PasswordBox x:ConnectionId='12' 
+                    <TextBox x:ConnectionId='9' 
+                            Margin="0,0,0,20"               
+                            Name="emailBox"
+                            Height="100"
+                            Width="400"
+                            FontSize="25"
+                            BorderThickness="2"  
+                            BorderBrush="White"
+                            CornerRadius="15"
+                            PlaceholderText="Enter Your Email Id"
+                                                              
+                                                          
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource TextBoxStyle}"
+
+                    >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:ConnectionId='19' Name="emailBoxToolTip"
+                                Content=""
+                             Visibility="Visible"
+
+                                />
+                        </ToolTipService.ToolTip>
+                    </TextBox>
+
+
+                    <FontIcon x:ConnectionId='10'
                         Grid.Row="0"
+                        Name="emailCheck"              
+                        Style="{StaticResource BoxCheck}"
+                >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:ConnectionId='18' Name="emailToolTip"
+                             Visibility="Visible"
+                                Content=""
+                                />
+                        </ToolTipService.ToolTip>
+                    </FontIcon>
+
+
+                    <Grid 
+                        
+                        Grid.Row="1"
+                      >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+
+
+                        <PasswordBox x:ConnectionId='13' 
+
                         x:Name="passwordBox" 
                         VerticalAlignment="Top"
-                        PasswordRevealMode="Hidden"
-                        Header="Enter Your Password : "            
+                        PasswordRevealMode="Hidden"          
                         HorizontalAlignment="Center"
-                        Style="{StaticResource SignUpPasswordBox}"
-                        />
+                                                         
+                                                                     
+                        Style="{StaticResource PasswordBoxStyle}"
+                    >
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:ConnectionId='17' 
+                        Name="passwordBoxToolTip"
+                        Content=""
+                            Visibility="Visible"
 
-                    <CheckBox x:ConnectionId='13'
-                        Grid.Row="2"
+
+                     />
+                            </ToolTipService.ToolTip>
+                        </PasswordBox>
+
+
+
+                        <FontIcon x:ConnectionId='14'
+                            Name="passwordCheck"
+                            Style="{StaticResource BoxCheck}"
+                    >
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:ConnectionId='16' Name="passwordToolTip"
+                            Content=""
+                                 Visibility="Visible"
+
+
+                            />
+                            </ToolTipService.ToolTip>
+                        </FontIcon>
+
+
+                        <CheckBox x:ConnectionId='15'
+                        Grid.Row="1"
                         FontSize="25"
-                        
                         HorizontalAlignment="Center"
                         Name="revealModeCheckBox"
                         Content="Show password"
@@ -139,30 +171,22 @@
                                                                   
                     />
 
-                    
 
-                    <TextBlock x:ConnectionId='14' 
-                        Grid.Row="3"
-                        Name="accountExists"
 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource SignUpTextBlocks}"
-                        />
-                </Grid>
+                    </Grid>
 
 
 
 
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
 
-                    <Button x:ConnectionId='10' Name="LogInBackButton"
-                            Style="{StaticResource HomePageButton}"
+                        <Button x:ConnectionId='11' Name="logInBackButton"
+                            Style="{StaticResource ButtonStyle}"
  HorizontalAlignment="Center"
                 VerticalAlignment="Top"
             Grid.Row="4"
@@ -172,10 +196,10 @@
 
 
 
-                    <Button x:ConnectionId='11' 
+                        <Button x:ConnectionId='12' 
                     Grid.Column="1"
-                Style="{StaticResource HomePageButton}"
-                Name="LogInButton"
+                Style="{StaticResource  ButtonStyle}"
+                Name="logInButton"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Grid.Row="2"  
@@ -187,6 +211,11 @@
 
 
 
+                    </Grid>
+
+
+
+
                 </Grid>
 
 
@@ -197,31 +226,26 @@
 
 
 
-        </Grid>
-
-
-
-
-        <!--XAML Code-->
-        <!-- In this example, the ListView's ItemTemplate property is bound to a data template (shown below)
+            <!--XAML Code-->
+            <!-- In this example, the ListView's ItemTemplate property is bound to a data template (shown below)
 called ContactListViewTemplate, defined in a Page.Resources section. -->
 
-        <!--<DataTemplate x:Key="ContactListViewTemplate" x:DataType="local1:Contact">
+            <!--<DataTemplate x:Key="ContactListViewTemplate" x:DataType="local1:Contact">
                 <TextBlock Text="{x:Bind Name}" x:Phase="1" Margin="0,5,0,5"/>
             </DataTemplate>-->
 
 
 
 
-        <Grid x:ConnectionId='7' Grid.Column="1"  
+            <Grid x:ConnectionId='7' Grid.Column="1"  
               Name="Column1"  >
 
                 <ListView x:ConnectionId='8'           
-                Name="FrequentEmail"
+                Name="frequentEmail"
                                             
                 IsItemClickEnabled="True"
                                                     
-                ItemTemplate="{StaticResource EmailIdOfUsers}"
+                ItemTemplate="{StaticResource emailIdOfUsers}"
                 Style="{StaticResource LoginListView}"
                 Width="400"
                 Height="700"
@@ -237,10 +261,10 @@ called ContactListViewTemplate, defined in a Page.Resources section. -->
 
 
 
-    </Grid>
+        </Grid>
 
-        </ScrollViewer>
-       
+    </ScrollViewer>
+
 
 
 

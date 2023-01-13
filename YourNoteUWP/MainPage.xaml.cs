@@ -29,13 +29,13 @@ namespace YourNoteUWP
         }
 
 
-        private void SignUp_Click(object sender, RoutedEventArgs e)
+        private void signUp_Click(object sender, RoutedEventArgs e)
         {
             this.Content = new SignUpPage();
         }
 
 
-        private void SignIn_Click(object sender, RoutedEventArgs e)
+        private void signIn_Click(object sender, RoutedEventArgs e)
         {
             this.Content = new LogInPage();
         }

@@ -42,7 +42,7 @@ namespace YourNoteUWP
             DBCreation.SharedNotesTableCreation();
             
             //Recent searches
-            DBCreation.RecentSearchesTableCreation();
+          //  DBCreation.RecentSearchesTableCreation();
 
            // DBUpdation.DeleteNote("", "", new Note("", "", "", ""));
         }

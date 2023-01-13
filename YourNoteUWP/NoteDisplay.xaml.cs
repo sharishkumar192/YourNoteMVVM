@@ -65,7 +65,7 @@ namespace YourNoteUWP
         {
             
                 var sharedToUser = (Models.User)e.ClickedItem;
-                bool isNoteShared = DBUpdation.InsertSharedNote(noteOwner.emailId, sharedToUser.emailId, displayNote.noteId);
+                bool isNoteShared = DBUpdation.InsertSharedNote(noteOwner.userId, sharedToUser.userId, displayNote.noteId);
                 usersToShare.Remove(sharedToUser);
                 NoteShared(isNoteShared);
           

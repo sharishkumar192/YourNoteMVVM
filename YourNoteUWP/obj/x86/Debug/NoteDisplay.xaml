@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:data="using:YourNoteUWP.Models" 
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+   >
 
 
     <Page.Resources>
@@ -19,7 +19,7 @@
                         HorizontalAlignment="Center" 
                 >
                     <StackPanel Margin="10" >
-                        <TextBlock x:ConnectionId='4'                         
+                        <TextBlock x:ConnectionId='4'                        
                                HorizontalAlignment="Left" 
                                Foreground="Red"
                                     
@@ -35,9 +35,7 @@
 
 
 
-    <Grid x:ConnectionId='5' 
-        Name="Chumma"
-        Background="{ThemeResource SystemControlAcrylicWindowBrush1}"
+    <Grid 
         >
 
         <Grid.RowDefinitions>
@@ -56,7 +54,7 @@
                 Grid.Row="0">
 
 
-                <TextBox x:ConnectionId='13'
+                <TextBox x:ConnectionId='12'
                 
                     Name="titleOfNote"
                     IsTapEnabled="True"
@@ -84,7 +82,7 @@
                   
                 >
                 <!-- Note Share Button -->
-                <Button x:ConnectionId='7'    
+                <Button x:ConnectionId='6'    
                     RelativePanel.AlignLeftWithPanel="True"
                     Style="{StaticResource AccountPageButton}"
                     Name="noteShareButton" 
@@ -93,18 +91,18 @@
                    >
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock x:ConnectionId='10' 
+                        <TextBlock x:ConnectionId='9' 
                     Margin="0,0,10,0"
                     Name="noteShareButtonImage" 
                     FontFamily="Segoe MDL2 Assets" 
                     Text="&#xE165;" 
                     VerticalAlignment="Center"/>
-                        <TextBlock x:ConnectionId='11' Name="noteShareButtonText" Text="Share"/>
+                        <TextBlock x:ConnectionId='10' Name="noteShareButtonText" Text="Share"/>
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout>
                             <Grid>
-                                <ListView x:ConnectionId='12' 
+                                <ListView x:ConnectionId='11' 
                 Name="usersToShareView"
                 Margin="20"
                 HorizontalAlignment="Center"
@@ -130,7 +128,7 @@
 
 
                 <!-- Note Close Button -->
-                <Button x:ConnectionId='8' 
+                <Button x:ConnectionId='7' 
                 
                     Style="{StaticResource AccountPageButton}"
                     Name="noteCloseButton" 
@@ -145,7 +143,7 @@
 
    
                 <!-- Note Delete Button -->
-                <Button x:ConnectionId='9' 
+                <Button x:ConnectionId='8' 
                 
                     Style="{StaticResource AccountPageButton}"
                     Name="noteDeleteButton" 
@@ -166,7 +164,7 @@
 
 
 
-        <TextBox x:ConnectionId='6' 
+        <TextBox x:ConnectionId='5' 
             Name="contentOfNote"
             Grid.Row="1"
             FontSize="25"

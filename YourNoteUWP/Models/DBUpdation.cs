@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
@@ -19,16 +21,23 @@ namespace YourNoteUWP {
         //Updates the login count of the currentUser
         public static void UpdateLoginCount(string tableName, Models.User user)
         {
+            string query = $"UPDATE {tableName} SET loginCount = loginCount+1 where userId = '{user.userId}' ; ";
             try
             {
 
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"UPDATE {tableName} SET loginCount = loginCount+1 where emailId = '{user.emailId}' ; ";
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SQLiteConnection conn = DBCreation.OpenConnection()) 
+                {
+
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter[] parameters = new SQLiteParameter[2];
+                    parameters[0] = new SQLiteParameter("@notesTableName", DBCreation.notesTableName);
+                    parameters[1] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
+                    command.Parameters.Add(parameters[0]);
+                    command.Parameters.Add(parameters[1]);
+                    command.ExecuteNonQuery();
+
+
+                }
 
             }
             catch (Exception)
@@ -42,7 +51,7 @@ namespace YourNoteUWP {
         //Updates the recent search count of the note
         public static void UpdateRecentSearchedCount(string tableName, Note note)
         {
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             try
             {
@@ -77,21 +86,40 @@ namespace YourNoteUWP {
         //Creates new currentUser 
         public static void InsertNewUser(Models.User user)
         {
-            try 
+           
+            try
             {
 
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(name, emailId, password, loginCount) VALUES ('{user.name}', '{user.emailId}','{user.password}', '{0}');";
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+                using(SQLiteConnection conn = DBCreation.OpenConnection())
+                {
+                    //DbProviderFactory factory = DbProviderFactories.GetFactory(conn);
+                    //DbCommandBuilder commandBuilder = factory.CreateCommandBuilder();
+                    //string sanitizedTableName = commandBuilder.QuoteIdentifier(DBCreation.userTableName);
+                    SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+                    string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (name, userId, password) VALUES ( @name, @userId, @password);";
+
+
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter[] parameters = new SQLiteParameter[3];
+                    //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
+                    parameters[0] = new SQLiteParameter("@name",user.name);
+                    parameters[1] = new SQLiteParameter("@userId", user.userId);
+                    parameters[2] = new SQLiteParameter("@password", user.password);
+                    command.Parameters.Add(parameters[0]);
+                    command.Parameters.Add(parameters[1]);
+                    command.Parameters.Add(parameters[2]);
+                   // command.Parameters.Add(parameters[3]);
+                    command.ExecuteNonQuery();
+
+
+                }
+
+
 
             }
             catch (Exception )
             {
-                Console.WriteLine("The User Already Exists");
+                
             }
          
             //sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
@@ -101,14 +129,14 @@ namespace YourNoteUWP {
         //Creates new note 
          public static void InsertNewNote(Note newNote)
         {
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = conn.CreateCommand();
 
             try
             {
-                  sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content,noteColor) VALUES ('{newNote.userId}','{newNote.title}','{newNote.content}', '{newNote.noteColor}');";
+                  sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content,noteColor,) VALUES ('{newNote.userId}','{newNote.title}','{newNote.content}', '{newNote.noteColor}');";
                 sqlite_cmd.ExecuteNonQuery();
 
              
@@ -116,7 +144,7 @@ namespace YourNoteUWP {
                 }
             catch (Exception)
             {
-                Console.WriteLine("The Note already exists");
+             
             }
             finally
             {
@@ -131,7 +159,7 @@ namespace YourNoteUWP {
             bool isNoteShared = true;
             try 
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = conn.CreateCommand();
@@ -148,9 +176,8 @@ namespace YourNoteUWP {
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine("Notes Already Shared");
             }
 
             return isNoteShared;
@@ -161,7 +188,7 @@ namespace YourNoteUWP {
         {
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = conn.CreateCommand();
@@ -170,9 +197,8 @@ namespace YourNoteUWP {
                 conn.Close();
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
-                Console.WriteLine("Notes Already Shared");
             }
         }
     
@@ -181,7 +207,7 @@ namespace YourNoteUWP {
         {  
             
             
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = conn.CreateCommand();

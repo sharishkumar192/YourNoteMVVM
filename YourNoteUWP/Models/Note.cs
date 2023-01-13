@@ -14,6 +14,7 @@ namespace YourNoteUWP.Models
         public string title;
         public string content;
         public string noteColor;
+        public long searchCount;
         public Note(string userId, long noteId, string title, string content, string noteColor)
         {
             this.userId = userId;   
@@ -31,6 +32,7 @@ namespace YourNoteUWP.Models
             this.title = copyNote.title;
             this.content = copyNote.content;
             this.noteColor = copyNote.noteColor;
+            this.searchCount = copyNote.searchCount;
         }
         public Note(string userId, string title, string content, string noteColor)
         {
@@ -48,15 +50,16 @@ namespace YourNoteUWP.Models
 
         public static ObservableCollection<Note> GetSharedNotes(Models.User user)
         {
-            Dictionary<long, bool> sharedNoteIds = DBFetch.ReadAllSharedNotes(DBCreation.sharedTableName, user.emailId);
+            Dictionary<long, bool> sharedNoteIds = DBFetch.ReadAllSharedNotes(DBCreation.sharedTableName, user.userId);
             return DBFetch.ReadAllNotes(DBCreation.notesTableName, sharedNoteIds);
 
         }
 
         public static ObservableCollection<Note> GetRecentNotes()
         {
-            ObservableCollection<Note> notes = DBFetch.GetRecentlySearchedNotes(DBCreation.recentSearchesTableName);
-            return notes;
+            return null;
+            // ObservableCollection<Note> notes = DBFetch.GetRecentlySearchedNotes(DBCreation.recentSearchesTableName);
+           // return notes;
 
         }
 

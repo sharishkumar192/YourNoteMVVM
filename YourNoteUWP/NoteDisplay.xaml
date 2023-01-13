@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:data="using:YourNoteUWP.Models" 
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+   >
 
 
     <Page.Resources>
@@ -19,7 +19,7 @@
                         HorizontalAlignment="Center" 
                 >
                     <StackPanel Margin="10" >
-                        <TextBlock Text="{x:Bind emailId}" 
+                        <TextBlock Text="{x:Bind userId}" 
                                HorizontalAlignment="Left" 
                                Foreground="Red"
                                     
@@ -36,8 +36,6 @@
 
 
     <Grid 
-        Name="Chumma"
-        Background="{ThemeResource SystemControlAcrylicWindowBrush1}"
         >
 
         <Grid.RowDefinitions>

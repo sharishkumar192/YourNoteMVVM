@@ -32,9 +32,9 @@ namespace YourNoteUWP
             //  users = new ObservableCollection(Collection.OrderBy(users => users[].Date).ToList());
             if (users == null || users.Count == 0)
                 Column1.Visibility = Visibility.Collapsed;
-            
-            else 
-            
+
+            else
+
             {
                 //Column1.Visibility = Visibility.Collapsed;
                 Column1.Visibility = Visibility.Visible;
@@ -46,7 +46,7 @@ namespace YourNoteUWP
 
 
 
-        private void RevealModeCheckbox_Changed(object sender, RoutedEventArgs e)
+        private void revealModeCheckbox_Changed(object sender, RoutedEventArgs e)
         {
             if (revealModeCheckBox.IsChecked == true)
             {
@@ -60,21 +60,14 @@ namespace YourNoteUWP
 
 
 
-        private void EmailBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void emailBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (EmailBox.Text.Length != 0 && User.IsValidEmail(EmailBox.Text) == false)
-            {
-                EmailBox.Description = "Provide A Proper Email";
-            }
-            else
-            {
-                EmailBox.Description = "";
-            }
+            emailCheck.Visibility = Visibility.Collapsed;
         }
 
-        private void LogInButton_Click(object sender, RoutedEventArgs e)
+        private void logInButton_Click(object sender, RoutedEventArgs e)
         {
-            User user = new Models.User(EmailBox.Text, passwordBox.Password);
+            User user = new Models.User(emailBox.Text, passwordBox.Password);
             if (DBFetch.CheckUser(DBCreation.userTableName, user) == true)
             {
                 user.loginCount++;
@@ -88,24 +81,63 @@ namespace YourNoteUWP
             }
             else
             {
-                accountExists.Text = "Account Didnt Exist";
+                //accountExists.Text = "Account Didnt Exist";
             }
 
 
         }
 
-        private void FrequentEmail_ItemClick(object sender, ItemClickEventArgs e)
+        private void frequentEmail_ItemClick(object sender, ItemClickEventArgs e)
         {
             var user = (User)e.ClickedItem;
 
-            EmailBox.Text = user.emailId;
+            emailBox.Text = user.userId;
 
         }
 
-        private void LogInBackButton_Click(object sender, RoutedEventArgs e)
+        private void logInBackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Content = new MainPage();
             // this.Frame.Navigate(typeof(OpeningPage));
+        }
+
+        private void emailBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (emailBox.Text.Length == 0 || (emailBox.Text.Length != 0 && User.IsValidEmail(emailBox.Text) == false))
+            {
+                emailCheck.Visibility = Visibility.Visible;
+                emailBoxToolTip.Content = emailToolTip.Content = "Enter a Valid Email Id";
+            }
+            else
+            {
+                emailCheck.Visibility = Visibility.Collapsed;
+                emailBoxToolTip.Visibility = Visibility.Collapsed;
+                emailBoxToolTip.Content = emailToolTip.Content = "";
+
+            }
+        }
+
+        private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password.Length <= 2)
+            {
+                passwordCheck.Visibility = Visibility.Visible;
+                passwordBoxToolTip.Content = passwordToolTip.Content = "The Length of the Password must be greater than 2";
+            }
+            else
+            {
+                passwordCheck.Visibility = Visibility.Collapsed;
+                passwordBoxToolTip.Visibility = Visibility.Collapsed;
+                passwordBoxToolTip.Content = passwordToolTip.Content = "";
+
+            }
+
+
+        }
+        
+        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            passwordCheck.Visibility = Visibility.Collapsed;
         }
     }
 

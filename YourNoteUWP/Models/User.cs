@@ -9,15 +9,15 @@ namespace YourNoteUWP.Models
 {
    public class User
     {
-        public string name { get; set; }
-        public string emailId { get; set; }
-        public string password { get; set; }
+        public string name;
+        public string userId;
+        public string password;
 
-        public long loginCount { get; set; }
+        public long loginCount;
         public User(string name, string email, string password, long loginCount)
         {
             this.name = name;
-            this.emailId = email;
+            this.userId = email;
             this.password = password;
             this.loginCount = loginCount;
         }
@@ -25,7 +25,7 @@ namespace YourNoteUWP.Models
         public User(User newUser)
         {
             this.name = newUser.name;
-            this.emailId = newUser.emailId;
+            this.userId = newUser.userId;
             this.password = newUser.password;
             this.loginCount = newUser.loginCount;
         }
@@ -33,13 +33,13 @@ namespace YourNoteUWP.Models
         public User(string name, string email, string password)
         {
             this.name = name;
-            this.emailId = email;
+            this.userId = email;
             this.password = password;
         }
 
         public User( string email, string password)
         {
-            this.emailId = email;
+            this.userId = email;
             this.password = password;
         }
 

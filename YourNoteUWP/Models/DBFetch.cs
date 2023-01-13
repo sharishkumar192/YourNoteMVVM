@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Net;
+using System.Numerics;
 using Windows.Security.Cryptography.Core;
 using Windows.System;
 using YourNoteUWP.Models;
@@ -20,13 +21,13 @@ namespace YourNoteUWP
             string name = "";
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
 
                 sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT name FROM {tableName} where emailId='{owner.emailId}'";
+                sqlite_cmd.CommandText = $"SELECT name FROM {tableName} where userId='{owner.userId}'";
 
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 while (sqlite_datareader.Read())
@@ -53,7 +54,7 @@ namespace YourNoteUWP
             bool isExist = false;
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -64,7 +65,7 @@ namespace YourNoteUWP
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 while (sqlite_datareader.Read())
                 {
-                    if (credentials.emailId == sqlite_datareader.GetString(1) && credentials.password == sqlite_datareader.GetString(2))
+                    if (credentials.userId == sqlite_datareader.GetString(1) && credentials.password == sqlite_datareader.GetString(2))
                     {
                         isExist = true;
                         break;
@@ -92,7 +93,7 @@ namespace YourNoteUWP
             long noOfColumns = 0;
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 string columncount = $"SELECT COUNT(*) FROM pragma_table_info('{tablename}');";
                 SQLiteCommand sqlite_cmd;
@@ -119,7 +120,7 @@ namespace YourNoteUWP
 
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -182,14 +183,14 @@ namespace YourNoteUWP
 
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
 
 
                 sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where userId = '{user.emailId}' ";
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where userId = '{user.userId}' ";
 
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 notes = new ObservableCollection<Models.Note>();
@@ -215,6 +216,7 @@ namespace YourNoteUWP
             }
 
 
+
             return notes;
         }
 
@@ -225,7 +227,7 @@ namespace YourNoteUWP
 
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -272,19 +274,19 @@ namespace YourNoteUWP
 
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
 
                 sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where emailId!='{owner.emailId}' ";
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where userId!='{owner.userId}' ";
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 while (sqlite_datareader.Read())
                 {
                     long count = (long)sqlite_datareader.GetValue(3);
                     YourNoteUWP.Models.User user = new Models.User(sqlite_datareader.GetString(0), sqlite_datareader.GetString(1), "", count);
-                    users[user.emailId] = user;
+                    users[user.userId] = user;
                 }
                 sqlite_datareader.Close();
                 conn.Close();
@@ -310,7 +312,7 @@ namespace YourNoteUWP
             try
             {
 
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -355,7 +357,7 @@ namespace YourNoteUWP
             try
 
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -388,7 +390,7 @@ namespace YourNoteUWP
         {
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
 
                 SQLiteCommand sqlite_cmd;
@@ -442,7 +444,7 @@ namespace YourNoteUWP
             try
             {
                 //  Console.WriteLine("\nSharedToUser Details : \n");
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -480,7 +482,7 @@ namespace YourNoteUWP
             Dictionary<long, bool> sharedNoteIds = new Dictionary<long, bool>();
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -511,7 +513,7 @@ namespace YourNoteUWP
             bool isNoteShared = true;
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
@@ -543,13 +545,13 @@ namespace YourNoteUWP
             bool check = false;
             try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
+                SQLiteConnection conn = DBCreation.OpenConnection();
                 conn.Open();
                 SQLiteCommand sqlite_cmd;
                 SQLiteDataReader sqlite_datareader;
 
                 sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where emailId=\"{emailId}\" ";
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} where userId=\"{emailId}\" ";
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
                 while (sqlite_datareader.Read())
                 {
@@ -575,7 +577,7 @@ namespace YourNoteUWP
         //    try
         //    {
 
-        //        SQLiteConnection conn = DBCreation.CreateConnection();
+        //        SQLiteConnection conn = DBCreation.OpenConnection();
         //        conn.Open();
         //        SQLiteCommand sqlite_cmd;
         //        SQLiteDataReader sqlite_datareader;
@@ -605,7 +607,7 @@ namespace YourNoteUWP
         public static ObservableCollection<Note> GetNotes(string tableName, List<long> noteIds)
         {
             ObservableCollection<Note> notes = null;
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             try
             {
@@ -652,7 +654,7 @@ namespace YourNoteUWP
         {
             ObservableCollection<Note> recentlySearchedNotes = null;
             List<long> noteIds = null;
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             try
             {
@@ -692,7 +694,7 @@ namespace YourNoteUWP
         public static bool CheckNoteExists(string tableName, long noteId)
             {
             bool isExist = false;
-            SQLiteConnection conn = DBCreation.CreateConnection();
+            SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             try
             {
@@ -733,7 +735,7 @@ namespace YourNoteUWP
         public static string GetNoteColor(string tableName, long noteId)
         {
             string color = "";
-           SQLiteConnection conn = DBCreation.CreateConnection();
+           SQLiteConnection conn = DBCreation.OpenConnection();
             conn.Open();
             try
             {

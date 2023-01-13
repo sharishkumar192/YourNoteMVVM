@@ -14,107 +14,82 @@ namespace YourNoteUWP
     {
         public static string userTableName = "UserTable",
             notesTableName = "NotesTable",
-            sharedTableName = "ShareTable",
-        recentSearchesTableName = "RecentSearchTable" ;
+            sharedTableName = "ShareTable";
         public static void UserTableCreation()
         {
-            // SQLiteConnection sqlite_conn = CreateConnection();
             CreateUserTable();
-            //  sqlite_conn.Close();
         }
 
-         public static void NotesTableCreation()
+        public static void NotesTableCreation()
         {
-            //  SQLiteConnection sqlite_conn = CreateConnection();
             CreateNotesTable();
-            //  sqlite_conn.Close();
-
         }
 
         // Creates an object of SQLiteConnection 
-        public static SQLiteConnection CreateConnection()
+        public static SQLiteConnection OpenConnection()
         {
-
-            SQLiteConnection sqlite_conn;
-      
             // Create a new database connection:
-            try
-            {
-                sqlite_conn = new SQLiteConnection("Data Source=C:\\Users\\harish-pt6263\\AppData\\Local\\Packages\\f370c6dd-350c-4488-8938-3a4de12a2669_ekzxxtgcwg1pc\\LocalState\\database.db; Version = 3; New = True; Compress = True; ");
-
-                // Open the connection:
-
-
-                return sqlite_conn;
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                
-            }
-
-
-            return null;
+            SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=C:\\Users\\harish-pt6263\\AppData\\Local\\Packages\\f370c6dd-350c-4488-8938-3a4de12a2669_ekzxxtgcwg1pc\\LocalState\\database.db; Version = 3; New = True; Compress = True; ");
+            sqlite_conn.Open();
+            return sqlite_conn;
         }
 
         //Creates The User Table 
         public static void CreateUserTable()
         {
-            try 
+            string query =
+            $"CREATE TABLE  {userTableName} (name VARCHAR(10000)," +
+            $" userId VARCHAR(10000) PRIMARY KEY," +
+            $" password VARCHAR(10000)," +
+            $" loginCount INTEGER DEFAULT 0 )";
+            try
             {
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                string table =
-        $"CREATE TABLE if not exists {userTableName}(name VARCHAR(10000)," +
-        $" emailId VARCHAR(10000) PRIMARY KEY," +
-        $"password VARCHAR(10000)," +
-        $"loginCount INTEGER )";
-                //  create table Newsh1(uid integer primary key, ch varchar(10000));
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = table;
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SQLiteConnection conn = DBCreation.OpenConnection())
+                {
+
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+                }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
+
             }
 
-         
+
+
+
         }
 
         //Creates The Notes Table 
 
-         public static void CreateNotesTable()
+        public static void CreateNotesTable()
         {
-            try 
+            string query = $"CREATE TABLE if not exists {notesTableName} " +
+      $"(userId VARCHAR(10000)," +
+      $"noteId INTEGER PRIMARY KEY AUTOINCREMENT," +
+      $"title VARCHAR(10000)," +
+      $"content VARCHAR(1000), " +
+      $"noteColor VARCHAR(7) DEFAULT \"#c6e8b7\" ,  " +
+      $"searchCount INTEGER DEFAULT 0  ,  " +
+      $"FOREIGN KEY(userId) REFERENCES {userTableName} (userId))";
+            try
             {
 
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                string noteColor = "#c3e9fd";
-                // create table newsh(id integer, FOREIGN KEY(id) REFERENCES Newsh1(uid));
-                SQLiteCommand sqlite_cmd;
-                string table =
-  $"CREATE TABLE if not exists {DBCreation.notesTableName}" +
-  $"(userId VARCHAR(10000)," +
-  $"noteId INTEGER PRIMARY KEY AUTOINCREMENT," +
-  $"title VARCHAR(10000)," +
-  $"content VARCHAR(1000), " +
-  $"noteColor VARCHAR(7),  " +
-  $"FOREIGN KEY(userId) REFERENCES {DBCreation.userTableName}(emailId))";
-                              sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = table;
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SQLiteConnection conn = OpenConnection())
+                {
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+                }
+
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
+
             }
 
         }
@@ -123,67 +98,30 @@ namespace YourNoteUWP
 
         public static void SharedNotesTableCreation()
         {
-            try 
-            {
-
-                SQLiteConnection conn = DBCreation.CreateConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                string table =
-      $"CREATE TABLE if not exists {sharedTableName}" +
-      $"(ownerId VARCHAR(10000)," +
-      $"sharedUserId VARCHAR(10000)  " +
-      $",sharedNoteId Integer," +
-      $"PRIMARY KEY (ownerId, sharedUserId, sharedNoteId)" +
-      $" FOREIGN KEY(ownerId) REFERENCES {userTableName}(emailId)" +
-      $" FOREIGN KEY(sharedUserId) REFERENCES {userTableName}(emailId)" +
-        $" FOREIGN KEY(sharedNoteId) REFERENCES {notesTableName}(noteId))";
-
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = table;
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}\n");
-            }
-         
-        }
-
-
-        public static void RecentSearchesTableCreation()
-        {
-            SQLiteConnection conn = DBCreation.CreateConnection();
-            conn.Open();
-            SQLiteCommand sqlite_cmd;
+            string query =
+     $"CREATE TABLE if not exists {sharedTableName} " +
+     $"(sharedUserId VARCHAR(10000) ,  " +
+     $"sharedNoteId Integer ," +
+     $"PRIMARY KEY (sharedUserId, sharedNoteId)" +
+     $" FOREIGN KEY(sharedUserId) REFERENCES {userTableName} (userId)" +
+       $" FOREIGN KEY(sharedNoteId) REFERENCES {notesTableName} (noteId))";
             try
             {
-                string table =
-  $"CREATE TABLE if not exists {DBCreation.recentSearchesTableName}" +
-  $"(noteId INTEGER PRIMARY KEY," +
-  $"count INTEGER," +
-  $"FOREIGN KEY(noteId) REFERENCES {DBCreation.notesTableName}(noteId))";
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = table;
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+
+                using (SQLiteConnection conn = OpenConnection())
+                {
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.ExecuteNonQuery();
+
+                }
 
             }
-            catch(Exception)
-            { }
-            finally
-              {
-                conn.Close();
+            catch (Exception)
+            {
 
             }
-            }
 
-
-
-       
-
+        }
     }
-    }
+}
 

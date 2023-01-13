@@ -45,8 +45,8 @@ namespace YourNoteUWP
             this.InitializeComponent();
             Navigation.IsPaneOpen = false;
             loggedUser.name = DBFetch.GetName(DBCreation.userTableName, loggedUser);
-            currentUser = new Models.User(loggedUser.emailId, loggedUser.password);
-          
+            currentUser = new Models.User(loggedUser.userId, loggedUser.password);
+            Navigation.CompactPaneLength = userImage.Width;
 
 
             //Grid View ItemSource
@@ -170,7 +170,7 @@ namespace YourNoteUWP
             //            notesFeeder.Add(selectedNote);
             //            NotesData.ItemsSource = notesFeeder;
 
-            DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
+           /// DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
             this.Content = new NoteDisplay(note, currentUser);
 
         }
@@ -185,7 +185,7 @@ namespace YourNoteUWP
 //            notesFeeder.Clear();
 //            notesFeeder.Add(selectedNote);
 //            NotesData.ItemsSource = notesFeeder;
-            DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
+          //  DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
             this.Content = new NoteDisplay(note, currentUser);
         }
 
@@ -224,7 +224,7 @@ namespace YourNoteUWP
             };
 
 
-                Note note = new Note(currentUser.emailId, "Owner : " + currentUser.emailId, "No Content", l[r]);
+                Note note = new Note(currentUser.userId, "Owner : " + currentUser.userId, "No Content", l[r]);
                 DBUpdation.InsertNewNote(note);
 
            
