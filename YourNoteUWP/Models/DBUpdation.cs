@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -84,7 +85,7 @@ namespace YourNoteUWP {
 
 
         //Creates new currentUser 
-        public static void InsertNewUser(Models.User user)
+        public static void InsertNewUser(Models.User user) //Needed
         {
            
             try
@@ -127,29 +128,43 @@ namespace YourNoteUWP {
         }
 
         //Creates new note 
-         public static void InsertNewNote(Note newNote)
+         public static void InsertNewNote(Note newNote) // Needed
         {
-            SQLiteConnection conn = DBCreation.OpenConnection();
-            conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
+
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+
+            
+
+           string query = $"INSERT INTO "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName)  + " (userId, title, content, noteColor) VALUES (@userId, @title, @content, @noteColor);";
 
             try
             {
-                  sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.notesTableName} (userId, title, content,noteColor,) VALUES ('{newNote.userId}','{newNote.title}','{newNote.content}', '{newNote.noteColor}');";
-                sqlite_cmd.ExecuteNonQuery();
 
+                using(SQLiteConnection conn = DBCreation.OpenConnection())
+                {
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter[] parameters = new SQLiteParameter[4];
+                    parameters[0] = new SQLiteParameter("@userId", newNote.userId);
+                    parameters[1] = new SQLiteParameter("@title", newNote.title);
+                    parameters[2] = new SQLiteParameter("@content", newNote.content);
+                    parameters[3] = new SQLiteParameter("@noteColor", newNote.content);
+                    command.Parameters.Add(parameters[0]);
+                    command.Parameters.Add(parameters[1]);
+                    command.Parameters.Add(parameters[2]);
+                    command.Parameters.Add(parameters[3]);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                }
+               
              
-              conn.Close();
+            
                 }
             catch (Exception)
             {
              
             }
-            finally
-            {
-                conn.Close();
-            }
+
   
         }
 

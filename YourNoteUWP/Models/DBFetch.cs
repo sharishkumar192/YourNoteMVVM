@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
@@ -49,38 +50,41 @@ namespace YourNoteUWP
         }
 
         // Checks if the currentUser's id and password is present in the table or not 
-        public static bool CheckUser(string tablename, Models.User credentials)
+        public static bool CheckUser(string tableName, Models.User credentials) //Needed
         {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             bool isExist = false;
+            string query = $"SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(tableName) + " where "+
+
+                 sqlCommandBuilder.QuoteIdentifier(tableName)
+                + ".userId = @userId" ;
+          
             try
             {
-                SQLiteConnection conn = DBCreation.OpenConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                SQLiteDataReader sqlite_datareader;
-
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM {tablename}";
-
-                sqlite_datareader = sqlite_cmd.ExecuteReader();
-                while (sqlite_datareader.Read())
+                using (SQLiteConnection conn = DBCreation.OpenConnection())
                 {
-                    if (credentials.userId == sqlite_datareader.GetString(1) && credentials.password == sqlite_datareader.GetString(2))
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter parameters = new SQLiteParameter("@userId", credentials.userId);
+                    command.Parameters.Add(parameters);
+                    using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                     {
-                        isExist = true;
-                        break;
+                        while (sqlite_datareader.Read())
+                        {
+                                isExist = true;
+                                break;
+                        }
+
+
+                        sqlite_datareader.Close();
                     }
 
+                    conn.Close();
+
                 }
-                sqlite_datareader.Close();
-
-                conn.Close();
-
-
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
+
             }
 
 

@@ -44,13 +44,13 @@ namespace YourNoteUWP
             //emailBox_LostFocus(sender, e);
             //passwordBox_LostFocus(sender, e);
             //rPasswordBox_LostFocus(sender, e);
-           
+
 
             //if (nameToolTip.Visibility == Visibility.Visible &&
             //    emailToolTip.Visibility == Visibility.Collapsed &&
             //           passwordBoxToolTip.Visibility == Visibility.Collapsed &&
             //           rPasswordBoxToolTip.Visibility == Visibility.Collapsed)
-        
+
             //{
 
                 User user = new User(nameBox.Text, emailBox.Text, rPasswordBox.Password);

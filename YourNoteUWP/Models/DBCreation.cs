@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Security.Cryptography;
@@ -37,8 +38,9 @@ namespace YourNoteUWP
         //Creates The User Table 
         public static void CreateUserTable()
         {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             string query =
-            $"CREATE TABLE  {userTableName} (name VARCHAR(10000)," +
+            $"CREATE TABLE if not exists " +  sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (name VARCHAR(10000)," +
             $" userId VARCHAR(10000) PRIMARY KEY," +
             $" password VARCHAR(10000)," +
             $" loginCount INTEGER DEFAULT 0 )";
@@ -67,14 +69,15 @@ namespace YourNoteUWP
 
         public static void CreateNotesTable()
         {
-            string query = $"CREATE TABLE if not exists {notesTableName} " +
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            string query = $"CREATE TABLE if not exists " +  sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName)  +
       $"(userId VARCHAR(10000)," +
       $"noteId INTEGER PRIMARY KEY AUTOINCREMENT," +
       $"title VARCHAR(10000)," +
       $"content VARCHAR(1000), " +
       $"noteColor VARCHAR(7) DEFAULT \"#c6e8b7\" ,  " +
       $"searchCount INTEGER DEFAULT 0  ,  " +
-      $"FOREIGN KEY(userId) REFERENCES {userTableName} (userId))";
+      $"FOREIGN KEY(userId) REFERENCES "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(userId))";
             try
             {
 
@@ -98,13 +101,14 @@ namespace YourNoteUWP
 
         public static void SharedNotesTableCreation()
         {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             string query =
-     $"CREATE TABLE if not exists {sharedTableName} " +
+     $"CREATE TABLE if not exists " + sqlCommandBuilder.QuoteIdentifier(DBCreation.sharedTableName) +
      $"(sharedUserId VARCHAR(10000) ,  " +
      $"sharedNoteId Integer ," +
      $"PRIMARY KEY (sharedUserId, sharedNoteId)" +
-     $" FOREIGN KEY(sharedUserId) REFERENCES {userTableName} (userId)" +
-       $" FOREIGN KEY(sharedNoteId) REFERENCES {notesTableName} (noteId))";
+     $" FOREIGN KEY(sharedUserId) REFERENCES" +  sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(userId)" +
+       $" FOREIGN KEY(sharedNoteId) REFERENCES "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName) + "(noteId))";
             try
             {
 
@@ -112,7 +116,7 @@ namespace YourNoteUWP
                 {
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     command.ExecuteNonQuery();
-
+                    conn.Close();
                 }
 
             }

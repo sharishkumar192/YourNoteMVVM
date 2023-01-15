@@ -14,10 +14,10 @@ namespace YourNoteUWP.Models
         public string password;
 
         public long loginCount;
-        public User(string name, string email, string password, long loginCount)
+        public User(string name, string userId, string password, long loginCount)
         {
             this.name = name;
-            this.userId = email;
+            this.userId = userId;
             this.password = password;
             this.loginCount = loginCount;
         }
@@ -30,23 +30,23 @@ namespace YourNoteUWP.Models
             this.loginCount = newUser.loginCount;
         }
 
-        public User(string name, string email, string password)
+        public User(string name, string userId, string password)
         {
             this.name = name;
-            this.userId = email;
+            this.userId = userId;
             this.password = password;
         }
 
-        public User( string email, string password)
+        public User( string userId, string password)
         {
-            this.userId = email;
+            this.userId = userId;
             this.password = password;
         }
 
-        public static bool IsValidEmail(string email)
+        public static bool IsValidEmail(string userId)
         {
-            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
-            return emailRegex.IsMatch(email);
+            Regex userIdRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+            return userIdRegex.IsMatch(userId);
         }
     }
 }
