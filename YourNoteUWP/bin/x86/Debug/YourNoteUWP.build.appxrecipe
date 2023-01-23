@@ -58,6 +58,9 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\123.png">
       <PackagePath>Assets\123.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\58933.png">
+      <PackagePath>Assets\58933.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\download.png">
       <PackagePath>Assets\download.png</PackagePath>
     </AppxPackagedFile>
@@ -108,6 +111,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf">
+      <PackagePath>NoteContent.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteDisplay.xbf">
       <PackagePath>NoteDisplay.xbf</PackagePath>

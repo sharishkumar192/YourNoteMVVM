@@ -1,19 +1,16 @@
-﻿<!--
-    MinHeight="900"
-    MinWidth="900"
--->
-<Page
-    x:Class="YourNoteUWP.NoteDisplay"
+﻿<UserControl
+    x:Class="YourNoteUWP.NoteContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
     mc:Ignorable="d">
+    <UserControl.Resources>
 
-
-    <Page.Resources>
         <DataTemplate x:Key="shareUser" x:DataType="data:User">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel Margin="10">
@@ -25,53 +22,62 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
-    </Page.Resources>
 
 
+
+    </UserControl.Resources>
 
 
 
 
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="80*" />
+            <ColumnDefinition Width="10*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="{ThemeResource WindowBrushA}" />
+        <Grid Grid.Column="2" Background="{ThemeResource WindowBrushA}" />
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
 
-            <Grid Grid.Row="0">
+            <TextBox
+                Name="titleOfNote"
+                Height="45"
+                Margin="15"
+                HorizontalAlignment="Stretch"
+                FontSize="25"
+                Foreground="Red"
+                IsReadOnly="True"
+                IsTapEnabled="True"
+                Style="{StaticResource TextBoxWithoutDelete}"
+                Tapped="titleOfNote_Tapped"
+                Text="Title"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+
+            <Button
+                Name="noteCloseButton"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="noteCloseButton_Click"
+                Content="&#xE106;"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="25"
+                RelativePanel.RightOf="noteShareButton"
+                Style="{StaticResource AccountPageButton}" />
 
 
-                <TextBox
-                    Name="titleOfNote"
-                    Height="45"
-                    Margin="15"
-                    HorizontalAlignment="Stretch"
-                    FontSize="25"
-                    Foreground="Red"
-                    IsReadOnly="True"
-                    IsTapEnabled="True"
-                    Style="{StaticResource TextBoxWithoutDelete}"
-                    Tapped="titleOfNote_Tapped"
-                    Text="Title"
-                    TextAlignment="Center"
-                    TextWrapping="Wrap" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
 
 
-
-
-
-            </Grid>
-
-            <RelativePanel Grid.Row="1">
                 <!--  Note Share Button  -->
                 <Button
                     Name="noteShareButton"
@@ -116,19 +122,6 @@
                 </Button>
 
 
-                <!--  Note Close Button  -->
-                <Button
-                    Name="noteCloseButton"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Click="noteCloseButton_Click"
-                    Content="&#xE106;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="25"
-                    RelativePanel.RightOf="noteShareButton"
-                    Style="{StaticResource AccountPageButton}" />
-
-
                 <!--  Note Delete Button  -->
                 <Button
                     Name="noteDeleteButton"
@@ -140,28 +133,23 @@
                     RelativePanel.AlignRightWithPanel="True"
                     Style="{StaticResource AccountPageButton}" />
 
-            </RelativePanel>
+            </StackPanel>
 
 
+            <TextBox
+                Name="contentOfNote"
+                Grid.Row="2"
+                Margin="20"
+                FontSize="25"
+                Foreground="Red"
+                IsReadOnly="True"
+                IsTapEnabled="True"
+                Style="{StaticResource TextBoxWithoutDelete}"
+                Text="Content"
+                TextWrapping="Wrap" />
 
         </Grid>
-
-
-
-
-        <TextBox
-            Name="contentOfNote"
-            Grid.Row="1"
-            Margin="20"
-            FontSize="25"
-            Foreground="Red"
-            IsReadOnly="True"
-            IsTapEnabled="True"
-            Style="{StaticResource TextBoxWithoutDelete}"
-            Text="Content"
-            TextWrapping="Wrap" />
-
-
-
     </Grid>
-</Page>
+
+
+</UserControl>

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.AI.MachineLearning;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -28,46 +29,37 @@ namespace YourNoteUWP
     /// </summary>
     public sealed partial class AccountPage : Page
     {
-        private ObservableCollection<Note> notesFeeder;
-        private ObservableCollection<Note> notesForSearch;
-        private ObservableCollection<Note> recentNotes;
-        private Note selectedNote = null;
-        public static Models.User currentUser;
-        public Note notesTemplate { get { return this.DataContext as Note; } }
+        private ObservableCollection<Note> _notesFeeder = null ;
+        private ObservableCollection<Note> _noteForSearch = new ObservableCollection<Note>();
+        private ObservableCollection<Note> _recentNotes = new ObservableCollection<Note>();
+        private Note _selectedNote = null;
 
-        public AccountPage()
-        {
-            this.InitializeComponent();
-            Navigation.IsPaneOpen = false;
-        }
+        public static Models.User currentUser = null;
+
         public AccountPage(Models.User loggedUser)
         {
             this.InitializeComponent();
             Navigation.IsPaneOpen = false;
-            loggedUser.name = DBFetch.GetName(DBCreation.userTableName, loggedUser);
-            currentUser = new Models.User(loggedUser.userId, loggedUser.password);
+            currentUser = new Models.User(loggedUser);
             Navigation.CompactPaneLength = userImage.Width;
 
 
-            //Grid View ItemSource
-            notesFeeder = Note.GetPersonalNotes(currentUser);
+            _notesFeeder = Note.GetPersonalNotes(currentUser);
+            NotesData.ItemsSource = _notesFeeder;
 
-            //Auto Suggestion Box Content ItemSources
-            notesForSearch = DBFetch.ReadAllNotesOfUser(DBCreation.notesTableName, DBCreation.sharedTableName, currentUser);
-            recentNotes = Note.GetRecentNotes();
-            if(recentNotes == null )
-                recentNotes = new ObservableCollection<Note>();
+            Tuple<ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = Note.GetSearchNotes(currentUser);
+            _noteForSearch = searchNotes.Item1; 
+            _recentNotes = searchNotes.Item2;
 
 
-            PersonalContent.IsHitTestVisible = true
-;                PersonalContent.IsHoldingEnabled = true;
+
         }
 
         //Change the value of the Selected Note -> To prevent the firing event of the AutoSuggestionBox TextChanged after choosing the options
         bool ChangeVar()
         {
-            if (selectedNote != null) {
-                selectedNote = null;
+            if (_selectedNote != null) {
+                _selectedNote = null;
                 return false;
             }
             return true;
@@ -77,8 +69,9 @@ namespace YourNoteUWP
         private void NotesData_ItemClick(object sender, ItemClickEventArgs e)
         {
             Note note = (YourNoteUWP.Models.Note)e.ClickedItem;
-            //MFrame.Navigate(Page());
-            this.Content = new NoteDisplay(note, currentUser);
+            //MFrame.Navigate(Page());.
+            NoteDisplayPopUp.IsOpen = true;
+            this.Content = new NoteContent(note, currentUser);
         }
 
 
@@ -114,13 +107,15 @@ namespace YourNoteUWP
 
                 if(contentOfTextBox.Text.Length >2)
                 {
+                    RecentSuggestedContent.Visibility = Visibility.Collapsed;
+                    SearchBoxContainerContent.Visibility = Visibility.Visible;  
                     var suitableItems = new ObservableCollection<Note>();
                     var splitText = contentOfTextBox.Text.Split(" ");
 
                 
 
 
-                    foreach (var eachNote in notesForSearch)
+                    foreach (var eachNote in _noteForSearch)
                     {
                         var found = splitText.All((key) =>
                         {
@@ -134,22 +129,24 @@ namespace YourNoteUWP
 
 
                    SearchBoxContainerContent.ItemsSource = suitableItems;
-                    notesFeeder.Clear();
-                    notesFeeder = suitableItems;
-                    NotesData.ItemsSource = notesFeeder;
+                  //  _notesFeeder.Clear();
+                  //  _notesFeeder = suitableItems;
+                   // NotesData.ItemsSource = _notesFeeder;
 
 
 
                 }
                 else
                 {
-                    
-                        notesFeeder.Clear();
+                    RecentSuggestedContent.Visibility = Visibility.Visible; 
+                    SearchBoxContainerContent.Visibility = Visibility.Collapsed;
+
+                    _notesFeeder.Clear();
                         if (SharedContent.IsSelected == false)
-                            notesFeeder = Note.GetPersonalNotes(currentUser);
+                            _notesFeeder = Note.GetPersonalNotes(currentUser);
                         else
-                            notesFeeder = Note.GetSharedNotes(currentUser);
-                        NotesData.ItemsSource = notesFeeder;
+                            _notesFeeder = Note.GetSharedNotes(currentUser);
+                        NotesData.ItemsSource = _notesFeeder;
                         return;
 
                 }
@@ -165,13 +162,16 @@ namespace YourNoteUWP
             Note note = (Note)RecentSuggestedContent.SelectedItem;
             SearchTextBox.Text = note.title;
             SuggestionsPopup.IsOpen = false;
-            selectedNote = note;
-            //            notesFeeder.Clear();
-            //            notesFeeder.Add(selectedNote);
-            //            NotesData.ItemsSource = notesFeeder;
+            _selectedNote = note;
+            note.searchCount++;
+            //            _notesFeeder.Clear();
+            //            _notesFeeder.Add(_selectedNote);
+            //            NotesData.ItemsSource = _notesFeeder;
 
-           /// DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
-            this.Content = new NoteDisplay(note, currentUser);
+            /// DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
+            /// 
+            NoteDisplayPopUp.IsOpen = true;
+            this.Content = new NoteContent(note, currentUser);
 
         }
 
@@ -181,12 +181,14 @@ namespace YourNoteUWP
             Note note = (Note)e.ClickedItem;
            SearchTextBox.Text = note.title;
             SuggestionsPopup.IsOpen = false;
-            selectedNote = note;
-//            notesFeeder.Clear();
-//            notesFeeder.Add(selectedNote);
-//            NotesData.ItemsSource = notesFeeder;
-          //  DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
-            this.Content = new NoteDisplay(note, currentUser);
+            _selectedNote = note;
+            note.searchCount++;
+            //            _notesFeeder.Clear();
+            //            _notesFeeder.Add(_selectedNote);
+            //            NotesData.ItemsSource = _notesFeeder;
+            //  DBUpdation.UpdateRecentSearchedCount(DBCreation.recentSearchesTableName, note);
+            NoteDisplayPopUp.IsOpen = true;
+            this.Content = new NoteContent(note, currentUser);
         }
 
         private void Navigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -194,22 +196,22 @@ namespace YourNoteUWP
             if (PersonalContent.IsSelected)
             {
 
-                notesFeeder.Clear();
-                notesFeeder = Note.GetPersonalNotes(currentUser);
-                NotesData.ItemsSource = notesFeeder;
+              //  _notesFeeder.Clear();
+                _notesFeeder = Note.GetPersonalNotes(currentUser);
+                NotesData.ItemsSource = _notesFeeder;
 
                 SearchTextBox.Text = "";
-                selectedNote = new Note("", "", "", "");
+                _selectedNote = new Note("", "", "", "");
                 SuggestionsPopup.IsOpen = false;
 
             }
             else if (SharedContent.IsSelected)
             {
-                notesFeeder.Clear();
-                notesFeeder = Note.GetSharedNotes(currentUser);
-                NotesData.ItemsSource = notesFeeder;
+             //   _notesFeeder.Clear();
+                _notesFeeder = Note.GetSharedNotes(currentUser);
+                NotesData.ItemsSource = _notesFeeder;
    
-                selectedNote = new Note("", "", "", "");
+                _selectedNote = new Note("", "", "", "");
                 SearchTextBox.Text = "";
                 SuggestionsPopup.IsOpen = false;
             }
@@ -223,7 +225,7 @@ namespace YourNoteUWP
                 "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
             };
 
-
+                NoteDisplayPopUp.IsOpen = true;
                 Note note = new Note(currentUser.userId, "Owner : " + currentUser.userId, "No Content", l[r]);
                 DBUpdation.InsertNewNote(note);
 
@@ -231,7 +233,7 @@ namespace YourNoteUWP
                 //note.noteId = DBFetch.GetNoteId(DBCreation.notesTableName);
 
 
-                this.Content = new NoteDisplay(note, currentUser);
+                this.Content = new NoteContent(note, currentUser);
 
 
             }
@@ -245,7 +247,9 @@ namespace YourNoteUWP
         }
 
 
-
-
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SuggestionsPopup.IsOpen = false;
+        }
     }
 }

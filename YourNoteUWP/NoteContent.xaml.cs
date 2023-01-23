@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,16 +15,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
-using System.Windows;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace YourNoteUWP
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class NoteDisplay : Page
+    public sealed partial class NoteContent : UserControl
     {
         ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
         Models.User noteOwner = null;
@@ -34,25 +28,26 @@ namespace YourNoteUWP
         private string oldTitle;
         private string oldContent;
         DispatcherTimer dispatcherTimer;
-        public NoteDisplay()
+        public NoteContent()
         {
             this.InitializeComponent();
             titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
             contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
-
         }
 
-        public NoteDisplay(YourNoteUWP.Models.Note note, Models.User user)
+
+        public NoteContent(YourNoteUWP.Models.Note note, Models.User user)
         {
             this.InitializeComponent();
             displayNote = new Note(note);
-            noteOwner = new Models.User(user);  
+            noteOwner = new Models.User(user);
             titleOfNote.Text = displayNote.title;
             contentOfNote.Text = displayNote.content;
             usersToShare = Models.User.GetUsersToShare(noteOwner, displayNote.noteId);
             titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
             contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
         }
+
 
         private void noteCloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -62,13 +57,13 @@ namespace YourNoteUWP
 
         private void usersToShare_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
-                var sharedToUser = (Models.User)e.ClickedItem;
-                Note.ShareNote(sharedToUser.userId, displayNote.noteId);
-                usersToShare.Remove(sharedToUser);
-                NoteShared();
-          
-            
+
+            var sharedToUser = (Models.User)e.ClickedItem;
+            Note.ShareNote(sharedToUser.userId, displayNote.noteId);
+            usersToShare.Remove(sharedToUser);
+            NoteShared();
+
+
         }
 
         private void noteShareButton_Click(object sender, RoutedEventArgs e)
@@ -78,13 +73,13 @@ namespace YourNoteUWP
         private async void NoteShared()
         {
             MessageDialog showDialog;
-          
-                showDialog  = new MessageDialog("Note Has Been Shared!");
-                showDialog.Commands.Add(new UICommand("Ok")
+
+            showDialog = new MessageDialog("Note Has Been Shared!");
+            showDialog.Commands.Add(new UICommand("Ok")
             {
                 Id = 0
             });
-           showDialog.DefaultCommandIndex = 0;
+            showDialog.DefaultCommandIndex = 0;
             var result = await showDialog.ShowAsync();
         }
 
@@ -92,15 +87,15 @@ namespace YourNoteUWP
         {
             titleOfNote.IsReadOnly = false;
             //noteSaveButton.Visibility = Visibility.Visible;
-            if (titleOfNote.IsReadOnly == false) 
+            if (titleOfNote.IsReadOnly == false)
             {
                 titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
                 contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
             }
-                
+
             oldTitle = displayNote.title;
             oldContent = displayNote.content;
-            if(titleOfNote.IsReadOnly == false || contentOfNote.IsReadOnly== false)
+            if (titleOfNote.IsReadOnly == false || contentOfNote.IsReadOnly == false)
                 DispatcherTimerSetup();
 
         }
@@ -108,10 +103,10 @@ namespace YourNoteUWP
         private void contentOfNote_Tapped(object sender, TappedRoutedEventArgs e)
         {
             contentOfNote.IsReadOnly = false;
-            if(contentOfNote.IsReadOnly == false)
+            if (contentOfNote.IsReadOnly == false)
             {
-               // titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-               // contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
+                // titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
+                // contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
             }
             //noteSaveButton.Visibility = Visibility.Visible;
             oldContent = displayNote.content;
@@ -141,22 +136,19 @@ namespace YourNoteUWP
             //    titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             //if (contentOfNote.IsReadOnly != false)
             //    contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-            
+
             displayNote.title = titleOfNote.Text;
             displayNote.content = contentOfNote.Text;
 
- 
+
             DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
         }
 
         private void noteDeleteButton_Click(object sender, RoutedEventArgs e)
         {
             Note.DeleteNote(displayNote);
-            
+
             this.Content = new AccountPage(noteOwner);
         }
-
-
     }
-
 }

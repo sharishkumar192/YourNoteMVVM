@@ -1,5 +1,6 @@
 WinMetadata\Windows.winmd
 Assets\123.png
+Assets\58933.png
 Assets\download.png
 Assets\LockScreenLogo.scale-200.png
 Assets\SplashScreen.scale-200.png
@@ -13,6 +14,7 @@ App.xbf
 Dictionary.xbf
 LogInPage.xbf
 MainPage.xbf
+NoteContent.xbf
 NoteDisplay.xbf
 NotesDataTemplate.xbf
 SignUpPage.xbf

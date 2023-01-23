@@ -36,14 +36,14 @@ namespace YourNoteUWP
         }
 
         //Creates The User Table 
-        public static void CreateUserTable()
+        public static void CreateUserTable() 
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             string query =
             $"CREATE TABLE if not exists " +  sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (name VARCHAR(10000)," +
             $" userId VARCHAR(10000) PRIMARY KEY," +
             $" password VARCHAR(10000)," +
-            $" loginCount INTEGER DEFAULT 0 )";
+            $" _loginCount INTEGER DEFAULT 0 )";
             try
             {
                 using (SQLiteConnection conn = DBCreation.OpenConnection())

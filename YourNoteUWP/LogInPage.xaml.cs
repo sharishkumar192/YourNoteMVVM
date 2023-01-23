@@ -28,7 +28,7 @@ namespace YourNoteUWP
         public LogInPage()
         {
             this.InitializeComponent();
-            users = DBFetch.ReadAllUserData(DBCreation.userTableName);
+            users = User.GetFrequentUsers();
             //  users = new ObservableCollection(Collection.OrderBy(users => users[].Date).ToList());
             if (users == null || users.Count == 0)
                 Column1.Visibility = Visibility.Collapsed;
@@ -67,24 +67,16 @@ namespace YourNoteUWP
 
         private void logInButton_Click(object sender, RoutedEventArgs e)
         {
-            User user = new Models.User(emailBox.Text, passwordBox.Password);
-            if (DBFetch.CheckUser(DBCreation.userTableName, user) == true)
+            Tuple<Models.User, bool> validation = DBFetch.ValidateUser(DBCreation.userTableName, emailBox.Text, passwordBox.Password);
+            if (validation.Item2 == true)  
             {
-                user.loginCount++;
-
-                DBUpdation.UpdateLoginCount(DBCreation.userTableName, user);
-                // MainPageFrame.
-
-                // this.Frame.Navigate(typeof(AccountPage), currentUser);
-                this.Content = new AccountPage(user);
+                this.Content = new AccountPage(validation.Item1);
 
             }
             else
             {
-                //accountExists.Text = "Account Didnt Exist";
+                //Credentials Wrong
             }
-
-
         }
 
         private void frequentEmail_ItemClick(object sender, ItemClickEventArgs e)

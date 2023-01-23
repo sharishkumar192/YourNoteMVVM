@@ -18,71 +18,8 @@ using YourNoteUWP.Models;
 namespace YourNoteUWP { 
     public class DBUpdation
     {
-        
-        //Updates the login count of the currentUser
-        public static void UpdateLoginCount(string tableName, Models.User user)
-        {
-            string query = $"UPDATE {tableName} SET loginCount = loginCount+1 where userId = '{user.userId}' ; ";
-            try
-            {
 
-                using (SQLiteConnection conn = DBCreation.OpenConnection()) 
-                {
-
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[2];
-                    parameters[0] = new SQLiteParameter("@notesTableName", DBCreation.notesTableName);
-                    parameters[1] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    command.ExecuteNonQuery();
-
-
-                }
-
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("The User Already Exists");
-            }
-
-        }
-
-
-        //Updates the recent search count of the note
-        public static void UpdateRecentSearchedCount(string tableName, Note note)
-        {
-            SQLiteConnection conn = DBCreation.OpenConnection();
-            conn.Open();
-            try
-            {
-
-
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                if (DBFetch.CheckNoteExists(tableName, note.noteId) == true)
-                {
-                    sqlite_cmd.CommandText = $"UPDATE {tableName} SET count = count+1 where noteId = '{note.noteId}' ; ";
-
-                }
-                else
-                {
-                    sqlite_cmd.CommandText = $"INSERT INTO {tableName}(noteId, count) VALUES ('{note.noteId}', '{1}');";
-                }
-                sqlite_cmd.ExecuteNonQuery();
-
-            }
-            catch (Exception)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-        }
-
+        // ----------------------------------------SIGN UP PAGE DB UPDATION----------------------------------------
 
         //Creates new currentUser 
         public static void InsertNewUser(Models.User user) //Needed
@@ -127,8 +64,11 @@ namespace YourNoteUWP {
 
         }
 
+
+        // ----------------------------------------ACCOUNT PAGE DB UPDATION----------------------------------------
+
         //Creates new note 
-         public static void InsertNewNote(Note newNote) // Needed
+        public static void InsertNewNote(Note newNote)// Needed 
         {
 
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
@@ -147,7 +87,7 @@ namespace YourNoteUWP {
                     parameters[0] = new SQLiteParameter("@userId", newNote.userId);
                     parameters[1] = new SQLiteParameter("@title", newNote.title);
                     parameters[2] = new SQLiteParameter("@content", newNote.content);
-                    parameters[3] = new SQLiteParameter("@noteColor", newNote.content);
+                    parameters[3] = new SQLiteParameter("@noteColor", newNote.noteColor);
                     command.Parameters.Add(parameters[0]);
                     command.Parameters.Add(parameters[1]);
                     command.Parameters.Add(parameters[2]);
@@ -165,51 +105,71 @@ namespace YourNoteUWP {
              
             }
 
-  
+
         }
 
+
+        // ----------------------------------------NOTE DISPLAY PAGE DB UPDATION----------------------------------------
+
         //Creates a new entry for the shared note
-         public static bool  InsertSharedNote(string ownerId, string shareduserId, long noteId)
+        public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
         {
-            bool isNoteShared = true;
-            try 
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+  string query = $"INSERT INTO " +
+            sqlCommandBuilder.QuoteIdentifier(sharedTableName)
+          + "  VALUES (@sharedUserId, @noteId);";
+
+            try
             {
-                SQLiteConnection conn = DBCreation.OpenConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                if (DBFetch.CheckNoteShared(shareduserId, DBCreation.sharedTableName, noteId) == true)
+                using (SQLiteConnection conn = DBCreation.OpenConnection())
                 {
-                    sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.sharedTableName} (ownerId , sharedUserId, sharedNoteId) VALUES ('{ownerId}','{shareduserId}','{noteId}');";
-                    sqlite_cmd.ExecuteNonQuery();
+
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter[] parameters = new SQLiteParameter[2];
+                    parameters[0] = new SQLiteParameter("@sharedUserId", sharedUserId);
+                    parameters[1] = new SQLiteParameter("@noteId", noteId);
+                    command.Parameters.Add(parameters[0]);
+                    command.Parameters.Add(parameters[1]);
+                    command.ExecuteNonQuery();
                     conn.Close();
 
                 }
-                else
-                {
-                    isNoteShared = false; 
-                }
+
+
+
 
             }
             catch (Exception)
             {
             }
-
-            return isNoteShared;
         }
 
         //Updation of the Note
-        public static void UpdateNote(string tableName, Note changedNote)
+        public static void UpdateNote(string notesTableName, Note changedNote)// Needed
         {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET title= @title , content= @content , searchCount = @count where noteId = @noteId  ;";
             try
             {
-                SQLiteConnection conn = DBCreation.OpenConnection();
-                conn.Open();
-                SQLiteCommand sqlite_cmd;
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"UPDATE '{tableName}' SET title='{changedNote.title}', content='{changedNote.content}' where noteId = '{changedNote.noteId}';";
-                sqlite_cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SQLiteConnection conn = DBCreation.OpenConnection())
+                {
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    SQLiteParameter[] parameters = new SQLiteParameter[4];
+                    parameters[0] = new SQLiteParameter("@title", changedNote.title);
+                    parameters[1] = new SQLiteParameter("@content", changedNote.content);
+                    parameters[2] = new SQLiteParameter("@noteId", changedNote.noteId);
+                    parameters[3] = new SQLiteParameter("@count", changedNote.searchCount);
+
+
+                    command.Parameters.Add(parameters[0]);
+                    command.Parameters.Add(parameters[1]);
+                    command.Parameters.Add(parameters[2]);
+                    command.Parameters.Add(parameters[3]);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+                }
+             
+              
 
             }
             catch (Exception )
@@ -218,40 +178,34 @@ namespace YourNoteUWP {
         }
     
         //Delete the Note
-        public static void DeleteNote(string notesTableName, string sharedTableName, Note noteToDelete)
-        {  
-            
-            
-            SQLiteConnection conn = DBCreation.OpenConnection();
-            conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
+        public static void DeleteNote(string notesTableName, string sharedTableName, Note noteToDelete)// Needed 
+        {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+
+
+            string query1 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "WHERE sharedNoteId  = @noteId ; ";
+            string query2 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + "WHERE noteId  = @noteId ; ";
+
 
             try
             {
                 
+                using (SQLiteConnection conn = DBCreation.OpenConnection())
+                {
+                    SQLiteCommand command = new SQLiteCommand(query1, conn);
+                    SQLiteParameter parameters = new SQLiteParameter("@noteId", noteToDelete.noteId);
+                    command.Parameters.Add(parameters);
+                    command.ExecuteNonQuery();
 
-                sqlite_cmd.CommandText = $"DELETE FROM {notesTableName} WHERE userId = \"{noteToDelete.userId}\" and noteId = {noteToDelete.noteId};";
-                sqlite_cmd.ExecuteNonQuery();
+                    command.CommandText = query2;
+                    command.ExecuteNonQuery();
+                    conn.Close();
 
-          
-                sqlite_cmd = conn.CreateCommand();
-                sqlite_cmd.CommandText = $"DELETE FROM {sharedTableName} WHERE ownerId = \"{noteToDelete.userId}\" and sharedNoteId={noteToDelete.noteId};" ;
-                sqlite_cmd.ExecuteNonQuery();
-
-
-                conn.Close();
-
-
+                }
             }
             catch (Exception)
             {
                 
-            }
-            finally
-            {
-                conn.Close();
-
             }
 
         }
@@ -262,19 +216,3 @@ namespace YourNoteUWP {
 
     }
 }
-
-
-// To make a SQLQuery return a value
-//int yourValue = 0;
-//string sql = "select day from time_limit where priority_level='p1'";
-//using (SqlConnection conn = new SqlConnection(connString))
-//{
-//    SqlCommand cmd = new SqlCommand(sql, conn);
-//    conn.Open();
-//    yourValue = (Int32)cmd.ExecuteScalar();
-//}
-
-
-// To check if the table exists in the database or not 
-//SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}';
-//create table if not exists TableName(col1 typ1, ..., colN typN)

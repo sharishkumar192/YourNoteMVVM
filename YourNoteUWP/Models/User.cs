@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -37,16 +38,27 @@ namespace YourNoteUWP.Models
             this.password = password;
         }
 
-        public User( string userId, string password)
-        {
-            this.userId = userId;
-            this.password = password;
-        }
 
         public static bool IsValidEmail(string userId)
         {
             Regex userIdRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
             return userIdRegex.IsMatch(userId);
+        }
+
+
+        public static ObservableCollection<Models.User> GetUsersToShare(Models.User noteOwner, long displayNoteId)
+        {
+            return DBFetch.ValidUsersToShare(DBCreation.userTableName, DBCreation.sharedTableName, noteOwner, displayNoteId);
+        }
+
+        public static bool CheckEmail(string userId)
+        {
+            return DBFetch.CheckValidEmail(DBCreation.userTableName, userId);
+        }
+
+        public static ObservableCollection<Models.User> GetFrequentUsers()
+        {
+           return DBFetch.FrequentLoggedUsers(DBCreation.userTableName);
         }
     }
 }

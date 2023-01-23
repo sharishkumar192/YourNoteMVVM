@@ -101,7 +101,7 @@ namespace YourNoteUWP
                 emailBoxToolTip.Content = emailToolTip.Content = "Enter a Valid Email Id";
             }
 
-            else if (emailBox.Text.Length != 0 && DBFetch.CheckValidEmail(DBCreation.userTableName, emailBox.Text) == true)
+            else if (emailBox.Text.Length != 0 && User.CheckEmail(emailBox.Text) == true)
             {
                 emailCheck.Visibility = Visibility.Visible;
                 emailBoxToolTip.Content = emailToolTip.Content = "The Email Id Already Exists!";

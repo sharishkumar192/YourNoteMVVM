@@ -81,3 +81,8 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.g.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NotesDataTemplate.xbf
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.g.i.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.g.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.xaml
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.xbf
+D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf
