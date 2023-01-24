@@ -72,8 +72,8 @@
     <RootType FullName="Windows.UI.Xaml.Controls.RelativePanel">
       <RootProperty Name="Children" />
       <RootProperty Name="Name" />
-      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
       <RootMethod Name="GetAlignRightWithPanel" />
       <RootMethod Name="SetAlignRightWithPanel" />
       <RootMethod Name="GetAlignBottomWith" />
@@ -149,10 +149,10 @@
       <RootProperty Name="Text" />
       <RootProperty Name="TextAlignment" />
       <RootProperty Name="TextWrapping" />
-      <RootProperty Name="MinHeight" />
       <RootProperty Name="MinWidth" />
-      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MinHeight" />
       <RootProperty Name="MaxWidth" />
+      <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
       <RootEvent Name="LostFocus" />
       <RootEvent Name="TextChanged" />
@@ -309,11 +309,11 @@
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Style" />
       <RootProperty Name="Name" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="MinHeight" />
       <RootProperty Name="MinWidth" />
-      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MinHeight" />
       <RootProperty Name="MaxWidth" />
+      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="Margin" />
       <RootProperty Name="PlaceholderText" />
       <RootEvent Name="LostFocus" />
       <RootEvent Name="PasswordChanged" />

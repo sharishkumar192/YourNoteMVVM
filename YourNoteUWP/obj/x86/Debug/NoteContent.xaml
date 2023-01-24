@@ -37,8 +37,8 @@
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="10*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource Light1}" />
-        <Grid Grid.Column="2" Background="{ThemeResource Light1}" />
+        <Grid Grid.Column="0" Background="{ThemeResource WindowBrushA}" />
+        <Grid Grid.Column="2" Background="{ThemeResource WindowBrushA}" />
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

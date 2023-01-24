@@ -1,57 +1,49 @@
-﻿<Page
+﻿<Page x:ConnectionId='1'
     x:Class="YourNoteUWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:YourNoteUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-  Background="{ThemeResource Light1}"
-    >
+    Background="{ThemeResource Light1}"
+    mc:Ignorable="d">
+
 
     <ScrollViewer x:ConnectionId='2'
         Name="homePageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Auto"
-        >
-        <Grid >
+        VerticalScrollBarVisibility="Auto">
+        <Grid>
 
             <RelativePanel>
 
-                <TextBlock x:ConnectionId='5' 
-             Grid.Row="0"
-            Name="Title"
-            Style="{StaticResource TitleTextBlockStyle}"
-                     RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Text="Your Note" 
-            FontSize="50"
+                <TextBlock x:ConnectionId='5'
+                    Name="Title"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    FontSize="50"
                     Foreground="{ThemeResource Dark1}"
-            HorizontalAlignment="Center" 
-            />
+                    RelativePanel.AlignHorizontalCenterWithPanel="True"
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Text="Your Note" />
 
             </RelativePanel>
 
 
 
-            <RelativePanel
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            >
+            <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                <Button x:ConnectionId='3' 
-                Style="{ThemeResource ButtonStyle}"
-                Name="signUp" 
-                Content="Sign Up" 
-                                     
-                />
-                <Button x:ConnectionId='4'    
-                Style="{ThemeResource ButtonStyle}"
-                Name="signIn" 
-                RelativePanel.Below="signUp"
-                Content="Sign In" 
-                                     
-
-               />
+                <Button x:ConnectionId='3'
+                    Name="SignUp"
+                                                                      
+                    Content="Sign Up"
+                    Style="{ThemeResource ButtonStyle}" />
+                <Button x:ConnectionId='4'
+                    Name="SignIn"
+                                                                     
+                    Content="Sign In"
+                    RelativePanel.Below="SignUp"
+                    Style="{ThemeResource ButtonStyle}" />
 
 
 
