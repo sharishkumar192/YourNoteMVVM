@@ -11,29 +11,6 @@ namespace YourNoteUWP.ViewModels
 {
     internal class SignUpPageViewModel : INotifyPropertyChanged
     {
-
-        private string _name;
-
-        public Visibility NameBoxToolTipVisibility
-        {
-            get { return _nameBoxToolTipVisibility; }
-            set { 
-                _nameBoxToolTipVisibility = value ;
-                OnPropertyChanged();
-            }
-        }
-
-        private Visibility _nameBoxToolTipVisibility = Visibility.Collapsed;
-        private string _nameBoxToolTipContent;
-
-        private string _nameToolTipContent;
-        private Visibility _nameToolTipVisibility;
-
-        private Visibility _nameCheckVisibility;
-        private string _emailId;
-        private string _pass;
-        private string _rpass;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -41,61 +18,97 @@ namespace YourNoteUWP.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string NameBox
+        private string _nameboxContent;
+        public string NameBoxContent
         {
-            get { return _name; }
-            set { _name = value; }
+            get { return _nameboxContent; }
+            set
+            {
+                _nameboxContent = value;
+
+                NameBoxLostFocus();
+                OnPropertyChanged("NameBoxContent");
+
+            }
         }
 
+        private string _nameBoxToolTipContent ;
         public string NameBoxToolTipContent
         {
             get { return _nameBoxToolTipContent; }
-            set { _nameBoxToolTipContent = value; }
+            set { _nameBoxToolTipContent = value; OnPropertyChanged("NameBoxToolTipContent"); }
         }
 
+
+        private Visibility _nameBoxToolTipVisibility = Visibility.Collapsed;
+        public Visibility NameBoxToolTipVisibility
+        {
+            get { return _nameBoxToolTipVisibility; }
+            set
+            {
+                _nameBoxToolTipVisibility = value;
+                OnPropertyChanged("NameBoxToolTipVisibility");
+            }
+        }
+
+
+
+        private string _nameToolTipContent ;
         public string NameToolTipContent
         {
             get { return _nameToolTipContent; }
-            set {  _nameBoxToolTipContent = value;  }
+            set
+            {
+                _nameToolTipContent = value;
+                OnPropertyChanged("NameToolTipContent");
+            }
         }
 
+
+        private Visibility _nameToolTipVisibility = Visibility.Collapsed;
         public Visibility NameToolTipVisibility
         {
             get { return _nameToolTipVisibility; }
-            set {
-               // OnPropertyChanged(nameof(NameToolTipVisibility));
+            set
+            {
                 _nameToolTipVisibility = value;
-                OnPropertyChanged();
+                OnPropertyChanged("NameToolTipVisibility");
 
             }
         }
 
+        private Visibility _nameCheckVisibility = Visibility.Collapsed;
         public Visibility NameCheckVisibility
         {
             get { return _nameCheckVisibility; }
-            set {
-               // OnPropertyChanged(nameof(NameCheckVisibility));
+            set
+            {
+
                 _nameCheckVisibility = value;
-                OnPropertyChanged();
+                OnPropertyChanged("NameCheckVisibility");
             }
         }
-        public string EmailId
+
+        private string _emailBoxContent;
+        public string EmailBoxContent
         {
-            get { return _emailId; }
-            set { _emailId = value; }
+            get { return _emailBoxContent; }
+            set { _emailBoxContent = value;
+            OnPropertyChanged("EmailBoxContent")
+            }
         }
 
-        public string Password
-        {
-            get { return _pass; }
-            set { _pass = value; }
-        }
 
-        public string RPassword
-        {
-            get { return _rpass; }
-            set { _rpass = value; }
-        }
+        
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,18 +165,38 @@ namespace YourNoteUWP.ViewModels
         public void NameBoxLostFocus()
         {
 
-            string value = IsNameCheck(_name);
+            string value = IsNameCheck(_nameboxContent);
             if (value == null)
             {
-                _nameBoxToolTipContent = _nameToolTipContent = "";
-                _nameBoxToolTipVisibility = _nameToolTipVisibility = _nameCheckVisibility = Visibility.Collapsed;
+                NameBoxToolTipContent = NameToolTipContent = "";
+                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Collapsed;
+
             }
             else
             {
-                _nameBoxToolTipContent = _nameToolTipContent = value;
-                _nameBoxToolTipVisibility = _nameToolTipVisibility = _nameCheckVisibility = Visibility.Visible;
+                NameBoxToolTipContent = NameToolTipContent = value;
+                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Visible;
 
             }
+        }
+
+
+      
+        private string _pass;
+        private string _rpass;
+
+
+     
+        public string Password
+        {
+            get { return _pass; }
+            set { _pass = value; }
+        }
+
+        public string RPassword
+        {
+            get { return _rpass; }
+            set { _rpass = value; }
         }
 
 

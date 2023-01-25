@@ -31,7 +31,8 @@ namespace YourNoteUWP
         public SignUpPage()
         {
             this.InitializeComponent();
-            _signUpPageViewModel = new SignUpPageViewModel();  
+            _signUpPageViewModel = new SignUpPageViewModel();
+            this.DataContext = _signUpPageViewModel;
             //passwordBox.Height = nameBoxContent.Height;
             //passwordBox.Width = nameBoxContent.Width;
             //repasswordBox.Height = passwordBox.Height;
@@ -42,7 +43,7 @@ namespace YourNoteUWP
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            NameBox_LostFocus(sender, e);
+           // NameBox_LostFocus(sender, e);
             EmailBox_LostFocus(sender, e);
             PasswordBox_LostFocus(sender, e);
             RPasswordBox_LostFocus(sender, e);
