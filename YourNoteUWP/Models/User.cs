@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace YourNoteUWP.Models
 {
@@ -66,6 +67,11 @@ namespace YourNoteUWP.Models
             User newUser = new User(name, userId, password);
             DBUpdation.InsertNewUser(newUser);
 
+        }
+
+        public static Tuple<Models.User, bool>  ValidateLogInUser(string userId, string password)
+        {
+            return DBFetch.ValidateUser(DBCreation.userTableName, userId, password);
         }
 
     }

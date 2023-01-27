@@ -148,6 +148,8 @@
     <Compile Include="SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\IEmail.cs" />
+    <Compile Include="ViewModels\IEmailExt.cs" />
     <Compile Include="ViewModels\IMainView.cs" />
     <Compile Include="ViewModels\LogInPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />

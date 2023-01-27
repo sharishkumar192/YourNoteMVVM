@@ -10,12 +10,18 @@ using Windows.UI.Xaml.Controls;
 using YourNoteUWP.Models;
 namespace YourNoteUWP.ViewModels
 {
-    internal class SignUpPageViewModel : INotifyPropertyChanged
+    internal class SignUpPageViewModel : INotifyPropertyChanged, IEmailExt
     {
         private IMainView _view;
+        private LogInPageViewModel _logInPageViewModel ;
         public SignUpPageViewModel(IMainView view)
         {
             _view = view;
+            _logInPageViewModel = new LogInPageViewModel();
+        }
+
+        public SignUpPageViewModel()
+        {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -211,17 +217,43 @@ namespace YourNoteUWP.ViewModels
 
 
 
-        public string IsEmailCheck(string check)
+        public string IsEmailCheck(string email)
         {
-            if (String.IsNullOrEmpty(check) == true)
-                return "Email Cant Be Empty";
-            else if (User.IsValidEmail(check) == false)
-                return "Email Id Not Valid";
-            else if (User.CheckEmail(check) == true)
+            string checkNullOrEmpty = CheckNullOrEmpty(email);
+
+            if (checkNullOrEmpty != null)
+                return checkNullOrEmpty;
+
+            string checkValid = CheckValidEmail(email);
+
+
+            if (checkValid != null)
+                return checkValid;
+
+            string existedMail = CheckAlreadyExistingEmail(email);
+
+
+            if (existedMail != null)
+                return existedMail;
+
+       return null;
+        }
+
+        public string CheckAlreadyExistingEmail(string email)
+        {
+            if (User.CheckEmail(email) == true)
                 return "The Email Id Already Exists!";
             return null;
         }
+        public string CheckNullOrEmpty(string email)
+        {
+          return  _logInPageViewModel.CheckNullOrEmpty(email);
+        }
 
+        public string CheckValidEmail(string email)
+        {
+            return _logInPageViewModel.CheckValidEmail(email);
+        }
 
 
 
@@ -487,19 +519,19 @@ namespace YourNoteUWP.ViewModels
             if (value == null)
             {
                 RPasswordBoxToolTipContent = RPasswordToolTipContent = "";
-                RPasswordBoxToolTipVisibility  = RPasswordCheckVisibility = Visibility.Collapsed;
+                RPasswordBoxToolTipVisibility = RPasswordCheckVisibility = Visibility.Collapsed;
             }
             else
             {
                 RPasswordBoxToolTipContent = RPasswordToolTipContent = value;
-                RPasswordBoxToolTipVisibility  = RPasswordCheckVisibility = Visibility.Visible;
+                RPasswordBoxToolTipVisibility = RPasswordCheckVisibility = Visibility.Visible;
             }
         }
 
         public void SignUpBackButtonClick()
         {
             _view.Content = new MainPage();
-           
+
 
         }
 
@@ -521,7 +553,10 @@ namespace YourNoteUWP.ViewModels
             }
         }
 
+       
     }
+
+
 
 
 }

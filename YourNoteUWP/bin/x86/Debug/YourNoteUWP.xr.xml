@@ -37,8 +37,8 @@
       <RootProperty Name="TextAlignment" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="Name" />
-      <RootProperty Name="Foreground" />
       <RootProperty Name="Visibility" />
+      <RootProperty Name="Foreground" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.BindExtension">
@@ -59,6 +59,7 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Margin" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Visibility" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
       <RootMethod Name="GetColumnSpan" />
@@ -143,13 +144,13 @@
       <RootProperty Name="Header" />
       <RootProperty Name="Style" />
       <RootProperty Name="UseSystemFocusVisuals" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="BorderBrush" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Text" />
       <RootProperty Name="IsReadOnly" />
       <RootProperty Name="IsTapEnabled" />
-      <RootProperty Name="Text" />
       <RootProperty Name="TextAlignment" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="MinWidth" />
@@ -239,10 +240,10 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Name" />
-      <RootProperty Name="Style" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Content" />
+      <RootProperty Name="Style" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="Flyout" />
@@ -307,9 +308,10 @@
     <RootType FullName="Windows.UI.Xaml.Controls.PasswordBox">
       <RootProperty Name="SelectionHighlightColor" />
       <RootProperty Name="SelectionFlyout" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="PasswordRevealMode" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Password" />
+      <RootProperty Name="PasswordRevealMode" />
       <RootProperty Name="Style" />
       <RootProperty Name="Name" />
       <RootProperty Name="MinWidth" />
@@ -317,19 +319,15 @@
       <RootProperty Name="MaxWidth" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
-      <RootProperty Name="Password" />
       <RootProperty Name="PlaceholderText" />
-      <RootEvent Name="LostFocus" />
       <RootEvent Name="PasswordChanged" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
       <RootProperty Name="Name" />
-      <RootProperty Name="FontSize" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Content" />
+      <RootProperty Name="FontSize" />
       <RootProperty Name="IsChecked" />
-      <RootEvent Name="Checked" />
-      <RootEvent Name="Unchecked" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListViewBase">
       <RootProperty Name="IsSwipeEnabled" />
