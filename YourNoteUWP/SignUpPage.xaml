@@ -79,14 +79,14 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="25"
-                LostFocus="EmailBox_LostFocus"
                 PlaceholderText="Enter Your Email Id"
                 Style="{StaticResource TextBoxStyle}"
-                Text="{x:Bind _signUpPageViewModel.EmailBoxContent, Mode=OneWay}">
+                Text="{x:Bind _signUpPageViewModel.EmailBoxContent, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                TextChanged="{x:Bind _signUpPageViewModel.EmailBoxTextChanged, Mode=OneWay}">
                 <ToolTipService.ToolTip>
-                    <ToolTip
+                    <TextBlock
                         Name="EmailBoxToolTip"
-                        Content="{x:Bind _signUpPageViewModel.EmailBoxToolTipContent, Mode=OneWay}"
+                        Text="{x:Bind _signUpPageViewModel.EmailBoxToolTipContent, Mode=OneWay}"
                         Visibility="{x:Bind _signUpPageViewModel.EmailBoxToolTipVisibility, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBox>
@@ -98,10 +98,10 @@
                 Style="{StaticResource BoxCheck}"
                 Visibility="{x:Bind _signUpPageViewModel.EmailCheckVisibility, Mode=OneWay}">
                 <ToolTipService.ToolTip>
-                    <ToolTip
+                    <TextBlock
                         Name="EmailToolTip"
-                        Content="{x:Bind _signUpPageViewModel.EmailCheckToolTipContent, Mode=OneWay}"
-                        Visibility="{x:Bind _signUpPageViewModel.EmailCheckToolTipVisibility, Mode=OneWay}" />
+                        Text="{x:Bind _signUpPageViewModel.EmailToolTipContent, Mode=OneWay}"
+                        Visibility="{x:Bind _signUpPageViewModel.EmailToolTipVisibility, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
 
             </FontIcon>
@@ -122,26 +122,27 @@
                 <PasswordBox
                     Name="PasswordBox"
                     HorizontalAlignment="Center"
-                    LostFocus="PasswordBox_LostFocus"
-                    PasswordRevealMode="Hidden"
+                    Password="{x:Bind _signUpPageViewModel.PasswordBoxPassword, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                    PasswordChanged="{x:Bind _signUpPageViewModel.PasswordBoxTextChanged, Mode=OneWay}"
+                    PasswordRevealMode="{x:Bind _signUpPageViewModel.PasswordBoxRevealMode, Mode=OneWay}"
                     PlaceholderText="Enter The Password"
                     Style="{StaticResource PasswordBoxStyle}">
                     <ToolTipService.ToolTip>
-                        <ToolTip
+                        <TextBlock
                             Name="PasswordBoxToolTip"
-                            Content=""
-                            Visibility="Visible" />
+                            Text="{x:Bind _signUpPageViewModel.PasswordBoxToolTipContent, Mode=OneWay}"
+                            Visibility="{x:Bind _signUpPageViewModel.PasswordBoxToolTipVisibility, Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </PasswordBox>
 
 
 
-                <FontIcon Name="PasswordCheck" Style="{StaticResource BoxCheck}">
+                <FontIcon
+                    Name="PasswordCheck"
+                    Style="{StaticResource BoxCheck}"
+                    Visibility="{x:Bind _signUpPageViewModel.PasswordCheckVisibility, Mode=OneWay}">
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Name="PasswordToolTip"
-                            Content=""
-                            Visibility="Visible" />
+                        <TextBlock Name="PasswordToolTip" Text="{x:Bind _signUpPageViewModel.PasswordToolTipContent, Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </FontIcon>
 
@@ -150,11 +151,9 @@
                     Name="RevealModeCheckBox"
                     Grid.Row="1"
                     HorizontalAlignment="Center"
-                    Checked="RevealModeCheckbox_Changed"
                     Content="Show password"
                     FontSize="25"
-                    IsChecked="False"
-                    Unchecked="RevealModeCheckbox_Changed" />
+                    IsChecked="{x:Bind _signUpPageViewModel.RevealModeCheckBoxIsChecked, Mode=OneWay}" />
 
 
 
@@ -172,14 +171,15 @@
                 MaxHeight="200"
                 Margin="0,0,0,10"
                 HorizontalAlignment="Center"
-                LostFocus="RPasswordBox_LostFocus"
-                PasswordRevealMode="Hidden"
+                Password="{x:Bind _signUpPageViewModel.RPasswordBoxPassword, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                PasswordChanged="{x:Bind _signUpPageViewModel.RPasswordBoxPasswordChanged, Mode=OneWay}"
+                PasswordRevealMode="{x:Bind _signUpPageViewModel.RPasswordBoxRevealMode, Mode=OneWay}"
                 Style="{StaticResource PasswordBoxStyle}">
                 <ToolTipService.ToolTip>
                     <ToolTip
                         Name="RPasswordBoxToolTip"
-                        Content=""
-                        Visibility="Visible" />
+                        Content="{x:Bind _signUpPageViewModel.RPasswordBoxToolTipContent, Mode=OneWay}"
+                        Visibility="{x:Bind _signUpPageViewModel.RPasswordBoxToolTipVisibility, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </PasswordBox>
 
@@ -188,12 +188,10 @@
             <FontIcon
                 Name="RPasswordCheck"
                 Grid.Row="3"
-                Style="{StaticResource BoxCheck}">
+                Style="{StaticResource BoxCheck}"
+                Visibility="{x:Bind _signUpPageViewModel.RPasswordCheckVisibility, Mode=OneWay}">
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Name="RPasswordToolTip"
-                        Content=""
-                        Visibility="Visible" />
+                    <ToolTip Name="RPasswordToolTip" Content="{x:Bind _signUpPageViewModel.RPasswordToolTipContent, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </FontIcon>
 
@@ -213,14 +211,14 @@
                     Grid.Column="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
-                    Click="SignUpBackButton_Click"
+                    Click="{x:Bind _signUpPageViewModel.SignUpBackButtonClick, Mode=OneWay}"
                     Content="Back"
                     Style="{StaticResource ButtonStyle}" />
 
                 <Button
-                    Name="SignUpButton"
+                    Name="LogInButton"
                     Grid.Column="1"
-                    Click="SignUpButton_Click"
+                    Click="{x:Bind _signUpPageViewModel.LogInButtonClick, Mode=OneWay}"
                     Content="Create Account"
                     Style="{StaticResource ButtonStyle}" />
 

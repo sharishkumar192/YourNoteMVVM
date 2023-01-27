@@ -6,17 +6,26 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using YourNoteUWP.Models;
 namespace YourNoteUWP.ViewModels
 {
     internal class SignUpPageViewModel : INotifyPropertyChanged
     {
+        private IMainView _view;
+        public SignUpPageViewModel(IMainView view)
+        {
+            _view = view;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        //------------------------------------------Name TextBox---------------------------------------------------
 
         private string _nameboxContent;
         public string NameBoxContent
@@ -27,16 +36,20 @@ namespace YourNoteUWP.ViewModels
                 _nameboxContent = value;
 
                 NameBoxLostFocus();
-                OnPropertyChanged("NameBoxContent");
+                OnPropertyChanged();
 
             }
         }
 
-        private string _nameBoxToolTipContent ;
+        private string _nameBoxToolTipContent;
         public string NameBoxToolTipContent
         {
             get { return _nameBoxToolTipContent; }
-            set { _nameBoxToolTipContent = value; OnPropertyChanged("NameBoxToolTipContent"); }
+            set
+            {
+                _nameBoxToolTipContent = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -47,20 +60,20 @@ namespace YourNoteUWP.ViewModels
             set
             {
                 _nameBoxToolTipVisibility = value;
-                OnPropertyChanged("NameBoxToolTipVisibility");
+                OnPropertyChanged();
             }
         }
 
 
 
-        private string _nameToolTipContent ;
+        private string _nameToolTipContent;
         public string NameToolTipContent
         {
             get { return _nameToolTipContent; }
             set
             {
                 _nameToolTipContent = value;
-                OnPropertyChanged("NameToolTipContent");
+                OnPropertyChanged();
             }
         }
 
@@ -72,7 +85,7 @@ namespace YourNoteUWP.ViewModels
             set
             {
                 _nameToolTipVisibility = value;
-                OnPropertyChanged("NameToolTipVisibility");
+                OnPropertyChanged();
 
             }
         }
@@ -85,39 +98,118 @@ namespace YourNoteUWP.ViewModels
             {
 
                 _nameCheckVisibility = value;
-                OnPropertyChanged("NameCheckVisibility");
+                OnPropertyChanged();
             }
         }
-
-        private string _emailBoxContent;
-        public string EmailBoxContent
-        {
-            get { return _emailBoxContent; }
-            set { _emailBoxContent = value;
-            OnPropertyChanged("EmailBoxContent")
-            }
-        }
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
         public string IsNameCheck(string check)
         {
             if (String.IsNullOrEmpty(check) == true)
                 return "Name Cant Be Empty";
             return null;
         }
+        public void NameBoxLostFocus()
+        {
+
+            string value = IsNameCheck(NameBoxContent);
+            if (value == null)
+            {
+                NameBoxToolTipContent = NameToolTipContent = "";
+                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                NameBoxToolTipContent = NameToolTipContent = value;
+                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Visible;
+
+            }
+        }
+
+        //------------------------------------------Email TextBox---------------------------------------------------
+        private string _emailBoxContent;
+        public string EmailBoxContent
+        {
+            get { return _emailBoxContent; }
+            set
+            {
+                _emailBoxContent = value;
+                EmailBoxLostFocus();
+                OnPropertyChanged();
+            }
+        }
+
+        private string _emailBoxToolTipContent;
+
+        public string EmailBoxToolTipContent
+        {
+            get { return _emailBoxToolTipContent; }
+            set
+            {
+                _emailBoxToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private Visibility _emailBoxToolTipVisibility = Visibility.Collapsed;
+
+        public Visibility EmailBoxToolTipVisibility
+        {
+            get { return _emailBoxToolTipVisibility; }
+            set
+            {
+                _emailBoxToolTipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+        private Visibility _emailCheckVisibility = Visibility.Collapsed;
+
+        public Visibility EmailCheckVisibility
+        {
+            get { return _emailCheckVisibility; }
+            set
+            {
+                _emailCheckVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private string _emailToolTipContent;
+
+        public string EmailToolTipContent
+        {
+            get { return _emailToolTipContent; }
+            set
+            {
+                _emailToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private Visibility _emailToolTipVisibility = Visibility.Collapsed;
+
+        public Visibility EmailToolTipVisibility
+        {
+            get { return _emailToolTipVisibility; }
+            set
+            {
+                _emailToolTipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
 
         public string IsEmailCheck(string check)
         {
@@ -130,6 +222,126 @@ namespace YourNoteUWP.ViewModels
             return null;
         }
 
+
+
+
+        public void EmailBoxLostFocus()
+        {
+            string value = IsEmailCheck(EmailBoxContent);
+            if (value == null)
+            {
+                EmailBoxToolTipContent = EmailToolTipContent = "";
+                EmailBoxToolTipVisibility = EmailToolTipVisibility = EmailCheckVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                EmailBoxToolTipContent = EmailToolTipContent = value;
+                EmailBoxToolTipVisibility = EmailToolTipVisibility = EmailCheckVisibility = Visibility.Visible;
+
+            }
+
+        }
+
+        public void EmailBoxTextChanged()
+        {
+            EmailCheckVisibility = Visibility.Collapsed;
+
+        }
+
+        //------------------------------------------Password Box---------------------------------------------------
+
+        private string _passwordBoxPassword;
+
+        public string PasswordBoxPassword
+        {
+            get { return _passwordBoxPassword; }
+            set
+            {
+                _passwordBoxPassword = value;
+                PasswordBoxLostFocus();
+                OnPropertyChanged();
+            }
+        }
+
+
+        public void PasswordBoxTextChanged()
+        {
+            PasswordCheckVisibility = Visibility.Collapsed;
+        }
+
+        private PasswordRevealMode _passwordBoxRevealMode = PasswordRevealMode.Hidden;
+
+        public PasswordRevealMode PasswordBoxRevealMode
+        {
+            get { return _passwordBoxRevealMode; }
+            set
+            {
+                _passwordBoxRevealMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private string _passwordBoxToolTipContent;
+
+        public string PasswordBoxToolTipContent
+        {
+            get { return _passwordBoxToolTipContent; }
+            set
+            {
+                _passwordBoxToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _passwordBoxToolTipVisibility = Visibility.Collapsed;
+
+        public Visibility PasswordBoxToolTipVisibility
+        {
+            get { return _passwordBoxToolTipVisibility; }
+            set
+            {
+                _passwordBoxToolTipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _passwordCheckVisibility = Visibility.Collapsed;
+
+        public Visibility PasswordCheckVisibility
+        {
+            get { return _passwordCheckVisibility; }
+            set
+            {
+                _passwordCheckVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _passwordToolTipContent;
+
+        public string PasswordToolTipContent
+        {
+            get { return _passwordToolTipContent; }
+            set
+            {
+                _passwordToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _revealModeCheckBoxIsChecked = false;
+
+        public bool RevealModeCheckBoxIsChecked
+        {
+            get { return _revealModeCheckBoxIsChecked; }
+            set
+            {
+                _revealModeCheckBoxIsChecked = value;
+                RevealModeCheckBoxChanged();
+                OnPropertyChanged();
+            }
+        }
+
         public string IsPasswordCheck(string check)
         {
 
@@ -140,6 +352,115 @@ namespace YourNoteUWP.ViewModels
 
             return null;
         }
+        public void PasswordBoxLostFocus()
+        {
+            string value = IsPasswordCheck(PasswordBoxPassword);
+            if (value == null)
+            {
+                PasswordBoxToolTipContent = PasswordToolTipContent = "";
+                PasswordBoxToolTipVisibility = PasswordCheckVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasswordBoxToolTipContent = PasswordToolTipContent = value;
+                PasswordBoxToolTipVisibility = PasswordCheckVisibility = Visibility.Visible;
+
+            }
+        }
+
+        public void RevealModeCheckBoxChanged()
+        {
+            if (RevealModeCheckBoxIsChecked == true)
+            {
+                PasswordBoxRevealMode = PasswordRevealMode.Visible;
+                RPasswordBoxRevealMode = PasswordRevealMode.Visible;
+            }
+            else
+            {
+                PasswordBoxRevealMode = PasswordRevealMode.Hidden;
+                RPasswordBoxRevealMode = PasswordRevealMode.Hidden;
+            }
+        }
+        //------------------------------------------Re Password Box---------------------------------------------------
+
+        private string _rPasswordBoxPassword;
+        public string RPasswordBoxPassword
+        {
+            get { return _rPasswordBoxPassword; }
+            set
+            {
+                _rPasswordBoxPassword = value;
+                RPasswordBoxLostFocus();
+                OnPropertyChanged();
+            }
+        }
+
+        public void RPasswordBoxPasswordChanged()
+        {
+            RPasswordCheckVisibility = Visibility.Collapsed;
+        }
+
+        private PasswordRevealMode _rPasswordBoxRevealMode = PasswordRevealMode.Hidden;
+
+        public PasswordRevealMode RPasswordBoxRevealMode
+        {
+            get { return _rPasswordBoxRevealMode; }
+            set
+            {
+                _rPasswordBoxRevealMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _rPasswordBoxToolTipContent;
+
+        public string RPasswordBoxToolTipContent
+        {
+            get { return _rPasswordBoxToolTipContent; }
+            set
+            {
+                _rPasswordBoxToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _rPasswordBoxToolTipVisibility = Visibility.Collapsed;
+
+        public Visibility RPasswordBoxToolTipVisibility
+        {
+            get { return _rPasswordBoxToolTipVisibility; }
+            set
+            {
+                _rPasswordBoxToolTipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _rPasswordCheckVisibility = Visibility.Collapsed;
+
+        public Visibility RPasswordCheckVisibility
+        {
+            get { return _rPasswordCheckVisibility; }
+            set
+            {
+                _rPasswordCheckVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _rPasswordToolTipContent;
+
+        public string RPasswordToolTipContent
+        {
+            get { return _rPasswordToolTipContent; }
+            set
+            {
+                _rPasswordToolTipContent = value;
+                OnPropertyChanged();
+
+            }
+        }
+
 
         public string IsRPasswordCheck(string check1, string check2)
         {
@@ -160,49 +481,47 @@ namespace YourNoteUWP.ViewModels
             return null;
 
         }
-
-
-        public void NameBoxLostFocus()
+        public void RPasswordBoxLostFocus()
         {
-
-            string value = IsNameCheck(_nameboxContent);
+            string value = IsRPasswordCheck(RPasswordBoxPassword, PasswordBoxPassword);
             if (value == null)
             {
-                NameBoxToolTipContent = NameToolTipContent = "";
-                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Collapsed;
-
+                RPasswordBoxToolTipContent = RPasswordToolTipContent = "";
+                RPasswordBoxToolTipVisibility  = RPasswordCheckVisibility = Visibility.Collapsed;
             }
             else
             {
-                NameBoxToolTipContent = NameToolTipContent = value;
-                NameBoxToolTipVisibility = NameToolTipVisibility = NameCheckVisibility = Visibility.Visible;
-
+                RPasswordBoxToolTipContent = RPasswordToolTipContent = value;
+                RPasswordBoxToolTipVisibility  = RPasswordCheckVisibility = Visibility.Visible;
             }
         }
 
-
-      
-        private string _pass;
-        private string _rpass;
-
-
-     
-        public string Password
+        public void SignUpBackButtonClick()
         {
-            get { return _pass; }
-            set { _pass = value; }
+            _view.Content = new MainPage();
+           
+
         }
 
-        public string RPassword
+        public void LogInButtonClick()
         {
-            get { return _rpass; }
-            set { _rpass = value; }
-        }
+            NameBoxLostFocus();
+            EmailBoxLostFocus();
+            PasswordBoxLostFocus();
+            RPasswordBoxLostFocus();
 
+            if (NameCheckVisibility == Visibility.Collapsed &&
+                EmailCheckVisibility == Visibility.Collapsed &&
+                PasswordCheckVisibility == Visibility.Collapsed &&
+                RPasswordCheckVisibility == Visibility.Collapsed)
+            {
+
+                User.NewUserInsertion(NameBoxContent, EmailBoxContent, RPasswordBoxPassword);
+                _view.Content = new LogInPage();
+            }
+        }
 
     }
-
-
 
 
 }

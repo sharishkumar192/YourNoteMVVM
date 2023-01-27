@@ -79,14 +79,15 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="25"
-                                              
                 PlaceholderText="Enter Your Email Id"
-                Style="{StaticResource TextBoxStyle}">
+                Style="{StaticResource TextBoxStyle}"
+                                                                                                                
+                                                                                            >
                 <ToolTipService.ToolTip>
-                    <ToolTip x:ConnectionId='19'
+                    <TextBlock x:ConnectionId='19'
                         Name="EmailBoxToolTip"
-                        Content=""
-                        Visibility="Collapsed" />
+                                                                                                
+                                                                                                          />
                 </ToolTipService.ToolTip>
             </TextBox>
 
@@ -94,12 +95,13 @@
             <FontIcon x:ConnectionId='6'
                 Name="EmailCheck"
                 Grid.Row="1"
-                Style="{StaticResource BoxCheck}">
+                Style="{StaticResource BoxCheck}"
+                                                                                            >
                 <ToolTipService.ToolTip>
-                    <ToolTip x:ConnectionId='18'
+                    <TextBlock x:ConnectionId='18'
                         Name="EmailToolTip"
-                        Content=""
-                        Visibility="Visible" />
+                                                                                             
+                                                                                                       />
                 </ToolTipService.ToolTip>
 
             </FontIcon>
@@ -120,26 +122,27 @@
                 <PasswordBox x:ConnectionId='13'
                     Name="PasswordBox"
                     HorizontalAlignment="Center"
-                                                     
-                    PasswordRevealMode="Hidden"
+                                                                                                                            
+                                                                                                       
+                                                                                                         
                     PlaceholderText="Enter The Password"
                     Style="{StaticResource PasswordBoxStyle}">
                     <ToolTipService.ToolTip>
-                        <ToolTip x:ConnectionId='17'
+                        <TextBlock x:ConnectionId='17'
                             Name="PasswordBoxToolTip"
-                            Content=""
-                            Visibility="Visible" />
+                                                                                                       
+                                                                                                                 />
                     </ToolTipService.ToolTip>
                 </PasswordBox>
 
 
 
-                <FontIcon x:ConnectionId='14' Name="PasswordCheck" Style="{StaticResource BoxCheck}">
+                <FontIcon x:ConnectionId='14'
+                    Name="PasswordCheck"
+                    Style="{StaticResource BoxCheck}"
+                                                                                                   >
                     <ToolTipService.ToolTip>
-                        <ToolTip x:ConnectionId='16'
-                            Name="PasswordToolTip"
-                            Content=""
-                            Visibility="Visible" />
+                        <TextBlock x:ConnectionId='16' Name="PasswordToolTip"                                                                          />
                     </ToolTipService.ToolTip>
                 </FontIcon>
 
@@ -148,11 +151,9 @@
                     Name="RevealModeCheckBox"
                     Grid.Row="1"
                     HorizontalAlignment="Center"
-                                                        
                     Content="Show password"
                     FontSize="25"
-                    IsChecked="False"
-                                                           />
+                                                                                                       />
 
 
 
@@ -170,14 +171,15 @@
                 MaxHeight="200"
                 Margin="0,0,0,10"
                 HorizontalAlignment="Center"
-                                                  
-                PasswordRevealMode="Hidden"
+                                                                                                                         
+                                                                                                        
+                                                                                                      
                 Style="{StaticResource PasswordBoxStyle}">
                 <ToolTipService.ToolTip>
                     <ToolTip x:ConnectionId='12'
                         Name="RPasswordBoxToolTip"
-                        Content=""
-                        Visibility="Visible" />
+                                                                                                       
+                                                                                                              />
                 </ToolTipService.ToolTip>
             </PasswordBox>
 
@@ -186,12 +188,10 @@
             <FontIcon x:ConnectionId='8'
                 Name="RPasswordCheck"
                 Grid.Row="3"
-                Style="{StaticResource BoxCheck}">
+                Style="{StaticResource BoxCheck}"
+                                                                                                >
                 <ToolTipService.ToolTip>
-                    <ToolTip x:ConnectionId='11'
-                        Name="RPasswordToolTip"
-                        Content=""
-                        Visibility="Visible" />
+                    <ToolTip x:ConnectionId='11' Name="RPasswordToolTip"                                                                              />
                 </ToolTipService.ToolTip>
             </FontIcon>
 
@@ -211,14 +211,14 @@
                     Grid.Column="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
-                                                  
+                                                                                            
                     Content="Back"
                     Style="{StaticResource ButtonStyle}" />
 
                 <Button x:ConnectionId='10'
-                    Name="SignUpButton"
+                    Name="LogInButton"
                     Grid.Column="1"
-                                              
+                                                                                       
                     Content="Create Account"
                     Style="{StaticResource ButtonStyle}" />
 

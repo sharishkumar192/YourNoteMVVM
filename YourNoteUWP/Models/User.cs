@@ -60,5 +60,13 @@ namespace YourNoteUWP.Models
         {
            return DBFetch.FrequentLoggedUsers(DBCreation.userTableName);
         }
+
+        public static void NewUserInsertion(string name, string userId, string password)
+        {
+            User newUser = new User(name, userId, password);
+            DBUpdation.InsertNewUser(newUser);
+
+        }
+
     }
 }

@@ -317,6 +317,7 @@
       <RootProperty Name="MaxWidth" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="Password" />
       <RootProperty Name="PlaceholderText" />
       <RootEvent Name="LostFocus" />
       <RootEvent Name="PasswordChanged" />

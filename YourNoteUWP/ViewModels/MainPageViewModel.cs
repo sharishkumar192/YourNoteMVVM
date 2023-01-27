@@ -11,7 +11,7 @@ namespace YourNoteUWP.ViewModels
 {
     internal class MainPageViewModel 
     {
-        IMainView _view;
+        private IMainView _view;
         public MainPageViewModel(IMainView view)
         {
             _view = view;
