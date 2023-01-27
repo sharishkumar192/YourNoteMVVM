@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
+using YourNoteUWP.ViewModels;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,12 +28,15 @@ namespace YourNoteUWP
         Models.Note displayNote = null;
         private string oldTitle;
         private string oldContent;
-        DispatcherTimer dispatcherTimer;
+       
+       private AccountPageViewModel _accountPageViewModel;
         public NoteContent()
         {
             this.InitializeComponent();
             titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
             contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
+
+            _accountPageViewModel = new AccountPageViewModel();
         }
 
 
@@ -66,9 +70,6 @@ namespace YourNoteUWP
 
         }
 
-        private void noteShareButton_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         private async void NoteShared()
         {
@@ -83,72 +84,14 @@ namespace YourNoteUWP
             var result = await showDialog.ShowAsync();
         }
 
-        private void titleOfNote_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            titleOfNote.IsReadOnly = false;
-            //noteSaveButton.Visibility = Visibility.Visible;
-            if (titleOfNote.IsReadOnly == false)
-            {
-                titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-                contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-            }
-
-            oldTitle = displayNote.title;
-            oldContent = displayNote.content;
-            if (titleOfNote.IsReadOnly == false || contentOfNote.IsReadOnly == false)
-                DispatcherTimerSetup();
-
-        }
-
-        private void contentOfNote_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            contentOfNote.IsReadOnly = false;
-            if (contentOfNote.IsReadOnly == false)
-            {
-                // titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-                // contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.White);
-            }
-            //noteSaveButton.Visibility = Visibility.Visible;
-            oldContent = displayNote.content;
-
-            if (titleOfNote.IsReadOnly == false || contentOfNote.IsReadOnly == false)
-                DispatcherTimerSetup();
-        }
+ 
 
 
 
-        public void DispatcherTimerSetup()
-        {
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
-            dispatcherTimer.Start();
-        }
+      
 
-        private void DispatcherTimer_Tick(object sender, object e)
-        {
-            //save the text
-            //var text = MyTextBox.Text;
+       
 
-
-
-            //if (titleOfNote.IsReadOnly != false)
-            //    titleOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-            //if (contentOfNote.IsReadOnly != false)
-            //    contentOfNote.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-
-            displayNote.title = titleOfNote.Text;
-            displayNote.content = contentOfNote.Text;
-
-
-            DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
-        }
-
-        private void noteDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            Note.DeleteNote(displayNote);
-
-            this.Content = new AccountPage(noteOwner);
-        }
+       
     }
 }

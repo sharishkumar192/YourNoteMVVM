@@ -39,17 +39,16 @@ namespace YourNoteUWP.ViewModels
 
         }
 
-        //---------------------------------------------Email Box----------------------------------------------------
-
-        //------------------------------------------Email TextBox---------------------------------------------------
-        private string _emailBoxContent;
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public string EmailBoxContent
+
+        //------------------------------------------Email TextBox---------------------------------------------------
+        private string _emailBoxContent;
+
+         public string EmailBoxContent
         {
             get { return _emailBoxContent; }
             set
@@ -59,42 +58,6 @@ namespace YourNoteUWP.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-        private ObservableCollection<YourNoteUWP.Models.User> _frequentEmailItemSource = Models.User.GetFrequentUsers();
-
-        public ObservableCollection<YourNoteUWP.Models.User> FrequentEmailItemSource
-        {
-            get { return _frequentEmailItemSource; }
-            
-        }
-
-
-        public void FrequentEmailItemClick(object sender, ItemClickEventArgs e)
-        {
-            var frequentUser = (Models.User)e.ClickedItem;
-
-           EmailBoxContent = frequentUser.userId;
-        }
-
-
-        private Visibility _frequentEmailBox = Visibility.Collapsed;
-
-        public Visibility FrequentEmailBox
-        {
-            get { return _frequentEmailBox; }
-            set
-            {
-                _frequentEmailBox = value;
-
-            }
-        }
-
-
-
-
-
-
 
         public string IsEmailCheck(string email)
         {
@@ -109,6 +72,22 @@ namespace YourNoteUWP.ViewModels
             if (checkValid != null)
                 return checkValid;
 
+            return null;
+        }
+
+     
+        public string CheckNullOrEmpty(string email)
+        {
+            if (String.IsNullOrEmpty(email) == true)
+                return "Email Cant Be Empty";
+
+            return null;
+        }
+
+        public string CheckValidEmail(string email)
+        {
+            if (Models.User.IsValidEmail(email) == false)
+                return "Email Id Not Valid";
             return null;
         }
 
@@ -129,21 +108,8 @@ namespace YourNoteUWP.ViewModels
 
         }
 
-        public string CheckNullOrEmpty(string email)
-        {
-            if (String.IsNullOrEmpty(email) == true)
-                return "Email Cant Be Empty";
 
-            return null;
-        }
-
-        public string CheckValidEmail(string email)
-        {
-            if (Models.User.IsValidEmail(email) == false)
-                return "Email Id Not Valid";
-            return null;
-        }
-
+        //-------------------------------------------------- Password Box --------------------------------------------------------
 
         private bool _revealModeCheckBoxIsChecked = false;
 
@@ -159,6 +125,7 @@ namespace YourNoteUWP.ViewModels
         }
 
 
+        
         public void RevealModeCheckBoxChanged()
         {
             if (RevealModeCheckBoxIsChecked == true)
@@ -175,37 +142,48 @@ namespace YourNoteUWP.ViewModels
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void LogInButtonClick()
+        //---------------------------------------------- Frequent Users ListView ----------------------------------------------------
+        public ObservableCollection<YourNoteUWP.Models.User> FrequentEmailItemSource
         {
+            get { return _frequentEmailItemSource; }
+
+        }
+
+
+        public void FrequentEmailItemClick(object sender, ItemClickEventArgs e)
+        {
+            var frequentUser = (Models.User)e.ClickedItem;
+
+            EmailBoxContent = frequentUser.userId;
+        }
+
+
+        private Visibility _frequentEmailBox = Visibility.Collapsed;
+
+        public Visibility FrequentEmailBox
+        {
+            get { return _frequentEmailBox; }
+            set
+            {
+                _frequentEmailBox = value;
+
+            }
+        }
+
+
+        private ObservableCollection<YourNoteUWP.Models.User> _frequentEmailItemSource = Models.User.GetFrequentUsers();
+
+        //------------------------------------------Page Navigation Buttons---------------------------------------------
+      public void LogInButtonClick()
+        {
+            //_signUpPageViewModel.PasswordBoxPassword
             Tuple<Models.User, bool> validation = Models.User.ValidateLogInUser(EmailBoxContent, "123");
 
             if (validation.Item2 == true)
             {
-               _manageView.Content = new AccountPage(validation.Item1);
+                AccountPageViewModel _accountPageViewModel = new AccountPageViewModel();
+                _accountPageViewModel.LoggedUser = validation.Item1;
+                _manageView.Content = new AccountPage();
 
             }
             else

@@ -49,17 +49,17 @@
 
 
             <TextBox
-                Name="titleOfNote"
+                Name="TitleOfNote"
                 Height="45"
                 Margin="15"
                 HorizontalAlignment="Stretch"
                 FontSize="25"
                 Foreground="Red"
-                IsReadOnly="True"
+                IsReadOnly="{x:Bind _accountPageViewModel.TitleOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="True"
                 Style="{StaticResource TextBoxWithoutDelete}"
-                Tapped="titleOfNote_Tapped"
-                Text="Title"
+                Tapped="{x:Bind _accountPageViewModel.TitleOfNoteTapped, Mode=OneWay}"
+                Text="{x:Bind _accountPageViewModel.TitleOfNoteText, Mode=OneWay}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
 
@@ -124,8 +124,8 @@
 
                 <!--  Note Delete Button  -->
                 <Button
-                    Name="noteDeleteButton"
-                    Click="noteDeleteButton_Click"
+                    Name="NoteDeleteButton"
+                    Click="{x:Bind _accountPageViewModel.NoteDeleteButtonClick, Mode=OneWay}"
                     Content="&#xE107;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="25"
@@ -137,15 +137,16 @@
 
 
             <TextBox
-                Name="contentOfNote"
+                Name="ContentOfNote"
                 Grid.Row="2"
                 Margin="20"
                 FontSize="25"
                 Foreground="Red"
-                IsReadOnly="True"
+                IsReadOnly="{x:Bind _accountPageViewModel.ContentOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="True"
                 Style="{StaticResource TextBoxWithoutDelete}"
-                Text="Content"
+                Tapped="{x:Bind _accountPageViewModel.ContentOfNoteTapped, Mode=OneWay}"
+                Text="{x:Bind _accountPageViewModel.ContentOfNoteText, Mode=OneWay}"
                 TextWrapping="Wrap" />
 
         </Grid>

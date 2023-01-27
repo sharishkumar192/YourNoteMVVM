@@ -58,7 +58,7 @@ namespace YourNoteUWP.Models
 
         }
 
-        public static Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
+        public static Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
         {
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;
@@ -94,7 +94,7 @@ namespace YourNoteUWP.Models
                 }
             }
 
-            Tuple<ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple<ObservableCollection<Note>, ObservableCollection<Note>>(noteForSearch, recentNotes);
+            Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>>(personalNotes, noteForSearch, recentNotes);
             return searchNotes;
         }
 
@@ -113,6 +113,7 @@ namespace YourNoteUWP.Models
            DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
         }
 
+      
 
     }
 
