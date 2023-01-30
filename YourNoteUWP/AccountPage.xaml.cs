@@ -30,36 +30,59 @@ namespace YourNoteUWP
     /// </summary>
     public sealed partial class AccountPage : Page, IMainView
     {
-     
 
-      
+
 
         private AccountPageViewModel _accountPageViewModel;
+
+
         public AccountPage()
         {
+            //   this.InitializeComponent();
+            //   _accountPageViewModel = new AccountPageViewModel(this, );
 
         }
         public AccountPage(Models.User loggedUser)
         {
             this.InitializeComponent();
-            _accountPageViewModel = new AccountPageViewModel(this);
-  
-          //  Navigation.CompactPaneLength = userImage.Width;
+            _accountPageViewModel = new AccountPageViewModel(this, loggedUser);
+
+            this.DataContext = _accountPageViewModel;
+            this.SizeChanged += AccountPage_SizeChanged;
+
+
+
+            //NoteContentPopUp.Height = Bounds.
+
+            //  Navigation.CompactPaneLength = userImage.Width;
 
         }
 
+        private void InitializeComponent(DependencyObject parent)
+        {
+            
+        }
+
+        private void AccountPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _accountPageViewModel.AccountPageSizeChanged(sender, e);
+        }
+
+
+
+
         //Change the value of the Selected Note -> To prevent the firing event of the AutoSuggestionBox TextChanged after choosing the options
-       
-       
-     
-       
+
+
+
+
 
         //When an item in the SplitView Panel is clicked
 
         private void userImage_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-          
-                Navigation.IsPaneOpen = true;
+
+            Navigation.IsPaneOpen = true;
 
 
         }
@@ -68,7 +91,7 @@ namespace YourNoteUWP
         {
 
             //SplitViewz.IsPaneOpen = false;
-                Navigation.IsPaneOpen = false;
+            Navigation.IsPaneOpen = false;
 
         }
 

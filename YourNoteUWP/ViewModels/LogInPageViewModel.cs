@@ -181,10 +181,8 @@ namespace YourNoteUWP.ViewModels
 
             if (validation.Item2 == true)
             {
-                AccountPageViewModel _accountPageViewModel = new AccountPageViewModel();
-                _accountPageViewModel.LoggedUser = validation.Item1;
-                _manageView.Content = new AccountPage();
-
+          
+                _manageView.Content = new AccountPage(validation.Item1);
             }
             else
             {

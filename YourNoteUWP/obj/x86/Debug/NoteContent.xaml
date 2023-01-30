@@ -9,6 +9,11 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <local:AccountPage />
+
+    </UserControl.DataContext>
     <UserControl.Resources>
 
         <DataTemplate x:Key="shareUser"                       >
@@ -33,14 +38,14 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="80*" />
-            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="15*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource WindowBrushA}" />
-        <Grid Grid.Column="2" Background="{ThemeResource WindowBrushA}" />
+        <Grid Grid.Column="0" Background="{ThemeResource SystemControlDisabledTransparentBrush}" />
+        <Grid Grid.Column="2" Background="{ThemeResource SystemControlTransparentBrush}" />
 
-        <Grid Grid.Column="1">
+        <Grid x:ConnectionId='5' Grid.Column="1"                                                                               >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -48,58 +53,59 @@
             </Grid.RowDefinitions>
 
 
-            <TextBox x:ConnectionId='5'
-                Name="titleOfNote"
+            <!--  Title of Note  -->
+
+            <TextBox x:ConnectionId='6'
+                Name="TitleOfNote"
                 Height="45"
                 Margin="15"
                 HorizontalAlignment="Stretch"
                 FontSize="25"
                 Foreground="Red"
-                IsReadOnly="True"
+                                                                                              
                 IsTapEnabled="True"
                 Style="{StaticResource TextBoxWithoutDelete}"
-                                           
-                Text="Title"
+                                                                                      
+                                                                                  
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
 
-            <Button x:ConnectionId='6'
-                Name="noteCloseButton"
+
+            <!--  Note Close Button  -->
+
+            <Button x:ConnectionId='7'
+                Name="NoteCloseButton"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                                              
                 Content="&#xE106;"
                 FontFamily="Segoe MDL2 Assets"
-                FontSize="25"
-                RelativePanel.RightOf="noteShareButton"
-                Style="{StaticResource AccountPageButton}" />
-
+                FontSize="5"
+                RelativePanel.RightOf="NoteShareButton" />
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-
-
                 <!--  Note Share Button  -->
-                <Button x:ConnectionId='8'
-                    Name="noteShareButton"
+                <Button x:ConnectionId='9'
+                    Name="NoteShareButton"
                     HorizontalAlignment="Left"
-                                                 
+                                                                                            
                     FontSize="25"
                     RelativePanel.AlignLeftWithPanel="True"
                     Style="{StaticResource AccountPageButton}">
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock x:ConnectionId='10'
+                        <TextBlock x:ConnectionId='11'
                             Name="noteShareButtonImage"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             FontFamily="Segoe MDL2 Assets"
                             Text="&#xE165;" />
-                        <TextBlock x:ConnectionId='11' Name="noteShareButtonText" Text="Share" />
+                        <TextBlock x:ConnectionId='12' Name="noteShareButtonText" Text="Share" />
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout>
                             <Grid>
-                                <ListView x:ConnectionId='12'
+                                <ListView x:ConnectionId='13'
                                     Name="usersToShareView"
                                     Width="350"
                                     Height="400"
@@ -123,34 +129,35 @@
 
 
                 <!--  Note Delete Button  -->
-                <Button x:ConnectionId='9'
-                    Name="noteDeleteButton"
-                                                  
+                <Button x:ConnectionId='10'
+                    Name="NoteDeleteButton"
+                                                                                             
                     Content="&#xE107;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="25"
                     Foreground="Red"
                     RelativePanel.AlignRightWithPanel="True"
                     Style="{StaticResource AccountPageButton}" />
-
             </StackPanel>
 
 
-            <TextBox x:ConnectionId='7'
-                Name="contentOfNote"
+            <!--  Content of Note  -->
+            <TextBox x:ConnectionId='8'
+                Name="ContentOfNote"
                 Grid.Row="2"
                 Margin="20"
                 FontSize="25"
                 Foreground="Red"
-                IsReadOnly="True"
+                                                                                                
                 IsTapEnabled="True"
                 Style="{StaticResource TextBoxWithoutDelete}"
-                Text="Content"
+                                                                                        
+                                                                                    
                 TextWrapping="Wrap" />
 
+
         </Grid>
+
     </Grid>
-
-
 </UserControl>
 

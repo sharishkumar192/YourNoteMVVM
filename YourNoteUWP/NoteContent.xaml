@@ -9,6 +9,11 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <local:AccountPage />
+
+    </UserControl.DataContext>
     <UserControl.Resources>
 
         <DataTemplate x:Key="shareUser" x:DataType="data:User">
@@ -33,20 +38,22 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="80*" />
-            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="15*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource WindowBrushA}" />
-        <Grid Grid.Column="2" Background="{ThemeResource WindowBrushA}" />
+        <Grid Grid.Column="0" Background="{ThemeResource SystemControlDisabledTransparentBrush}" />
+        <Grid Grid.Column="2" Background="{ThemeResource SystemControlTransparentBrush}" />
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="{x:Bind _accountPageViewModel.NoteContentBackground, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
+
+            <!--  Title of Note  -->
 
             <TextBox
                 Name="TitleOfNote"
@@ -63,26 +70,25 @@
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
 
+
+            <!--  Note Close Button  -->
+
             <Button
-                Name="noteCloseButton"
+                Name="NoteCloseButton"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Click="noteCloseButton_Click"
+                Click="NoteCloseButton_Click"
                 Content="&#xE106;"
                 FontFamily="Segoe MDL2 Assets"
-                FontSize="25"
-                RelativePanel.RightOf="noteShareButton"
-                Style="{StaticResource AccountPageButton}" />
-
+                FontSize="5"
+                RelativePanel.RightOf="NoteShareButton" />
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-
-
                 <!--  Note Share Button  -->
                 <Button
-                    Name="noteShareButton"
+                    Name="NoteShareButton"
                     HorizontalAlignment="Left"
-                    Click="noteShareButton_Click"
+                    Click="{x:Bind _accountPageViewModel.NoteShareButtonClick, Mode=OneWay}"
                     FontSize="25"
                     RelativePanel.AlignLeftWithPanel="True"
                     Style="{StaticResource AccountPageButton}">
@@ -132,10 +138,10 @@
                     Foreground="Red"
                     RelativePanel.AlignRightWithPanel="True"
                     Style="{StaticResource AccountPageButton}" />
-
             </StackPanel>
 
 
+            <!--  Content of Note  -->
             <TextBox
                 Name="ContentOfNote"
                 Grid.Row="2"
@@ -149,8 +155,8 @@
                 Text="{x:Bind _accountPageViewModel.ContentOfNoteText, Mode=OneWay}"
                 TextWrapping="Wrap" />
 
+
         </Grid>
+
     </Grid>
-
-
 </UserControl>

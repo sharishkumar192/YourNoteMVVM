@@ -13,7 +13,7 @@
     mc:Ignorable="d">
 
 
-    <Page.Resources>
+    <!--<Page.Resources>
         <DataTemplate x:Key="shareUser" x:DataType="data:User">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel Margin="10">
@@ -72,7 +72,9 @@
             </Grid>
 
             <RelativePanel Grid.Row="1">
-                <!--  Note Share Button  -->
+    -->
+    <!--  Note Share Button  -->
+    <!--
                 <Button
                     Name="noteShareButton"
                     HorizontalAlignment="Left"
@@ -116,7 +118,9 @@
                 </Button>
 
 
-                <!--  Note Close Button  -->
+    -->
+    <!--  Note Close Button  -->
+    <!--
                 <Button
                     Name="noteCloseButton"
                     HorizontalAlignment="Right"
@@ -129,7 +133,9 @@
                     Style="{StaticResource AccountPageButton}" />
 
 
-                <!--  Note Delete Button  -->
+    -->
+    <!--  Note Delete Button  -->
+    <!--
                 <Button
                     Name="noteDeleteButton"
                     Click="noteDeleteButton_Click"
@@ -163,5 +169,5 @@
 
 
 
-    </Grid>
+    </Grid>-->
 </Page>

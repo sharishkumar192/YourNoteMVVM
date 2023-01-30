@@ -103,9 +103,9 @@ namespace YourNoteUWP.Models
             DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
         }
 
-        public static void DeleteNote(Note noteToDelete)
+        public static void DeleteNote(long noteId)
         {
-            DBUpdation.DeleteNote(DBCreation.notesTableName, DBCreation.sharedTableName, noteToDelete);
+            DBUpdation.DeleteNote(DBCreation.notesTableName, DBCreation.sharedTableName, noteId);
         }
 
         public static void ShareNote(string sharedUserId, long noteId)

@@ -178,7 +178,7 @@ namespace YourNoteUWP {
         }
     
         //Delete the Note
-        public static void DeleteNote(string notesTableName, string sharedTableName, Note noteToDelete)// Needed 
+        public static void DeleteNote(string notesTableName, string sharedTableName, long noteId)// Needed 
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
 
@@ -193,7 +193,7 @@ namespace YourNoteUWP {
                 using (SQLiteConnection conn = DBCreation.OpenConnection())
                 {
                     SQLiteCommand command = new SQLiteCommand(query1, conn);
-                    SQLiteParameter parameters = new SQLiteParameter("@noteId", noteToDelete.noteId);
+                    SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
                     command.Parameters.Add(parameters);
                     command.ExecuteNonQuery();
 

@@ -33,31 +33,24 @@ namespace YourNoteUWP
         public NoteContent()
         {
             this.InitializeComponent();
-            titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
-            contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
+
+            //  titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
+            //  contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
 
             _accountPageViewModel = new AccountPageViewModel();
+            
+                //AccountPageViewModel)Parent as AccountPageViewModel;
         }
 
 
-        public NoteContent(YourNoteUWP.Models.Note note, Models.User user)
-        {
-            this.InitializeComponent();
-            displayNote = new Note(note);
-            noteOwner = new Models.User(user);
-            titleOfNote.Text = displayNote.title;
-            contentOfNote.Text = displayNote.content;
-            usersToShare = Models.User.GetUsersToShare(noteOwner, displayNote.noteId);
-            titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
-            contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
-        }
+      
 
 
-        private void noteCloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Note.NoteUpdation(displayNote);
-            this.Content = new AccountPage(noteOwner);
-        }
+        //private void noteCloseButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Note.NoteUpdation(displayNote);
+        //    this.Content = new AccountPage(noteOwner);
+        //}
 
         private void usersToShare_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -84,14 +77,9 @@ namespace YourNoteUWP
             var result = await showDialog.ShowAsync();
         }
 
- 
-
-
-
-      
-
-       
-
-       
+        private void NoteCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+          _accountPageViewModel.NoteCloseButtonClick(this.Parent, e);
+        }
     }
 }

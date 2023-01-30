@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using YourNoteUWP.Models;
 
@@ -22,14 +23,15 @@ namespace YourNoteUWP.ViewModels
         private Note _selectedNote = null;
         private DispatcherTimer _dispatcherTimer;
 
-        public AccountPageViewModel(IMainView view)
+        public AccountPageViewModel(IMainView view, Models.User user)
         {
             _manageView = view;
+            LoggedUser = user;
             _searchNotes = Note.GetSearchNotes(LoggedUser);
             NotesDataItemSource = _searchNotes.Item1;
             SearchBoxContentItemSource = _searchNotes.Item2;
          
-            if(_searchNotes.Item3.Count > 0)
+            if( _searchNotes!=null && _searchNotes.Item3.Count > 0)
             {
                 RecentSuggestedVisibility = Visibility.Visible;
                 SearchBoxContentVisibility = Visibility.Collapsed;
@@ -108,20 +110,39 @@ namespace YourNoteUWP.ViewModels
             set { _notesDataItemSource = value; }
         }
 
+        private static SolidColorBrush GetSolidColorBrush(string hex)
+        {
+            if (hex == null)
+                hex = "#fdefad";
+            hex = hex.Replace("#", string.Empty);
+            byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
+            return myBrush;
+        }
+
         //When an item from the GridView is clicked 
         public void NotesDataItemClick(object sender, ItemClickEventArgs e)
         {
-            Note note = (YourNoteUWP.Models.Note)e.ClickedItem;
+            Note snote = (YourNoteUWP.Models.Note)e.ClickedItem;
             //MFrame.Navigate(Page());.
+           
             NoteDisplayPopUpIsOpen = true;
-            this.Content = new NoteContent(note, currentUser);
+            TitleOfNoteText = snote.title;
+            ContentOfNoteText = snote.content;
+
+            NoteContentBackground = GetSolidColorBrush(snote.noteColor);
+
+
         }
+
 
         private bool _noteDisplayPopUpIsOpen = false;
 
         public bool NoteDisplayPopUpIsOpen
         {
-            get { return _noteDisplayPopUpIsOpen = false; }
+            get { return _noteDisplayPopUpIsOpen; }
             set { _noteDisplayPopUpIsOpen  = value;
                 OnPropertyChanged();
             }
@@ -355,7 +376,11 @@ namespace YourNoteUWP.ViewModels
         }
 
 
-
+        public void AccountPageSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            NoteContentPopUpHeight = Window.Current.Bounds.Height;
+            NoteContentPopUpWidth = Window.Current.Bounds.Width;
+        }
 
 
 
@@ -394,11 +419,60 @@ namespace YourNoteUWP.ViewModels
             set {  _contentOfNoteIsReadOnly = value; }
         }
 
+
+
+        private string _OldTitle;
+
+        public string OldTitle
+        {
+            get { return _OldTitle; }
+            set { _OldTitle = value; }
+        }
+
+
+        private string _OldContent;
+
+        public  string OldContent
+        {
+            get { return _OldContent; }
+            set { _OldContent = value; }
+        }
+
+
+        private double _noteContentPopUpHeight;
+
+        public double NoteContentPopUpHeight
+        {
+            get { return _noteContentPopUpHeight; }
+            set { _noteContentPopUpHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _noteContentPopUpWidth;
+
+        public double NoteContentPopUpWidth
+        {
+            get { return _noteContentPopUpWidth; }
+            set { _noteContentPopUpWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private SolidColorBrush _noteContentBackground;
+
+        public SolidColorBrush NoteContentBackground
+        {
+            get { return _noteContentBackground; }
+            set { _noteContentBackground = value; }
+        }
+
         public void NoteDeleteButtonClick()
         {
-            Note.DeleteNote(displayNote);
+            Note.DeleteNote(_selectedNote.noteId);
+            NoteDisplayPopUpIsOpen = false;
 
-            this.Content = new AccountPage(noteOwner);
         }
 
         public void TitleOfNoteTapped()
@@ -406,9 +480,8 @@ namespace YourNoteUWP.ViewModels
             TitleOfNoteIsReadOnly = false;
        
 
-            oldTitle = displayNote.title;
-            oldContent = displayNote.content;
-                DispatcherTimerSetup();
+            OldTitle = TitleOfNoteText;
+            DispatcherTimerSetup();
 
         }
 
@@ -422,19 +495,39 @@ namespace YourNoteUWP.ViewModels
 
         private void DispatcherTimer_Tick(object sender, object e)
         {
-            Note.NoteUpdation(displayNote);
-            DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
+            _selectedNote.title = TitleOfNoteText;
+            _selectedNote.content = ContentOfNoteText;
+            Note.NoteUpdation(_selectedNote);
         }
 
         public void ContentOfNoteTapped()
         {
             ContentOfNoteIsReadOnly = false;
-
-            //noteSaveButton.Visibility = Visibility.Visible;
-            oldTitle = displayNote.title;
-            oldContent = displayNote.content;
+            OldContent = ContentOfNoteText;
                 DispatcherTimerSetup();
         }
+
+
+
+        public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            //_selectedNote.title = TitleOfNoteText;
+            //  _selectedNote.content = ContentOfNoteText;
+            //    Note.NoteUpdation(_selectedNote);
+            Popup p = (Popup)sender ;
+
+            // close the Popup
+            if (p != null) { p.IsOpen = false; }
+            
+            //    this.Content = new AccountPage(noteOwner);
+        }
+
+        public void NoteShareButtonClick()
+        {
+
+        }
+
+      
     }
 
 
