@@ -152,6 +152,8 @@
     <Compile Include="ViewModels\IEmail.cs" />
     <Compile Include="ViewModels\IEmailExt.cs" />
     <Compile Include="ViewModels\IMainView.cs" />
+    <Compile Include="ViewModels\INullorEmpty.cs" />
+    <Compile Include="ViewModels\IPassword.cs" />
     <Compile Include="ViewModels\LogInPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SignUpPageViewModel.cs" />
@@ -162,8 +164,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\123.png" />
-    <Content Include="Assets\58933.png" />
     <Content Include="Assets\download.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
@@ -210,6 +210,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Assets\YourNoteUWPBackDrop.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

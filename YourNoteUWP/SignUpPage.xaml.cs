@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 using static System.Net.Mime.MediaTypeNames;
 using YourNoteUWP.Models;
 using YourNoteUWP.ViewModels;
+using Windows.UI.Core;
+using System.Windows.Input;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -41,6 +43,7 @@ namespace YourNoteUWP
 
         }
 
-        }
+    
+    }
     }
 

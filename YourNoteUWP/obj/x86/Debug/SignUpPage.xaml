@@ -6,6 +6,11 @@
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/YourNoteUWPBackDrop.jpg" Stretch="Fill" />
+    </Page.Background>
+
+
     <ScrollViewer x:ConnectionId='2'
         Name="SignUpPageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
@@ -13,215 +18,213 @@
         <Grid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Background="{ThemeResource Light2}"
-            BorderBrush="{ThemeResource Dark3}"
+            Background="#ffffff"
+            BorderBrush="#a1a1a1"
             BorderThickness="2"
             CornerRadius="12">
 
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
 
             <!--<Name Field>-->
 
-            <TextBox x:ConnectionId='3'
-                Name="NameBox"
-                Grid.Row="0"
-                Width="400"
-                Height="50"
-                Margin="0,20"
-                HorizontalAlignment="Center"
-                FontSize="25"
-                PlaceholderText="Enter Your Name"
-                Style="{StaticResource TextBoxStyle}"
-                                                                                                               >
 
-                <ToolTipService.ToolTip>
-                    <TextBlock x:ConnectionId='21'
-                        Name="NameBoxToolTip"
-                                                                                               
-                                                                                                         />
+            <RelativePanel Grid.Row="0" Margin="10,20,10,10">
+                <TextBox x:ConnectionId='18'
+                    Name="NameBox"
+                    Margin="5,20,5,10"
+                                                                                                       
+                    Style="{StaticResource TextBoxStyle}"
+                                                                                                                   
+                                                                                                />
 
-                </ToolTipService.ToolTip>
-            </TextBox>
-
-            <FontIcon x:ConnectionId='4'
-                Name="NameCheck"
-                Grid.Row="0"
-                Style="{StaticResource BoxCheck}"
-                                                                                           >
-                <ToolTipService.ToolTip>
-                    <TextBlock x:ConnectionId='20'
-                        Name="NameToolTip"
-                                                                                            
-                        Visibility="Visible" />
-                </ToolTipService.ToolTip>
-            </FontIcon>
-
-
-            <!--<Email Field>-->
-
-            <TextBox x:ConnectionId='5'
-                Name="EmailBox"
-                Grid.Row="1"
-                Width="400"
-                Height="50"
-                Margin="0,20"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontSize="25"
-                PlaceholderText="Enter Your Email Id"
-                Style="{StaticResource TextBoxStyle}"
-                                                                                                                
-                                                                                            >
-                <ToolTipService.ToolTip>
-                    <TextBlock x:ConnectionId='19'
-                        Name="EmailBoxToolTip"
+                <Border x:ConnectionId='19'
+                    Name="NameCheckBorder"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.RightOf="NameBox"
+                    Style="{StaticResource CheckBorder}">
+                    <FontIcon x:ConnectionId='20'
+                        Name="NameCheck"
+                        Style="{StaticResource BoxCheck}"
+                                                                                                    />
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:ConnectionId='21'
+                            Name="NameToolTip"
                                                                                                 
                                                                                                           />
-                </ToolTipService.ToolTip>
-            </TextBox>
+                    </ToolTipService.ToolTip>
+                </Border>
+            </RelativePanel>
+
+            <!--<Email Field>-->
+            <RelativePanel Grid.Row="1" Margin="10">
+
+                <TextBox x:ConnectionId='14'
+                    Name="EmailBox"
+                    Grid.Row="1"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                                                                                                        
+                    Style="{StaticResource TextBoxStyle}"
+                                                                                                                    
+                                                                                                 />
 
 
-            <FontIcon x:ConnectionId='6'
-                Name="EmailCheck"
-                Grid.Row="1"
-                Style="{StaticResource BoxCheck}"
-                                                                                            >
-                <ToolTipService.ToolTip>
-                    <TextBlock x:ConnectionId='18'
-                        Name="EmailToolTip"
-                                                                                             
-                                                                                                       />
-                </ToolTipService.ToolTip>
 
-            </FontIcon>
+
+                <Border x:ConnectionId='15'
+                    Name="EmailCheckBorder"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.RightOf="EmailBox"
+                    Style="{StaticResource CheckBorder}">
+                    <FontIcon x:ConnectionId='16'
+                        Name="EmailCheck"
+                        Style="{StaticResource BoxCheck}"
+                                                                                                     />
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:ConnectionId='17'
+                            Name="EmailToolTip"
+                                                                                                 
+                                                                                                           />
+                    </ToolTipService.ToolTip>
+                </Border>
+            </RelativePanel>
 
 
             <!--<Password Field>-->
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Margin="0,0,0,10">
 
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
+                <RelativePanel Grid.Row="0" Margin="10">
+
+                    <PasswordBox x:ConnectionId='10'
+                        Name="PasswordBox"
+                        Grid.Row="0"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                                                                                                                                
+                                                                                                           
+                                                                                                             
+                                                                                                               
+                        Style="{StaticResource PasswordBoxStyle}" />
 
 
+                    <Border x:ConnectionId='11'
+                        Name="PasswordCheckBorder"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.RightOf="PasswordBox"
+                        Style="{StaticResource CheckBorder}">
 
-                <PasswordBox x:ConnectionId='13'
-                    Name="PasswordBox"
-                    Width="400"
-                    Height="50"
-                    Margin="0,20"
-                    HorizontalAlignment="Center"
-                                                                                                                            
-                                                                                                       
-                                                                                                         
-                    PlaceholderText="Enter The Password"
-                    Style="{StaticResource PasswordBoxStyle}">
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:ConnectionId='17'
-                            Name="PasswordBoxToolTip"
-                                                                                                       
-                                                                                                                 />
-                    </ToolTipService.ToolTip>
-                </PasswordBox>
+                        <FontIcon x:ConnectionId='12'
+                            Name="PasswordCheck"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource BoxCheck}"
+                                                                                                            />
 
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:ConnectionId='13'
+                                Name="PasswordToolTip"
+                                                                                                        
+                                                                                                                  />
+                        </ToolTipService.ToolTip>
 
-
-                <FontIcon x:ConnectionId='14'
-                    Name="PasswordCheck"
-                    Style="{StaticResource BoxCheck}"
-                                                                                                   >
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:ConnectionId='16' Name="PasswordToolTip"                                                                          />
-                    </ToolTipService.ToolTip>
-                </FontIcon>
+                    </Border>
+                </RelativePanel>
 
 
-                <CheckBox x:ConnectionId='15'
+                <CheckBox x:ConnectionId='9'
                     Name="RevealModeCheckBox"
                     Grid.Row="1"
-                    HorizontalAlignment="Center"
+                    Margin="20,7,0,0"
+                    HorizontalAlignment="Left"
+                                                                                                  
                     Content="Show password"
                     FontSize="25"
-                                                                                                       />
-
+                                                                                                      
+                    Style="{StaticResource ValidateCheckBox}"
+                                                                                                     />
 
 
             </Grid>
 
 
-            <!--<RPassword Field>-->
+            <!--<Confirm Password Field>-->
 
-            <PasswordBox x:ConnectionId='7'
-                Name="RPasswordBox"
-                Grid.Row="3"
-                Width="400"
-                Height="50"
-                Margin="0,20"
-                HorizontalAlignment="Center"
-                                                                                                                         
-                                                                                                        
-                                                                                                      
-                Style="{StaticResource PasswordBoxStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:ConnectionId='12'
-                        Name="RPasswordBoxToolTip"
-                                                                                                       
-                                                                                                              />
-                </ToolTipService.ToolTip>
-            </PasswordBox>
+            <RelativePanel Grid.Row="3" Margin="10,10,10,10">
+                <PasswordBox x:ConnectionId='5'
+                    Name="ConfirmPasswordBox"
+                    Grid.Row="3"
+                    Margin="5"
+                                                                                                                                   
+                                                                                                                  
+                                                                                                                
+                                                                                                                  
+                    Style="{StaticResource PasswordBoxStyle}" />
 
+                <Border x:ConnectionId='6'
+                    Name="ConfirmPasswordCheckBorder"
+                    Margin="5"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.RightOf="ConfirmPasswordBox"
+                    Style="{StaticResource CheckBorder}">
+                    <FontIcon x:ConnectionId='7'
+                        Name="ConfirmPasswordCheck"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource BoxCheck}"
+                                                                                                               />
 
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:ConnectionId='8'
+                            Name="ConfirmPasswordToolTip"
+                                                                                                           
+                                                                                                                     />
+                    </ToolTipService.ToolTip>
+                </Border>
 
-            <FontIcon x:ConnectionId='8'
-                Name="RPasswordCheck"
-                Grid.Row="3"
-                Style="{StaticResource BoxCheck}"
-                                                                                                >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:ConnectionId='11' Name="RPasswordToolTip"                                                                              />
-                </ToolTipService.ToolTip>
-            </FontIcon>
-
-
+            </RelativePanel>
 
 
             <Grid Grid.Row="4" VerticalAlignment="Center">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
+                <RelativePanel>
 
 
-                <Button x:ConnectionId='9'
-                    Name="SignUpBackButton"
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                                                                                            
-                    Content="Back"
-                    Style="{StaticResource ButtonStyle}" />
+                    <Button x:ConnectionId='3'
+                        Name="SignUpBackButton"
+                        Margin="0,0,10,0"
+                                                                                                
+                        Content="Back"
+                        RelativePanel.LeftOf="LogInButton"
+                        Style="{StaticResource SignUpButtonStyle}" />
 
-                <Button x:ConnectionId='10'
-                    Name="LogInButton"
-                    Grid.Column="1"
-                                                                                       
-                    Content="Create Account"
-                    Style="{StaticResource ButtonStyle}" />
+                    <Button x:ConnectionId='4'
+                        Name="LogInButton"
+                        Width="Auto"
+                        Margin="0,0,10,10"
+                        Padding="2,0,2,0"
+                                                                                           
+                        Content="Create Account"
+                        RelativePanel.AlignRightWithPanel="True"
+                        Style="{StaticResource SignUpButtonStyle}" />
 
+                </RelativePanel>
 
             </Grid>
+
 
         </Grid>
 

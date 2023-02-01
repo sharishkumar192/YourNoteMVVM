@@ -13,11 +13,11 @@ using YourNoteUWP.Models;
 
 namespace YourNoteUWP.ViewModels
 {
-    internal class LogInPageViewModel : IEmail, INotifyPropertyChanged
+    internal class LogInPageViewModel : INotifyPropertyChanged, IEmail, INullorEmpty 
     {
         IMainView _manageView;
         private SignUpPageViewModel _signUpPageViewModel;
-         public LogInPageViewModel(IMainView view)
+        public LogInPageViewModel(IMainView view)
         {
             _manageView = view;
             _signUpPageViewModel = new SignUpPageViewModel();
@@ -46,19 +46,6 @@ namespace YourNoteUWP.ViewModels
         }
 
         //------------------------------------------Email TextBox---------------------------------------------------
-        private string _emailBoxContent;
-
-         public string EmailBoxContent
-        {
-            get { return _emailBoxContent; }
-            set
-            {
-                _emailBoxContent = value;
-                EmailBoxLostFocus();
-                OnPropertyChanged();
-            }
-        }
-
         public string IsEmailCheck(string email)
         {
             string checkNullOrEmpty = CheckNullOrEmpty(email);
@@ -75,20 +62,67 @@ namespace YourNoteUWP.ViewModels
             return null;
         }
 
-     
-        public string CheckNullOrEmpty(string email)
-        {
-            if (String.IsNullOrEmpty(email) == true)
-                return "Email Cant Be Empty";
-
-            return null;
-        }
-
         public string CheckValidEmail(string email)
         {
-            if (Models.User.IsValidEmail(email) == false)
-                return "Email Id Not Valid";
-            return null;
+            return _signUpPageViewModel.CheckValidEmail(email);
+        }
+
+        public string CheckNullOrEmpty(string email)
+        {
+           return  _signUpPageViewModel.CheckNullOrEmpty(email);
+
+        }
+
+
+        //Text Box
+
+        private string _emailBoxContent = "";
+        public string EmailBoxContent
+        {
+            get { return _emailBoxContent; }
+            set
+            {
+                _emailBoxContent = value;
+                EmailBoxLostFocus();
+                OnPropertyChanged();
+            }
+        }
+
+        public string EmailBoxPlaceHolderText
+        {
+            get { return _signUpPageViewModel.EmailBoxPlaceHolderText; }
+        }
+
+        // Font Icon
+        public Visibility EmailCheckVisibility
+        {
+            get { return _signUpPageViewModel.EmailCheckVisibility; }
+            set
+            {
+                _signUpPageViewModel.EmailCheckVisibility = value;
+                ShowEmailToolTip();
+                OnPropertyChanged();
+            }
+        }
+
+        //Tool Tip
+        public string EmailToolTipContent
+        {
+            get { return _signUpPageViewModel.EmailToolTipContent; }
+            set
+            {
+                _signUpPageViewModel.EmailToolTipContent = value;
+                OnPropertyChanged();
+            }
+        }
+        public Visibility EmailToolTipVisibility
+        {
+            get { return _signUpPageViewModel.EmailToolTipVisibility; }
+            set
+            {
+                _signUpPageViewModel.EmailToolTipVisibility = value;
+                OnPropertyChanged();
+            }
         }
 
         public void EmailBoxLostFocus()
@@ -96,52 +130,161 @@ namespace YourNoteUWP.ViewModels
             string value = IsEmailCheck(EmailBoxContent);
             if (value == null)
             {
-                _signUpPageViewModel.EmailBoxToolTipContent = _signUpPageViewModel.EmailToolTipContent = "";
-                _signUpPageViewModel.EmailBoxToolTipVisibility = _signUpPageViewModel.EmailToolTipVisibility = _signUpPageViewModel.EmailCheckVisibility = Visibility.Collapsed;
+                EmailToolTipContent = "";
+                EmailCheckVisibility = Visibility.Collapsed;
             }
             else
             {
-                _signUpPageViewModel.EmailBoxToolTipContent = _signUpPageViewModel.EmailToolTipContent = value;
-                _signUpPageViewModel.EmailBoxToolTipVisibility = _signUpPageViewModel.EmailToolTipVisibility = _signUpPageViewModel.EmailCheckVisibility = Visibility.Visible;
+                EmailToolTipContent = value;
+                EmailCheckVisibility = Visibility.Visible;
 
             }
 
         }
 
+        public void ShowEmailToolTip()
+        {
+            if (EmailCheckVisibility == Visibility.Collapsed)
+            {
+                EmailToolTipVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                EmailToolTipVisibility = Visibility.Visible;
+            }
+        }
+
+        public void EmailBoxTextChanged()
+        {
+            EmailToolTipContent = "";
+            EmailCheckVisibility = Visibility.Collapsed;
+        }
 
         //-------------------------------------------------- Password Box --------------------------------------------------------
 
-        private bool _revealModeCheckBoxIsChecked = false;
 
-        public bool RevealModeCheckBoxIsChecked
+        //Password Box
+        private string _passwordBoxPassword = "";
+        public string PasswordBoxPassword
         {
-            get { return _revealModeCheckBoxIsChecked; }
+            get { return _passwordBoxPassword; }
             set
             {
-                _revealModeCheckBoxIsChecked = value;
-                RevealModeCheckBoxChanged();
+                _passwordBoxPassword = value;
+                PasswordBoxLostFocus();
+                OnPropertyChanged();
+            }
+        }
+
+        public PasswordRevealMode PasswordBoxRevealMode
+        {
+            get { return _signUpPageViewModel.PasswordBoxRevealMode; }
+            set
+            {
+                _signUpPageViewModel.PasswordBoxRevealMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PasswordBoxPlaceHolderText
+
+        {
+            get { return _signUpPageViewModel.PasswordBoxPlaceHolderText; }
+        }
+
+        //Check Box
+        public bool RevealModeCheckBoxIsChecked
+        {
+            get { return _signUpPageViewModel.RevealModeCheckBoxIsChecked; }
+            set
+            {
+                _signUpPageViewModel.RevealModeCheckBoxIsChecked = value;
                 OnPropertyChanged();
             }
         }
 
 
-        
-        public void RevealModeCheckBoxChanged()
+        // Font Icon
+        public Visibility PasswordCheckVisibility
         {
-            if (RevealModeCheckBoxIsChecked == true)
-            {
-                _signUpPageViewModel.PasswordBoxRevealMode = PasswordRevealMode.Visible;
+            get { return _signUpPageViewModel.PasswordCheckVisibility; }
+            set {  _signUpPageViewModel.PasswordCheckVisibility = value;
+                ShowPasswordToolTip();
+                OnPropertyChanged();
 
+            }
+        }
+
+        //Tool Tip
+        public string PasswordToolTipContent
+        {
+            get { return _signUpPageViewModel.PasswordToolTipContent; }
+            set { 
+                _signUpPageViewModel.PasswordToolTipContent = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        public Visibility PasswordToolTipVisibility
+        {
+            get { return _signUpPageViewModel.PasswordToolTipVisibility; }
+            set
+            {
+                _signUpPageViewModel.PasswordToolTipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void RevealModeCheckBoxChecked()
+        {
+            if (RevealModeCheckBoxIsChecked == false)
+            {
+                RevealModeCheckBoxIsChecked = true;
+                PasswordBoxRevealMode = PasswordRevealMode.Visible;
             }
             else
             {
-                _signUpPageViewModel.PasswordBoxRevealMode = PasswordRevealMode.Hidden;
-
+                RevealModeCheckBoxIsChecked = false;
+                PasswordBoxRevealMode = PasswordRevealMode.Hidden;
             }
-
-
         }
 
+        public void PasswordBoxLostFocus()
+        {
+            string value = _signUpPageViewModel.IsPasswordCheck(PasswordBoxPassword);
+            if (value == null)
+            {
+                PasswordToolTipContent = "";
+                PasswordCheckVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasswordToolTipContent = value;
+                PasswordCheckVisibility = Visibility.Visible;
+
+
+            }
+        }
+
+        public void PasswordBoxTextChanged()
+        {
+            PasswordToolTipContent = "";
+            PasswordCheckVisibility = Visibility.Collapsed;
+        }
+
+
+        public void ShowPasswordToolTip()
+        {
+            if (PasswordCheckVisibility == Visibility.Collapsed)
+            {
+                PasswordToolTipVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasswordToolTipVisibility = Visibility.Visible;
+            }
+        }
         //---------------------------------------------- Frequent Users ListView ----------------------------------------------------
         public ObservableCollection<YourNoteUWP.Models.User> FrequentEmailItemSource
         {
@@ -174,20 +317,27 @@ namespace YourNoteUWP.ViewModels
         private ObservableCollection<YourNoteUWP.Models.User> _frequentEmailItemSource = Models.User.GetFrequentUsers();
 
         //------------------------------------------Page Navigation Buttons---------------------------------------------
-      public void LogInButtonClick()
+        public void LogInButtonClick()
         {
             //_signUpPageViewModel.PasswordBoxPassword
-            Tuple<Models.User, bool> validation = Models.User.ValidateLogInUser(EmailBoxContent, "123");
 
-            if (validation.Item2 == true)
+            EmailBoxLostFocus();
+            PasswordBoxLostFocus();
+            if (EmailCheckVisibility == Visibility.Collapsed &&
+                PasswordCheckVisibility == Visibility.Collapsed)
             {
-          
-                _manageView.Content = new AccountPage(validation.Item1);
+                Tuple<Models.User, bool> validation = Models.User.ValidateLogInUser(EmailBoxContent, PasswordBoxPassword);
+                if (validation.Item2 == true)
+                {
+                    _manageView.Content = new AccountPage(validation.Item1);
+                }
+                else
+                {
+                    //TODO -> Case : Credentials are wrong
+                }
+
             }
-            else
-            {
-                //Credentials Wrong
-            }
+
         }
 
         public void LogInBackButtonClick()
@@ -195,5 +345,19 @@ namespace YourNoteUWP.ViewModels
         {
             _manageView.Content = new MainPage();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

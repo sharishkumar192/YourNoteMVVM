@@ -7,14 +7,17 @@
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/YourNoteUWPBackDrop.jpg" Stretch="Fill" />
+    </Page.Background>
 
     <Page.Resources>
         <DataTemplate x:Key="emailIdOfUsers" x:DataType="data:User">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <StackPanel
+                Padding="5,2"
+                Background="#ffffff"
+                BorderBrush="#2c2c2c"
+                BorderThickness="0,0,0,1">
 
                 <TextBlock
                     HorizontalAlignment="Left"
@@ -27,28 +30,33 @@
                     Style="{StaticResource SignUpTextBlocks}"
                     Text="{x:Bind userId}" />
 
-            </Grid>
+            </StackPanel>
 
         </DataTemplate>
 
     </Page.Resources>
 
     <ScrollViewer
-        Name="logInPageScrollViewer"
+        Name="LogInPageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
         <Grid
             HorizontalAlignment="Center"
-            Background="{ThemeResource Light2}"
-            BorderBrush="{ThemeResource Dark3}"
-            BorderThickness="2"
+            VerticalAlignment="Center"
+            Background="#a1a1a1"
             CornerRadius="12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid
+                Grid.Column="0"
+                Background="#ffffff"
+                BorderBrush="#a1a1a1"
+                BorderThickness="5"
+                CornerRadius="12">
 
                 <Grid Grid.Row="0" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -57,87 +65,95 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
+                    <!--<Email Field>-->
+                    <RelativePanel Grid.Row="0" Margin="10">
+
+                        <TextBox
+                            Name="EmailBox"
+                            Grid.Row="0"
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            PlaceholderText="{x:Bind _logInPageViewModel.EmailBoxPlaceHolderText, Mode=OneWay}"
+                            Style="{StaticResource TextBoxStyle}"
+                            Text="{x:Bind _logInPageViewModel.EmailBoxContent, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                            TextChanged="{x:Bind _logInPageViewModel.EmailBoxTextChanged, Mode=OneWay}" />
 
 
-                    <TextBox
-                        Name="EmailBox"
-                        Width="400"
-                        Height="50"
-                        Margin="0,20"
-                        HorizontalAlignment="Center"
-                        BorderBrush="White"
-                        BorderThickness="2"
-                        CornerRadius="15"
-                        FontSize="25"
-                        PlaceholderText="Enter Your Email Id"
-                        Style="{StaticResource TextBoxStyle}"
-                        Text="{x:Bind _logInPageViewModel.EmailBoxContent, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
-                        TextChanged="{x:Bind _signUpPageViewModel.EmailBoxTextChanged, Mode=OneWay}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Name="EmailBoxToolTip"
-                                Content="{x:Bind _signUpPageViewModel.EmailBoxToolTipContent, Mode=OneWay}"
-                                Visibility="{x:Bind _signUpPageViewModel.EmailBoxToolTipVisibility, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBox>
+                        <Border
+                            Name="EmailCheckBorder"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.RightOf="EmailBox"
+                            Style="{StaticResource CheckBorder}">
+                            <FontIcon
+                                Name="EmailCheck"
+                                Style="{StaticResource BoxCheck}"
+                                Visibility="{x:Bind _logInPageViewModel.EmailCheckVisibility, Mode=OneWay}" />
+                            <ToolTipService.ToolTip>
+                                <TextBlock
+                                    Name="EmailToolTip"
+                                    Text="{x:Bind _logInPageViewModel.EmailToolTipContent, Mode=OneWay}"
+                                    Visibility="{x:Bind _logInPageViewModel.EmailToolTipVisibility, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </Border>
+                    </RelativePanel>
 
-
-                    <FontIcon
-                        Name="EmailCheck"
-                        Style="{StaticResource BoxCheck}"
-                        Visibility="{x:Bind _signUpPageViewModel.EmailCheckVisibility, Mode=OneWay}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Name="EmailToolTip" Content="{x:Bind _signUpPageViewModel.EmailToolTipContent, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </FontIcon>
-
+                    <!--<Password Field>-->
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+                        <RelativePanel Grid.Row="0" Margin="15,20,10,10">
 
+                            <PasswordBox
+                                x:Name="PasswordBox"
+                                Margin="0,20,0,17"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Password="{x:Bind _logInPageViewModel.PasswordBoxPassword, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                                PasswordChanged="{x:Bind _logInPageViewModel.PasswordBoxTextChanged, Mode=OneWay}"
+                                PasswordRevealMode="{x:Bind _logInPageViewModel.PasswordBoxRevealMode, Mode=OneWay}"
+                                PlaceholderText="{x:Bind _logInPageViewModel.PasswordBoxPlaceHolderText, Mode=OneWay}"
+                                Style="{StaticResource PasswordBoxStyle}" />
 
+                            <Border
+                                Name="PasswordCheckBorder"
+                                Margin="0,15,0,0"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.RightOf="PasswordBox"
+                                Style="{StaticResource CheckBorder}">
 
-                        <PasswordBox
-                            x:Name="PasswordBox"
-                            Width="400"
-                            Height="50"
-                            Margin="0,20"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Password="{x:Bind _signUpPageViewModel.PasswordBoxPassword, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
-                            PasswordChanged="{x:Bind _signUpPageViewModel.PasswordBoxTextChanged, Mode=OneWay}"
-                            PasswordRevealMode="{x:Bind _signUpPageViewModel.PasswordBoxRevealMode, Mode=OneWay}"
-                            Style="{StaticResource PasswordBoxStyle}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock
-                                    Name="PasswordBoxToolTip"
-                                    Text="{x:Bind _signUpPageViewModel.PasswordBoxToolTipContent, Mode=OneWay}"
-                                    Visibility="{x:Bind _signUpPageViewModel.PasswordBoxToolTipVisibility, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </PasswordBox>
+                                <FontIcon
+                                    Name="PasswordCheck"
+                                    Margin="5,0,0,0"
+                                    Style="{StaticResource BoxCheck}"
+                                    Visibility="{x:Bind _logInPageViewModel.PasswordCheckVisibility, Mode=OneWay}" />
 
+                                <ToolTipService.ToolTip>
+                                    <TextBlock
+                                        Name="PasswordToolTip"
+                                        Text="{x:Bind _logInPageViewModel.PasswordToolTipContent, Mode=OneWay}"
+                                        Visibility="{x:Bind _logInPageViewModel.PasswordToolTipVisibility, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
 
-
-                        <FontIcon
-                            Name="PasswordCheck"
-                            Style="{StaticResource BoxCheck}"
-                            Visibility="{x:Bind _signUpPageViewModel.PasswordCheckVisibility, Mode=OneWay}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock Name="PasswordToolTip" Text="{x:Bind _signUpPageViewModel.PasswordToolTipContent, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </FontIcon>
+                            </Border>
+                        </RelativePanel>
 
 
                         <CheckBox
                             Name="RevealModeCheckBox"
                             Grid.Row="1"
-                            HorizontalAlignment="Center"
+                            Margin="18.5,0,0,5"
+                            HorizontalAlignment="Left"
+                            Checked="{x:Bind _logInPageViewModel.RevealModeCheckBoxChecked, Mode=OneWay}"
                             Content="Show password"
                             FontSize="25"
-                            IsChecked="{x:Bind _logInPageViewModel.RevealModeCheckBoxIsChecked, Mode=OneWay}" />
+                            IsChecked="{x:Bind _logInPageViewModel.RevealModeCheckBoxIsChecked, Mode=OneWay}"
+                            Style="{StaticResource ValidateCheckBox}"
+                            Unchecked="{x:Bind _logInPageViewModel.RevealModeCheckBoxChecked, Mode=OneWay}" />
+
+
 
 
 
@@ -147,37 +163,28 @@
 
 
                     <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                        <RelativePanel>
+                            <Button
+                                Name="LogInButton"
+                                Margin="0,0,10,0"
+                                Click="{x:Bind _logInPageViewModel.LogInButtonClick, Mode=OneWay}"
+                                Content="Log In"
+                                RelativePanel.AlignRightWithPanel="True"
+                                Style="{StaticResource SignUpButtonStyle}" />
 
-
-                        <Button
-                            Name="LogInBackButton"
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Click="{x:Bind _logInPageViewModel.LogInBackButtonClick, Mode=OneWay}"
-                            Content="Back"
-                            Style="{StaticResource ButtonStyle}" />
-
-
-
-                        <Button
-                            Name="LogInButton"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Click="{x:Bind _logInPageViewModel.LogInButtonClick, Mode=OneWay}"
-                            Content="Log In"
-                            FontSize="25"
-                            Style="{StaticResource ButtonStyle}" />
+                            <Button
+                                Name="LogInBackButton"
+                                Margin="0,0,10,0"
+                                Click="{x:Bind _logInPageViewModel.LogInBackButtonClick, Mode=OneWay}"
+                                Content="Back"
+                                RelativePanel.LeftOf="LogInButton"
+                                Style="{StaticResource SignUpButtonStyle}" />
 
 
 
+
+
+                        </RelativePanel>
 
 
                     </Grid>
@@ -193,30 +200,21 @@
             </Grid>
 
 
-
-
-            <!--  XAML Code  -->
-            <!--
-                In this example, the ListView's ItemTemplate property is bound to a data template (shown below)
-                called ContactListViewTemplate, defined in a Page.Resources section.
-            -->
-
-            <!--<DataTemplate x:Key="ContactListViewTemplate" x:DataType="local1:Contact">
-                <TextBlock Text="{x:Bind Name}" x:Phase="1" Margin="0,5,0,5"/>
-            </DataTemplate>-->
-
-
-
+            <Grid Grid.Column="1" Background="#a1a1a1" />
 
             <Grid
                 Name="FrequentEmailBox"
-                Grid.Column="1"
+                Grid.Column="2"
+                Background="#ffffff"
+                BorderBrush="#a1a1a1"
+                BorderThickness="5"
+                CornerRadius="12"
                 Visibility="{x:Bind _logInPageViewModel.FrequentEmailBox, Mode=OneWay}">
 
                 <ListView
                     Name="FrequentEmail"
-                    Width="400"
-                    Height="700"
+                    Width="300"
+                    Height="300"
                     IsItemClickEnabled="True"
                     ItemClick="{x:Bind _logInPageViewModel.FrequentEmailItemClick}"
                     ItemContainerStyle="{StaticResource LoginListViewItem}"

@@ -6,7 +6,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using Windows.Storage;
+using Windows.UI.Xaml;
 using YourNoteUWP;
 using YourNoteUWP.Models;
 namespace YourNoteUWP
@@ -30,7 +31,8 @@ namespace YourNoteUWP
         public static SQLiteConnection OpenConnection()
         {
             // Create a new database connection:
-            SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=C:\\Users\\harish-pt6263\\AppData\\Local\\Packages\\f370c6dd-350c-4488-8938-3a4de12a2669_ekzxxtgcwg1pc\\LocalState\\database.db; Version = 3; New = True; Compress = True; ");
+         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source="+localFolder.Path+"\\database.db; Version = 3; New = True; Compress = True; ");
             sqlite_conn.Open();
             return sqlite_conn;
         }

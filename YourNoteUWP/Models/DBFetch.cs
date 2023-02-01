@@ -29,7 +29,7 @@ namespace YourNoteUWP
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             bool check = false;
-            string query = $"SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " where userId= @userId ";
+            string query = $"SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " WHERE userId= @userId ";
             try
             {
                 using (SQLiteConnection conn = DBCreation.OpenConnection())

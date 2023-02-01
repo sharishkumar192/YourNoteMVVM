@@ -7,14 +7,17 @@
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/YourNoteUWPBackDrop.jpg" Stretch="Fill" />
+    </Page.Background>
 
     <Page.Resources>
         <DataTemplate x:Key="emailIdOfUsers"                       >
-            <Grid x:ConnectionId='3' Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <StackPanel x:ConnectionId='3'
+                Padding="5,2"
+                Background="#ffffff"
+                BorderBrush="#2c2c2c"
+                BorderThickness="0,0,0,1">
 
                 <TextBlock x:ConnectionId='4'
                     HorizontalAlignment="Left"
@@ -27,28 +30,33 @@
                     Style="{StaticResource SignUpTextBlocks}"
                                            />
 
-            </Grid>
+            </StackPanel>
 
         </DataTemplate>
 
     </Page.Resources>
 
     <ScrollViewer x:ConnectionId='6'
-        Name="logInPageScrollViewer"
+        Name="LogInPageScrollViewer"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
         <Grid
             HorizontalAlignment="Center"
-            Background="{ThemeResource Light2}"
-            BorderBrush="{ThemeResource Dark3}"
-            BorderThickness="2"
+            VerticalAlignment="Center"
+            Background="#a1a1a1"
             CornerRadius="12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid
+                Grid.Column="0"
+                Background="#ffffff"
+                BorderBrush="#a1a1a1"
+                BorderThickness="5"
+                CornerRadius="12">
 
                 <Grid Grid.Row="0" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -57,84 +65,95 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
+                    <!--<Email Field>-->
+                    <RelativePanel Grid.Row="0" Margin="10">
+
+                        <TextBox x:ConnectionId='16'
+                            Name="EmailBox"
+                            Grid.Row="0"
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                                                                                                               
+                            Style="{StaticResource TextBoxStyle}"
+                                                                                                                           
+                                                                                                        />
 
 
-                    <TextBox x:ConnectionId='9'
-                        Name="EmailBox"
-                        Width="400"
-                        Height="100"
-                        Margin="0,0,0,20"
-                        HorizontalAlignment="Center"
-                        BorderBrush="White"
-                        BorderThickness="2"
-                        CornerRadius="15"
-                        FontSize="25"
-                        PlaceholderText="Enter Your Email Id"
-                        Style="{StaticResource TextBoxStyle}"
-                                                                                                                       
-                                                                                                    >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:ConnectionId='19'
-                                Name="EmailBoxToolTip"
-                                                                                                           
+                        <Border x:ConnectionId='17'
+                            Name="EmailCheckBorder"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.RightOf="EmailBox"
+                            Style="{StaticResource CheckBorder}">
+                            <FontIcon x:ConnectionId='18'
+                                Name="EmailCheck"
+                                Style="{StaticResource BoxCheck}"
+                                                                                                            />
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:ConnectionId='19'
+                                    Name="EmailToolTip"
+                                                                                                        
                                                                                                                   />
-                        </ToolTipService.ToolTip>
-                    </TextBox>
+                            </ToolTipService.ToolTip>
+                        </Border>
+                    </RelativePanel>
 
-
-                    <FontIcon x:ConnectionId='10'
-                        Name="EmailCheck"
-                        Style="{StaticResource BoxCheck}"
-                                                                                                    >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:ConnectionId='18' Name="EmailToolTip"                                                                          />
-                        </ToolTipService.ToolTip>
-                    </FontIcon>
-
+                    <!--<Password Field>-->
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+                        <RelativePanel Grid.Row="0" Margin="15,20,10,10">
 
+                            <PasswordBox x:ConnectionId='12'
+                                x:Name="PasswordBox"
+                                Margin="0,20,0,17"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                                                                                                                       
+                                                                                                                  
+                                                                                                                    
+                                                                                                                      
+                                Style="{StaticResource PasswordBoxStyle}" />
 
+                            <Border x:ConnectionId='13'
+                                Name="PasswordCheckBorder"
+                                Margin="0,15,0,0"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.RightOf="PasswordBox"
+                                Style="{StaticResource CheckBorder}">
 
-                        <PasswordBox x:ConnectionId='13'
-                            x:Name="PasswordBox"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                                                                                                                                    
-                                                                                                               
-                                                                                                                 
-                            Style="{StaticResource PasswordBoxStyle}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:ConnectionId='17'
-                                    Name="PasswordBoxToolTip"
+                                <FontIcon x:ConnectionId='14'
+                                    Name="PasswordCheck"
+                                    Margin="5,0,0,0"
+                                    Style="{StaticResource BoxCheck}"
+                                                                                                                   />
+
+                                <ToolTipService.ToolTip>
+                                    <TextBlock x:ConnectionId='15'
+                                        Name="PasswordToolTip"
                                                                                                                
                                                                                                                          />
-                            </ToolTipService.ToolTip>
-                        </PasswordBox>
+                                </ToolTipService.ToolTip>
+
+                            </Border>
+                        </RelativePanel>
 
 
-
-                        <FontIcon x:ConnectionId='14'
-                            Name="PasswordCheck"
-                            Style="{StaticResource BoxCheck}"
-                                                                                                           >
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:ConnectionId='16' Name="PasswordToolTip"                                                                          />
-                            </ToolTipService.ToolTip>
-                        </FontIcon>
-
-
-                        <CheckBox x:ConnectionId='15'
+                        <CheckBox x:ConnectionId='11'
                             Name="RevealModeCheckBox"
                             Grid.Row="1"
-                            HorizontalAlignment="Center"
+                            Margin="18.5,0,0,5"
+                            HorizontalAlignment="Left"
+                                                                                                         
                             Content="Show password"
                             FontSize="25"
-                                                                                                              />
+                                                                                                             
+                            Style="{StaticResource ValidateCheckBox}"
+                                                                                                            />
+
+
 
 
 
@@ -144,37 +163,28 @@
 
 
                     <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-
-                        <Button x:ConnectionId='11'
-                            Name="LogInBackButton"
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
+                        <RelativePanel>
+                            <Button x:ConnectionId='9'
+                                Name="LogInButton"
+                                Margin="0,0,10,0"
                                                                                                   
-                            Content="Back"
-                            Style="{StaticResource ButtonStyle}" />
+                                Content="Log In"
+                                RelativePanel.AlignRightWithPanel="True"
+                                Style="{StaticResource SignUpButtonStyle}" />
+
+                            <Button x:ConnectionId='10'
+                                Name="LogInBackButton"
+                                Margin="0,0,10,0"
+                                                                                                      
+                                Content="Back"
+                                RelativePanel.LeftOf="LogInButton"
+                                Style="{StaticResource SignUpButtonStyle}" />
 
 
 
-                        <Button x:ConnectionId='12'
-                            Name="LogInButton"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                                                                                              
-                            Content="Log In"
-                            FontSize="25"
-                            Style="{StaticResource ButtonStyle}" />
 
 
-
+                        </RelativePanel>
 
 
                     </Grid>
@@ -190,30 +200,21 @@
             </Grid>
 
 
-
-
-            <!--  XAML Code  -->
-            <!--
-                In this example, the ListView's ItemTemplate property is bound to a data template (shown below)
-                called ContactListViewTemplate, defined in a Page.Resources section.
-            -->
-
-            <!--<DataTemplate x:Key="ContactListViewTemplate" x:DataType="local1:Contact">
-                <TextBlock Text="{x:Bind Name}" x:Phase="1" Margin="0,5,0,5"/>
-            </DataTemplate>-->
-
-
-
+            <Grid Grid.Column="1" Background="#a1a1a1" />
 
             <Grid x:ConnectionId='7'
                 Name="FrequentEmailBox"
-                Grid.Column="1"
+                Grid.Column="2"
+                Background="#ffffff"
+                BorderBrush="#a1a1a1"
+                BorderThickness="5"
+                CornerRadius="12"
                                                                                        >
 
                 <ListView x:ConnectionId='8'
                     Name="FrequentEmail"
-                    Width="400"
-                    Height="700"
+                    Width="300"
+                    Height="300"
                     IsItemClickEnabled="True"
                                                                                    
                     ItemContainerStyle="{StaticResource LoginListViewItem}"

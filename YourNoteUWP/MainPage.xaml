@@ -6,6 +6,7 @@
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource Light1}"
+    NavigationCacheMode="Disabled"
     mc:Ignorable="d">
 
 
