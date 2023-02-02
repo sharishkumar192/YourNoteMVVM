@@ -23,7 +23,7 @@
             Background="#ffffff"
             BorderBrush="Black"
             BorderThickness="1"
-            CornerRadius="12">
+            CornerRadius="4">
 
 
             <Grid.RowDefinitions>
@@ -40,7 +40,7 @@
                 HorizontalAlignment="Center"
                 Background="#ffffff"
                 BorderThickness="0,5,0,0"
-                CornerRadius="12,12,0,0">
+                CornerRadius="4,4,0,0">
                 <StackPanel Margin="15,15,5,5" Orientation="Horizontal">
                     <Image
                         Width="30"
@@ -77,7 +77,7 @@
                 Background="#ffffff"
                 BorderBrush="#ffffff"
                 BorderThickness="5,0,5,5"
-                CornerRadius="0,0,12,12">
+                CornerRadius="0,0,4,4">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -234,7 +234,7 @@
                         Click="{x:Bind _signUpPageViewModel.SignUpBackButtonClick, Mode=OneWay}"
                         Content="Back"
                         RelativePanel.LeftOf="LogInButton"
-                        Style="{StaticResource SignUpButtonStyle}" />
+                        Style="{StaticResource BackButtonStyle}" />
 
 
                     <Button

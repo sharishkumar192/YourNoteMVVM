@@ -14,23 +14,33 @@
     <Page.Resources>
         <DataTemplate x:Key="emailIdOfUsers"                       >
             <StackPanel x:ConnectionId='3'
-                Padding="5,2"
+                Width="Auto"
+                Height="Auto"
+                Margin="0"
                 Background="#ffffff"
                 BorderBrush="#2c2c2c"
-                BorderThickness="0,0,0,1">
+                BorderThickness="0,0,0,1"
+                Orientation="Horizontal">
 
-                <TextBlock x:ConnectionId='4'
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource SignUpTextBlocks}"
-                                         />
-
-                <TextBlock x:ConnectionId='5'
-                    Grid.Row="1"
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource SignUpTextBlocks}"
-                                           />
+                <Image
+                    Width="40"
+                    Height="40"
+                    Margin="0,0,10,0"
+                    Source="/Assets/LockScreenLogo.scale-200.png" />
+                <StackPanel>
+                    <TextBlock x:ConnectionId='4'
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource SignUpTextBlocks}"
+                                             />
+                    <TextBlock x:ConnectionId='5'
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource SignUpTextBlocks}"
+                                               />
+                </StackPanel>
 
             </StackPanel>
+
 
         </DataTemplate>
 
@@ -50,9 +60,9 @@
             Background="#ffffff"
             BorderBrush="Black"
             BorderThickness="1"
-            CornerRadius="12">
+            CornerRadius="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
@@ -60,11 +70,11 @@
 
             <Grid
                 Grid.Column="0"
-                Padding="20,0,0,0"
+                Padding="20,0,40,0"
                 Background="#ffffff"
                 BorderBrush="{StaticResource WindowBrushA}"
                 BorderThickness="1,1,0,1"
-                CornerRadius="12">
+                CornerRadius="4">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -74,8 +84,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+
                 </Grid.RowDefinitions>
 
 
@@ -86,7 +95,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Background="#ffffff"
-                    CornerRadius="12">
+                    CornerRadius="4">
 
                     <StackPanel Margin="15,0,0,0" Orientation="Horizontal">
                         <Image
@@ -113,14 +122,6 @@
                         Foreground="Black"
                         Text="to access Notebook" />
                 </StackPanel>
-                <!--<Row Spacer>-->
-
-                <Grid
-                    Grid.Row="1"
-                    Width="430"
-                    Height="10"
-                    Background="#ffffff"
-                    BorderBrush="#ffffff" />
 
 
                 <!--<Email Field>-->
@@ -137,6 +138,8 @@
                 <RelativePanel Grid.Row="2" Margin="0,15,0,0">
                     <Border x:ConnectionId='17'
                         Name="EmailFontBorderStyle"
+                        Width="Auto"
+                        Margin="-10,0,-30,0"
                         RelativePanel.AlignRightWithPanel="True"
                         Style="{StaticResource FontBorderStyle}">
                         <FontIcon x:ConnectionId='18'
@@ -166,6 +169,7 @@
 
                     <Border x:ConnectionId='14'
                         Name="PasswordFontBorderStyle"
+                        Margin="-10,0,-30,0"
                         RelativePanel.AlignRightWithPanel="True"
                         Style="{StaticResource FontBorderStyle}">
 
@@ -209,7 +213,7 @@
                                                                                               
                         Content="Back"
                         RelativePanel.LeftOf="LogInButton"
-                        Style="{StaticResource SignUpButtonStyle}" />
+                        Style="{StaticResource BackButtonStyle}" />
 
                 </RelativePanel>
 
@@ -243,15 +247,27 @@
             <Grid x:ConnectionId='7'
                 Name="FrequentEmailBox"
                 Grid.Column="2"
-                Padding="20,0,35,20"
+                Padding="35,0,33,10"
                 Background="#ffffff"
                 BorderBrush="Black"
                 BorderThickness="0"
-                CornerRadius="12"
+                CornerRadius="4"
                                                                                        >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    Foreground="Black"
+                    Text="Choose an account" />
+
 
                 <ListView x:ConnectionId='8'
                     Name="FrequentEmail"
+                    Grid.Row="1"
                     Width="300"
                     Height="300"
                     IsItemClickEnabled="True"
