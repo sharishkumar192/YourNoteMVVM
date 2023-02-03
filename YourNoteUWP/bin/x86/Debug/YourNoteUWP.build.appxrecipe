@@ -238,8 +238,8 @@
       <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\ZohoSignUpPageBackdrop-Light.png">
-      <PackagePath>Assets\ZohoSignUpPageBackdrop-Light.png</PackagePath>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\AppBackdrop-Light.png">
+      <PackagePath>Assets\AppBackdrop-Light.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>

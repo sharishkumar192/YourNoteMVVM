@@ -20,7 +20,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
 using YourNoteUWP.ViewModels;
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace YourNoteUWP
@@ -30,25 +29,19 @@ namespace YourNoteUWP
     /// </summary>
     public sealed partial class AccountPage : Page
     {
-
-
-
         private AccountPageViewModel _accountPageViewModel;
-
-
         public AccountPage()
         {
-            //   this.InitializeComponent();
-            //   _accountPageViewModel = new AccountPageViewModel(this, );
+            this.InitializeComponent();
+            this.SizeChanged += AccountPage_SizeChanged;
+
+
 
         }
         public AccountPage(Models.User loggedUser)
         {
-            this.InitializeComponent();
-           // _accountPageViewModel = new AccountPageViewModel(this, loggedUser);
+          //  this.InitializeComponent();
 
-            this.DataContext = _accountPageViewModel;
-            this.SizeChanged += AccountPage_SizeChanged;
 
 
 
@@ -58,11 +51,12 @@ namespace YourNoteUWP
 
         }
 
-        
-
-        private void InitializeComponent(DependencyObject parent)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+
+            Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
+
+            _accountPageViewModel = new AccountPageViewModel(tuple);
         }
 
         private void AccountPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -73,18 +67,28 @@ namespace YourNoteUWP
 
 
 
-        //Change the value of the Selected Note -> To prevent the firing event of the AutoSuggestionBox TextChanged after choosing the options
+        void ChangeVar()
+        {
 
-
-
+        }
+        //When an item from the GridView is clicked 
+        private void NotesData_ItemClick(object sender, ItemClickEventArgs e)
+        {
+                //asdad
+        }
 
 
         //When an item in the SplitView Panel is clicked
+        public void HamburgerOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+         
+
+
+        }
 
         private void userImage_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-
-            Navigation.IsPaneOpen = true;
+       
 
 
         }
@@ -92,9 +96,29 @@ namespace YourNoteUWP
         private void userImage_PointerExited(object sender, PointerRoutedEventArgs e)
         {
 
-            //SplitViewz.IsPaneOpen = false;
-            Navigation.IsPaneOpen = false;
 
+        }
+
+
+        //The Suggested Options for the AutoSugggetionBox
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+     
+        }
+
+
+
+        // Handle currentUser selecting an item, in our case just output the selected item (Recently Titles)
+        private void RecentSuggestedContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+          
+
+        }
+
+        //(Suggestions)
+        private void SearchBoxContainerContent_ItemClick(object sender, ItemClickEventArgs e)
+        {
+           
         }
 
 

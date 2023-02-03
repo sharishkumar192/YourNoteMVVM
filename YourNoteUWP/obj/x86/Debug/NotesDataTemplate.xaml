@@ -77,7 +77,7 @@
         <Grid x:ConnectionId='7' 
          
             Name="notesDisplayContent"
-            Height="126"
+            Padding="10"
             >
 
             <Grid.RowDefinitions>

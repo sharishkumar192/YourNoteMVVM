@@ -34,10 +34,11 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
 
+
             //  titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
             //  contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
 
-            _accountPageViewModel = new AccountPageViewModel();
+           _accountPageViewModel = new AccountPageViewModel();
             
                 //AccountPageViewModel)Parent as AccountPageViewModel;
         }

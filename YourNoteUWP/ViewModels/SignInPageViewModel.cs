@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using YourNoteUWP.View;
+using System.ComponentModel.DataAnnotations;
+using Windows.UI.Xaml.Media.Animation;
+
 namespace YourNoteUWP.ViewModels
 {
     internal class SignInPageViewModel : INotifyPropertyChanged, IEmail, INullorEmpty
@@ -360,7 +363,9 @@ namespace YourNoteUWP.ViewModels
                 Tuple<Models.User, bool> validation = Models.User.ValidateLogInUser(EmailBoxContent, PasswordBoxPassword);
                 if (validation.Item2 == true)
                 {
-                    _frame.Navigate(typeof(AccountPage), _frame);
+
+                    Tuple<Frame, Models.User> tuple = new Tuple<Frame, Models.User>(_frame, validation.Item1);
+                    _frame.Navigate(typeof(AccountPage), tuple , new DrillInNavigationTransitionInfo());
                    
                 }
                 else
@@ -378,7 +383,7 @@ namespace YourNoteUWP.ViewModels
 
         public void NavigateToSignUpClick()
         {
-            _frame.Navigate(typeof(SignUpPage), _frame);
+            _frame.Navigate(typeof(SignUpPage), _frame, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
         }
     }
 }

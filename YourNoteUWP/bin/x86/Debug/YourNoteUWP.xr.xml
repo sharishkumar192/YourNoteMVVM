@@ -16,7 +16,10 @@
       <RootProperty Name="Resources" />
       <RootProperty Name="Content" />
     </RootType>
-    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
+    <RootType FullName="Windows.UI.Xaml.Media.ImageBrush">
+      <RootProperty Name="ImageSource" />
+      <RootProperty Name="Stretch" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
     </RootType>
@@ -88,77 +91,64 @@
       <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.RelativePanel">
-      <RootProperty Name="Children" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="CornerRadius" />
+      <RootProperty Name="Children" />
+      <RootMethod Name="GetAlignBottomWithPanel" />
+      <RootMethod Name="SetAlignBottomWithPanel" />
       <RootMethod Name="GetAlignLeftWithPanel" />
       <RootMethod Name="SetAlignLeftWithPanel" />
-      <RootMethod Name="GetRightOf" />
-      <RootMethod Name="SetRightOf" />
+      <RootMethod Name="GetAlignTopWithPanel" />
+      <RootMethod Name="SetAlignTopWithPanel" />
+      <RootMethod Name="GetAlignHorizontalCenterWithPanel" />
+      <RootMethod Name="SetAlignHorizontalCenterWithPanel" />
       <RootMethod Name="GetAlignRightWithPanel" />
       <RootMethod Name="SetAlignRightWithPanel" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">
-      <RootProperty Name="Name" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="IsBackButtonVisible" />
-      <RootProperty Name="IsPaneOpen" />
-      <RootProperty Name="IsPaneToggleButtonVisible" />
-      <RootProperty Name="IsSettingsVisible" />
-      <RootProperty Name="PaneDisplayMode" />
-      <RootProperty Name="MenuItems" />
-      <RootProperty Name="PaneFooter" />
-      <RootProperty Name="Content" />
-      <RootEvent Name="SelectionChanged" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.Popup">
-      <RootProperty Name="Name" />
-      <RootProperty Name="IsLightDismissEnabled" />
-      <RootProperty Name="IsOpen" />
-      <RootProperty Name="Child" />
-    </RootType>
-    <RootType FullName="YourNoteUWP.NoteContent">
-      <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.NavigationViewItem">
-      <RootProperty Name="Name" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="IsSelected" />
-      <RootProperty Name="Tag" />
-      <RootProperty Name="Icon" />
-      <RootProperty Name="Foreground" />
-      <RootEvent Name="Tapped" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
-      <RootProperty Name="FontFamily" />
-      <RootProperty Name="Glyph" />
-      <RootProperty Name="Foreground" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="Opacity" />
-      <RootProperty Name="Name" />
-      <RootProperty Name="Style" />
-      <RootProperty Name="Visibility" />
+      <RootMethod Name="GetRightOf" />
+      <RootMethod Name="SetRightOf" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
       <RootProperty Name="Name" />
       <RootProperty Name="Margin" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="CornerRadius" />
       <RootProperty Name="IsItemClickEnabled" />
       <RootProperty Name="ItemContainerStyle" />
       <RootProperty Name="ItemsSource" />
-      <RootProperty Name="Style" />
       <RootProperty Name="ItemTemplate" />
       <RootEvent Name="ItemClick" />
     </RootType>
     <RootType FullName="YourNoteUWP.NotesDataTemplate" />
-    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="CornerRadius" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Foreground" />
       <RootProperty Name="Name" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Flyout" />
+      <RootEvent Name="Click" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
       <RootProperty Name="Width" />
       <RootProperty Name="Height" />
       <RootProperty Name="Source" />
+      <RootProperty Name="Stretch" />
       <RootProperty Name="Margin" />
-      <RootEvent Name="PointerEntered" />
-      <RootEvent Name="PointerExited" />
     </RootType>
     <RootType FullName="YourNoteUWP.AccountPage" />
     <RootType FullName="Windows.UI.Xaml.Media.AcrylicBrush">
@@ -192,6 +182,16 @@
       <RootProperty Name="MinHeight" />
       <RootProperty Name="FocusVisualMargin" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
+      <RootProperty Name="Glyph" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Foreground" />
+      <RootProperty Name="Opacity" />
+      <RootProperty Name="Name" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Visibility" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.UIElement">
       <RootProperty Name="Visibility" />
       <RootProperty Name="ContextFlyout" />
@@ -200,20 +200,6 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.IconElement">
       <RootProperty Name="Foreground" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Button">
-      <RootProperty Name="Name" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="FontFamily" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="Style" />
-      <RootProperty Name="Flyout" />
-      <RootProperty Name="Foreground" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Margin" />
-      <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="CornerRadius" />
@@ -401,6 +387,7 @@
       <RootMethod Name="GetVisualStateGroups" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.TemplateBindingExtension" />
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.VisualStateGroup">
       <RootProperty Name="States" />
     </RootType>
@@ -503,6 +490,9 @@
       <RootMethod Name="GetZIndex" />
       <RootMethod Name="SetZIndex" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.Popup">
+      <RootProperty Name="Child" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Media.Animation.DoubleAnimation">
       <RootProperty Name="To" />
       <RootProperty Name="Duration" />
@@ -533,13 +523,13 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.RelativeSource" />
     <RootType FullName="Windows.UI.Xaml.Controls.UserControl">
-      <RootProperty Name="DataContext" />
       <RootProperty Name="Resources" />
       <RootProperty Name="Content" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Flyout">
       <RootProperty Name="Content" />
     </RootType>
+    <RootType FullName="YourNoteUWP.NoteContent" />
     <RootType FullName="YourNoteUWP.NoteDisplay" />
     <RootType FullName="Windows.UI.Xaml.AdaptiveTrigger">
       <RootProperty Name="MinWindowWidth" />
@@ -547,10 +537,6 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="Name" />
       <RootProperty Name="Content" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Media.ImageBrush">
-      <RootProperty Name="ImageSource" />
-      <RootProperty Name="Stretch" />
     </RootType>
     <RootType FullName="YourNoteUWP.View.MainPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.ToolTipService">

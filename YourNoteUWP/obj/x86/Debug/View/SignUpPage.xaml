@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Background>
-        <ImageBrush ImageSource="D:\YourNoteUWP\YourNoteUWP\Assets\ZohoSignUpPageBackdrop-Light.png" Stretch="Fill" />
+        <ImageBrush ImageSource="/Assets/AppBackdrop-Light.png" />
     </Page.Background>
 
     <ScrollViewer x:ConnectionId='2'
@@ -259,7 +259,7 @@
                         Margin="0,0,2,0"
                         FontSize="14"
                         Foreground="Black"
-                        Text="  Already have Zoho account? " />
+                        Text="  Already have an account? " />
 
                     <HyperlinkButton x:ConnectionId='8'
                         x:Name="NavigateToSignIn"

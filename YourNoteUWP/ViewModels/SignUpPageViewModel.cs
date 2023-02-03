@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
 using YourNoteUWP.View;
@@ -608,7 +609,7 @@ namespace YourNoteUWP.ViewModels
         public void NavigateToSignInClick()
         {
 
-            _frame.Navigate(typeof(SignInPage), _frame);
+            _frame.Navigate(typeof(SignInPage), _frame , new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
 
 
         }

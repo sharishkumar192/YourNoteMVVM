@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Page.Background>
-        <ImageBrush ImageSource="Assets/ZohoSignUpPageBackdrop - Light.png" Stretch="Fill" />
+        <ImageBrush ImageSource="/Assets/AppBackdrop-Light.png" />
     </Page.Background>
 
     <Page.Resources>
@@ -232,7 +232,7 @@
                         Margin="0,0,2,0"
                         FontSize="14"
                         Foreground="Black"
-                        Text="Start your journey with us by creating an " />
+                        Text="New User? Start your journey with us by creating an" />
 
                     <HyperlinkButton
                         x:Name="NavigateToSignUp"

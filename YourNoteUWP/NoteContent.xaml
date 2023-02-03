@@ -10,10 +10,7 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
-        <local:AccountPage />
 
-    </UserControl.DataContext>
     <UserControl.Resources>
 
         <DataTemplate x:Key="shareUser" x:DataType="data:User">
@@ -36,7 +33,7 @@
 
 
 
-    <Grid>
+    <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*" />
             <ColumnDefinition Width="70*" />
@@ -53,7 +50,9 @@
             </Grid.RowDefinitions>
 
 
+
             <!--  Title of Note  -->
+
 
             <TextBox
                 Name="TitleOfNote"
@@ -71,7 +70,9 @@
                 TextWrapping="Wrap" />
 
 
+
             <!--  Note Close Button  -->
+
 
             <Button
                 Name="NoteCloseButton"
@@ -84,7 +85,9 @@
                 RelativePanel.RightOf="NoteShareButton" />
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
+
                 <!--  Note Share Button  -->
+
                 <Button
                     Name="NoteShareButton"
                     HorizontalAlignment="Left"
@@ -128,7 +131,9 @@
                 </Button>
 
 
+
                 <!--  Note Delete Button  -->
+
                 <Button
                     Name="NoteDeleteButton"
                     Click="{x:Bind _accountPageViewModel.NoteDeleteButtonClick, Mode=OneWay}"
@@ -141,7 +146,9 @@
             </StackPanel>
 
 
+
             <!--  Content of Note  -->
+
             <TextBox
                 Name="ContentOfNote"
                 Grid.Row="2"
@@ -159,4 +166,5 @@
         </Grid>
 
     </Grid>
+
 </UserControl>

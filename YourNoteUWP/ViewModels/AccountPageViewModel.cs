@@ -23,7 +23,7 @@ namespace YourNoteUWP.ViewModels
         private Note _selectedNote = null;
         private DispatcherTimer _dispatcherTimer;
         private Frame _frame;
-        public AccountPageViewModel(Tuple<Frame, Models.User> tuple)
+        public AccountPageViewModel(Tuple<Frame, Models.User>  tuple)
         {
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
@@ -283,7 +283,11 @@ namespace YourNoteUWP.ViewModels
 
         public void LogoutContentTapped()
         {
-            _frame.Navigate(typeof(SignInPage), _frame);
+            if(_frame.CanGoBack)
+            {
+                _frame.GoBack();    
+            }
+          
         }
 
         public void SearchBoxContainerItemClick(object sender, ItemClickEventArgs e)
@@ -465,7 +469,10 @@ namespace YourNoteUWP.ViewModels
         public SolidColorBrush NoteContentBackground
         {
             get { return _noteContentBackground; }
-            set { _noteContentBackground = value; }
+            set { _noteContentBackground = value;
+                OnPropertyChanged();
+
+}
         }
 
         public void NoteDeleteButtonClick()
