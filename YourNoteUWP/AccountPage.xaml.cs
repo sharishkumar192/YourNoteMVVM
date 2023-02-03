@@ -28,7 +28,7 @@ namespace YourNoteUWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AccountPage : Page, IMainView
+    public sealed partial class AccountPage : Page
     {
 
 
@@ -45,7 +45,7 @@ namespace YourNoteUWP
         public AccountPage(Models.User loggedUser)
         {
             this.InitializeComponent();
-            _accountPageViewModel = new AccountPageViewModel(this, loggedUser);
+           // _accountPageViewModel = new AccountPageViewModel(this, loggedUser);
 
             this.DataContext = _accountPageViewModel;
             this.SizeChanged += AccountPage_SizeChanged;
@@ -57,6 +57,8 @@ namespace YourNoteUWP
             //  Navigation.CompactPaneLength = userImage.Width;
 
         }
+
+        
 
         private void InitializeComponent(DependencyObject parent)
         {

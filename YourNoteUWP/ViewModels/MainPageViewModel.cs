@@ -11,20 +11,19 @@ namespace YourNoteUWP.ViewModels
 {
     internal class MainPageViewModel 
     {
-        private IMainView _view;
-        public MainPageViewModel(IMainView view)
+       
+       static Frame _mainFrame;
+        public MainPageViewModel(Frame frame)
         {
-            _view = view;
-        }
-        public void LoadSignUpPage()
-        {
-            _view.Content = new SignUpPage();
+            _mainFrame = frame;
 
         }
-        public void LoadLogInPage()
+        public MainPageViewModel()
         {
-            _view.Content = new LogInPage();
+            //_mainFrame = frame;
 
         }
+
+    
     }
 }

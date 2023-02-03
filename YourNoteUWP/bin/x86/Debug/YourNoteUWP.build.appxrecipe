@@ -279,12 +279,6 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Dictionary.xbf">
       <PackagePath>Dictionary.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\LogInPage.xbf">
-      <PackagePath>LogInPage.xbf</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf">
       <PackagePath>NoteContent.xbf</PackagePath>
     </AppxPackagedFile>
@@ -294,8 +288,14 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NotesDataTemplate.xbf">
       <PackagePath>NotesDataTemplate.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\SignUpPage.xbf">
-      <PackagePath>SignUpPage.xbf</PackagePath>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\MainPage.xbf">
+      <PackagePath>View\MainPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignInPage.xbf">
+      <PackagePath>View\SignInPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignUpPage.xbf">
+      <PackagePath>View\SignUpPage.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>

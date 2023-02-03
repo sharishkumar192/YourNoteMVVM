@@ -55,11 +55,11 @@ Assets\ZohoSignUpPageBackdrop-Light.png
 AccountPage.xbf
 App.xbf
 Dictionary.xbf
-LogInPage.xbf
-MainPage.xbf
 NoteContent.xbf
 NoteDisplay.xbf
 NotesDataTemplate.xbf
-SignUpPage.xbf
+View\MainPage.xbf
+View\SignInPage.xbf
+View\SignUpPage.xbf
 YourNoteUWP.xr.xml
 Properties\Default.rd.xml

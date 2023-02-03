@@ -30,13 +30,13 @@
     <AppXManifest Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-02-02T10:06:25.288</Modified>
+      <Modified>2023-02-03T06:01:35.214</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\YourNoteUWP.exe">
       <PackagePath>entrypoint\YourNoteUWP.exe</PackagePath>
-      <Modified>2023-02-02T10:06:24.734</Modified>
+      <Modified>2023-02-03T06:01:34.668</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.2.14\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.dll">
       <PackagePath>System.Runtime.dll</PackagePath>
@@ -342,43 +342,43 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\YourNoteUWP.xr.xml">
       <PackagePath>YourNoteUWP.xr.xml</PackagePath>
-      <Modified>2023-02-02T09:47:22.342</Modified>
+      <Modified>2023-02-03T05:59:28.899</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.621</Modified>
+      <Modified>2023-02-03T06:01:34.573</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\AccountPage.xbf">
       <PackagePath>AccountPage.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.621</Modified>
+      <Modified>2023-02-03T06:01:34.573</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Dictionary.xbf">
       <PackagePath>Dictionary.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.603</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\LogInPage.xbf">
-      <PackagePath>LogInPage.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.614</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.621</Modified>
+      <Modified>2023-02-03T06:01:34.556</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf">
       <PackagePath>NoteContent.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.622</Modified>
+      <Modified>2023-02-03T06:01:34.574</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteDisplay.xbf">
       <PackagePath>NoteDisplay.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.622</Modified>
+      <Modified>2023-02-03T06:01:34.574</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NotesDataTemplate.xbf">
       <PackagePath>NotesDataTemplate.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.622</Modified>
+      <Modified>2023-02-03T06:01:34.574</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\SignUpPage.xbf">
-      <PackagePath>SignUpPage.xbf</PackagePath>
-      <Modified>2023-02-02T10:06:24.622</Modified>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\MainPage.xbf">
+      <PackagePath>View\MainPage.xbf</PackagePath>
+      <Modified>2023-02-03T06:01:34.574</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignInPage.xbf">
+      <PackagePath>View\SignInPage.xbf</PackagePath>
+      <Modified>2023-02-03T06:01:34.570</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignUpPage.xbf">
+      <PackagePath>View\SignUpPage.xbf</PackagePath>
+      <Modified>2023-02-03T06:01:34.572</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -386,11 +386,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-02-02T07:15:36.507</Modified>
+      <Modified>2023-02-03T05:40:01.733</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Core\YourNoteUWP.exe">
       <PackagePath>YourNoteUWP.exe</PackagePath>
-      <Modified>2023-02-02T10:06:25.283</Modified>
+      <Modified>2023-02-03T06:01:35.209</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

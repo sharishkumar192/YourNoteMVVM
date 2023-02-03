@@ -7,21 +7,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
+using YourNoteUWP.View;
+
 namespace YourNoteUWP.ViewModels
 {
     internal class SignUpPageViewModel : INotifyPropertyChanged, INullorEmpty, IEmailExt, IPassword
     {
-        private IMainView _view;
-        private LogInPageViewModel _logInPageViewModel;
-        public SignUpPageViewModel(IMainView view)
+    
+        private SignInPageViewModel _signInPageViewModel;
+        private Frame _frame;
+        public SignUpPageViewModel(Frame frame)
         {
-            _view = view;
-            _logInPageViewModel = new LogInPageViewModel();
+            _frame = frame;
+            _signInPageViewModel = new SignInPageViewModel();
         }
 
         public SignUpPageViewModel()
         {
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,7 +68,7 @@ namespace YourNoteUWP.ViewModels
             }
         }
 
-        private string _nameBoxPlaceHolderText = "Name"; 
+        private string _nameBoxPlaceHolderText = "Name";
 
         public string NameBoxPlaceHolderText
         {
@@ -580,42 +585,9 @@ namespace YourNoteUWP.ViewModels
         }
 
 
+//------------------------------------------- Navigation Buttons-----------------------------------------
 
-
-
-
-
-
-
-
-
-
-        private bool _logInButtonIsEnabled = false ;
-
-        public bool LogInButtonIsEnabled
-        {
-            get { return _logInButtonIsEnabled ; }
-            set { _logInButtonIsEnabled  = value; }
-        }
-
-
-
-
-
-
-        public void SignUpBackButtonClick()
-        {
-            _view.Content = new MainPage();
-
-
-        }
-
-
-
-
-
-
-        public void LogInButtonClick()
+        public void CreateAccountClick()
         {
             NameBoxLostFocus();
             EmailBoxLostFocus();
@@ -629,9 +601,18 @@ namespace YourNoteUWP.ViewModels
             {
 
                 User.NewUserInsertion(NameBoxContent, EmailBoxContent, PasswordBoxPassword);
-                _view.Content = new LogInPage();
+                _frame.Navigate(typeof(SignInPage), _frame);
+
             }
         }
+        public void NavigateToSignInClick()
+        {
+
+            _frame.Navigate(typeof(SignInPage), _frame);
+
+
+        }
+
     }
 
 

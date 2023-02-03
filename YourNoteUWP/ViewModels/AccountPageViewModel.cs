@@ -12,21 +12,21 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using YourNoteUWP.Models;
-
+using YourNoteUWP.View;
 namespace YourNoteUWP.ViewModels
 {
     internal class AccountPageViewModel : INotifyPropertyChanged
     {
-        IMainView _manageView;
+       
          
         private Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> _searchNotes;
         private Note _selectedNote = null;
         private DispatcherTimer _dispatcherTimer;
-
-        public AccountPageViewModel(IMainView view, Models.User user)
+        private Frame _frame;
+        public AccountPageViewModel(Tuple<Frame, Models.User> tuple)
         {
-            _manageView = view;
-            LoggedUser = user;
+            _frame = tuple.Item1;
+            LoggedUser = tuple.Item2;
             _searchNotes = Note.GetSearchNotes(LoggedUser);
             NotesDataItemSource = _searchNotes.Item1;
             SearchBoxContentItemSource = _searchNotes.Item2;
@@ -283,7 +283,7 @@ namespace YourNoteUWP.ViewModels
 
         public void LogoutContentTapped()
         {
-            _manageView.Content = new LogInPage();
+            _frame.Navigate(typeof(SignInPage), _frame);
         }
 
         public void SearchBoxContainerItemClick(object sender, ItemClickEventArgs e)
