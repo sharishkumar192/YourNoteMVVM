@@ -84,6 +84,12 @@ namespace YourNoteUWP.View
             void DisconnectUnloadedObject(int connectionId);
         }
 
+        private interface ISignUpPage_BindingsScopeConnector
+        {
+            global::System.WeakReference Parent { get; set; }
+            bool ContainsElement(int connectionId);
+            void RegisterForElementConnection(int connectionId, global::Windows.UI.Xaml.Markup.IComponentConnector connector);
+        }
 #pragma warning disable 0169    //  Proactively suppress unused field warning in case Bindings is not used.
 #pragma warning disable 0649
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.19041.685")]

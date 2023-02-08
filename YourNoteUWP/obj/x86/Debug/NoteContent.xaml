@@ -33,16 +33,16 @@
 
 
 
-    <Grid Background="Black">
+    <Grid Background="Beige">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*" />
             <ColumnDefinition Width="70*" />
             <ColumnDefinition Width="15*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource SystemControlDisabledTransparentBrush}" />
-        <Grid Grid.Column="2" Background="{ThemeResource SystemControlTransparentBrush}" />
+        <Grid Grid.Column="0" />
+        <Grid Grid.Column="2" />
 
-        <Grid x:ConnectionId='5' Grid.Column="1"                                                                               >
+        <Grid Grid.Column="1" Background="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -54,7 +54,7 @@
             <!--  Title of Note  -->
 
 
-            <TextBox x:ConnectionId='6'
+            <TextBox x:ConnectionId='5'
                 Name="TitleOfNote"
                 Height="45"
                 Margin="15"
@@ -74,7 +74,7 @@
             <!--  Note Close Button  -->
 
 
-            <Button x:ConnectionId='7'
+            <Button x:ConnectionId='6'
                 Name="NoteCloseButton"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -88,27 +88,25 @@
 
                 <!--  Note Share Button  -->
 
-                <Button x:ConnectionId='9'
+                <Button x:ConnectionId='8'
                     Name="NoteShareButton"
                     HorizontalAlignment="Left"
                                                                                             
-                    FontSize="25"
-                    RelativePanel.AlignLeftWithPanel="True"
-                    Style="{StaticResource AccountPageButton}">
+                    RelativePanel.AlignLeftWithPanel="True">
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock x:ConnectionId='11'
+                        <TextBlock x:ConnectionId='10'
                             Name="noteShareButtonImage"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             FontFamily="Segoe MDL2 Assets"
                             Text="&#xE165;" />
-                        <TextBlock x:ConnectionId='12' Name="noteShareButtonText" Text="Share" />
+                        <TextBlock x:ConnectionId='11' Name="noteShareButtonText" Text="Share" />
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout>
                             <Grid>
-                                <ListView x:ConnectionId='13'
+                                <ListView x:ConnectionId='12'
                                     Name="usersToShareView"
                                     Width="350"
                                     Height="400"
@@ -134,22 +132,20 @@
 
                 <!--  Note Delete Button  -->
 
-                <Button x:ConnectionId='10'
+                <Button x:ConnectionId='9'
                     Name="NoteDeleteButton"
                                                                                              
                     Content="&#xE107;"
                     FontFamily="Segoe MDL2 Assets"
-                    FontSize="25"
                     Foreground="Red"
-                    RelativePanel.AlignRightWithPanel="True"
-                    Style="{StaticResource AccountPageButton}" />
+                    RelativePanel.AlignRightWithPanel="True" />
             </StackPanel>
 
 
 
             <!--  Content of Note  -->
 
-            <TextBox x:ConnectionId='8'
+            <TextBox x:ConnectionId='7'
                 Name="ContentOfNote"
                 Grid.Row="2"
                 Margin="20"

@@ -23,18 +23,20 @@ namespace YourNoteUWP.ViewModels
         private Note _selectedNote = null;
         private DispatcherTimer _dispatcherTimer;
         private Frame _frame;
-        public AccountPageViewModel(Tuple<Frame, Models.User>  tuple)
+            public AccountPageViewModel(Tuple<Frame, Models.User>  tuple)
         {
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
             _searchNotes = Note.GetSearchNotes(LoggedUser);
             NotesDataItemSource = _searchNotes.Item1;
             SearchBoxContentItemSource = _searchNotes.Item2;
-         
-            if( _searchNotes!=null && _searchNotes.Item3.Count > 0)
+            SubSearchItemSource = _searchNotes.Item2;
+
+
+            if ( _searchNotes!=null && _searchNotes.Item3.Count > 0)
             {
-                RecentSuggestedVisibility = Visibility.Visible;
-                SearchBoxContentVisibility = Visibility.Collapsed;
+              //  RecentSuggestedVisibility = Visibility.Visible;
+              //  SearchBoxContentVisibility = Visibility.Collapsed;
                 RecentSuggestedItemSource = _searchNotes.Item3;
             }
 
@@ -61,7 +63,7 @@ namespace YourNoteUWP.ViewModels
           
         }
 
-        private bool _personalContentIsSelected = false;
+        private bool _personalContentIsSelected = false ;
 
         public bool PersonalContentIsSelected
         {
@@ -78,7 +80,9 @@ namespace YourNoteUWP.ViewModels
         public bool SharedContentIsSelected
         {
             get { return _sharedContentIsSelected; }
-            set { _sharedContentIsSelected = value; }
+            set { _sharedContentIsSelected = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -94,20 +98,16 @@ namespace YourNoteUWP.ViewModels
             }
         }
 
-        private ObservableCollection<Note> _notesForSearch  ;
 
-        public ObservableCollection<Note> NoteForSearch
-        {
-            get { return _notesForSearch  ; }
-         
-        }
 
         private ObservableCollection<Note> _notesDataItemSource;
 
         public ObservableCollection<Note> NotesDataItemSource
         {
             get { return _notesDataItemSource; }
-            set { _notesDataItemSource = value; }
+            set { _notesDataItemSource = value;
+                OnPropertyChanged();
+            }
         }
 
         private static SolidColorBrush GetSolidColorBrush(string hex)
@@ -132,7 +132,7 @@ namespace YourNoteUWP.ViewModels
             TitleOfNoteText = snote.title;
             ContentOfNoteText = snote.content;
 
-            NoteContentBackground = GetSolidColorBrush(snote.noteColor);
+           // NoteContentBackground = GetSolidColorBrush(snote.noteColor);
 
 
         }
@@ -162,17 +162,32 @@ namespace YourNoteUWP.ViewModels
         public ObservableCollection<Note> SearchBoxContentItemSource
         {
             get { return _searchBoxContentItemSource; }
-            set { _searchBoxContentItemSource = value; }
+            set { _searchBoxContentItemSource = value;
+                OnPropertyChanged();
+            
+            }
         }
 
+        
 
-
-        public void NavigationSelectionChanged()
+        public void MainMenuOptionsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var lb = (ListBox)sender;
+            var li = (ListBoxItem)lb.SelectedItem;
+
+            string name = li.Name;
+
             if (PersonalContentIsSelected == true)
             {
 
-                //  _notesFeeder.Clear();
+
+              //  PersonalContentIsSelected = true ;
+                SharedContentIsSelected = false;
+                NoteCreationIsSelected = false;
+
+
+
+
                 NotesDataItemSource = Note.GetPersonalNotes(LoggedUser);
 
                 SearchTextBoxText = "";
@@ -180,8 +195,12 @@ namespace YourNoteUWP.ViewModels
                 SuggestionsPopupIsOpen = false;
 
             }
-            else if (SharedContentIsSelected == true)
+            else  if (SharedContentIsSelected == true)
             {
+                PersonalContentIsSelected = false;
+             //   SharedContentIsSelected = true;
+                NoteCreationIsSelected = false;
+
                 NotesDataItemSource = Note.GetSharedNotes(LoggedUser);
                 _selectedNote = new Note("", "", "", "");
                 SearchTextBoxText = "";
@@ -189,6 +208,10 @@ namespace YourNoteUWP.ViewModels
             }
             else if (NoteCreationIsSelected == true)
             {
+                PersonalContentIsSelected = false;
+                SharedContentIsSelected = false;
+             //   NoteCreationIsSelected = true;
+
                 SuggestionsPopupIsOpen = false;
                 Random random = new Random();
                 int r = random.Next(0, 4);
@@ -206,6 +229,9 @@ namespace YourNoteUWP.ViewModels
 
                 TitleOfNoteText = note.title;
                 ContentOfNoteText = note.content;
+                NoteDisplayPopUpIsOpen = true;
+
+
             }
         }
 
@@ -224,6 +250,9 @@ namespace YourNoteUWP.ViewModels
         //The Suggested Options for the AutoSugggetionBox
         public void SearchTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
+
+
+     
             if (ChangeVar())
             {
                 SuggestionsPopupIsOpen = true;
@@ -241,8 +270,8 @@ namespace YourNoteUWP.ViewModels
 
 
 
-
-                    foreach (var eachNote in NoteForSearch)
+                    
+                    foreach (var eachNote in SearchBoxContentItemSource)
                     {
                         var found = splitText.All((key) =>
                         {
@@ -263,23 +292,40 @@ namespace YourNoteUWP.ViewModels
 
 
                 }
+
                 else
                 {
   
                     RecentSuggestedVisibility = Visibility.Visible;
                     SearchBoxContentVisibility = Visibility.Collapsed;
+                    SearchBoxContentItemSource = SubSearchItemSource;
 
-                    NotesDataItemSource.Clear();
-                    if (SharedContentIsSelected == false)
-                        NotesDataItemSource = Note.GetPersonalNotes(LoggedUser);
-                    else
-                        NotesDataItemSource = Note.GetSharedNotes(LoggedUser);
+
+
 
                 }
 
             }
         }
 
+
+        private ObservableCollection<Note> _subSearchItemSource;
+
+        public ObservableCollection<Note> SubSearchItemSource
+        {
+            get { return _subSearchItemSource; }
+            set
+            {
+                _subSearchItemSource = value;
+                OnPropertyChanged();
+
+            }
+        }
+        public void SearchButtonLostFocus()
+       {
+
+            SearchBoxContentItemSource = SubSearchItemSource;
+        }
 
         public void LogoutContentTapped()
         {
@@ -304,16 +350,18 @@ namespace YourNoteUWP.ViewModels
           
         }
 
-        private Visibility _recentSuggestedVisibility = Visibility.Collapsed;
+        private Visibility _recentSuggestedVisibility = Visibility.Visible;
 
         public Visibility RecentSuggestedVisibility
         {
             get { return _recentSuggestedVisibility; }
-            set { _recentSuggestedVisibility = value; }
+            set { _recentSuggestedVisibility = value;
+                OnPropertyChanged();
+            }
         }
 
 
-        private Visibility _searchBoxContentVisibility = Visibility.Visible;
+        private Visibility _searchBoxContentVisibility = Visibility.Collapsed;
 
         public Visibility SearchBoxContentVisibility
         {
@@ -329,7 +377,10 @@ namespace YourNoteUWP.ViewModels
         public bool SuggestionsPopupIsOpen
         {
             get { return _suggestionsPopupIsOpen; }
-            set { _suggestionsPopupIsOpen = value; }
+            set { _suggestionsPopupIsOpen = value;
+
+                OnPropertyChanged();
+            }
         }
 
         private Note _recentSuggestedSelectedItem;
@@ -358,24 +409,27 @@ namespace YourNoteUWP.ViewModels
         public void RecentSuggestedSelectionChanged()
         {
             Note selectedNote = RecentSuggestedSelectedItem;
-            SearchTextBoxText = selectedNote.title;
-            SuggestionsPopupIsOpen = false;
+            //    SearchTextBoxText = selectedNote.title;
+            SuggestionsPopupIsOpen = true;
             _selectedNote = selectedNote;
-            selectedNote.searchCount++;
+         //   selectedNote.searchCount++;
 
             NoteDisplayPopUpIsOpen = true;
             
-            TitleOfNoteText = selectedNote.title;
-            ContentOfNoteText = selectedNote.content;   
+         //   TitleOfNoteText = selectedNote.title;
+        //    ContentOfNoteText = selectedNote.content;   
 
         
 
 
         }
 
+
+
         public void SearchTextBoxLostFocus()
         {
             SuggestionsPopupIsOpen = false;
+
 
         }
 

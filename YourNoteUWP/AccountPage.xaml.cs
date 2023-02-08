@@ -121,6 +121,14 @@ namespace YourNoteUWP
            
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           // PopupName.IsOpen = true;
+        }
 
+        private void MainMenuOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
 }

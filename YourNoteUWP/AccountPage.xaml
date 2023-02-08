@@ -22,36 +22,36 @@
     <Page.Resources>
 
 
-
         <DataTemplate x:Key="SearchTitle" x:DataType="data:Note">
-            <StackPanel
-                Margin="10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
 
+            <Border
+                Width="300"
+                BorderBrush="White"
+                BorderThickness="0,0,0,1">
                 <TextBlock
-                    HorizontalAlignment="Left"
-                    FontSize="15"
+                    Padding="0,0,0,2"
+                    HorizontalAlignment="Stretch"
+                    FontSize="14"
+                    Foreground="White"
+                    HorizontalTextAlignment="Center"
                     Text="{x:Bind title}" />
-
-            </StackPanel>
+            </Border>
         </DataTemplate>
 
 
-
         <DataTemplate x:Key="RecentlySuggested" x:DataType="data:Note">
-            <StackPanel
-                Margin="10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
 
+            <Border
+                Width="300"
+                BorderBrush="White"
+                BorderThickness="0,0,0,1">
                 <TextBlock
-                    HorizontalAlignment="Left"
-                    FontSize="15"
-                    Style="{StaticResource SignUpTextBlocks}"
+                    HorizontalAlignment="Center"
+                    FontSize="14"
+                    Foreground="White"
                     Text="{x:Bind title}" />
+            </Border>
 
-            </StackPanel>
         </DataTemplate>
     </Page.Resources>
 
@@ -72,53 +72,111 @@
             BorderThickness="1,1,1,0"
             CornerRadius="4,4,0,0">
 
-            <Button
-                Width="50"
-                Height="40"
-                Margin="10,0,0,0"
-                Background="Black"
-                Content="&#xE721;"
-                CornerRadius="4"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="15"
-                Foreground="White"
-                RelativePanel.AlignBottomWithPanel="True"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignTopWithPanel="True" />
-
             <StackPanel
+                Margin="10,5,0,0"
                 Orientation="Horizontal"
                 RelativePanel.AlignBottomWithPanel="True"
-                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True">
-                <Button
-                    Width="90"
-                    Height="30"
-                    Margin="10,0,5,0"
-                    Background="Black"
-                    Content="Personal"
-                    CornerRadius="4"
-                    FontSize="15"
-                    Foreground="White" />
-                <Button
-                    Width="90"
-                    Height="30"
-                    Margin="5,0,5,0"
-                    Content="Shared"
-                    CornerRadius="4"
-                    FontSize="15"
-                    Foreground="Black" />
 
-                <Button
-                    Width="90"
+                <Image
+                    Width="30"
                     Height="30"
-                    Margin="5,0,10,0"
-                    Content="New Note"
-                    CornerRadius="4"
-                    FontSize="15"
-                    Foreground="Black" />
+                    Margin="0,0,10,10"
+                    Source="/Assets/StoreLogo.scale-100.png" />
 
+                <TextBlock
+                    Margin="0,7,0,0"
+                    FontSize="24"
+                    Foreground="Black"
+                    Text="Notebook" />
             </StackPanel>
+
+
+
+
+            <ListBox
+                Name="MainMenuOptions"
+                ItemContainerStyle="{StaticResource MainMenuItemStyle}"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                SelectionChanged="{x:Bind _accountPageViewModel.MainMenuOptionsSelectionChanged}"
+                SelectionMode="Single"
+                Style="{StaticResource MainMenuStyle}">
+                <ListBoxItem
+                    Name="PersonalContent"
+                    Content="Personal"
+                    IsSelected="{x:Bind _accountPageViewModel.PersonalContentIsSelected, Mode=TwoWay}"
+                    IsTapEnabled="True" />
+
+                <ListBoxItem
+                    Name="SharedContent"
+                    Content="Shared"
+                    IsSelected="{x:Bind _accountPageViewModel.SharedContentIsSelected, Mode=TwoWay}" />
+
+                <ListBoxItem
+                    Name="NoteCreation"
+                    Content="New Note"
+                    IsSelected="{x:Bind _accountPageViewModel.NoteCreationIsSelected, Mode=TwoWay}" />
+
+            </ListBox>
+
+
+
+            <TextBox
+                Name="SearchTextBox"
+                Width="300"
+                Height="40"
+                Background="White"
+                CornerRadius="4"
+                FontSize="15"
+                Foreground="Black"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.LeftOf="UserMenu"
+                Style="{StaticResource CustomSearchBox}"
+                Text="{x:Bind _accountPageViewModel.SearchTextBoxText, Mode=OneWay}"
+                TextChanged="{x:Bind _accountPageViewModel.SearchTextBoxTextChanged, Mode=OneWay}" />
+
+            <Popup
+                Name="SuggestionsPopup"
+                IsLightDismissEnabled="False"
+                IsOpen="{x:Bind _accountPageViewModel.SuggestionsPopupIsOpen, Mode=OneWay}"
+                RelativePanel.AlignBottomWith="SearchTextBox">
+                <Grid
+                    Name="PopUpContainer"
+                    Width="Auto"
+                    Height="Auto">
+
+                    <ListBox
+                        Name="RecentSuggestedContent"
+                        Background="Black"
+                        BorderBrush="Red"
+                        BorderThickness="10,0,10,10"
+                        CornerRadius="4"
+                        ItemTemplate="{StaticResource RecentlySuggested}"
+                        ItemsSource="{x:Bind _accountPageViewModel.RecentSuggestedItemSource, Mode=OneWay}"
+                        SelectionChanged="{x:Bind _accountPageViewModel.RecentSuggestedSelectionChanged, Mode=OneWay}"
+                        SelectionMode="Single"
+                        Visibility="{x:Bind _accountPageViewModel.RecentSuggestedVisibility, Mode=OneWay}" />
+
+                    <ListView
+                        Name="SearchBoxContainerContent"
+                        Height="Auto"
+                        Background="Black"
+                        BorderBrush="Red"
+                        BorderThickness="10,0,10,10"
+                        CornerRadius="4"
+                        IsItemClickEnabled="True"
+                        ItemClick="{x:Bind _accountPageViewModel.SearchBoxContainerItemClick, Mode=OneWay}"
+                        ItemTemplate="{StaticResource SearchTitle}"
+                        ItemsSource="{x:Bind _accountPageViewModel.SearchBoxContentItemSource, Mode=OneWay}"
+                        Visibility="{x:Bind _accountPageViewModel.SearchBoxContentVisibility, Mode=OneWay}" />
+
+                </Grid>
+
+            </Popup>
 
             <Button
                 Name="UserMenu"
@@ -130,57 +188,12 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True">
                 <Image
-                    Width="30"
-                    Height="30"
+                    Width="27"
+                    Height="27"
                     Source="/Assets/LockScreenLogo.scale-200.png"
                     Stretch="Fill" />
             </Button>
-            <!--<TextBox
-                Name="SearchTextBox"
-                Width="300"
-                Height="50"
-                Background="Black"
-                CornerRadius="12"
-                Foreground="Red"
-                RelativePanel.AlignRightWithPanel="True"
-                TextChanged="SearchTextBox_TextChanged" />
-            <Popup
-                Name="SuggestionsPopup"
-                IsLightDismissEnabled="False"
-                IsOpen="False"
-                RelativePanel.AlignBottomWith="SearchTextBox">
-                <Grid Name="PopUpContainer" Background="#041322">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <StackPanel Name="RecentlySearchedContainer">
-                        <TextBlock Name="RecentSuggestedHeader" Text="Recently Search Notes : " />
-                        <ListBox
-                            Name="RecentSuggestedContent"
-                            ItemTemplate="{StaticResource RecentlySuggested}"
-                            ItemsSource="{x:Bind _accountPageViewModel.RecentSuggestedItemSource, Mode=OneWay}"
-                            SelectionChanged="RecentSuggestedContent_SelectionChanged"
-                            SelectionMode="Single" />
 
-                    </StackPanel>
-
-
-                    <StackPanel Name="SearchBoxContainer" Grid.Row="1">
-                        <TextBlock Name="SearchBoxContainerHeader" Text="Titles: " />
-                        <ListView
-                            Name="SearchBoxContainerContent"
-                            Height="200"
-                            IsItemClickEnabled="True"
-                            ItemClick="SearchBoxContainerContent_ItemClick"
-                            ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
-                            ItemTemplate="{StaticResource SearchTitle}"
-                            ItemsSource="{x:Bind _accountPageViewModel.SearchBoxContentItemSource, Mode=OneWay}"
-                            Style="{StaticResource SearchContainerStyle}" />
-                    </StackPanel>
-                </Grid>
-
-            </Popup>-->
 
 
 
@@ -209,7 +222,21 @@
             </GridView.ItemTemplate>
         </GridView>
 
+        <Popup
+            Name="NoteDisplayPopUp"
+            IsLightDismissEnabled="False"
+            IsOpen="{x:Bind _accountPageViewModel.NoteDisplayPopUpIsOpen, Mode=OneWay}">
+
+            <local:NoteContent
+                x:Name="NoteContentPopUp"
+                Width="{x:Bind _accountPageViewModel.NoteContentPopUpWidth, Mode=OneWay}"
+                Height="{x:Bind _accountPageViewModel.NoteContentPopUpHeight, Mode=OneWay}" />
+        </Popup>
+
+
     </Grid>
+
+
 
 </Page>
 <!--  Header="Users"  -->
