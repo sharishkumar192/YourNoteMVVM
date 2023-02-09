@@ -41,6 +41,7 @@ namespace YourNoteUWP.ViewModels
                 FrequentEmailBoxVisibility = Visibility.Visible;
 
             }
+        
 
         }
 

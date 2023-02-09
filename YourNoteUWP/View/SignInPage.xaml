@@ -12,7 +12,15 @@
         <ImageBrush ImageSource="/Assets/AppBackdrop-Light.png" />
     </Page.Background>
 
+
+
+
     <Page.Resources>
+
+
+
+
+
         <DataTemplate x:Key="emailIdOfUsers" x:DataType="data:User">
             <StackPanel
                 Width="Auto"
@@ -46,6 +54,7 @@
         </DataTemplate>
 
     </Page.Resources>
+
 
     <ScrollViewer
         Name="LogInPageScrollViewer"

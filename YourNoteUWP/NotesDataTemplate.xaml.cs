@@ -27,7 +27,7 @@ namespace YourNoteUWP
         public void SetColor()
         {
             if (this.DataContext != null)
-                notesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+                NotesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
         }
         public Note notesTemplate
         {
@@ -70,7 +70,7 @@ namespace YourNoteUWP
         private void NotesDataTemplate_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             if(notesTemplate != null)
-                notesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+                NotesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
             Bindings.Update();
         }
 

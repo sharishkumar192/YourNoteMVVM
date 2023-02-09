@@ -107,12 +107,16 @@ namespace YourNoteUWP.ViewModels
             }
         }
 
+
+
+
+
         public void MainMenuOptionsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lb = (ListBox)sender;
-            var li = (ListBoxItem)lb.SelectedItem;
+           // var lb = (ListBox)sender;
+           // var li = (ListBoxItem)lb.SelectedItem;
 
-            string name = li.Name;
+          //  string name = li.Name;
 
             if (PersonalContentIsSelected == true)
             {
@@ -581,8 +585,8 @@ namespace YourNoteUWP.ViewModels
 
         public void NoteDeleteButtonClick()
         {
-            Note.DeleteNote(_selectedNote.noteId);
-            NoteDisplayPopUpIsOpen = false;
+           // Note.DeleteNote(_selectedNote.noteId);
+           // NoteDisplayPopUpIsOpen = false;
 
         }
 

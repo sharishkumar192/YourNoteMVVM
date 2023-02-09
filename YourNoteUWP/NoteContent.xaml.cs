@@ -28,8 +28,8 @@ namespace YourNoteUWP
         Models.Note displayNote = null;
         private string oldTitle;
         private string oldContent;
-       
-       private AccountPageViewModel _accountPageViewModel;
+
+        private AccountPageViewModel _accountPageViewModel;
         public NoteContent()
         {
             this.InitializeComponent();
@@ -43,15 +43,16 @@ namespace YourNoteUWP
                 //AccountPageViewModel)Parent as AccountPageViewModel;
         }
 
+    
 
-      
 
 
-        //private void noteCloseButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Note.NoteUpdation(displayNote);
-        //    this.Content = new AccountPage(noteOwner);
-        //}
+
+        private void noteCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Note.NoteUpdation(displayNote);
+            //this.Content = new AccountPage(noteOwner);
+        }
 
         private void usersToShare_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -80,7 +81,7 @@ namespace YourNoteUWP
 
         private void NoteCloseButton_Click(object sender, RoutedEventArgs e)
         {
-          _accountPageViewModel.NoteCloseButtonClick(this.Parent, e);
+            _accountPageViewModel.NoteCloseButtonClick(this.Parent, e);
         }
     }
 }

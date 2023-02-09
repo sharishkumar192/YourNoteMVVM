@@ -94,14 +94,16 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
-                SelectionChanged="{x:Bind _accountPageViewModel.MainMenuOptionsSelectionChanged}"
+                SelectedIndex="0"
+                SelectedItem="PersonalContent"
+                SelectedValue="PersonalContent"
+                SelectionChanged="{x:Bind _accountPageViewModel.MainMenuOptionsSelectionChanged, Mode=OneWay}"
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
                 <ListBoxItem
                     Name="PersonalContent"
                     Content="Personal"
-                    IsSelected="{x:Bind _accountPageViewModel.PersonalContentIsSelected, Mode=TwoWay}"
-                    IsTapEnabled="True" />
+                    IsSelected="{x:Bind _accountPageViewModel.PersonalContentIsSelected, Mode=TwoWay}" />
 
                 <ListBoxItem
                     Name="SharedContent"
@@ -120,7 +122,7 @@
             <StackPanel
                 Name="SearchBox"
                 Width="325"
-                Margin="0,5,5,0"
+                Margin="0,7,5,0"
                 LostFocus="{x:Bind _accountPageViewModel.SearchBoxLostFocus, Mode=OneWay}"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
@@ -183,7 +185,7 @@
                 Name="Logout"
                 Width="35"
                 Height="31"
-                Margin="0,0,5,5"
+                Margin="0,0,5,0"
                 Background="Red"
                 Click="{x:Bind _accountPageViewModel.LogoutContentTapped, Mode=OneWay}"
                 Content="&#xF3B1;"
