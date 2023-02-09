@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,17 +25,16 @@ namespace YourNoteUWP {
         //Creates new currentUser 
         public static void InsertNewUser(Models.User user) //Needed
         {
-           
+            SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
 
-                using(SQLiteConnection conn = DBCreation.OpenConnection())
-                {
+               
                     //DbProviderFactory factory = DbProviderFactories.GetFactory(conn);
                     //DbCommandBuilder commandBuilder = factory.CreateCommandBuilder();
                     //string sanitizedTableName = commandBuilder.QuoteIdentifier(DBCreation.userTableName);
                     SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-                    string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (name, userId, password) VALUES ( @name, @userId, @password);";
+                    string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
 
 
                     SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -48,18 +48,20 @@ namespace YourNoteUWP {
                     command.Parameters.Add(parameters[2]);
                    // command.Parameters.Add(parameters[3]);
                     command.ExecuteNonQuery();
+                conn.Close();
 
-
-                }
-
-
-
-            }
-            catch (Exception )
-            {
                 
+
+
+
             }
-         
+           catch(Exception e) { Debug.WriteLine(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
             //sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
 
         }
@@ -72,16 +74,15 @@ namespace YourNoteUWP {
         {
 
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            SQLiteConnection conn = DBCreation.OpenConnection();
 
-            
 
-           string query = $"INSERT INTO "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName)  + " (userId, title, content, noteColor) VALUES (@userId, @title, @content, @noteColor);";
+            string query = $"INSERT INTO "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR) VALUES (@userId, @title, @content, @noteColor);";
 
             try
             {
 
-                using(SQLiteConnection conn = DBCreation.OpenConnection())
-                {
+              
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     SQLiteParameter[] parameters = new SQLiteParameter[4];
                     parameters[0] = new SQLiteParameter("@userId", newNote.userId);
@@ -95,14 +96,16 @@ namespace YourNoteUWP {
                     command.ExecuteNonQuery();
                     conn.Close();
 
-                }
+                
                
              
             
                 }
-            catch (Exception)
+           catch(Exception e) { Debug.WriteLine(e.Message); }
+            finally
             {
-             
+                conn.Close();
+
             }
 
 
@@ -115,14 +118,11 @@ namespace YourNoteUWP {
         public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-  string query = $"INSERT INTO " +
-            sqlCommandBuilder.QuoteIdentifier(sharedTableName)
-          + "  VALUES (@sharedUserId, @noteId);";
-
+  string query = $"INSERT INTO " +  sqlCommandBuilder.QuoteIdentifier(sharedTableName)+ "  VALUES (@SHAREDUSERID, @NOTEID);";
+            SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-                using (SQLiteConnection conn = DBCreation.OpenConnection())
-                {
+                
 
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     SQLiteParameter[] parameters = new SQLiteParameter[2];
@@ -133,14 +133,17 @@ namespace YourNoteUWP {
                     command.ExecuteNonQuery();
                     conn.Close();
 
-                }
+                
 
 
 
 
             }
-            catch (Exception)
+           catch(Exception e) { Debug.WriteLine(e.Message); }
+            finally
             {
+                conn.Close();
+
             }
         }
 
@@ -148,11 +151,11 @@ namespace YourNoteUWP {
         public static void UpdateNote(string notesTableName, Note changedNote)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET title= @title , content= @content , searchCount = @count where noteId = @noteId  ;";
+            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title , CONTENT= @content , SEARCHCOUNT = @count WHERE NOTEID = @noteId  ;";
+            SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-                using (SQLiteConnection conn = DBCreation.OpenConnection())
-                {
+              
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     SQLiteParameter[] parameters = new SQLiteParameter[4];
                     parameters[0] = new SQLiteParameter("@title", changedNote.title);
@@ -167,14 +170,18 @@ namespace YourNoteUWP {
                     command.Parameters.Add(parameters[3]);
                     command.ExecuteNonQuery();
                     conn.Close();
-                }
+                
              
               
 
             }
-            catch (Exception )
+           catch(Exception e) { Debug.WriteLine(e.Message); }
+            finally
             {
+                conn.Close();
+
             }
+
         }
     
         //Delete the Note
@@ -183,15 +190,14 @@ namespace YourNoteUWP {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
 
 
-            string query1 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "WHERE sharedNoteId  = @noteId ; ";
-            string query2 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + "WHERE noteId  = @noteId ; ";
-
+            string query1 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "WHERE SHAREDNOTEID  = @noteId ; ";
+            string query2 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + "WHERE NOTEID  = @noteId ; ";
+            SQLiteConnection conn = DBCreation.OpenConnection();
 
             try
             {
                 
-                using (SQLiteConnection conn = DBCreation.OpenConnection())
-                {
+               
                     SQLiteCommand command = new SQLiteCommand(query1, conn);
                     SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
                     command.Parameters.Add(parameters);
@@ -201,11 +207,13 @@ namespace YourNoteUWP {
                     command.ExecuteNonQuery();
                     conn.Close();
 
-                }
-            }
-            catch (Exception)
-            {
                 
+            }
+           catch(Exception e) { Debug.WriteLine(e.Message); }
+            finally
+            {
+                conn.Close();
+
             }
 
         }

@@ -10,26 +10,32 @@
     <Page.Background>
         <ImageBrush ImageSource="/Assets/AppBackdrop-Light.png" />
     </Page.Background>
-    <!--<Page.Resources>
-        <DataTemplate x:Key="NotesofUser" x:DataType="data:Note">
-
-            <local:NotesDataTemplate  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-
-        </DataTemplate>
-    </Page.Resources>-->
 
 
     <Page.Resources>
 
-
-        <DataTemplate x:Key="SearchTitle"                       >
+        <DataTemplate x:Key="RecentlySuggested"                       >
 
             <Border x:ConnectionId='6'
                 Width="300"
                 BorderBrush="White"
                 BorderThickness="0,0,0,1">
                 <TextBlock x:ConnectionId='7'
-                    Padding="0,0,0,2"
+                    HorizontalAlignment="Center"
+                    FontSize="14"
+                    Foreground="White"
+                                          />
+            </Border>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="SearchTitle"                       >
+
+            <Border x:ConnectionId='3'
+                Width="300"
+                BorderBrush="White"
+                BorderThickness="0,0,0,1">
+                <TextBlock x:ConnectionId='4'
                     HorizontalAlignment="Stretch"
                     FontSize="14"
                     Foreground="White"
@@ -39,20 +45,7 @@
         </DataTemplate>
 
 
-        <DataTemplate x:Key="RecentlySuggested"                       >
 
-            <Border x:ConnectionId='3'
-                Width="300"
-                BorderBrush="White"
-                BorderThickness="0,0,0,1">
-                <TextBlock x:ConnectionId='4'
-                    HorizontalAlignment="Center"
-                    FontSize="14"
-                    Foreground="White"
-                                          />
-            </Border>
-
-        </DataTemplate>
     </Page.Resources>
 
 
@@ -63,6 +56,7 @@
 
             <RowDefinition />
         </Grid.RowDefinitions>
+
 
         <RelativePanel
             Margin="5,5,5,0"
@@ -82,11 +76,10 @@
                 <Image
                     Width="30"
                     Height="30"
-                    Margin="0,0,10,10"
+                    Margin="0,2,10,10"
                     Source="/Assets/StoreLogo.scale-100.png" />
 
                 <TextBlock
-                    Margin="0,7,0,0"
                     FontSize="24"
                     Foreground="Black"
                     Text="Notebook" />
@@ -94,7 +87,7 @@
 
 
 
-
+            <!--  MAIN MENU OPTIONS  -->
             <ListBox x:ConnectionId='13'
                 Name="MainMenuOptions"
                 ItemContainerStyle="{StaticResource MainMenuItemStyle}"
@@ -104,18 +97,18 @@
                                                                                                  
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
-                <ListBoxItem x:ConnectionId='20'
+                <ListBoxItem x:ConnectionId='21'
                     Name="PersonalContent"
                     Content="Personal"
                                                                                                       
                     IsTapEnabled="True" />
 
-                <ListBoxItem x:ConnectionId='21'
+                <ListBoxItem x:ConnectionId='22'
                     Name="SharedContent"
                     Content="Shared"
                                                                                                      />
 
-                <ListBoxItem x:ConnectionId='22'
+                <ListBoxItem x:ConnectionId='23'
                     Name="NoteCreation"
                     Content="New Note"
                                                                                                     />
@@ -123,82 +116,92 @@
             </ListBox>
 
 
-
-            <TextBox x:ConnectionId='14'
-                Name="SearchTextBox"
-                Width="300"
-                Height="40"
-                Background="White"
-                CornerRadius="4"
-                FontSize="15"
-                Foreground="Black"
+            <!--  SEARCH BOX  -->
+            <StackPanel x:ConnectionId='14'
+                Name="SearchBox"
+                Width="325"
+                Margin="0,5,5,0"
+                                                                                          
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
-                RelativePanel.LeftOf="UserMenu"
-                Style="{StaticResource CustomSearchBox}"
-                                                                                    
-                                                                                                   />
+                RelativePanel.LeftOf="Logout">
+                <TextBox x:ConnectionId='16'
+                    Name="SearchTextBox"
+                    Background="White"
+                    CornerRadius="4"
+                    FontSize="15"
+                    Foreground="Black"
+                    Style="{StaticResource CustomSearchBox}"
+                                                                                        
+                                                                                                       />
 
-            <Popup x:ConnectionId='15'
-                Name="SuggestionsPopup"
-                IsLightDismissEnabled="False"
-                                                                                           
-                RelativePanel.AlignBottomWith="SearchTextBox">
-                <Grid x:ConnectionId='17'
-                    Name="PopUpContainer"
-                    Width="Auto"
-                    Height="Auto">
-
-                    <ListBox x:ConnectionId='18'
-                        Name="RecentSuggestedContent"
-                        Background="Black"
-                        BorderBrush="Red"
-                        BorderThickness="10,0,10,10"
-                        CornerRadius="4"
-                        ItemTemplate="{StaticResource RecentlySuggested}"
-                                                                                                           
-                                                                                                                      
-                        SelectionMode="Single"
-                                                                                                           />
-
-                    <ListView x:ConnectionId='19'
-                        Name="SearchBoxContainerContent"
+                <Popup x:ConnectionId='17'
+                    Name="SuggestionsPopup"
+                    Margin="0,4,0,0"
+                    IsLightDismissEnabled="False"
+                                                                                               
+                    KeyTipPlacementMode="Bottom">
+                    <Grid x:ConnectionId='18'
+                        Name="PopUpContainer"
+                        Width="Auto"
                         Height="Auto"
-                        Background="Black"
-                        BorderBrush="Red"
-                        BorderThickness="10,0,10,10"
-                        CornerRadius="4"
-                        IsItemClickEnabled="True"
-                                                                                                           
-                        ItemTemplate="{StaticResource SearchTitle}"
-                                                                                                            
-                                                                                                            />
+                        CornerRadius="4">
+                        <Border CornerRadius="4">
+                            <ListBox x:ConnectionId='20'
+                                Name="RecentSuggestedContent"
+                                Width="325"
+                                Background="Black"
+                                ItemTemplate="{StaticResource RecentlySuggested}"
+                                                                                                                   
+                                                                                                                              
+                                SelectionMode="Single"
+                                                                                                                   />
+                        </Border>
 
-                </Grid>
+                        <ListView x:ConnectionId='19'
+                            Name="SearchBoxContainerContent"
+                            Width="325"
+                            Height="Auto"
+                            Background="Black"
+                            CornerRadius="4"
+                            IsItemClickEnabled="True"
+                                                                                                               
+                            ItemTemplate="{StaticResource SearchTitle}"
+                                                                                                                
+                                                                                                                />
 
-            </Popup>
+                    </Grid>
 
-            <Button x:ConnectionId='16'
-                Name="UserMenu"
-                Margin="10"
-                Background="Black"
+                </Popup>
+            </StackPanel>
+
+
+            <!--  SIGN OUT  -->
+            <!--  USER MENU  -->
+
+            <Button x:ConnectionId='15'
+                Name="Logout"
+                Width="35"
+                Height="31"
+                Margin="0,0,5,5"
+                Background="Red"
                                                                                        
+                Content="&#xF3B1;"
                 CornerRadius="4"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="14"
+                Foreground="White"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignTopWithPanel="True">
-                <Image
-                    Width="27"
-                    Height="27"
-                    Source="/Assets/LockScreenLogo.scale-200.png"
-                    Stretch="Fill" />
-            </Button>
-
+                RelativePanel.AlignTopWithPanel="True"
+                ToolTipService.Placement="Bottom"
+                ToolTipService.ToolTip="Sign Out" />
 
 
 
         </RelativePanel>
 
+        <!--  NOTES DISPLAY  -->
         <GridView x:ConnectionId='8'
             Name="NotesData"
             Grid.Row="1"
@@ -221,7 +224,6 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-
         <Popup x:ConnectionId='9'
             Name="NoteDisplayPopUp"
             IsLightDismissEnabled="False"

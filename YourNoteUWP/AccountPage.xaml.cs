@@ -34,28 +34,13 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
             this.SizeChanged += AccountPage_SizeChanged;
-
-
-
-        }
-        public AccountPage(Models.User loggedUser)
-        {
-          //  this.InitializeComponent();
-
-
-
-
-            //NoteContentPopUp.Height = Bounds.
-
-            //  Navigation.CompactPaneLength = userImage.Width;
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
 
             Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
-
+            
             _accountPageViewModel = new AccountPageViewModel(tuple);
         }
 

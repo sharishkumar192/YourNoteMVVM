@@ -57,7 +57,7 @@ namespace YourNoteUWP
         private void noteCloseButton_Click(object sender, RoutedEventArgs e)
         {
             Note.NoteUpdation(displayNote);
-            this.Content = new AccountPage(noteOwner);
+           // this.Content = new AccountPage(noteOwner);
         }
 
         private void usersToShare_ItemClick(object sender, ItemClickEventArgs e)
