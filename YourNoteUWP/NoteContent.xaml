@@ -44,27 +44,17 @@
         <Grid
             Grid.Column="0"
             Margin="0,0,-3,0"
-            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-            <Button
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Click="{x:Bind TransparentClick, Mode=OneWay}"
-                Style="{StaticResource TransparentStyle}" />
-        </Grid>
+            Background="{ThemeResource bgAcrylicBrushHome}"
+            Tapped="{x:Bind TransparentTapped, Mode=OneWay}" />
         <Grid
             Grid.Column="2"
             Margin="-3,0,0,0"
-            Background="{ThemeResource bgAcrylicBrushHome}">
-            <Button
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Click="{x:Bind TransparentClick, Mode=OneWay}"
-                Style="{StaticResource TransparentStyle}" />
-        </Grid>
+            Background="{ThemeResource bgAcrylicBrushHome}"
+            Tapped="{x:Bind TransparentTapped, Mode=OneWay}" />
 
         <!--  NOTE CONTENT  -->
 
-        <Grid Grid.Column="1" Background="#e8b01c">
+        <Grid Grid.Column="1" Background="{x:Bind NoteContentBackground, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

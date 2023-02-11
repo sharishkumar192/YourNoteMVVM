@@ -41,30 +41,20 @@
         </Grid.ColumnDefinitions>
 
         <!--  TRANSPARENT AREA  -->
-        <Grid
+        <Grid x:ConnectionId='5'
             Grid.Column="0"
             Margin="0,0,-3,0"
-            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-            <Button x:ConnectionId='13'
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                                                              
-                Style="{StaticResource TransparentStyle}" />
-        </Grid>
-        <Grid
+            Background="{ThemeResource bgAcrylicBrushHome}"
+                                                             />
+        <Grid x:ConnectionId='6'
             Grid.Column="2"
             Margin="-3,0,0,0"
-            Background="{ThemeResource bgAcrylicBrushHome}">
-            <Button x:ConnectionId='12'
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                                                              
-                Style="{StaticResource TransparentStyle}" />
-        </Grid>
+            Background="{ThemeResource bgAcrylicBrushHome}"
+                                                             />
 
         <!--  NOTE CONTENT  -->
 
-        <Grid Grid.Column="1" Background="#e8b01c">
+        <Grid x:ConnectionId='7' Grid.Column="1"                                                         >
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -74,7 +64,7 @@
 
 
             <RelativePanel>
-                <TextBox x:ConnectionId='10'
+                <TextBox x:ConnectionId='13'
                     Name="TitleOfNote"
                     Width="700"
                     Height="50"
@@ -94,7 +84,7 @@
                                                                 
                     TextAlignment="Center" />
 
-                <Button x:ConnectionId='11'
+                <Button x:ConnectionId='14'
                     Name="NoteCloseButton"
                     Margin="10"
                     Background="Transparent"
@@ -106,7 +96,7 @@
                     RelativePanel.AlignRightWithPanel="True" />
             </RelativePanel>
 
-            <ListBox x:ConnectionId='5'
+            <ListBox x:ConnectionId='8'
                 Name="NoteMenuOptions"
                 Grid.Row="1"
                 HorizontalAlignment="Center"
@@ -124,7 +114,7 @@
 
 
                 <ListBoxItem>
-                    <Button x:ConnectionId='8'
+                    <Button x:ConnectionId='11'
                         Name="NoteShareButton"
                         Background="Transparent"
                                                                           
@@ -135,7 +125,7 @@
                         <Button.Flyout>
                             <Flyout>
                                 <Grid>
-                                    <ListView x:ConnectionId='9'
+                                    <ListView x:ConnectionId='12'
                                         Name="UsersToShareView"
                                         Width="350"
                                         Height="400"
@@ -157,7 +147,7 @@
                 </ListBoxItem>
 
                 <ListBoxItem>
-                    <Button x:ConnectionId='7'
+                    <Button x:ConnectionId='10'
                         Name="NoteDeleteButton"
                         Background="Transparent"
                                                                            
@@ -170,7 +160,7 @@
             </ListBox>
 
 
-            <TextBox x:ConnectionId='6'
+            <TextBox x:ConnectionId='9'
                 Name="ContentOfNote"
                 Grid.Row="2"
                 Width="1000"

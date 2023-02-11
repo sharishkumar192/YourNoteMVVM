@@ -53,9 +53,10 @@ namespace YourNoteUWP
             _displayNote = note;
             TitleOfNoteText = _displayNote.title;
             ContentOfNoteText = _displayNote.content;
+            NoteContentBackground = GetSolidColorBrush(_displayNote.noteColor);
         }
 
-
+        
 
 
 
@@ -128,7 +129,7 @@ namespace YourNoteUWP
             }
         }
 
-        public void TransparentClick(object sender, RoutedEventArgs e)
+        public void TransparentTapped(object sender, TappedRoutedEventArgs e)
         {
             Popup p = this.Parent as Popup;
 
@@ -262,6 +263,9 @@ namespace YourNoteUWP
 
         }
 
+        private void Grid_Tapped()
+        {
 
+        }
     }
 }
