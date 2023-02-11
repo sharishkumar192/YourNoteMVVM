@@ -45,63 +45,10 @@ namespace YourNoteUWP.Models
 
 
 
-        public static ObservableCollection<Note> GetPersonalNotes(User user)
-        {
-            return DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
+     
 
-        }
 
-        public static ObservableCollection<Note> GetSharedNotes(Models.User user)
-        {
-
-            return DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, user);
-
-        }
-
-        public static Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
-        {
-            ObservableCollection<Note> noteForSearch = null;
-            ObservableCollection<Note> recentNotes = null;
-            ObservableCollection<Note> personalNotes = GetPersonalNotes(user);
-            ObservableCollection<Note> sharedNotes = GetSharedNotes(user);
-            if (personalNotes != null)
-            {
-                foreach (Note note in personalNotes)
-                {
-                    if (noteForSearch == null)
-                        noteForSearch = new ObservableCollection<Note>();
-                    if (recentNotes == null)
-                        recentNotes = new ObservableCollection<Note>();
-                    noteForSearch.Add(note);
-                    if (recentNotes.Count < 6 && note.searchCount != 0)
-                        recentNotes.Add(note);
-                }
-            }
-
-            if (sharedNotes != null)
-            {
-                foreach (Note note in sharedNotes)
-                {
-                    if (noteForSearch == null)
-                        noteForSearch = new ObservableCollection<Note>();
-                    if (recentNotes == null)
-                        recentNotes = new ObservableCollection<Note>();
-
-                    if (recentNotes.Count < 6 && note.searchCount != 0)
-                        recentNotes.Add(note);
-
-                    noteForSearch.Add(note);
-                }
-            }
-
-            Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>>(personalNotes, noteForSearch, recentNotes);
-            return searchNotes;
-        }
-
-        public static void NoteUpdation(Note displayNote)
-        {
-            DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
-        }
+       
 
         public static void DeleteNote(long noteId)
         {

@@ -132,9 +132,6 @@
     <Compile Include="NoteContent.xaml.cs">
       <DependentUpon>NoteContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NoteDisplay.xaml.cs">
-      <DependentUpon>NoteDisplay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NotesDataTemplate.xaml.cs">
       <DependentUpon>NotesDataTemplate.xaml</DependentUpon>
     </Compile>
@@ -145,6 +142,7 @@
     <Compile Include="ViewModels\INullorEmpty.cs" />
     <Compile Include="ViewModels\IPassword.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\NoteContentViewModel.cs" />
     <Compile Include="ViewModels\SignInPageViewModel.cs" />
     <Compile Include="ViewModels\SignUpPageViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
@@ -232,10 +230,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NoteContent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NoteDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

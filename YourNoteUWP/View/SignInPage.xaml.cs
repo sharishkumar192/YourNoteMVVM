@@ -33,7 +33,7 @@ namespace YourNoteUWP.View
         {
             _frame = e.Parameter as Frame;
             _signInPageViewModel = new SignInPageViewModel(_frame);
-          
+
 
         }
 

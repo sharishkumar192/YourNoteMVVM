@@ -95,25 +95,24 @@
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 SelectedIndex="0"
-                SelectedItem="PersonalContent"
                 SelectedValue="PersonalContent"
-                                                                                                              
+                                                                                        
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
                 <ListBoxItem x:ConnectionId='21'
                     Name="PersonalContent"
                     Content="Personal"
-                                                                                                       />
+                                                                                 />
 
                 <ListBoxItem x:ConnectionId='22'
                     Name="SharedContent"
                     Content="Shared"
-                                                                                                     />
+                                                                               />
 
                 <ListBoxItem x:ConnectionId='23'
                     Name="NoteCreation"
                     Content="New Note"
-                                                                                                    />
+                                                                              />
 
             </ListBox>
 
@@ -123,7 +122,7 @@
                 Name="SearchBox"
                 Width="325"
                 Margin="0,7,5,0"
-                                                                                          
+                                                                    
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
@@ -134,14 +133,14 @@
                     FontSize="15"
                     Foreground="Black"
                     Style="{StaticResource CustomSearchBox}"
-                                                                                        
-                                                                                                       />
+                                                                  
+                                                                                 />
 
                 <Popup x:ConnectionId='17'
                     Name="SuggestionsPopup"
                     Margin="0,4,0,0"
                     IsLightDismissEnabled="False"
-                                                                                               
+                                                                         
                     KeyTipPlacementMode="Bottom">
                     <Grid x:ConnectionId='18'
                         Name="PopUpContainer"
@@ -154,10 +153,10 @@
                                 Width="325"
                                 Background="Black"
                                 ItemTemplate="{StaticResource RecentlySuggested}"
-                                                                                                                   
-                                                                                                                              
+                                                                                             
+                                                                                                        
                                 SelectionMode="Single"
-                                                                                                                   />
+                                                                                             />
                         </Border>
 
                         <ListView x:ConnectionId='19'
@@ -167,10 +166,10 @@
                             Background="Black"
                             CornerRadius="4"
                             IsItemClickEnabled="True"
-                                                                                                               
+                                                                                         
                             ItemTemplate="{StaticResource SearchTitle}"
-                                                                                                                
-                                                                                                                />
+                                                                                          
+                                                                                          />
 
                     </Grid>
 
@@ -179,15 +178,13 @@
 
 
             <!--  SIGN OUT  -->
-            <!--  USER MENU  -->
-
             <Button x:ConnectionId='15'
                 Name="Logout"
                 Width="35"
                 Height="31"
                 Margin="0,0,5,0"
                 Background="Red"
-                                                                                       
+                                                                 
                 Content="&#xF3B1;"
                 CornerRadius="4"
                 FontFamily="Segoe MDL2 Assets"
@@ -209,14 +206,14 @@
             Grid.Row="1"
             Margin="5,0,5,5"
             HorizontalAlignment="Stretch"
-            Background="White"
+            Background="#ffffff"
             BorderBrush="Black"
             BorderThickness="1,0,1,1"
             CornerRadius="0,0,4,4"
             IsItemClickEnabled="True"
-                                                                                      
+                                                                
             ItemContainerStyle="{StaticResource NoteGridViewItem}"
-                                                                                         >
+                                                                   >
 
             <GridView.ItemTemplate>
                 <DataTemplate                       >
@@ -229,12 +226,12 @@
         <Popup x:ConnectionId='9'
             Name="NoteDisplayPopUp"
             IsLightDismissEnabled="False"
-                                                                                       >
+                                                                 >
 
             <local:NoteContent x:ConnectionId='10'
                 x:Name="NoteContentPopUp"
-                                                                                         
-                                                                                            />
+                                                                   
+                                                                      />
         </Popup>
 
 

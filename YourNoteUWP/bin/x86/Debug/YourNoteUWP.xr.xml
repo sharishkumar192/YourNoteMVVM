@@ -161,7 +161,6 @@
       <RootProperty Name="Name" />
       <RootProperty Name="ItemContainerStyle" />
       <RootProperty Name="SelectedIndex" />
-      <RootProperty Name="SelectedItem" />
       <RootProperty Name="SelectedValue" />
       <RootProperty Name="SelectionMode" />
       <RootProperty Name="Style" />
@@ -192,6 +191,7 @@
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
       <RootProperty Name="Flyout" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ToolTipService">
@@ -226,6 +226,8 @@
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="HorizontalTextAlignment" />
+      <RootProperty Name="IsReadOnly" />
+      <RootProperty Name="TextAlignment" />
       <RootEvent Name="TextChanged" />
       <RootEvent Name="Tapped" />
     </RootType>
@@ -270,7 +272,6 @@
       <RootProperty Name="TintColor" />
       <RootProperty Name="TintOpacity" />
       <RootProperty Name="Opacity" />
-      <RootProperty Name="TintLuminosityOpacity" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.FrameworkElement">
       <RootProperty Name="Width" />
@@ -317,6 +318,7 @@
       <RootProperty Name="HorizontalContentAlignment" />
       <RootProperty Name="VerticalContentAlignment" />
       <RootProperty Name="BackgroundSizing" />
+      <RootProperty Name="FontWeight" />
       <RootMethod Name="GetIsTemplateFocusTarget" />
       <RootMethod Name="SetIsTemplateFocusTarget" />
     </RootType>
@@ -402,17 +404,20 @@
       <RootProperty Name="TargetType" />
       <RootProperty Name="Template" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.VisualStateManager">
-      <RootMethod Name="GetVisualStateGroups" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
-      <RootProperty Name="Width" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ContentPresenter">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="HorizontalContentAlignment" />
+      <RootProperty Name="VerticalContentAlignment" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="BackgroundSizing" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
       <RootProperty Name="Content" />
       <RootProperty Name="ContentTemplate" />
+      <RootProperty Name="ContentTransitions" />
+      <RootProperty Name="CornerRadius" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="FontWeight" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="TextWrapping" />
@@ -422,29 +427,17 @@
       <RootProperty Name="TextLineBounds" />
       <RootProperty Name="OpticalMarginAlignment" />
       <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="ContentTransitions" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="Style" />
-      <RootProperty Name="Padding" />
-      <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="VerticalContentAlignment" />
-      <RootProperty Name="BackgroundSizing" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="CornerRadius" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Automation.AutomationProperties">
       <RootMethod Name="GetAccessibilityView" />
       <RootMethod Name="SetAccessibilityView" />
     </RootType>
-    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.TemplateBindingExtension" />
-    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
-    <RootType FullName="Windows.UI.Xaml.Data.Binding">
-      <RootProperty Name="RelativeSource" />
-      <RootProperty Name="TargetNullValue" />
+    <RootType FullName="Windows.UI.Xaml.VisualStateManager">
+      <RootMethod Name="GetVisualStateGroups" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Data.RelativeSource" />
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.TemplateBindingExtension" />
     <RootType FullName="Windows.UI.Xaml.VisualStateGroup">
       <RootProperty Name="States" />
     </RootType>
@@ -467,6 +460,16 @@
       <RootProperty Name="KeyTime" />
       <RootProperty Name="Value" />
     </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerDownThemeAnimation" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
+      <RootProperty Name="Width" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding">
+      <RootProperty Name="RelativeSource" />
+      <RootProperty Name="TargetNullValue" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.RelativeSource" />
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPresenter">
       <RootProperty Name="Padding" />
       <RootProperty Name="Footer" />
@@ -543,7 +546,6 @@
     <RootType FullName="Windows.UI.Xaml.Media.Animation.EntranceThemeTransition">
       <RootProperty Name="IsStaggeringEnabled" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerDownThemeAnimation" />
     <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerUpThemeAnimation" />
     <RootType FullName="Windows.UI.Xaml.Controls.Primitives.GridViewItemPresenter">
       <RootProperty Name="HorizontalContentAlignment" />
@@ -590,7 +592,6 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Flyout">
       <RootProperty Name="Content" />
     </RootType>
-    <RootType FullName="YourNoteUWP.NoteDisplay" />
     <RootType FullName="Windows.UI.Xaml.AdaptiveTrigger">
       <RootProperty Name="MinWindowWidth" />
     </RootType>

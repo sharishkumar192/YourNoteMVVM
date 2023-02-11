@@ -17,6 +17,7 @@
         <TextBlock
             Name="titles"
             Grid.Row="0"
+            HorizontalAlignment="Center"
             FontSize="20"
             Foreground="Black"
             Text="{x:Bind notesTemplate.title}" />

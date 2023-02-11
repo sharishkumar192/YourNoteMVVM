@@ -56,7 +56,6 @@ AccountPage.xbf
 App.xbf
 Dictionary.xbf
 NoteContent.xbf
-NoteDisplay.xbf
 NotesDataTemplate.xbf
 View\MainPage.xbf
 View\SignInPage.xbf

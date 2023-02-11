@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -21,49 +23,49 @@ using YourNoteUWP.ViewModels;
 
 namespace YourNoteUWP
 {
-    public sealed partial class NoteContent : UserControl
+    public sealed partial class NoteContent : UserControl, INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
         ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
         Models.User noteOwner = null;
-        Models.Note displayNote = null;
+        private static Note _displayNote ;
+        private Note _selectedNote = null;
         private string oldTitle;
         private string oldContent;
+        private DispatcherTimer _dispatcherTimer;
+        private NoteContentViewModel _noteContentViewModel;
 
-        private AccountPageViewModel _accountPageViewModel;
         public NoteContent()
         {
             this.InitializeComponent();
-
-
-            //  titleOfNote.AddHandler(TappedEvent, new TappedEventHandler(titleOfNote_Tapped), true);
-            //  contentOfNote.AddHandler(TappedEvent, new TappedEventHandler(contentOfNote_Tapped), true);
-
-           _accountPageViewModel = new AccountPageViewModel();
             
-                //AccountPageViewModel)Parent as AccountPageViewModel;
         }
 
-    
+        public void Hello(Note note)
+        {
+            _displayNote = note;
+            TitleOfNoteText = _displayNote.title;
+            ContentOfNoteText = _displayNote.content;
+        }
+
+
 
 
 
 
         private void noteCloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Note.NoteUpdation(displayNote);
-            //this.Content = new AccountPage(noteOwner);
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+            _noteContentViewModel.NoteUpdation(_displayNote);
         }
 
-        private void usersToShare_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-            var sharedToUser = (Models.User)e.ClickedItem;
-            Note.ShareNote(sharedToUser.userId, displayNote.noteId);
-            usersToShare.Remove(sharedToUser);
-            NoteShared();
-
-
-        }
 
 
         private async void NoteShared()
@@ -79,9 +81,187 @@ namespace YourNoteUWP
             var result = await showDialog.ShowAsync();
         }
 
-        private void NoteCloseButton_Click(object sender, RoutedEventArgs e)
+
+
+
+        private static SolidColorBrush GetSolidColorBrush(string hex)
         {
-            _accountPageViewModel.NoteCloseButtonClick(this.Parent, e);
+            if (hex == null)
+                hex = "#fdefad";
+            hex = hex.Replace("#", string.Empty);
+            byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
+            return myBrush;
         }
+
+        public void DispatcherTimerSetup()
+        {
+            _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+            _dispatcherTimer.Start();
+        }
+
+        private void DispatcherTimer_Tick(object sender, object e)
+        {
+            _selectedNote.title = TitleOfNoteText;
+            _selectedNote.content = ContentOfNoteText;
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+            _noteContentViewModel.NoteUpdation(_displayNote);
+          
+        }
+
+
+
+        //---------------------------Note Background--------------------------------------------------
+        private SolidColorBrush _noteContentBackground;
+        public SolidColorBrush NoteContentBackground
+        {
+            get { return _noteContentBackground; }
+            set
+            {
+                _noteContentBackground = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        public void TransparentClick(object sender, RoutedEventArgs e)
+        {
+            Popup p = this.Parent as Popup;
+
+            // close the Popup
+            if (p != null) { p.IsOpen = false; }
+
+            //    this.Content = new AccountPage(noteOwner);
+        }
+
+
+
+
+        //----------------------------Title Text Box---------------------------------------------------
+        private bool _titleOfNoteIsReadOnly = true;
+        public bool TitleOfNoteIsReadOnly
+        {
+            get { return _titleOfNoteIsReadOnly; }
+            set
+            {
+                _titleOfNoteIsReadOnly = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _titleOfNoteText;
+        public string TitleOfNoteText
+        {
+            get { return _titleOfNoteText; }
+            set
+            {
+                _titleOfNoteText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _oldTitle;
+        public string OldTitle
+        {
+            get { return _oldTitle; }
+            set
+            {
+                _oldTitle = value;
+            }
+        }
+
+        public void TitleOfNoteTapped()
+        {
+            TitleOfNoteIsReadOnly = false;
+            OldTitle = TitleOfNoteText;
+            DispatcherTimerSetup();
+        }
+
+
+
+        //----------------------------Note Close Button ---------------------------------------------------
+        public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            //_selectedNote.title = TitleOfNoteText;
+            //  _selectedNote.content = ContentOfNoteText;
+            //    Note.NoteUpdation(_selectedNote);
+            Popup p = this.Parent as Popup;
+
+            // close the Popup
+            if (p != null) { p.IsOpen = false; }
+
+      
+
+            //    this.Content = new AccountPage(noteOwner);
+        }
+
+        //----------------------------Note Share Button ---------------------------------------------------
+        public void NoteShareButtonClick()
+        {
+
+        }
+
+        //----------------------------Note Delete Button ---------------------------------------------------
+        public void NoteDeleteButtonClick()
+        {
+            // Note.DeleteNote(_selectedNote.noteId);
+            // NoteDisplayPopUpIsOpen = false;
+
+        }
+        //----------------------------Content Text Box ---------------------------------------------------
+
+        private string _contentOfNoteText;
+
+        public string ContentOfNoteText
+        {
+            get { return _contentOfNoteText; }
+            set
+            {
+                _contentOfNoteText = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private bool _contentOfNoteIsReadOnly = true;
+
+        public bool ContentOfNoteIsReadOnly
+        {
+            get { return _contentOfNoteIsReadOnly; }
+            set { _contentOfNoteIsReadOnly = value; }
+        }
+
+
+
+
+
+
+        private string _OldContent;
+
+        public string OldContent
+        {
+            get { return _OldContent; }
+            set { _OldContent = value; }
+        }
+
+
+        public void ContentOfNoteTapped()
+        {
+            ContentOfNoteIsReadOnly = false;
+            OldContent = ContentOfNoteText;
+            DispatcherTimerSetup();
+        }
+
+        private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+
     }
 }

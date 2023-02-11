@@ -13,7 +13,7 @@
 
     <UserControl.Resources>
 
-        <DataTemplate x:Key="shareUser"                       >
+        <DataTemplate x:Key="ShareUser"                       >
             <StackPanel x:ConnectionId='3' HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel Margin="10">
                     <TextBlock x:ConnectionId='4'
@@ -39,8 +39,31 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource bgAcrylicBrushHome}" />
-        <Grid Grid.Column="2" Background="{ThemeResource bgAcrylicBrushHome}" />
+
+        <!--  TRANSPARENT AREA  -->
+        <Grid
+            Grid.Column="0"
+            Margin="0,0,-3,0"
+            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Button x:ConnectionId='13'
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                                                              
+                Style="{StaticResource TransparentStyle}" />
+        </Grid>
+        <Grid
+            Grid.Column="2"
+            Margin="-3,0,0,0"
+            Background="{ThemeResource bgAcrylicBrushHome}">
+            <Button x:ConnectionId='12'
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                                                              
+                Style="{StaticResource TransparentStyle}" />
+        </Grid>
+
+        <!--  NOTE CONTENT  -->
+
         <Grid Grid.Column="1" Background="#e8b01c">
 
             <Grid.RowDefinitions>
@@ -48,9 +71,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+
             <RelativePanel>
                 <TextBox x:ConnectionId='10'
-                    Name="Box"
+                    Name="TitleOfNote"
                     Width="700"
                     Height="50"
                     Margin="10"
@@ -61,15 +86,19 @@
                     FontSize="28"
                     Foreground="Black"
                     HorizontalTextAlignment="Center"
-                    PlaceholderText="Title"
+                                                                            
+                    IsTapEnabled="True"
                     RelativePanel.AlignHorizontalCenterWithPanel="True"
-                    Style="{StaticResource NoteContentStyle}" />
+                    Style="{StaticResource NoteContentStyle}"
+                                                                    
+                                                                
+                    TextAlignment="Center" />
 
                 <Button x:ConnectionId='11'
                     Name="NoteCloseButton"
                     Margin="10"
                     Background="Transparent"
-                                                 
+                                                                      
                     Content="&#xE106;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="16"
@@ -98,7 +127,7 @@
                     <Button x:ConnectionId='8'
                         Name="NoteShareButton"
                         Background="Transparent"
-                                                                                                
+                                                                          
                         Content="&#xE72D;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
@@ -107,7 +136,7 @@
                             <Flyout>
                                 <Grid>
                                     <ListView x:ConnectionId='9'
-                                        Name="usersToShareView"
+                                        Name="UsersToShareView"
                                         Width="350"
                                         Height="400"
                                         Margin="20"
@@ -118,8 +147,8 @@
                                         BorderThickness="10"
                                         CornerRadius="15"
                                         IsItemClickEnabled="True"
-                                                                          
-                                        ItemTemplate="{StaticResource shareUser}"
+                                                                              
+                                        ItemTemplate="{StaticResource ShareUser}"
                                                                             />
                                 </Grid>
                             </Flyout>
@@ -131,7 +160,7 @@
                     <Button x:ConnectionId='7'
                         Name="NoteDeleteButton"
                         Background="Transparent"
-                                                                                                 
+                                                                           
                         Content="&#xE107;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
@@ -155,8 +184,8 @@
                 Foreground="Black"
                 IsTapEnabled="True"
                 Style="{StaticResource NoteContentStyle}"
-                                                                                        
-                Text="asda"
+                                                                  
+                                                              
                 TextWrapping="Wrap" />
 
         </Grid>

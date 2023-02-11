@@ -41,7 +41,7 @@ namespace YourNoteUWP.ViewModels
                 FrequentEmailBoxVisibility = Visibility.Visible;
 
             }
-        
+
 
         }
 
@@ -353,7 +353,7 @@ namespace YourNoteUWP.ViewModels
 
         private ObservableCollection<YourNoteUWP.Models.User> _frequentEmailItemSource = Models.User.GetFrequentUsers();
 
-//------------------------------------------- Navigation Buttons-----------------------------------------
+        //------------------------------------------- Navigation Buttons-----------------------------------------
         public void LogInButtonClick()
         {
             EmailBoxLostFocus();
@@ -366,8 +366,8 @@ namespace YourNoteUWP.ViewModels
                 {
 
                     Tuple<Frame, Models.User> tuple = new Tuple<Frame, Models.User>(_frame, validation.Item1);
-                    _frame.Navigate(typeof(AccountPage), tuple , new DrillInNavigationTransitionInfo());
-                   
+                    _frame.Navigate(typeof(AccountPage), tuple, new DrillInNavigationTransitionInfo());
+
                 }
                 else
                 {

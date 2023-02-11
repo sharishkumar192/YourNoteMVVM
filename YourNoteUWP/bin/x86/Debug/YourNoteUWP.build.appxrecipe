@@ -282,9 +282,6 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf">
       <PackagePath>NoteContent.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteDisplay.xbf">
-      <PackagePath>NoteDisplay.xbf</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NotesDataTemplate.xbf">
       <PackagePath>NotesDataTemplate.xbf</PackagePath>
     </AppxPackagedFile>

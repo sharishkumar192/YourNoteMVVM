@@ -13,7 +13,7 @@
 
     <UserControl.Resources>
 
-        <DataTemplate x:Key="shareUser" x:DataType="data:User">
+        <DataTemplate x:Key="ShareUser" x:DataType="data:User">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel Margin="10">
                     <TextBlock
@@ -39,8 +39,31 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="{ThemeResource bgAcrylicBrushHome}" />
-        <Grid Grid.Column="2" Background="{ThemeResource bgAcrylicBrushHome}" />
+
+        <!--  TRANSPARENT AREA  -->
+        <Grid
+            Grid.Column="0"
+            Margin="0,0,-3,0"
+            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Button
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="{x:Bind TransparentClick, Mode=OneWay}"
+                Style="{StaticResource TransparentStyle}" />
+        </Grid>
+        <Grid
+            Grid.Column="2"
+            Margin="-3,0,0,0"
+            Background="{ThemeResource bgAcrylicBrushHome}">
+            <Button
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="{x:Bind TransparentClick, Mode=OneWay}"
+                Style="{StaticResource TransparentStyle}" />
+        </Grid>
+
+        <!--  NOTE CONTENT  -->
+
         <Grid Grid.Column="1" Background="#e8b01c">
 
             <Grid.RowDefinitions>
@@ -48,9 +71,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+
             <RelativePanel>
                 <TextBox
-                    Name="Box"
+                    Name="TitleOfNote"
                     Width="700"
                     Height="50"
                     Margin="10"
@@ -61,15 +86,19 @@
                     FontSize="28"
                     Foreground="Black"
                     HorizontalTextAlignment="Center"
-                    PlaceholderText="Title"
+                    IsReadOnly="{x:Bind TitleOfNoteIsReadOnly, Mode=TwoWay}"
+                    IsTapEnabled="True"
                     RelativePanel.AlignHorizontalCenterWithPanel="True"
-                    Style="{StaticResource NoteContentStyle}" />
+                    Style="{StaticResource NoteContentStyle}"
+                    Tapped="{x:Bind TitleOfNoteTapped, Mode=OneWay}"
+                    Text="{x:Bind TitleOfNoteText, Mode=OneWay}"
+                    TextAlignment="Center" />
 
                 <Button
                     Name="NoteCloseButton"
                     Margin="10"
                     Background="Transparent"
-                    Click="NoteCloseButton_Click"
+                    Click="{x:Bind NoteCloseButtonClick, Mode=OneWay}"
                     Content="&#xE106;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="16"
@@ -98,7 +127,7 @@
                     <Button
                         Name="NoteShareButton"
                         Background="Transparent"
-                        Click="{x:Bind _accountPageViewModel.NoteShareButtonClick, Mode=OneWay}"
+                        Click="{x:Bind NoteShareButtonClick, Mode=OneWay}"
                         Content="&#xE72D;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
@@ -107,7 +136,7 @@
                             <Flyout>
                                 <Grid>
                                     <ListView
-                                        Name="usersToShareView"
+                                        Name="UsersToShareView"
                                         Width="350"
                                         Height="400"
                                         Margin="20"
@@ -118,8 +147,8 @@
                                         BorderThickness="10"
                                         CornerRadius="15"
                                         IsItemClickEnabled="True"
-                                        ItemClick="usersToShare_ItemClick"
-                                        ItemTemplate="{StaticResource shareUser}"
+                                        ItemClick="UsersToShareView_ItemClick"
+                                        ItemTemplate="{StaticResource ShareUser}"
                                         ItemsSource="{x:Bind usersToShare}" />
                                 </Grid>
                             </Flyout>
@@ -131,7 +160,7 @@
                     <Button
                         Name="NoteDeleteButton"
                         Background="Transparent"
-                        Click="{x:Bind _accountPageViewModel.NoteDeleteButtonClick, Mode=OneWay}"
+                        Click="{x:Bind NoteDeleteButtonClick, Mode=OneWay}"
                         Content="&#xE107;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
@@ -155,8 +184,8 @@
                 Foreground="Black"
                 IsTapEnabled="True"
                 Style="{StaticResource NoteContentStyle}"
-                Tapped="{x:Bind _accountPageViewModel.ContentOfNoteTapped, Mode=OneWay}"
-                Text="asda"
+                Tapped="{x:Bind ContentOfNoteTapped, Mode=OneWay}"
+                Text="{x:Bind ContentOfNoteText, Mode=OneWay}"
                 TextWrapping="Wrap" />
 
         </Grid>

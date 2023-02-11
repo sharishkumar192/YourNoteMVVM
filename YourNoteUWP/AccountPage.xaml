@@ -95,25 +95,24 @@
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 SelectedIndex="0"
-                SelectedItem="PersonalContent"
                 SelectedValue="PersonalContent"
-                SelectionChanged="{x:Bind _accountPageViewModel.MainMenuOptionsSelectionChanged, Mode=OneWay}"
+                SelectionChanged="{x:Bind MainMenuOptionsSelectionChanged, Mode=OneWay}"
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
                 <ListBoxItem
                     Name="PersonalContent"
                     Content="Personal"
-                    IsSelected="{x:Bind _accountPageViewModel.PersonalContentIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind PersonalContentIsSelected, Mode=TwoWay}" />
 
                 <ListBoxItem
                     Name="SharedContent"
                     Content="Shared"
-                    IsSelected="{x:Bind _accountPageViewModel.SharedContentIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind SharedContentIsSelected, Mode=TwoWay}" />
 
                 <ListBoxItem
                     Name="NoteCreation"
                     Content="New Note"
-                    IsSelected="{x:Bind _accountPageViewModel.NoteCreationIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind NoteCreationIsSelected, Mode=TwoWay}" />
 
             </ListBox>
 
@@ -123,7 +122,7 @@
                 Name="SearchBox"
                 Width="325"
                 Margin="0,7,5,0"
-                LostFocus="{x:Bind _accountPageViewModel.SearchBoxLostFocus, Mode=OneWay}"
+                LostFocus="{x:Bind SearchBoxLostFocus, Mode=OneWay}"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
@@ -134,14 +133,14 @@
                     FontSize="15"
                     Foreground="Black"
                     Style="{StaticResource CustomSearchBox}"
-                    Text="{x:Bind _accountPageViewModel.SearchTextBoxText, Mode=OneWay}"
-                    TextChanged="{x:Bind _accountPageViewModel.SearchTextBoxTextChanged, Mode=OneWay}" />
+                    Text="{x:Bind SearchTextBoxText, Mode=OneWay}"
+                    TextChanged="{x:Bind SearchTextBoxTextChanged, Mode=OneWay}" />
 
                 <Popup
                     Name="SuggestionsPopup"
                     Margin="0,4,0,0"
                     IsLightDismissEnabled="False"
-                    IsOpen="{x:Bind _accountPageViewModel.SuggestionsPopupIsOpen, Mode=OneWay}"
+                    IsOpen="{x:Bind SuggestionsPopupIsOpen, Mode=OneWay}"
                     KeyTipPlacementMode="Bottom">
                     <Grid
                         Name="PopUpContainer"
@@ -154,10 +153,10 @@
                                 Width="325"
                                 Background="Black"
                                 ItemTemplate="{StaticResource RecentlySuggested}"
-                                ItemsSource="{x:Bind _accountPageViewModel.RecentSuggestedItemSource, Mode=OneWay}"
-                                SelectionChanged="{x:Bind _accountPageViewModel.RecentSuggestedSelectionChanged, Mode=OneWay}"
+                                ItemsSource="{x:Bind RecentSuggestedItemSource, Mode=OneWay}"
+                                SelectionChanged="{x:Bind RecentSuggestedSelectionChanged, Mode=OneWay}"
                                 SelectionMode="Single"
-                                Visibility="{x:Bind _accountPageViewModel.RecentSuggestedVisibility, Mode=OneWay}" />
+                                Visibility="{x:Bind RecentSuggestedVisibility, Mode=OneWay}" />
                         </Border>
 
                         <ListView
@@ -167,10 +166,10 @@
                             Background="Black"
                             CornerRadius="4"
                             IsItemClickEnabled="True"
-                            ItemClick="{x:Bind _accountPageViewModel.SearchBoxContainerItemClick, Mode=OneWay}"
+                            ItemClick="{x:Bind SearchBoxContainerItemClick, Mode=OneWay}"
                             ItemTemplate="{StaticResource SearchTitle}"
-                            ItemsSource="{x:Bind _accountPageViewModel.SearchBoxContentItemSource, Mode=OneWay}"
-                            Visibility="{x:Bind _accountPageViewModel.SearchBoxContentVisibility, Mode=OneWay}" />
+                            ItemsSource="{x:Bind SearchBoxContentItemSource, Mode=OneWay}"
+                            Visibility="{x:Bind SearchBoxContentVisibility, Mode=OneWay}" />
 
                     </Grid>
 
@@ -179,15 +178,13 @@
 
 
             <!--  SIGN OUT  -->
-            <!--  USER MENU  -->
-
             <Button
                 Name="Logout"
                 Width="35"
                 Height="31"
                 Margin="0,0,5,0"
                 Background="Red"
-                Click="{x:Bind _accountPageViewModel.LogoutContentTapped, Mode=OneWay}"
+                Click="{x:Bind LogoutContentTapped, Mode=OneWay}"
                 Content="&#xF3B1;"
                 CornerRadius="4"
                 FontFamily="Segoe MDL2 Assets"
@@ -209,14 +206,14 @@
             Grid.Row="1"
             Margin="5,0,5,5"
             HorizontalAlignment="Stretch"
-            Background="White"
+            Background="#ffffff"
             BorderBrush="Black"
             BorderThickness="1,0,1,1"
             CornerRadius="0,0,4,4"
             IsItemClickEnabled="True"
-            ItemClick="{x:Bind _accountPageViewModel.NotesDataItemClick, Mode=OneWay}"
+            ItemClick="{x:Bind NotesDataItemClick, Mode=OneWay}"
             ItemContainerStyle="{StaticResource NoteGridViewItem}"
-            ItemsSource="{x:Bind _accountPageViewModel.NotesDataItemSource, Mode=OneWay}">
+            ItemsSource="{x:Bind NotesDataItemSource, Mode=OneWay}">
 
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Note">
@@ -229,12 +226,12 @@
         <Popup
             Name="NoteDisplayPopUp"
             IsLightDismissEnabled="False"
-            IsOpen="{x:Bind _accountPageViewModel.NoteDisplayPopUpIsOpen, Mode=OneWay}">
+            IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}">
 
             <local:NoteContent
                 x:Name="NoteContentPopUp"
-                Width="{x:Bind _accountPageViewModel.NoteContentPopUpWidth, Mode=OneWay}"
-                Height="{x:Bind _accountPageViewModel.NoteContentPopUpHeight, Mode=OneWay}" />
+                Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
+                Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
         </Popup>
 
 
