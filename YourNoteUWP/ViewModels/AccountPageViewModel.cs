@@ -229,7 +229,7 @@ namespace YourNoteUWP.ViewModels
 
         //public void NoteDeleteButtonClick()
         //{
-        //   // Note.DeleteNote(_selectedNote.noteId);
+        //   // Note.DeleteNote(_displayNote.noteId);
         //   // NoteDisplayPopUpIsOpen = false;
 
         //}
@@ -254,9 +254,9 @@ namespace YourNoteUWP.ViewModels
 
         //private void DispatcherTimer_Tick(object sender, object e)
         //{
-        //    _selectedNote.title = TitleOfNoteText;
-        //    _selectedNote.content = ContentOfNoteText;
-        //    Note.NoteUpdation(_selectedNote);
+        //    _displayNote.title = TitleOfNoteText;
+        //    _displayNote.content = ContentOfNoteText;
+        //    Note.NoteUpdation(_displayNote);
         //}
 
         //public void ContentOfNoteTapped()
@@ -270,9 +270,9 @@ namespace YourNoteUWP.ViewModels
 
         //public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
         //{
-        //    //_selectedNote.title = TitleOfNoteText;
-        //    //  _selectedNote.content = ContentOfNoteText;
-        //    //    Note.NoteUpdation(_selectedNote);
+        //    //_displayNote.title = TitleOfNoteText;
+        //    //  _displayNote.content = ContentOfNoteText;
+        //    //    Note.NoteUpdation(_displayNote);
         //    Popup p = (Popup)sender;
 
         //    // close the Popup

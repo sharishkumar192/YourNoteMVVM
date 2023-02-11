@@ -36,7 +36,7 @@ namespace YourNoteUWP
         ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
         Models.User noteOwner = null;
         private static Note _displayNote ;
-        private Note _selectedNote = null;
+      
         private string oldTitle;
         private string oldContent;
         private DispatcherTimer _dispatcherTimer;
@@ -45,7 +45,11 @@ namespace YourNoteUWP
         public NoteContent()
         {
             this.InitializeComponent();
-            
+          
+
+            TitleOfNote.AddHandler(TappedEvent, new TappedEventHandler(TitleOfNoteTapped), true);
+            ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), true);
+
         }
 
         public void Hello(Note note)
@@ -59,13 +63,6 @@ namespace YourNoteUWP
         
 
 
-
-
-        private void noteCloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-            _noteContentViewModel.NoteUpdation(_displayNote);
-        }
 
 
 
@@ -107,8 +104,8 @@ namespace YourNoteUWP
 
         private void DispatcherTimer_Tick(object sender, object e)
         {
-            _selectedNote.title = TitleOfNoteText;
-            _selectedNote.content = ContentOfNoteText;
+            _displayNote.title = TitleOfNoteText;
+            _displayNote.content = ContentOfNoteText;
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             _noteContentViewModel.NoteUpdation(_displayNote);
           
@@ -154,6 +151,14 @@ namespace YourNoteUWP
             }
         }
 
+        private bool _titleOfNoteIsTapped = true;
+
+        public bool TitleOfNoteIsTapped
+        {
+            get { return _titleOfNoteIsTapped = true; }
+        }
+
+
         private string _titleOfNoteText;
         public string TitleOfNoteText
         {
@@ -175,7 +180,7 @@ namespace YourNoteUWP
             }
         }
 
-        public void TitleOfNoteTapped()
+        public void TitleOfNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             TitleOfNoteIsReadOnly = false;
             OldTitle = TitleOfNoteText;
@@ -187,9 +192,13 @@ namespace YourNoteUWP
         //----------------------------Note Close Button ---------------------------------------------------
         public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            //_selectedNote.title = TitleOfNoteText;
-            //  _selectedNote.content = ContentOfNoteText;
-            //    Note.NoteUpdation(_selectedNote);
+            //_displayNote.title = TitleOfNoteText;
+            //  _displayNote.content = ContentOfNoteText;
+            //    Note.NoteUpdation(_displayNote);
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+            _noteContentViewModel.NoteUpdation(_displayNote);
+           
+
             Popup p = this.Parent as Popup;
 
             // close the Popup
@@ -209,9 +218,12 @@ namespace YourNoteUWP
         //----------------------------Note Delete Button ---------------------------------------------------
         public void NoteDeleteButtonClick()
         {
-            // Note.DeleteNote(_selectedNote.noteId);
-            // NoteDisplayPopUpIsOpen = false;
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+            _noteContentViewModel.DeleteNote(_displayNote.noteId);
 
+            Popup p = this.Parent as Popup;
+
+            if (p != null) { p.IsOpen = false; }
         }
         //----------------------------Content Text Box ---------------------------------------------------
 
@@ -227,6 +239,12 @@ namespace YourNoteUWP
             }
         }
 
+        private bool _contentOfNoteIsTapped = true;
+
+        public bool ContentOfNoteIsTapped
+        {
+            get { return _contentOfNoteIsTapped;  }
+        }
 
 
         private bool _contentOfNoteIsReadOnly = true;
@@ -251,7 +269,7 @@ namespace YourNoteUWP
         }
 
 
-        public void ContentOfNoteTapped()
+        public void ContentOfNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             ContentOfNoteIsReadOnly = false;
             OldContent = ContentOfNoteText;
@@ -263,9 +281,6 @@ namespace YourNoteUWP
 
         }
 
-        private void Grid_Tapped()
-        {
-
-        }
+       
     }
 }

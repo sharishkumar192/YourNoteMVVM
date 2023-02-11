@@ -48,7 +48,10 @@ namespace YourNoteUWP.ViewModels
             DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
         }
 
-
+        public  void DeleteNote(long noteId)
+        {
+            DBUpdation.DeleteNote(DBCreation.notesTableName, DBCreation.sharedTableName, noteId);
+        }
 
 
 
