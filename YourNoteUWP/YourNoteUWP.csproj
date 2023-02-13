@@ -140,6 +140,7 @@
     <Compile Include="ViewModels\IEmail.cs" />
     <Compile Include="ViewModels\IEmailExt.cs" />
     <Compile Include="ViewModels\INullorEmpty.cs" />
+    <Compile Include="ViewModels\IPage.cs" />
     <Compile Include="ViewModels\IPassword.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NoteContentViewModel.cs" />

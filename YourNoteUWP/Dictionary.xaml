@@ -97,7 +97,7 @@
         <Setter Property="Visibility" Value="Collapsed" />
         <Setter Property="Glyph" Value="&#x0021;" />
         <Setter Property="FontFamily" Value="Amiri" />
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Foreground" Value="Red" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -196,7 +196,7 @@
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}" />
         <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Height" Value="40" />
         <Setter Property="Width" Value="400" />
         <Setter Property="Margin" Value="15,15,15,0" />
@@ -558,7 +558,7 @@
         <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="#159aff" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Margin" Value="5,0,10,10" />
         <Setter Property="Height" Value="35" />
         <Setter Property="Width" Value="60" />
@@ -570,7 +570,7 @@
                 <ControlTemplate TargetType="Button">
                     <ContentPresenter
                         x:Name="ContentPresenter"
-                        Padding="{TemplateBinding Padding}"
+                        Padding="0,0,0,1"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         AutomationProperties.AccessibilityView="Raw"
@@ -648,7 +648,8 @@
     </Style>
 
     <Style x:Key="SignUpTextBlocks" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 
     <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
@@ -658,7 +659,7 @@
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource Dark1}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Height" Value="40" />
         <Setter Property="Width" Value="400" />
         <Setter Property="Margin" Value="15,15,15,0" />
@@ -894,7 +895,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="15" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
@@ -904,8 +905,8 @@
                             VerticalAlignment="Center">
                             <Rectangle
                                 x:Name="NormalRectangle"
-                                Width="18"
-                                Height="18"
+                                Width="16"
+                                Height="16"
                                 Fill="{ThemeResource CheckBoxCheckBackgroundFillUnchecked}"
                                 RadiusX="4"
                                 RadiusY="4"
@@ -915,7 +916,7 @@
                             <FontIcon
                                 x:Name="CheckGlyph"
                                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                FontSize="18"
+                                FontSize="16"
                                 Foreground="{ThemeResource CheckBoxCheckGlyphForegroundUnchecked}"
                                 Glyph="&#xE001;"
                                 Opacity="0" />
@@ -931,7 +932,7 @@
                             Content="Show password"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
-                            FontSize="18"
+                            FontSize="16"
                             TextWrapping="Wrap" />
 
                         <VisualStateManager.VisualStateGroups>

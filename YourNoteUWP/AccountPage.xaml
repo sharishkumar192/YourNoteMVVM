@@ -225,8 +225,9 @@
         </GridView>
         <Popup
             Name="NoteDisplayPopUp"
-            IsLightDismissEnabled="False"
-            IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}">
+            IsLightDismissEnabled="True"
+            IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}"
+            LightDismissOverlayMode="On">
 
             <local:NoteContent
                 x:Name="NoteContentPopUp"

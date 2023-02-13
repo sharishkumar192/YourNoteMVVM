@@ -37,15 +37,8 @@
                     Margin="0,0,10,0"
                     Source="/Assets/LockScreenLogo.scale-200.png" />
                 <StackPanel>
-                    <TextBlock x:ConnectionId='4'
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource SignUpTextBlocks}"
-                                             />
-                    <TextBlock x:ConnectionId='5'
-                        Grid.Row="1"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource SignUpTextBlocks}"
-                                               />
+                    <TextBlock x:ConnectionId='4' Style="{StaticResource SignUpTextBlocks}"                      />
+                    <TextBlock x:ConnectionId='5' Style="{StaticResource SignUpTextBlocks}"                        />
                 </StackPanel>
 
             </StackPanel>
@@ -120,7 +113,7 @@
                     </StackPanel>
                     <TextBlock
                         Margin="15,5,5,1"
-                        FontSize="20"
+                        FontSize="16"
                         FontWeight="SemiBold"
                         Foreground="Black"
                         Text="Sign in" />
@@ -153,6 +146,7 @@
                         Style="{StaticResource FontBorderStyle}">
                         <FontIcon x:ConnectionId='19'
                             Name="EmailCheck"
+                            HorizontalAlignment="Left"
                             Style="{StaticResource FontIconStyle}"
                                                                                                          />
                         <ToolTipService.ToolTip>
@@ -184,6 +178,7 @@
 
                         <FontIcon x:ConnectionId='16'
                             Name="PasswordCheck"
+                            HorizontalAlignment="Left"
                             Style="{StaticResource FontIconStyle}"
                                                                                                             />
 
@@ -203,6 +198,7 @@
                 <CheckBox x:ConnectionId='12'
                     Name="RevealModeCheckBox"
                     Grid.Row="4"
+                    Margin="15,15,15,2"
                                                                                                   
                                                                                                       
                     Style="{StaticResource ValidateCheckBox}"
@@ -247,6 +243,7 @@
                         x:Name="NavigateToSignUp"
                                                                                                 
                         Content="account"
+                        FontSize="14"
                         Style="{StaticResource NavigationLinks}" />
                 </StackPanel>
 
@@ -292,7 +289,7 @@
                 <TextBlock
                     Grid.Row="0"
                     HorizontalAlignment="Center"
-                    FontSize="18"
+                    FontSize="16"
                     Foreground="Black"
                     Text="Choose an account" />
 

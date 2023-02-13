@@ -25,7 +25,7 @@ namespace YourNoteUWP
 {
     public sealed partial class NoteContent : UserControl, INotifyPropertyChanged
     {
-
+     //  private Type _parentPage;
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -39,8 +39,27 @@ namespace YourNoteUWP
       
         private string oldTitle;
         private string oldContent;
-        private DispatcherTimer _dispatcherTimer;
         private NoteContentViewModel _noteContentViewModel;
+
+        private DispatcherTimer _titleTimer = null;
+
+        public DispatcherTimer TitleTimer
+        {
+            get { return _titleTimer; }
+            set { _titleTimer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DispatcherTimer _contentTimer;
+
+        public DispatcherTimer ContentTimer
+        {
+            get { return _contentTimer; }
+            set { _contentTimer = value;
+                OnPropertyChanged();
+            }
+        }
 
         public NoteContent()
         {
@@ -52,15 +71,26 @@ namespace YourNoteUWP
 
         }
 
-        public void Hello(Note note)
+        public void Hello(Note snote)
         {
-            _displayNote = note;
+            _displayNote = snote;
             TitleOfNoteText = _displayNote.title;
             ContentOfNoteText = _displayNote.content;
             NoteContentBackground = GetSolidColorBrush(_displayNote.noteColor);
+          
+            //(this.Parent as ).NoteDisplayPopUpOpened();
+            
+            //  _parentPage = parentPage;
+            // Page page = this.Parent as parenPage;
+
+
+            //.NoteDisplayPopUpOpened();
+            //page.;
+            //.NoteDisplayPopUpOpened();
+            //_uIElement = nameProperty;
         }
 
-        
+
 
 
 
@@ -94,21 +124,36 @@ namespace YourNoteUWP
             return myBrush;
         }
 
-        public void DispatcherTimerSetup()
+        private void DispatcherTimerStart(DispatcherTimer _dispatcherTimer)
         {
-            _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Tick += DispatcherTimer_Tick;
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             _dispatcherTimer.Start();
         }
-
+       
         private void DispatcherTimer_Tick(object sender, object e)
         {
-            _displayNote.title = TitleOfNoteText;
-            _displayNote.content = ContentOfNoteText;
-            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-            _noteContentViewModel.NoteUpdation(_displayNote);
-          
+            if (TitleTimer == null || ContentTimer == null)
+            {
+                    DispatcherTimer senderTimer = (DispatcherTimer)sender;
+                    senderTimer.Stop();
+
+            }
+            else
+            {
+                _displayNote.title = TitleOfNoteText;
+                _displayNote.content = ContentOfNoteText;
+                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                _noteContentViewModel.NoteUpdation(_displayNote);
+
+            }
+
+        }
+        private void DispatcherTimerStop(DispatcherTimer dispatcherTimer)
+        {
+            //dispatcherTimer.Tick = DispatcherTimer_Tick;
+            if(dispatcherTimer != null )
+            dispatcherTimer.Stop();
         }
 
 
@@ -129,12 +174,14 @@ namespace YourNoteUWP
         public void TransparentTapped(object sender, TappedRoutedEventArgs e)
         {
             Popup p = this.Parent as Popup;
-
+           /// p.Closed;
             // close the Popup
             if (p != null) { p.IsOpen = false; }
-
+         //   NoteDisplayIsOpen = false;
             //    this.Content = new AccountPage(noteOwner);
         }
+
+      
 
 
 
@@ -155,7 +202,7 @@ namespace YourNoteUWP
 
         public bool TitleOfNoteIsTapped
         {
-            get { return _titleOfNoteIsTapped = true; }
+            get { return _titleOfNoteIsTapped; }
         }
 
 
@@ -184,7 +231,8 @@ namespace YourNoteUWP
         {
             TitleOfNoteIsReadOnly = false;
             OldTitle = TitleOfNoteText;
-            DispatcherTimerSetup();
+            TitleTimer = new DispatcherTimer();
+            DispatcherTimerStart(TitleTimer);
         }
 
 
@@ -197,14 +245,23 @@ namespace YourNoteUWP
             //    Note.NoteUpdation(_displayNote);
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             _noteContentViewModel.NoteUpdation(_displayNote);
-           
+            if(TitleOfNoteIsReadOnly == false)
+            DispatcherTimerStop(TitleTimer);
+            if (ContentOfNoteIsReadOnly == false)
+                DispatcherTimerStop(ContentTimer);
+            TitleTimer = ContentTimer = null;
 
-            Popup p = this.Parent as Popup;
+       //     AccountPage accountPage = new AccountPage();
+      //      accountPage.NoteDisplayPopUpClosed();
+                           Popup p = this.Parent as Popup;
+             
+                 if (p != null) { p.IsOpen = false; }
 
-            // close the Popup
-            if (p != null) { p.IsOpen = false; }
 
-      
+            //((MyPageName)this.Parent).CustomMethod(); 
+
+            //  Popup.PopOutStoryboard.Begin();
+
 
             //    this.Content = new AccountPage(noteOwner);
         }
@@ -252,7 +309,9 @@ namespace YourNoteUWP
         public bool ContentOfNoteIsReadOnly
         {
             get { return _contentOfNoteIsReadOnly; }
-            set { _contentOfNoteIsReadOnly = value; }
+            set { _contentOfNoteIsReadOnly = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -268,12 +327,13 @@ namespace YourNoteUWP
             set { _OldContent = value; }
         }
 
-
+      
         public void ContentOfNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             ContentOfNoteIsReadOnly = false;
             OldContent = ContentOfNoteText;
-            DispatcherTimerSetup();
+            ContentTimer = new DispatcherTimer();
+            DispatcherTimerStart(ContentTimer);
         }
 
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
@@ -281,6 +341,6 @@ namespace YourNoteUWP
 
         }
 
-       
+      
     }
 }

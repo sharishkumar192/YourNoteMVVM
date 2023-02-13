@@ -30,7 +30,6 @@ namespace YourNoteUWP
     /// </summary>
     public sealed partial class AccountPage : Page, INotifyPropertyChanged
     {
-        private AccountPageViewModel _accountPageViewModel;
         private Note _selectedNote = null;
         private Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> _searchNotes;
 
@@ -48,6 +47,7 @@ namespace YourNoteUWP
 
         
         }
+
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -75,7 +75,7 @@ namespace YourNoteUWP
         private void AccountPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
              NoteContentPopUpHeight = Window.Current.Bounds.Height;
-            NoteContentPopUpWidth = Window.Current.Bounds.Width;
+            NoteContentPopUpWidth = Window.Current.Bounds.Width/2;
         }
 
 
@@ -207,7 +207,6 @@ namespace YourNoteUWP
                 "#c6e8b7","#c3e9fd","#f8bec5","#fdefad",
             };
 
-                NoteDisplayPopUpIsOpen = true;
                 Note note = new Note(LoggedUser.userId, "Owner : " + LoggedUser.userId, "No Content", l[r]);
                 DBUpdation.InsertNewNote(note);
 
@@ -361,7 +360,7 @@ namespace YourNoteUWP
             _selectedNote = note;
             note.searchCount++;
 
-            NoteDisplayPopUpIsOpen = true;
+            NoteDisplayPopUpOpened();
 
 
         }
@@ -427,10 +426,12 @@ namespace YourNoteUWP
         {
             Note snote = (YourNoteUWP.Models.Note)e.ClickedItem;
             //MFrame.Navigate(Page());.
-
-            NoteDisplayPopUpIsOpen = true;
-
+            //       PopInStoryboard.Begin();
+            // open the Popup if it isn't open already 
+            string  page = _frame.CurrentSourcePageType.Name;
             NoteContentPopUp.Hello(snote);
+            NoteDisplayPopUpOpened();
+
             // NoteContentBackground = GetSolidColorBrush(snote.noteColor);
 
 
@@ -487,6 +488,56 @@ namespace YourNoteUWP
             }
         }
 
+        public  void NoteDisplayPopUpOpened()
+        {
+          //  PopOut.Stop();
+            //PopIn.Begin();
+            NoteDisplayPopUpIsOpen = true;
+        }
+        public  void NoteDisplayPopUpClosed()
+        {
+            //PopOut.Begin();
 
+        //    PopIn.Stop();
+            
+            NoteDisplayPopUpIsOpen = false;
+        }
+
+        private void NoteDisplayPopUp_Opened(object sender, object e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoteDisplayPopUpOpened();
+        }
+
+
+
+        private void OnLayoutUpdated(object sender, object e)
+        { }
+        //{
+        //    if (gdChild.ActualWidth == 0 && gdChild.ActualHeight == 0)
+        //    {
+        //        return;
+        //    }
+
+        //    var coordinates = NoteDisplayPopUp.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
+
+        //    double ActualHorizontalOffset = NoteDisplayPopUp.HorizontalOffset;
+        //    double ActualVerticalOffset = NoteDisplayPopUp.VerticalOffset;
+
+        //    double NewHorizontalOffset = ((Window.Current.Bounds.Width - gdChild.ActualWidth) / 2) - coordinates.X;
+        //    double NewVerticalOffset = ((Window.Current.Bounds.Height - gdChild.ActualHeight) / 2) - coordinates.Y;
+
+        //    if (ActualHorizontalOffset != NewHorizontalOffset || ActualVerticalOffset != NewVerticalOffset)
+        //    {
+        //        this.NoteDisplayPopUp.HorizontalOffset = NewHorizontalOffset;
+        //        this.NoteDisplayPopUp.VerticalOffset = NewVerticalOffset;
+        //    }
+        }
     }
-}
+
+
+

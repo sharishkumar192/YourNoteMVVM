@@ -29,7 +29,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+
 
             </Grid.RowDefinitions>
 
@@ -55,25 +55,15 @@
                 </StackPanel>
                 <TextBlock
                     Margin="15,5,5,5"
-                    FontSize="20"
+                    FontSize="16"
+                    FontWeight="SemiBold"
                     Foreground="Black"
                     Text="Create your free account" />
             </StackPanel>
 
-            <!--<Row Spacer>-->
 
             <Grid
                 Grid.Row="1"
-                Width="430"
-                Height="10"
-                Background="#ffffff"
-                BorderBrush="#ffffff" />
-
-
-            <!--<Signup fields>-->
-
-            <Grid
-                Grid.Row="2"
                 Background="#ffffff"
                 BorderBrush="#ffffff"
                 BorderThickness="5,0,5,5"
@@ -186,6 +176,7 @@
                 <CheckBox
                     Name="RevealModeCheckBox"
                     Grid.Row="3"
+                    
                     Checked="{x:Bind _signUpPageViewModel.RevealModeCheckBoxChecked, Mode=OneWay}"
                     IsChecked="{x:Bind _signUpPageViewModel.RevealModeCheckBoxIsChecked, Mode=OneWay}"
                     Style="{StaticResource ValidateCheckBox}"
@@ -265,6 +256,7 @@
                         x:Name="NavigateToSignIn"
                         Click="{x:Bind _signUpPageViewModel.NavigateToSignInClick, Mode=OneWay}"
                         Content="SignIn"
+                        FontSize="14"
                         Style="{StaticResource NavigationLinks}" />
                 </StackPanel>
 

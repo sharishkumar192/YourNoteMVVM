@@ -81,7 +81,6 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Padding" />
       <RootProperty Name="Visibility" />
-      <RootEvent Name="Tapped" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
       <RootMethod Name="GetColumn" />
@@ -133,6 +132,7 @@
       <RootProperty Name="Name" />
       <RootProperty Name="IsLightDismissEnabled" />
       <RootProperty Name="IsOpen" />
+      <RootProperty Name="LightDismissOverlayMode" />
       <RootProperty Name="Child" />
       <RootProperty Name="Margin" />
       <RootProperty Name="KeyTipPlacementMode" />
@@ -222,11 +222,11 @@
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="BorderThickness" />
+      <RootProperty Name="IsReadOnly" />
       <RootProperty Name="IsTapEnabled" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="HorizontalTextAlignment" />
-      <RootProperty Name="IsReadOnly" />
       <RootProperty Name="TextAlignment" />
       <RootEvent Name="TextChanged" />
       <RootEvent Name="Tapped" />
@@ -290,6 +290,7 @@
       <RootProperty Name="Foreground" />
       <RootProperty Name="Opacity" />
       <RootProperty Name="Name" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
     </RootType>
@@ -373,6 +374,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
       <RootProperty Name="Name" />
+      <RootProperty Name="Margin" />
       <RootProperty Name="IsChecked" />
       <RootProperty Name="Style" />
       <RootEvent Name="Checked" />
@@ -388,6 +390,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.ListViewItem" />
     <RootType FullName="Windows.UI.Xaml.Controls.HyperlinkButton">
       <RootProperty Name="Content" />
+      <RootProperty Name="FontSize" />
       <RootProperty Name="Style" />
       <RootEvent Name="Click" />
     </RootType>

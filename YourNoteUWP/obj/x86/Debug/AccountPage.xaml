@@ -225,8 +225,9 @@
         </GridView>
         <Popup x:ConnectionId='9'
             Name="NoteDisplayPopUp"
-            IsLightDismissEnabled="False"
-                                                                 >
+            IsLightDismissEnabled="True"
+                                                                 
+            LightDismissOverlayMode="On">
 
             <local:NoteContent x:ConnectionId='10'
                 x:Name="NoteContentPopUp"
