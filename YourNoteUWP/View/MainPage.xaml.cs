@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,7 +28,17 @@ namespace YourNoteUWP.View
         public MainPage()
         {
             this.InitializeComponent();
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            titleBar.InactiveBackgroundColor = titleBar.BackgroundColor = Windows.UI.Colors.White;
+            titleBar.InactiveForegroundColor = titleBar.ForegroundColor = Windows.UI.Colors.Black;
+
+            titleBar.ButtonPressedBackgroundColor = titleBar.ButtonHoverBackgroundColor = titleBar.ButtonInactiveBackgroundColor = titleBar.ButtonBackgroundColor = Windows.UI.Colors.White;
+            titleBar.ButtonPressedForegroundColor = titleBar.ButtonHoverForegroundColor = 
+                titleBar.ButtonInactiveForegroundColor = titleBar.ButtonForegroundColor = Windows.UI.Colors.Black;
+            
             MFrame.Navigate(typeof(SignInPage), MFrame);
+
         }
     }
 }

@@ -24,14 +24,15 @@
         </DataTemplate>
 
     </UserControl.Resources>
-
-
-
-
-
-
-    <!--  NOTE CONTENT  -->
-    <Grid x:ConnectionId='5'                                                         >
+    <!--
+        NOTE CONTENT
+    -->
+    <Grid x:ConnectionId='5'
+        Width="Auto"
+        Height="Auto"
+        Margin="20"
+                                                                
+        CornerRadius="4">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -39,9 +40,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  NOTE CONTENT   -->
+        <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <TextBox x:ConnectionId='11'
+            <TextBox x:ConnectionId='12'
                 Name="TitleOfNote"
                 Width="700"
                 Height="50"
@@ -59,9 +60,10 @@
                 Style="{StaticResource NoteContentStyle}"
                                                                 
                                                             
-                TextAlignment="Center" />
+                TextAlignment="Center"
+                                                                           />
 
-            <Button x:ConnectionId='12'
+            <Button x:ConnectionId='13'
                 Name="NoteCloseButton"
                 Margin="10"
                 Background="Transparent"
@@ -72,81 +74,80 @@
                 Foreground="Black"
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
-
-        <ListBox x:ConnectionId='6'
-            Name="NoteMenuOptions"
+        <Grid x:ConnectionId='6'
+            Name="NoteMenuOptionsContainer"
             Grid.Row="1"
-            HorizontalAlignment="Center"
-            Background="Transparent"
-            Style="{StaticResource NoteMenuOptionsStyle}">
+                                                                                 >
+            <ListBox x:ConnectionId='8'
+                Name="NoteMenuOptions"
+                HorizontalAlignment="Center"
+                Background="Transparent"
+                Style="{StaticResource NoteMenuOptionsStyle}">
 
-            <ListBoxItem>
-                <Button
-                    Background="Transparent"
-                    Content="&#xE1A2;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="16"
-                    Foreground="Black" />
-            </ListBoxItem>
+                <!--<ListBoxItem>
+                    <Button
+
+                        Background="Transparent"
+                        Content="&#xE1A2;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="16"
+                        Foreground="Black" />
+                </ListBoxItem>-->
 
 
-            <ListBoxItem>
-                <Button x:ConnectionId='9'
-                    Name="NoteShareButton"
-                    Background="Transparent"
-                                                                      
-                    Content="&#xE72D;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="16"
-                    Foreground="Black">
-                    <Button.Flyout>
-                        <Flyout>
-                            <Grid>
-                                <ListView x:ConnectionId='10'
-                                    Name="UsersToShareView"
-                                    Width="350"
-                                    Height="400"
-                                    Margin="20"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Background="Beige"
-                                    BorderBrush="Beige"
-                                    BorderThickness="10"
-                                    CornerRadius="15"
-                                    IsItemClickEnabled="True"
+                <ListBoxItem>
+                    <Button x:ConnectionId='10'
+                        Name="NoteShareButton"
+                        Background="Transparent"
                                                                           
-                                    ItemTemplate="{StaticResource ShareUser}"
-                                                                        />
-                            </Grid>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
-            </ListBoxItem>
+                        Content="&#xE72D;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="16"
+                        Foreground="Black">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid>
+                                    <ListView x:ConnectionId='11'
+                                        Name="UsersToShareView"
+                                        Width="350"
+                                        Height="400"
+                                        Margin="20"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Background="Beige"
+                                        BorderBrush="Beige"
+                                        BorderThickness="10"
+                                        CornerRadius="15"
+                                        IsItemClickEnabled="True"
+                                                                              
+                                        ItemTemplate="{StaticResource ShareUser}"
+                                                                            />
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </ListBoxItem>
 
-            <ListBoxItem>
-                <Button x:ConnectionId='8'
-                    Name="NoteDeleteButton"
-                    Background="Transparent"
-                                                                       
-                    Content="&#xE107;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="16"
-                    Foreground="Black" />
-            </ListBoxItem>
+                <ListBoxItem>
+                    <Button x:ConnectionId='9'
+                        Name="NoteDeleteButton"
+                        Background="Transparent"
+                                                                           
+                        Content="&#xE107;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="16"
+                        Foreground="Black" />
+                </ListBoxItem>
 
-        </ListBox>
-
-
+            </ListBox>
+        </Grid>
         <TextBox x:ConnectionId='7'
             Name="ContentOfNote"
             Grid.Row="2"
-            Width="1000"
-            Height="750"
-            Margin="20,10,20,10"
+            Margin="10"
             Padding="10"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="Blue"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             BorderThickness="0"
             FontSize="20"
             Foreground="Black"
@@ -155,8 +156,8 @@
             Style="{StaticResource NoteContentStyle}"
                                                               
                                                           
+                                                                        
             TextWrapping="Wrap" />
-
     </Grid>
 
 

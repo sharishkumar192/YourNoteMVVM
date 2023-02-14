@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.AI.MachineLearning;
@@ -31,6 +32,7 @@ namespace YourNoteUWP
     public sealed partial class AccountPage : Page, INotifyPropertyChanged
     {
         private Note _selectedNote = null;
+        private AccountPageViewModel _accountPageViewModel;
         private Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> _searchNotes;
 
         private Frame _frame;
@@ -44,8 +46,8 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
             this.SizeChanged += AccountPage_SizeChanged;
+            SuggestionsPopup.Translation += new Vector3(0, 0, 32);
 
-        
         }
 
 
@@ -55,7 +57,8 @@ namespace YourNoteUWP
             Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
-            _searchNotes = AccountPageViewModel.GetSearchNotes(LoggedUser);
+            _accountPageViewModel = new AccountPageViewModel();
+            _searchNotes = _accountPageViewModel.GetSearchNotes(LoggedUser);
             NotesDataItemSource = _searchNotes.Item1;
             SearchBoxContentItemSource = _searchNotes.Item2;
             SubSearchItemSource = _searchNotes.Item2;
@@ -157,6 +160,17 @@ namespace YourNoteUWP
             }
         }
 
+        private int _mainMenuOptionsSelectedIndex = 0 ;
+
+        public int MainMenuOptionsSelectedIndex
+        {
+            get { return _mainMenuOptionsSelectedIndex  ; }
+            set { _mainMenuOptionsSelectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public void MainMenuOptionsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // var lb = (ListBox)sender;
@@ -166,7 +180,7 @@ namespace YourNoteUWP
 
             if (PersonalContentIsSelected == true)
             {
-
+                MainMenuOptionsSelectedIndex = 0;
 
                 //  PersonalContentIsSelected = true ;
                 SharedContentIsSelected = false;
@@ -184,6 +198,7 @@ namespace YourNoteUWP
             }
             else if (SharedContentIsSelected == true)
             {
+                MainMenuOptionsSelectedIndex = 1;
                 PersonalContentIsSelected = false;
                 //   SharedContentIsSelected = true;
                 NoteCreationIsSelected = false;
@@ -195,6 +210,7 @@ namespace YourNoteUWP
             }
             else if (NoteCreationIsSelected == true)
             {
+                MainMenuOptionsSelectedIndex = 2;
                 PersonalContentIsSelected = false;
                 SharedContentIsSelected = false;
                 //   NoteCreationIsSelected = true;
@@ -354,11 +370,9 @@ namespace YourNoteUWP
 
         public void SearchBoxContainerItemClick(object sender, ItemClickEventArgs e)
         {
-            Note note = (Note)e.ClickedItem;
-            SearchTextBoxText = note.title;
-            SuggestionsPopupIsOpen = false;
-            _selectedNote = note;
-            note.searchCount++;
+            Note selectedNote = (Note)e.ClickedItem;
+            selectedNote.searchCount++;
+            NoteContentPopUp.DisplayContent(selectedNote.noteId, selectedNote.title, selectedNote.content, selectedNote.searchCount, selectedNote.noteColor);
 
             NoteDisplayPopUpOpened();
 
@@ -424,17 +438,9 @@ namespace YourNoteUWP
 
         public void NotesDataItemClick(object sender, ItemClickEventArgs e)
         {
-            Note snote = (YourNoteUWP.Models.Note)e.ClickedItem;
-            //MFrame.Navigate(Page());.
-            //       PopInStoryboard.Begin();
-            // open the Popup if it isn't open already 
-            string  page = _frame.CurrentSourcePageType.Name;
-            NoteContentPopUp.Hello(snote);
+            Note selectedNote = (YourNoteUWP.Models.Note)e.ClickedItem;
+            NoteContentPopUp.DisplayContent(selectedNote.noteId, selectedNote.title, selectedNote.content, selectedNote.noteColor);
             NoteDisplayPopUpOpened();
-
-            // NoteContentBackground = GetSolidColorBrush(snote.noteColor);
-
-
         }
 
 

@@ -17,8 +17,6 @@ namespace YourNoteUWP.ViewModels
     internal class NoteContentViewModel  
     {
 
-        private Note _selectedNote; 
-        private Note _displayNote;
         private NoteContentViewModel()
         {
 
@@ -42,10 +40,22 @@ namespace YourNoteUWP.ViewModels
     
 
 
-
-        public  void NoteUpdation(Note displayNote)
+        public void UpdateCount(long searchCount, long noteId)
         {
-            DBUpdation.UpdateNote(DBCreation.notesTableName, displayNote);
+            DBUpdation.UpdateNoteCount(DBCreation.notesTableName, searchCount, noteId);
+        }
+        public  void NoteContentUpdation(string content, long noteId)
+        {
+            DBUpdation.UpdateNoteContent(DBCreation.notesTableName, content, noteId);
+        }
+
+        public void NoteUpdation(string title, string content, long noteId)
+        {
+            DBUpdation.UpdateNote(DBCreation.notesTableName, title, content, noteId);
+        }
+        public void NoteTitleUpdation(string title, long noteId)
+        {
+            DBUpdation.UpdateNoteTitle(DBCreation.notesTableName, title, noteId);
         }
 
         public  void DeleteNote(long noteId)

@@ -7,6 +7,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,20 +33,6 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            //User details Table
-            DBCreation.CreateUserTable();
-
-            //Notes details Table
-            DBCreation.NotesTableCreation();
-            
-            //Shared Notes
-            DBCreation.SharedNotesTableCreation();
-            
-            //Recent searches
-          //  DBCreation.RecentSearchesTableCreation();
-
-           // DBUpdation.DeleteNote("", "", new Note("", "", "", ""));
         }
 
         /// <summary>
@@ -55,6 +43,15 @@ namespace YourNoteUWP
         
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //User details Table
+            DBCreation.CreateUserTable();
+
+            //Notes details Table
+            DBCreation.NotesTableCreation();
+
+            //Shared Notes
+            DBCreation.SharedNotesTableCreation();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

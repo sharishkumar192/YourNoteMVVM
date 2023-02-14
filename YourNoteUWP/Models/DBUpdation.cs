@@ -146,34 +146,121 @@ namespace YourNoteUWP {
 
             }
         }
-
         //Updation of the Note
-        public static void UpdateNote(string notesTableName, Note changedNote)// Needed
+        public static void UpdateNote(string notesTableName, string title, string content, long noteId)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title , CONTENT= @content , SEARCHCOUNT = @count WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title , CONTENT= @content WHERE NOTEID = @noteId  ;";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                parameters[0] = new SQLiteParameter("@title", title);
+                parameters[1] = new SQLiteParameter("@content",content);
+                parameters[2] = new SQLiteParameter("@noteId", noteId);
+
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
+
+
+            }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+        //Updation of the Note Title
+        public static void UpdateNoteTitle(string notesTableName, string title, long noteId)// Needed
+        {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, NOTEID = @noteId  ;";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@title", title);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
+
+
+            }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+
+        public static void UpdateNoteCount(string notesTableName, long searchCount, long noteId)
+        {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@count", searchCount);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+
+        }
+
+        //Updation of the Note Content
+        public static void UpdateNoteContent(string notesTableName, string content, long noteId)// Needed
+        {
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  CONTENT= @content WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
               
                     SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[4];
-                    parameters[0] = new SQLiteParameter("@title", changedNote.title);
-                    parameters[1] = new SQLiteParameter("@content", changedNote.content);
-                    parameters[2] = new SQLiteParameter("@noteId", changedNote.noteId);
-                    parameters[3] = new SQLiteParameter("@count", changedNote.searchCount);
+                    SQLiteParameter[] parameters = new SQLiteParameter[2];
+                    parameters[0] = new SQLiteParameter("@content", content);
+                    parameters[1] = new SQLiteParameter("@noteId", noteId);
 
 
                     command.Parameters.Add(parameters[0]);
                     command.Parameters.Add(parameters[1]);
-                    command.Parameters.Add(parameters[2]);
-                    command.Parameters.Add(parameters[3]);
                     command.ExecuteNonQuery();
                     conn.Close();
-                
-             
-              
-
             }
            catch(Exception e) { Debug.WriteLine(e.Message); }
             finally

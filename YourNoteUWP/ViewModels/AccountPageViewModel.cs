@@ -20,8 +20,11 @@ namespace YourNoteUWP.ViewModels
 
 
        
-        private DispatcherTimer _dispatcherTimer;
-     
+        public AccountPageViewModel()
+        {
+
+
+        }
         public AccountPageViewModel(Tuple<Frame, Models.User> tuple)
         {
          
@@ -40,7 +43,7 @@ namespace YourNoteUWP.ViewModels
 
         }
 
-        public static Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
+        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
         {
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;

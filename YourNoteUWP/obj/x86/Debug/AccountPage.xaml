@@ -6,10 +6,9 @@
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="#ffffff"
     mc:Ignorable="d">
-    <Page.Background>
-        <ImageBrush ImageSource="/Assets/AppBackdrop-Light.png" />
-    </Page.Background>
+
 
 
     <Page.Resources>
@@ -53,18 +52,11 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-
             <RowDefinition />
         </Grid.RowDefinitions>
 
 
-        <RelativePanel
-            Margin="5,5,5,0"
-            VerticalAlignment="Center"
-            Background="#adb5bd"
-            BorderBrush="Black"
-            BorderThickness="1,1,1,0"
-            CornerRadius="4,4,0,0">
+        <RelativePanel VerticalAlignment="Center" Background="#ffffff">
 
             <StackPanel
                 Margin="10,5,0,0"
@@ -94,8 +86,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
-                SelectedIndex="0"
-                SelectedValue="PersonalContent"
+                                                                                  
                                                                                         
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
@@ -128,7 +119,7 @@
                 RelativePanel.LeftOf="Logout">
                 <TextBox x:ConnectionId='16'
                     Name="SearchTextBox"
-                    Background="White"
+                    Background="#f8f8f8"
                     CornerRadius="4"
                     FontSize="15"
                     Foreground="Black"
@@ -151,7 +142,7 @@
                             <ListBox x:ConnectionId='20'
                                 Name="RecentSuggestedContent"
                                 Width="325"
-                                Background="Black"
+                                Background="White"
                                 ItemTemplate="{StaticResource RecentlySuggested}"
                                                                                              
                                                                                                         
@@ -170,7 +161,9 @@
                             ItemTemplate="{StaticResource SearchTitle}"
                                                                                           
                                                                                           />
-
+                        <Grid.Shadow>
+                            <ThemeShadow />
+                        </Grid.Shadow>
                     </Grid>
 
                 </Popup>
@@ -200,16 +193,14 @@
 
         </RelativePanel>
 
+
         <!--  NOTES DISPLAY  -->
         <GridView x:ConnectionId='8'
             Name="NotesData"
             Grid.Row="1"
-            Margin="5,0,5,5"
+            Padding="0,10,0,0"
             HorizontalAlignment="Stretch"
-            Background="#ffffff"
-            BorderBrush="Black"
-            BorderThickness="1,0,1,1"
-            CornerRadius="0,0,4,4"
+            Background="#f7f7f7"
             IsItemClickEnabled="True"
                                                                 
             ItemContainerStyle="{StaticResource NoteGridViewItem}"

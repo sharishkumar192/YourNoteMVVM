@@ -25,8 +25,9 @@ namespace YourNoteUWP
 {
     public sealed partial class NoteContent : UserControl, INotifyPropertyChanged
     {
-     //  private Type _parentPage;
+        //  private Type _parentPage;
         public event PropertyChangedEventHandler PropertyChanged;
+        private DispatcherTimer _dispatcherTimer = null;
         void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -34,60 +35,52 @@ namespace YourNoteUWP
 
 
         ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
-        Models.User noteOwner = null;
-        private static Note _displayNote ;
-      
-        private string oldTitle;
-        private string oldContent;
+        private long _noteId;
+        private long _searchCount;
+        private bool gotCount = false;
         private NoteContentViewModel _noteContentViewModel;
 
-        private DispatcherTimer _titleTimer = null;
+        private bool _gotCount;
 
-        public DispatcherTimer TitleTimer
+        public bool  GotCount
         {
-            get { return _titleTimer; }
-            set { _titleTimer = value;
-                OnPropertyChanged();
+            get { return _gotCount; }
+            set { _gotCount = value;
+                UpdateCount();
             }
         }
 
-        private DispatcherTimer _contentTimer;
-
-        public DispatcherTimer ContentTimer
+        private void UpdateCount()
         {
-            get { return _contentTimer; }
-            set { _contentTimer = value;
-                OnPropertyChanged();
-            }
+                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                _noteContentViewModel.UpdateCount(_searchCount, _noteId);
         }
-
         public NoteContent()
         {
             this.InitializeComponent();
-          
 
-            TitleOfNote.AddHandler(TappedEvent, new TappedEventHandler(TitleOfNoteTapped), true);
-            ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), true);
+
+            TitleOfNote.AddHandler(TappedEvent, new TappedEventHandler(TitleOfNoteTapped), TitleOfNoteIsTapped);
+            ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), ContentOfNoteIsTapped);
 
         }
 
-        public void Hello(Note snote)
+        public void DisplayContent(long noteId, string title, string content, string noteColor)
         {
-            _displayNote = snote;
-            TitleOfNoteText = _displayNote.title;
-            ContentOfNoteText = _displayNote.content;
-            NoteContentBackground = GetSolidColorBrush(_displayNote.noteColor);
-          
-            //(this.Parent as ).NoteDisplayPopUpOpened();
-            
-            //  _parentPage = parentPage;
-            // Page page = this.Parent as parenPage;
+            _noteId = noteId;
+            TitleOfNoteText = title;
+            ContentOfNoteText = content;
+            NoteContentBackground = GetSolidColorBrush(noteColor);
+        }
 
-
-            //.NoteDisplayPopUpOpened();
-            //page.;
-            //.NoteDisplayPopUpOpened();
-            //_uIElement = nameProperty;
+        public void DisplayContent(long noteId, string title, string content, long searchCount, string noteColor)
+        {
+            _noteId = noteId;
+            TitleOfNoteText = title;
+            ContentOfNoteText = content;
+            _searchCount = searchCount;
+            gotCount = true;
+            NoteContentBackground = GetSolidColorBrush(noteColor);
         }
 
 
@@ -124,40 +117,6 @@ namespace YourNoteUWP
             return myBrush;
         }
 
-        private void DispatcherTimerStart(DispatcherTimer _dispatcherTimer)
-        {
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
-            _dispatcherTimer.Start();
-        }
-       
-        private void DispatcherTimer_Tick(object sender, object e)
-        {
-            if (TitleTimer == null || ContentTimer == null)
-            {
-                    DispatcherTimer senderTimer = (DispatcherTimer)sender;
-                    senderTimer.Stop();
-
-            }
-            else
-            {
-                _displayNote.title = TitleOfNoteText;
-                _displayNote.content = ContentOfNoteText;
-                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-                _noteContentViewModel.NoteUpdation(_displayNote);
-
-            }
-
-        }
-        private void DispatcherTimerStop(DispatcherTimer dispatcherTimer)
-        {
-            //dispatcherTimer.Tick = DispatcherTimer_Tick;
-            if(dispatcherTimer != null )
-            dispatcherTimer.Stop();
-        }
-
-
-
         //---------------------------Note Background--------------------------------------------------
         private SolidColorBrush _noteContentBackground;
         public SolidColorBrush NoteContentBackground
@@ -174,14 +133,14 @@ namespace YourNoteUWP
         public void TransparentTapped(object sender, TappedRoutedEventArgs e)
         {
             Popup p = this.Parent as Popup;
-           /// p.Closed;
+            /// p.Closed;
             // close the Popup
             if (p != null) { p.IsOpen = false; }
-         //   NoteDisplayIsOpen = false;
+            //   NoteDisplayIsOpen = false;
             //    this.Content = new AccountPage(noteOwner);
         }
 
-      
+
 
 
 
@@ -197,12 +156,15 @@ namespace YourNoteUWP
                 OnPropertyChanged();
             }
         }
-
         private bool _titleOfNoteIsTapped = true;
-
         public bool TitleOfNoteIsTapped
         {
             get { return _titleOfNoteIsTapped; }
+            set
+            {
+                _titleOfNoteIsTapped = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -217,54 +179,41 @@ namespace YourNoteUWP
             }
         }
 
-        private string _oldTitle;
-        public string OldTitle
-        {
-            get { return _oldTitle; }
-            set
-            {
-                _oldTitle = value;
-            }
-        }
+        private string _oldTitle = "";
 
-        public void TitleOfNoteTapped(object sender, TappedRoutedEventArgs e)
-        {
-            TitleOfNoteIsReadOnly = false;
-            OldTitle = TitleOfNoteText;
-            TitleTimer = new DispatcherTimer();
-            DispatcherTimerStart(TitleTimer);
-        }
 
 
 
         //----------------------------Note Close Button ---------------------------------------------------
         public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            //_displayNote.title = TitleOfNoteText;
-            //  _displayNote.content = ContentOfNoteText;
-            //    Note.NoteUpdation(_displayNote);
-            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-            _noteContentViewModel.NoteUpdation(_displayNote);
-            if(TitleOfNoteIsReadOnly == false)
-            DispatcherTimerStop(TitleTimer);
-            if (ContentOfNoteIsReadOnly == false)
-                DispatcherTimerStop(ContentTimer);
-            TitleTimer = ContentTimer = null;
+            if(_dispatcherTimer != null)
+            {
+                DispatcherTimer_Tick(sender, e);
+                DispatcherTimerStop(_dispatcherTimer);
 
-       //     AccountPage accountPage = new AccountPage();
-      //      accountPage.NoteDisplayPopUpClosed();
-                           Popup p = this.Parent as Popup;
-             
-                 if (p != null) { p.IsOpen = false; }
+            }
 
-
-            //((MyPageName)this.Parent).CustomMethod(); 
-
-            //  Popup.PopOutStoryboard.Begin();
-
-
-            //    this.Content = new AccountPage(noteOwner);
+            Popup p = this.Parent as Popup;
+            NoteMenuOptionsContainerVisibility = Visibility.Collapsed;
+            if (p != null) { p.IsOpen = false; }
+            AccountPageViewModel _accountPageViewModel = new AccountPageViewModel();
+            //_accountPageViewModel.
         }
+
+        //--------------------------- NoteMenuOptions List Box ------------------------------------------
+        private Visibility _noteMenuOptionsContainerVisibility = Visibility.Collapsed;
+
+        public Visibility NoteMenuOptionsContainerVisibility
+        {
+            get { return _noteMenuOptionsContainerVisibility; }
+            set
+            {
+                _noteMenuOptionsContainerVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         //----------------------------Note Share Button ---------------------------------------------------
         public void NoteShareButtonClick()
@@ -276,10 +225,8 @@ namespace YourNoteUWP
         public void NoteDeleteButtonClick()
         {
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-            _noteContentViewModel.DeleteNote(_displayNote.noteId);
-
+            _noteContentViewModel.DeleteNote(_noteId);
             Popup p = this.Parent as Popup;
-
             if (p != null) { p.IsOpen = false; }
         }
         //----------------------------Content Text Box ---------------------------------------------------
@@ -297,10 +244,14 @@ namespace YourNoteUWP
         }
 
         private bool _contentOfNoteIsTapped = true;
-
         public bool ContentOfNoteIsTapped
         {
-            get { return _contentOfNoteIsTapped;  }
+            get { return _contentOfNoteIsTapped; }
+            set
+            {
+                _contentOfNoteIsTapped = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -309,38 +260,117 @@ namespace YourNoteUWP
         public bool ContentOfNoteIsReadOnly
         {
             get { return _contentOfNoteIsReadOnly; }
-            set { _contentOfNoteIsReadOnly = value;
+            set
+            {
+                _contentOfNoteIsReadOnly = value;
                 OnPropertyChanged();
             }
         }
 
+        private string _oldContent = "";
 
 
 
-
-
-        private string _OldContent;
-
-        public string OldContent
-        {
-            get { return _OldContent; }
-            set { _OldContent = value; }
-        }
-
-      
-        public void ContentOfNoteTapped(object sender, TappedRoutedEventArgs e)
-        {
-            ContentOfNoteIsReadOnly = false;
-            OldContent = ContentOfNoteText;
-            ContentTimer = new DispatcherTimer();
-            DispatcherTimerStart(ContentTimer);
-        }
 
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }
 
-      
+
+        //----------------------------------------Auto Save----------------------------------------
+        public void TitleOfNoteTapped(object sender, TappedRoutedEventArgs e)
+        {
+           if(TitleOfNoteIsTapped)
+            EditModeEnabled();
+        }
+
+        public void ContentOfNoteTapped(object sender, TappedRoutedEventArgs e)
+        {
+           if(ContentOfNoteIsTapped)
+            EditModeEnabled();
+        }
+
+        private void EditModeEnabled()
+        {
+            if (NoteMenuOptionsContainerVisibility != Visibility.Visible)
+                NoteMenuOptionsContainerVisibility = Visibility.Visible;
+            if (TitleOfNoteIsReadOnly == true || ContentOfNoteIsReadOnly == true)
+            {
+                TitleOfNoteIsReadOnly = false;
+                ContentOfNoteIsReadOnly = false;
+
+                TitleOfNoteIsTapped = false;
+                ContentOfNoteIsTapped = false;
+
+                _oldContent = ContentOfNoteText;
+                _oldTitle = TitleOfNoteText;
+                _dispatcherTimer = new DispatcherTimer();
+                DispatcherTimerStart(_dispatcherTimer);
+            }
+        }
+        private void DispatcherTimerStart(DispatcherTimer dispatcherTimer)
+        {
+            if(dispatcherTimer !=null)
+            {
+                dispatcherTimer.Tick += DispatcherTimer_Tick;
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+                dispatcherTimer.Start();
+            }
+        }
+        private void DispatcherTimerStop(DispatcherTimer dispatcherTimer)
+        {
+            dispatcherTimer.Tick -= DispatcherTimer_Tick;
+            dispatcherTimer.Stop();
+        }
+        private void DispatcherTimer_Tick(object sender, object e)
+        {
+            bool contentChange = IsChanged(_oldContent, ContentOfNoteText);
+            bool titleChange = IsChanged(_oldTitle, TitleOfNoteText);
+            if (contentChange && titleChange)
+            {
+                _oldContent = ContentOfNoteText;
+                _oldTitle = TitleOfNoteText;
+                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                _noteContentViewModel.NoteUpdation(TitleOfNoteText, ContentOfNoteText, _noteId);
+
+            }
+            else
+            {
+                if (contentChange)
+                {
+                    _oldContent = ContentOfNoteText;
+                    _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                    _noteContentViewModel.NoteContentUpdation(ContentOfNoteText, _noteId);
+                }
+                if (titleChange)
+                {
+                    _oldTitle = TitleOfNoteText;
+                    _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                    _noteContentViewModel.NoteContentUpdation(TitleOfNoteText, _noteId);
+                }
+            }
+           
+        }
+
+        private bool IsChanged(string oContext, string nContext)
+        {
+            bool isChange = false;
+            if (oContext != nContext)
+                isChange = true;
+            return isChange;
+        }
+
+        private void ContentOfNoteTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox Context = (TextBox)sender;
+            ContentOfNoteText = Context.Text;           
+        }
+
+        private void TitleOfNoteTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox Context = (TextBox)sender;
+            TitleOfNoteText = Context.Text;
+        }
     }
 }

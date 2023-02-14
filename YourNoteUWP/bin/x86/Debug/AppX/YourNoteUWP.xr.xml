@@ -16,10 +16,6 @@
       <RootProperty Name="Resources" />
       <RootProperty Name="Content" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Media.ImageBrush">
-      <RootProperty Name="ImageSource" />
-      <RootProperty Name="Stretch" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
     </RootType>
@@ -71,6 +67,7 @@
       <RootProperty Name="Width" />
       <RootProperty Name="Height" />
       <RootProperty Name="CornerRadius" />
+      <RootProperty Name="Shadow" />
       <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="Resources" />
       <RootProperty Name="Margin" />
@@ -79,8 +76,8 @@
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Padding" />
       <RootProperty Name="Visibility" />
+      <RootProperty Name="Padding" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
       <RootMethod Name="GetColumn" />
@@ -94,13 +91,10 @@
       <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.RelativePanel">
-      <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Background" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="CornerRadius" />
       <RootProperty Name="Children" />
+      <RootProperty Name="Margin" />
       <RootMethod Name="GetAlignBottomWithPanel" />
       <RootMethod Name="SetAlignBottomWithPanel" />
       <RootMethod Name="GetAlignLeftWithPanel" />
@@ -116,12 +110,9 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
       <RootProperty Name="Name" />
-      <RootProperty Name="Margin" />
+      <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Background" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="CornerRadius" />
       <RootProperty Name="IsItemClickEnabled" />
       <RootProperty Name="ItemContainerStyle" />
       <RootProperty Name="ItemsSource" />
@@ -162,7 +153,6 @@
       <RootProperty Name="Name" />
       <RootProperty Name="ItemContainerStyle" />
       <RootProperty Name="SelectedIndex" />
-      <RootProperty Name="SelectedValue" />
       <RootProperty Name="SelectionMode" />
       <RootProperty Name="Style" />
       <RootProperty Name="Items" />
@@ -217,7 +207,6 @@
       <RootProperty Name="Header" />
       <RootProperty Name="PlaceholderText" />
       <RootProperty Name="UseSystemFocusVisuals" />
-      <RootProperty Name="Height" />
       <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
@@ -225,6 +214,7 @@
       <RootProperty Name="IsReadOnly" />
       <RootProperty Name="IsTapEnabled" />
       <RootProperty Name="TextWrapping" />
+      <RootProperty Name="Height" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="HorizontalTextAlignment" />
       <RootProperty Name="TextAlignment" />
@@ -254,6 +244,7 @@
       <RootProperty Name="Style" />
       <RootEvent Name="ItemClick" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.ThemeShadow" />
     <RootType FullName="Windows.UI.Xaml.Controls.ListBoxItem">
       <RootProperty Name="Name" />
       <RootProperty Name="Content" />
@@ -339,6 +330,7 @@
       <RootProperty Name="TabNavigation" />
       <RootProperty Name="Content" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="FontSize" />
       <RootProperty Name="IsHorizontalScrollChainingEnabled" />
       <RootProperty Name="IsVerticalScrollChainingEnabled" />
       <RootProperty Name="Name" />
@@ -465,6 +457,7 @@
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerDownThemeAnimation" />
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerUpThemeAnimation" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>
@@ -549,7 +542,6 @@
     <RootType FullName="Windows.UI.Xaml.Media.Animation.EntranceThemeTransition">
       <RootProperty Name="IsStaggeringEnabled" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Media.Animation.PointerUpThemeAnimation" />
     <RootType FullName="Windows.UI.Xaml.Controls.Primitives.GridViewItemPresenter">
       <RootProperty Name="HorizontalContentAlignment" />
       <RootProperty Name="VerticalContentAlignment" />
@@ -601,6 +593,10 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="Name" />
       <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.ImageBrush">
+      <RootProperty Name="ImageSource" />
+      <RootProperty Name="Stretch" />
     </RootType>
     <RootType FullName="YourNoteUWP.View.MainPage" />
     <RootType FullName="YourNoteUWP.View.SignInPage" />
