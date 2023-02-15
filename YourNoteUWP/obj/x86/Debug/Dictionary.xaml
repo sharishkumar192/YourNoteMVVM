@@ -2032,135 +2032,139 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SearchContainerItemStyle" TargetType="ListViewItem">
-        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="Background" Value="#0c365e" />
-        <Setter Property="Foreground" Value="White " />
+
+
+    <Style x:Key="SearchContainerItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="TabNavigation" Value="Local" />
-        <Setter Property="IsHoldingEnabled" Value="True" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
-        <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}" />
-        <Setter Property="AllowDrop" Value="True" />
-        <Setter Property="UseSystemFocusVisuals" Value="False" />
-        <Setter Property="FocusVisualMargin" Value="0" />
+        <Setter Property="Padding" Value="{StaticResource ListBoxItemPadding}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListViewItem">
-                    <ListViewItemPresenter
-                        x:Name="Root"
-                        Height="75"
-                        Margin="5"
-                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}"
-                        CheckBrush="{ThemeResource ListViewItemCheckBrush}"
-                        CheckMode="{ThemeResource ListViewItemCheckMode}"
-                        ContentMargin="{TemplateBinding Padding}"
-                        ContentTransitions="{TemplateBinding ContentTransitions}"
-                        Control.IsTemplateFocusTarget="False"
-                        CornerRadius="0"
-                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                        DragBackground="{ThemeResource ListViewItemDragBackground}"
-                        DragForeground="{ThemeResource ListViewItemDragForeground}"
-                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                        FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
-                        FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
-                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-                        PlaceholderBackground="DarkOrange"
-                        PointerOverBackground="#174276"
-                        PointerOverForeground="#ffffff"
-                        PressedBackground="#244c7e"
-                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                        RevealBackground="{ThemeResource ListViewItemRevealBackground}"
-                        RevealBorderBrush="{ThemeResource ListViewItemRevealBackground}"
-                        RevealBorderThickness="0"
-                        SelectedBackground="#add8ff"
-                        SelectedForeground="#092642"
-                        SelectedPointerOverBackground="#add8ff"
-                        SelectedPressedBackground="#80b9ee"
-                        SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}">
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid
+                        x:Name="LayoutRoot"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="Red"
+                        BorderThickness="10">
+                        <Grid.Resources>
+                            <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
+                                <Setter Property="FontFamily" Value="XamlAutoFontFamily" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                                <Setter Property="TextWrapping" Value="Wrap" />
+                                <Setter Property="LineStackingStrategy" Value="MaxHeight" />
+                                <Setter Property="TextLineBounds" Value="Full" />
+                                <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+                            </Style>
+                            <Style
+                                x:Key="BodyContentPresenterStyle"
+                                BasedOn="{StaticResource BaseContentPresenterStyle}"
+                                TargetType="ContentPresenter">
+                                <Setter Property="FontWeight" Value="Normal" />
+                            </Style>
+                        </Grid.Resources>
+                        <Rectangle
+                            x:Name="PressedBackground"
+                            Control.IsTemplateFocusTarget="True"
+                            Fill="Transparent" />
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Style="{StaticResource BodyContentPresenterStyle}"
+                            TextWrapping="NoWrap" />
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="Normal" />
 
-                                <VisualState x:Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
+                                <VisualState x:Name="Disabled">
+
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.(RevealBrush.State)" Value="PointerOver" />
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
 
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOverSelected">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.(RevealBrush.State)" Value="PointerOver" />
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="PointerOverPressed">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
+
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
 
-                                <VisualState x:Name="PressedSelected">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
-                                        <Setter Target="Root.CornerRadius" Value="12" />
-                                        <Setter Target="Root.BorderBrush" Value="Red" />
-                                        <Setter Target="Root.BorderThickness" Value="12" />
-                                    </VisualState.Setters>
+                                <VisualState x:Name="Selected">
+
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
+                                <VisualState x:Name="SelectedUnfocused">
 
-                            </VisualStateGroup>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SelectedPointerOver">
 
-                            <VisualStateGroup x:Name="DisabledStates">
-                                <VisualState x:Name="Enabled" />
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentMediumBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SelectedPressed">
 
-                                <VisualState x:Name="Disabled">
-                                    <VisualState.Setters>
-                                        <Setter Target="Root.RevealBorderThickness" Value="0" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
 
                             </VisualStateGroup>
 
                         </VisualStateManager.VisualStateGroups>
-                    </ListViewItemPresenter>
+                    </Grid>
 
                 </ControlTemplate>
             </Setter.Value>

@@ -46,7 +46,7 @@ namespace YourNoteUWP
         {
             this.InitializeComponent();
             this.SizeChanged += AccountPage_SizeChanged;
-            SuggestionsPopup.Translation += new Vector3(0, 0, 32);
+            SearchPopup.Translation += new Vector3(0, 0, 32);
 
         }
 
@@ -60,7 +60,7 @@ namespace YourNoteUWP
             _accountPageViewModel = new AccountPageViewModel();
             _searchNotes = _accountPageViewModel.GetSearchNotes(LoggedUser);
             NotesDataItemSource = _searchNotes.Item1;
-            SearchBoxContentItemSource = _searchNotes.Item2;
+            SuggestionContentItemSource = _searchNotes.Item2;
             SubSearchItemSource = _searchNotes.Item2;
           //  if(PersonalContentIsSelected == true)
           //          MainMenuOptions()
@@ -68,9 +68,9 @@ namespace YourNoteUWP
 
             if (_searchNotes != null && _searchNotes.Item3.Count > 0)
             {
-                //  RecentSuggestedVisibility = Visibility.Visible;
-                //  SearchBoxContentVisibility = Visibility.Collapsed;
-                RecentSuggestedItemSource = _searchNotes.Item3;
+                //  RecentlySearchedVisibility = Visibility.Visible;
+                //  SuggestionContentVisibility = Visibility.Collapsed;
+                RecentlySearchedItemSource = _searchNotes.Item3;
             }
             //_accountPageViewModel = new AccountPageViewModel(tuple);
         }
@@ -193,7 +193,7 @@ namespace YourNoteUWP
 
                 SearchTextBoxText = "";
                 _selectedNote = new Note("", "", "", "");
-                SuggestionsPopupIsOpen = false;
+                SearchPopupIsOpen = false;
 
             }
             else if (SharedContentIsSelected == true)
@@ -206,7 +206,7 @@ namespace YourNoteUWP
                 NotesDataItemSource = AccountPageViewModel.GetSharedNotes(LoggedUser);
                 _selectedNote = new Note("", "", "", "");
                 SearchTextBoxText = "";
-                SuggestionsPopupIsOpen = false;
+                SearchPopupIsOpen = false;
             }
             else if (NoteCreationIsSelected == true)
             {
@@ -215,7 +215,7 @@ namespace YourNoteUWP
                 SharedContentIsSelected = false;
                 //   NoteCreationIsSelected = true;
 
-                SuggestionsPopupIsOpen = false;
+                SearchPopupIsOpen = false;
                 Random random = new Random();
                 int r = random.Next(0, 4);
                 List<string> l = new List<string>()
@@ -235,10 +235,10 @@ namespace YourNoteUWP
         }
 
         //----------------------------Search Text Box---------------------------------------------------
-        public void SearchBoxLostFocus()
+        public void SearchBoxContainerLostFocus()
         {
-            SuggestionsPopupIsOpen = false;
-            SearchBoxContentItemSource = SubSearchItemSource;
+            SearchPopupIsOpen = false;
+            SuggestionContentItemSource = SubSearchItemSource;
         }
 
 
@@ -250,7 +250,7 @@ namespace YourNoteUWP
             set
             {
                 _searchTextBoxText = value;
-                // SearchBoxLostFocus();
+                // SuggestionLostFocus();
                 OnPropertyChanged();
             }
         }
@@ -260,15 +260,15 @@ namespace YourNoteUWP
         {
             if (ChangeVar())
             {
-                SuggestionsPopupIsOpen = true;
+                SearchPopupIsOpen = true;
                 TextBox contentOfTextBox = (TextBox)sender;
                 if (contentOfTextBox.Text.Length > 2)
                 {
-                    RecentSuggestedVisibility = Visibility.Collapsed;
-                    SearchBoxContentVisibility = Visibility.Visible;
+                     RecentlySearchedVisibility = Visibility.Collapsed;
+                    SuggestionContentVisibility = Visibility.Visible;
                     var suitableItems = new ObservableCollection<Note>();
                     var splitText = contentOfTextBox.Text.Split(" ");
-                    foreach (var eachNote in SearchBoxContentItemSource)
+                    foreach (var eachNote in SuggestionContentItemSource)
                     {
                         var found = splitText.All((key) =>
                         {
@@ -279,14 +279,14 @@ namespace YourNoteUWP
                             suitableItems.Add(eachNote);
                         }
                     }
-                    SearchBoxContentItemSource = suitableItems;
+                    SuggestionContentItemSource = suitableItems;
                 }
 
                 else
                 {
-                    RecentSuggestedVisibility = Visibility.Visible;
-                    SearchBoxContentVisibility = Visibility.Collapsed;
-                    SearchBoxContentItemSource = SubSearchItemSource;
+                    RecentlySearchedVisibility = Visibility.Visible;
+                    SuggestionContentVisibility = Visibility.Collapsed;
+                    SuggestionContentItemSource = SubSearchItemSource;
 
                 }
 
@@ -295,13 +295,13 @@ namespace YourNoteUWP
 
         //----------------------------Search Popup---------------------------------------------------
 
-        private bool _suggestionsPopupIsOpen = false;
-        public bool SuggestionsPopupIsOpen
+        private bool _searchPopupIsOpen = false;
+        public bool SearchPopupIsOpen
         {
-            get { return _suggestionsPopupIsOpen; }
+            get { return _searchPopupIsOpen; }
             set
             {
-                _suggestionsPopupIsOpen = value;
+                _searchPopupIsOpen = value;
 
                 OnPropertyChanged();
             }
@@ -311,23 +311,23 @@ namespace YourNoteUWP
 
         //----------------------------Search -> Recently Searched List Box ---------------------------------------------------
 
-        private ObservableCollection<Note> _recentSuggestedItemSource;
-        public ObservableCollection<Note> RecentSuggestedItemSource
+        private ObservableCollection<Note> _recentlySearchedItemSource;
+        public ObservableCollection<Note> RecentlySearchedItemSource
         {
-            get { return _recentSuggestedItemSource; }
+            get { return _recentlySearchedItemSource; }
             set
             {
-                _recentSuggestedItemSource = value;
+                _recentlySearchedItemSource = value;
             }
         }
 
 
 
-        public void RecentSuggestedSelectionChanged()
+        public void RecentlySearchedSelectionChanged()
         {
-            Note selectedNote = RecentSuggestedSelectedItem;
+            Note selectedNote = RecentlySearchedSelectedItem;
             //    SearchTextBoxText = selectedNote.title;
-            SuggestionsPopupIsOpen = true;
+            SearchPopupIsOpen = true;
             _selectedNote = selectedNote;
             //   selectedNote.searchCount++;
 
@@ -341,13 +341,13 @@ namespace YourNoteUWP
         }
 
 
-        private Visibility _recentSuggestedVisibility = Visibility.Visible;
-        public Visibility RecentSuggestedVisibility
+        private Visibility _recentlySearchedVisibility = Visibility.Visible;
+        public Visibility RecentlySearchedVisibility
         {
-            get { return _recentSuggestedVisibility; }
+            get { return _recentlySearchedVisibility; }
             set
             {
-                _recentSuggestedVisibility = value;
+                _recentlySearchedVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -355,11 +355,11 @@ namespace YourNoteUWP
 
 
 
-        private Note _recentSuggestedSelectedItem;
-        public Note RecentSuggestedSelectedItem
+        private Note _recentlySearchedSelectedItem;
+        public Note RecentlySearchedSelectedItem
         {
-            get { return _recentSuggestedSelectedItem; }
-            set { _recentSuggestedSelectedItem = value; }
+            get { return _recentlySearchedSelectedItem; }
+            set { _recentlySearchedSelectedItem = value; }
         }
 
 
@@ -368,7 +368,7 @@ namespace YourNoteUWP
 
         //----------------------------Search -> Suggestion List View ---------------------------------------------------
 
-        public void SearchBoxContainerItemClick(object sender, ItemClickEventArgs e)
+        public void SuggestionContainerItemClick(object sender, ItemClickEventArgs e)
         {
             Note selectedNote = (Note)e.ClickedItem;
             selectedNote.searchCount++;
@@ -380,13 +380,13 @@ namespace YourNoteUWP
         }
 
 
-        private ObservableCollection<Note> _searchBoxContentItemSource;
-        public ObservableCollection<Note> SearchBoxContentItemSource
+        private ObservableCollection<Note> _suggestionContentItemSource;
+        public ObservableCollection<Note> SuggestionContentItemSource
         {
-            get { return _searchBoxContentItemSource; }
+            get { return _suggestionContentItemSource; }
             set
             {
-                _searchBoxContentItemSource = value;
+                _suggestionContentItemSource = value;
                 OnPropertyChanged();
 
             }
@@ -394,7 +394,7 @@ namespace YourNoteUWP
 
 
 
-        //Temp Original Content of SearchBoxContent ItemSource
+        //Temp Original Content of SuggestionContent ItemSource
         private ObservableCollection<Note> _subSearchItemSource;
         public ObservableCollection<Note> SubSearchItemSource
         {
@@ -409,13 +409,13 @@ namespace YourNoteUWP
 
 
 
-        private Visibility _searchBoxContentVisibility = Visibility.Collapsed;
-        public Visibility SearchBoxContentVisibility
+        private Visibility _suggestionContentVisibility = Visibility.Visible;
+        public Visibility SuggestionContentVisibility
         {
-            get { return _searchBoxContentVisibility; }
+            get { return _suggestionContentVisibility; }
             set
             {
-                _searchBoxContentVisibility = value;
+                _suggestionContentVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -521,8 +521,7 @@ namespace YourNoteUWP
 
 
 
-        private void OnLayoutUpdated(object sender, object e)
-        { }
+        
         //{
         //    if (gdChild.ActualWidth == 0 && gdChild.ActualHeight == 0)
         //    {
@@ -542,7 +541,7 @@ namespace YourNoteUWP
         //        this.NoteDisplayPopUp.HorizontalOffset = NewHorizontalOffset;
         //        this.NoteDisplayPopUp.VerticalOffset = NewVerticalOffset;
         //    }
-        }
+    }
     }
 
 

@@ -19,29 +19,40 @@
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+    <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Width" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="Orientation" />
+      <RootProperty Name="Children" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="BorderThickness" />
-      <RootProperty Name="Child" />
-      <RootProperty Name="CornerRadius" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="MinWidth" />
-      <RootProperty Name="MinHeight" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="MaxWidth" />
-      <RootProperty Name="MaxHeight" />
       <RootProperty Name="Name" />
-      <RootProperty Name="Style" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="CornerRadius" />
+      <RootEvent Name="LostFocus" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Shapes.Rectangle">
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Fill" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="RadiusX" />
+      <RootProperty Name="RadiusY" />
+      <RootProperty Name="Stroke" />
+      <RootProperty Name="StrokeThickness" />
+      <RootProperty Name="UseLayoutRounding" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="FontSize" />
+      <RootProperty Name="FontWeight" />
       <RootProperty Name="Foreground" />
-      <RootProperty Name="HorizontalTextAlignment" />
       <RootProperty Name="Text" />
       <RootProperty Name="FontFamily" />
-      <RootProperty Name="FontWeight" />
       <RootProperty Name="TextTrimming" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="LineStackingStrategy" />
@@ -65,15 +76,15 @@
       <RootProperty Name="Children" />
       <RootProperty Name="Name" />
       <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
+      <RootProperty Name="MaxHeight" />
       <RootProperty Name="CornerRadius" />
-      <RootProperty Name="Shadow" />
       <RootProperty Name="ColumnDefinitions" />
       <RootProperty Name="Resources" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Background" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="BorderThickness" />
+      <RootProperty Name="Height" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Visibility" />
@@ -134,21 +145,6 @@
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="YourNoteUWP.NotesDataTemplate" />
-    <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="Orientation" />
-      <RootProperty Name="Children" />
-      <RootProperty Name="Name" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Height" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="CornerRadius" />
-      <RootEvent Name="LostFocus" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListBox">
       <RootProperty Name="Name" />
       <RootProperty Name="ItemContainerStyle" />
@@ -158,9 +154,9 @@
       <RootProperty Name="Items" />
       <RootProperty Name="Width" />
       <RootProperty Name="Background" />
-      <RootProperty Name="ItemTemplate" />
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="Visibility" />
+      <RootProperty Name="ItemTemplateSelector" />
       <RootProperty Name="HorizontalAlignment" />
       <RootEvent Name="SelectionChanged" />
     </RootType>
@@ -221,30 +217,55 @@
       <RootEvent Name="TextChanged" />
       <RootEvent Name="Tapped" />
     </RootType>
+    <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel">
+      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="BlurRadius" />
+      <RootProperty Name="ShadowOpacity" />
+      <RootProperty Name="Color" />
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+      <RootProperty Name="CornerRadius" />
+      <RootProperty Name="Child" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="MinWidth" />
+      <RootProperty Name="MinHeight" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="MaxWidth" />
+      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="Name" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Width" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="Name" />
       <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
       <RootProperty Name="Background" />
-      <RootProperty Name="CornerRadius" />
       <RootProperty Name="IsItemClickEnabled" />
-      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="ItemContainerStyle" />
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="Visibility" />
+      <RootProperty Name="ItemTemplateSelector" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Padding" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="DisplayMemberPath" />
-      <RootProperty Name="ItemContainerStyle" />
-      <RootProperty Name="ItemTemplateSelector" />
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="Height" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="CornerRadius" />
       <RootProperty Name="Style" />
       <RootEvent Name="ItemClick" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Media.ThemeShadow" />
+    <RootType FullName="YourNoteUWP.ItemsDataTemplateSelector">
+      <RootProperty Name="AllItems" />
+      <RootProperty Name="LastItems" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListBoxItem">
       <RootProperty Name="Name" />
       <RootProperty Name="Content" />
@@ -486,52 +507,6 @@
       <RootProperty Name="Duration" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Visibility" />
-    <RootType FullName="Windows.UI.Xaml.Shapes.Rectangle">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="Fill" />
-      <RootProperty Name="RadiusX" />
-      <RootProperty Name="RadiusY" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
-      <RootProperty Name="Stroke" />
-      <RootProperty Name="StrokeThickness" />
-      <RootProperty Name="UseLayoutRounding" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenter">
-      <RootProperty Name="Height" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="VerticalContentAlignment" />
-      <RootProperty Name="CheckBoxBrush" />
-      <RootProperty Name="CheckBrush" />
-      <RootProperty Name="CheckMode" />
-      <RootProperty Name="ContentMargin" />
-      <RootProperty Name="ContentTransitions" />
-      <RootProperty Name="CornerRadius" />
-      <RootProperty Name="DisabledOpacity" />
-      <RootProperty Name="DragBackground" />
-      <RootProperty Name="DragForeground" />
-      <RootProperty Name="DragOpacity" />
-      <RootProperty Name="FocusBorderBrush" />
-      <RootProperty Name="FocusSecondaryBorderBrush" />
-      <RootProperty Name="FocusVisualMargin" />
-      <RootProperty Name="PlaceholderBackground" />
-      <RootProperty Name="PointerOverBackground" />
-      <RootProperty Name="PointerOverForeground" />
-      <RootProperty Name="PressedBackground" />
-      <RootProperty Name="ReorderHintOffset" />
-      <RootProperty Name="RevealBackground" />
-      <RootProperty Name="RevealBorderBrush" />
-      <RootProperty Name="RevealBorderThickness" />
-      <RootProperty Name="SelectedBackground" />
-      <RootProperty Name="SelectedForeground" />
-      <RootProperty Name="SelectedPointerOverBackground" />
-      <RootProperty Name="SelectedPressedBackground" />
-      <RootProperty Name="SelectionCheckMarkVisualEnabled" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsStackPanel">
       <RootProperty Name="Orientation" />
     </RootType>
@@ -569,6 +544,15 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Canvas">
       <RootMethod Name="GetZIndex" />
       <RootMethod Name="SetZIndex" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenter">
+      <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="CornerRadius" />
+      <RootProperty Name="SelectedForeground" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Primitives.ToggleButton">
       <RootProperty Name="MinWidth" />

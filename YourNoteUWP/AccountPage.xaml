@@ -2,6 +2,7 @@
     x:Class="YourNoteUWP.AccountPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
@@ -13,34 +14,115 @@
 
     <Page.Resources>
 
-        <DataTemplate x:Key="RecentlySuggested" x:DataType="data:Note">
-
-            <Border
+        <DataTemplate x:Key="RecentlySuggestedA" x:DataType="data:Note">
+            <StackPanel
                 Width="300"
-                BorderBrush="White"
-                BorderThickness="0,0,0,1">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontSize="14"
-                    Foreground="White"
-                    Text="{x:Bind title}" />
-            </Border>
+                Margin="0,10,0,0"
+                BorderBrush="#f1f1f1"
+                BorderThickness="0,0,0,1"
+                Orientation="Horizontal">
+                <Rectangle
+                    Width="35"
+                    Height="35"
+                    Fill="{x:Bind noteColor}" />
+                <StackPanel Margin="5,0,0,5">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Text="{x:Bind title}" />
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="{x:Bind content}" />
+                </StackPanel>
+            </StackPanel>
 
         </DataTemplate>
 
-        <DataTemplate x:Key="SearchTitle" x:DataType="data:Note">
-
-            <Border
+        <DataTemplate x:Key="RecentlySuggestedL" x:DataType="data:Note">
+            <StackPanel
                 Width="300"
-                BorderBrush="White"
-                BorderThickness="0,0,0,1">
-                <TextBlock
-                    HorizontalAlignment="Stretch"
-                    FontSize="14"
-                    Foreground="White"
-                    HorizontalTextAlignment="Center"
-                    Text="{x:Bind title}" />
-            </Border>
+                Margin="0,10,0,5"
+                Orientation="Horizontal">
+                <Rectangle
+                    Width="35"
+                    Height="35"
+                    Fill="{x:Bind noteColor}" />
+                <StackPanel Margin="5,0,0,0">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Text="{x:Bind title}" />
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="{x:Bind content}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SearchTitleA" x:DataType="data:Note">
+            <StackPanel
+                Width="300"
+                Margin="0,5,0,5"
+                Padding="0,0,0,5"
+                BorderBrush="#f1f1f1"
+                BorderThickness="0,0,0,1"
+                Orientation="Horizontal">
+                <Rectangle
+                    Width="35"
+                    Height="35"
+                    Fill="{x:Bind noteColor}" />
+                <StackPanel Margin="5,0,0,0">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Text="{x:Bind title}" />
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="{x:Bind content}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SearchTitleL" x:DataType="data:Note">
+            <StackPanel
+                Width="300"
+                Margin="0,10,0,10"
+                Padding="0,0,0,5"
+                Orientation="Horizontal">
+                <Rectangle
+                    Width="35"
+                    Height="35"
+                    Fill="{x:Bind noteColor}" />
+                <StackPanel Margin="5,0,0,0">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Text="{x:Bind title}" />
+
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="{x:Bind content}" />
+                </StackPanel>
+            </StackPanel>
         </DataTemplate>
 
 
@@ -110,10 +192,10 @@
 
             <!--  SEARCH BOX  -->
             <StackPanel
-                Name="SearchBox"
+                Name="SearchBoxContainer"
                 Width="325"
                 Margin="0,7,5,0"
-                LostFocus="{x:Bind SearchBoxLostFocus, Mode=OneWay}"
+                LostFocus="{x:Bind SearchBoxContainerLostFocus, Mode=OneWay}"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
@@ -128,45 +210,54 @@
                     TextChanged="{x:Bind SearchTextBoxTextChanged, Mode=OneWay}" />
 
                 <Popup
-                    Name="SuggestionsPopup"
+                    Name="SearchPopup"
                     Margin="0,4,0,0"
                     IsLightDismissEnabled="False"
-                    IsOpen="{x:Bind SuggestionsPopupIsOpen, Mode=OneWay}"
+                    IsOpen="{x:Bind SearchPopupIsOpen, Mode=OneWay}"
                     KeyTipPlacementMode="Bottom">
-                    <Grid
-                        Name="PopUpContainer"
-                        Width="Auto"
-                        Height="Auto"
-                        CornerRadius="4">
-                        <Border CornerRadius="4">
-                            <ListBox
-                                Name="RecentSuggestedContent"
+                    <controls:DropShadowPanel
+                        MaxHeight="325"
+                        BlurRadius="10"
+                        ShadowOpacity="1"
+                        Color="Black">
+                        <Grid
+                            Name="PopUpContainer"
+                            Width="Auto"
+                            MaxHeight="325"
+                            CornerRadius="4">
+                            <Border CornerRadius="4">
+                                <ListBox
+                                    Name="RecentlySearched"
+                                    Width="325"
+                                    Background="White"
+                                    ItemsSource="{x:Bind RecentlySearchedItemSource, Mode=OneWay}"
+                                    SelectionChanged="{x:Bind RecentlySearchedSelectionChanged, Mode=OneWay}"
+                                    SelectionMode="Single"
+                                    Visibility="{x:Bind RecentlySearchedVisibility, Mode=OneWay}">
+                                    <ListBox.ItemTemplateSelector>
+                                        <local:ItemsDataTemplateSelector AllItems="{StaticResource RecentlySuggestedA}" LastItems="{StaticResource RecentlySuggestedL}" />
+                                    </ListBox.ItemTemplateSelector>
+                                </ListBox>
+                            </Border>
+
+                            <ListView
+                                Name="Suggestion"
                                 Width="325"
                                 Background="White"
-                                ItemTemplate="{StaticResource RecentlySuggested}"
-                                ItemsSource="{x:Bind RecentSuggestedItemSource, Mode=OneWay}"
-                                SelectionChanged="{x:Bind RecentSuggestedSelectionChanged, Mode=OneWay}"
-                                SelectionMode="Single"
-                                Visibility="{x:Bind RecentSuggestedVisibility, Mode=OneWay}" />
-                        </Border>
+                                IsItemClickEnabled="True"
+                                ItemClick="{x:Bind SuggestionContainerItemClick, Mode=OneWay}"
+                                ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
+                                ItemsSource="{x:Bind SuggestionContentItemSource, Mode=OneWay}"
+                                Visibility="{x:Bind SuggestionContentVisibility, Mode=OneWay}">
+                                <ListView.ItemTemplateSelector>
+                                    <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                </ListView.ItemTemplateSelector>
+                            </ListView>
 
-                        <ListView
-                            Name="SearchBoxContainerContent"
-                            Width="325"
-                            Height="Auto"
-                            Background="Black"
-                            CornerRadius="4"
-                            IsItemClickEnabled="True"
-                            ItemClick="{x:Bind SearchBoxContainerItemClick, Mode=OneWay}"
-                            ItemTemplate="{StaticResource SearchTitle}"
-                            ItemsSource="{x:Bind SearchBoxContentItemSource, Mode=OneWay}"
-                            Visibility="{x:Bind SearchBoxContentVisibility, Mode=OneWay}" />
-                        <Grid.Shadow>
-                            <ThemeShadow />
-                        </Grid.Shadow>
-                    </Grid>
-
+                        </Grid>
+                    </controls:DropShadowPanel>
                 </Popup>
+
             </StackPanel>
 
 
