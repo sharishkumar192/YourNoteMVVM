@@ -137,6 +137,7 @@
       <DependentUpon>NotesDataTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleData.cs" />
     <Compile Include="ViewModels\AccountPageViewModel.cs" />
     <Compile Include="ViewModels\IEmail.cs" />
     <Compile Include="ViewModels\IEmailExt.cs" />
@@ -150,12 +151,16 @@
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NoteColorOptions.xaml.cs">
+      <DependentUpon>NoteColorOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StyleOptionItemTemplateSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -240,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NoteColorOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -70,14 +70,14 @@ namespace YourNoteUWP {
         // ----------------------------------------ACCOUNT PAGE DB UPDATION----------------------------------------
 
         //Creates new note 
-        public static void InsertNewNote(Note newNote)// Needed 
+        public static void InsertNewNote(string tableName, Note newNote)// Needed 
         {
 
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             SQLiteConnection conn = DBCreation.OpenConnection();
 
 
-            string query = $"INSERT INTO "+ sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR) VALUES (@userId, @title, @content, @noteColor);";
+            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR) VALUES (@userId, @title, @content, @noteColor);";
 
             try
             {
@@ -305,9 +305,15 @@ namespace YourNoteUWP {
 
         }
 
+        public static void NewNoteCreation(string tableName, Note newNote)
+        {
+            
+        }
 
 
-      
+
+
+
 
     }
 }

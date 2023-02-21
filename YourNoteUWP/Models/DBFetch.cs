@@ -189,13 +189,13 @@ namespace YourNoteUWP
                         {
                             if (notes == null)
                                 notes = new ObservableCollection<Note>();
-                            Note note = new Note("", 0, "", "", "", 0);
+                            Note note = new Note("", 0, "", "", 0, 0);
 
                             note.userId = sqlite_datareader.GetString(0);
                             note.noteId = (long)sqlite_datareader.GetValue(1);
                             note.title = sqlite_datareader.GetString(2);
                             note.content = sqlite_datareader.GetString(3);
-                            note.noteColor = sqlite_datareader.GetString(4);
+                            note.noteColor = (long)sqlite_datareader.GetValue(4);
                             note.searchCount = (long)sqlite_datareader.GetValue(5);
                             notes.Add(note);
 
@@ -233,7 +233,7 @@ namespace YourNoteUWP
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
                     command.Parameters.Add(parameters);
-                    Note note = new Note("", 0, "", "", "", 0);
+                    Note note = new Note("", 0, "", "",0, 0);
                     using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                     {
                         while (sqlite_datareader.Read())
@@ -244,7 +244,7 @@ namespace YourNoteUWP
                             note.noteId = sqlite_datareader.GetInt64(1);
                             note.title = sqlite_datareader.GetString(2);
                             note.content = sqlite_datareader.GetString(3);
-                            note.noteColor = sqlite_datareader.GetString(4);
+                            note.noteColor = (long)sqlite_datareader.GetValue(4);
                             {
                                 if (sharedNotes == null)
                                     sharedNotes = new ObservableCollection<Note>();

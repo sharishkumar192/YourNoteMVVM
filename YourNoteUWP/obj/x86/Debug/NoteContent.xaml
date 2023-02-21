@@ -75,6 +75,7 @@
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
         <Grid x:ConnectionId='6'
+            
             Name="NoteMenuOptionsContainer"
             Grid.Row="1"
                                                                                  >
@@ -140,6 +141,7 @@
                 </ListBoxItem>
 
             </ListBox>
+            
         </Grid>
         <TextBox x:ConnectionId='7'
             Name="ContentOfNote"

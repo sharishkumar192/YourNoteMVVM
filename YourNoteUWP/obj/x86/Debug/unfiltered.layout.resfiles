@@ -58,6 +58,7 @@ Dictionary.xbf
 NoteContent.xbf
 NotesDataTemplate.xbf
 View\MainPage.xbf
+View\NoteColorOptions.xbf
 View\SignInPage.xbf
 View\SignUpPage.xbf
 YourNoteUWP.xr.xml

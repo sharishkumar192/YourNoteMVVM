@@ -51,6 +51,7 @@ namespace YourNoteUWP.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+
         //----------------------------Column Divider---------------------------------------------------
         private Visibility _columnDividerVisibility = Visibility.Collapsed;
 

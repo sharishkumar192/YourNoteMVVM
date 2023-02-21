@@ -13,9 +13,9 @@ namespace YourNoteUWP.Models
         public long noteId;
         public string title;
         public string content;
-        public string noteColor;
+        public long noteColor;
         public long searchCount;
-        public Note(string userId, long noteId, string title, string content, string noteColor, long searchCount)
+        public Note(string userId, long noteId, string title, string content, long noteColor, long searchCount)
         {
             this.userId = userId;
             this.noteId = noteId;
@@ -34,7 +34,7 @@ namespace YourNoteUWP.Models
             this.noteColor = copyNote.noteColor;
             this.searchCount = copyNote.searchCount;
         }
-        public Note(string userId, string title, string content, string noteColor)
+        public Note(string userId, string title, string content, long noteColor)
         {
             this.userId = userId;
             this.title = title;
@@ -44,17 +44,13 @@ namespace YourNoteUWP.Models
 
 
 
-
-     
-
-
-       
-
-       
-
         public static void ShareNote(string sharedUserId, long noteId)
         {
            DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
+        }
+
+        public void GetSolidBrush()
+        { 
         }
 
       

@@ -75,6 +75,7 @@
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
         <Grid
+            
             Name="NoteMenuOptionsContainer"
             Grid.Row="1"
             Visibility="{x:Bind NoteMenuOptionsContainerVisibility, Mode=OneWay}">
@@ -140,6 +141,7 @@
                 </ListBoxItem>
 
             </ListBox>
+            
         </Grid>
         <TextBox
             Name="ContentOfNote"

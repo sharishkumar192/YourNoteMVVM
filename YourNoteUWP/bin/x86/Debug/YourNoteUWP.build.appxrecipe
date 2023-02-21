@@ -357,6 +357,9 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\MainPage.xbf">
       <PackagePath>View\MainPage.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\NoteColorOptions.xbf">
+      <PackagePath>View\NoteColorOptions.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignInPage.xbf">
       <PackagePath>View\SignInPage.xbf</PackagePath>
     </AppxPackagedFile>

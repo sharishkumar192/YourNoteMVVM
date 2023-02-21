@@ -65,7 +65,7 @@ namespace YourNoteUWP
 
         }
 
-        public void DisplayContent(long noteId, string title, string content, string noteColor)
+        public void DisplayContent(long noteId, string title, string content, long noteColor)
         {
             _noteId = noteId;
             TitleOfNoteText = title;
@@ -73,7 +73,7 @@ namespace YourNoteUWP
             NoteContentBackground = GetSolidColorBrush(noteColor);
         }
 
-        public void DisplayContent(long noteId, string title, string content, long searchCount, string noteColor)
+        public void DisplayContent(long noteId, string title, string content, long searchCount, long noteColor)
         {
             _noteId = noteId;
             TitleOfNoteText = title;
@@ -105,10 +105,12 @@ namespace YourNoteUWP
 
 
 
-        private static SolidColorBrush GetSolidColorBrush(string hex)
+        private static SolidColorBrush GetSolidColorBrush(long value)
         {
-            if (hex == null)
-                hex = "#fdefad";
+            int index = (int)value;
+            List<string> color = new List<string>()
+        { "#f8bec5", "#c6e8b7", "#fdefad", "#c3e9fd"};
+            string hex = color[index];
             hex = hex.Replace("#", string.Empty);
             byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
             byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));

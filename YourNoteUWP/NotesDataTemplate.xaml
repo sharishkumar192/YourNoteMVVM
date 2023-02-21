@@ -2,40 +2,57 @@
     x:Class="YourNoteUWP.NotesDataTemplate"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <StackPanel Margin="10">
+        <controls:DropShadowPanel
+            BlurRadius="10"
+            ShadowOpacity="0.5"
+            Color="Black">
+            <Border
+                Name="NoteContent"
+                Background="{x:Bind NoteContentBackground, Mode=OneWay}"
+                CornerRadius="4">
+                <StackPanel Width="250" Height="250">
+                    <TextBlock
+                        Margin="0,5,0,0"
+                        Padding="10,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Text="{x:Bind notesTemplate.title}"
+                        TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        Name="contents"
+                        Grid.Row="1"
+                        Margin="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="14"
+                        Foreground="Black"
+                        HorizontalTextAlignment="Left"
+                        Text="{x:Bind notesTemplate.content}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </controls:DropShadowPanel>
 
-    <Grid Name="NotesDisplayContent" Background="Wheat">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
 
-        <TextBlock
-            Name="titles"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            FontSize="20"
-            Foreground="Black"
-            Text="{x:Bind notesTemplate.title}" />
+    </StackPanel>
 
 
 
-
-        <TextBlock
-            Name="contents"
-            Grid.Row="1"
-            Margin="20"
-            HorizontalAlignment="Center"
-            FontSize="15"
-            Foreground="Black"
-            Text="{x:Bind notesTemplate.content}" />
+</UserControl>
 
 
-        <VisualStateManager.VisualStateGroups>
+<!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowLayout">
                     <VisualState.StateTriggers>
@@ -96,7 +113,4 @@
 
 
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-    </Grid>
-
-</UserControl>
+        </VisualStateManager.VisualStateGroups>-->

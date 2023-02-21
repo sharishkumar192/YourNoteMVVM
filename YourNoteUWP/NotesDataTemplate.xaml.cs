@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel.Channels;
 using Windows.Foundation;
@@ -19,27 +21,61 @@ using YourNoteUWP.Models;
 
 namespace YourNoteUWP
 {
-    public sealed partial class NotesDataTemplate : UserControl
+    public sealed partial class NotesDataTemplate : UserControl, INotifyPropertyChanged
     {
-       // private static bool loadOnce = false;
+        // private static bool loadOnce = false;
+        public event PropertyChangedEventHandler PropertyChanged;
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static string NotePreview(string title, string content)
+        {
+            string text = "";
+            if(title != "")
+            {
+                text = text + title + "\r\n";
+              
+
+            }
+            if(content != "")
+            {
+                text += content;
+            }
+            if(title == "")
+                text = "(Empty Note)";
+            return text;
+        }
+
+
+        private SolidColorBrush _noteContentBackground ;
+
+        public SolidColorBrush NoteContentBackground
+        {
+            get { return _noteContentBackground; }
+            set { _noteContentBackground = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public void SetColor()
         {
             if (this.DataContext != null)
-                NotesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+                NoteContentBackground = GetSolidColorBrush(notesTemplate.noteColor);
         }
         public Note notesTemplate
         {
 
-             
+
             get
             {
                 // loadOnce = true;
-               // SetColor();
+                // SetColor();
                 return this.DataContext as Note;
 
-                
+
 
             }
         }
@@ -63,21 +99,23 @@ namespace YourNoteUWP
 
             //   
             //}
-           
+
 
         }
 
         private void NotesDataTemplate_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            if(notesTemplate != null)
-                NotesDisplayContent.Background = GetSolidColorBrush(notesTemplate.noteColor);
+            if (notesTemplate != null)
+                NoteContentBackground = GetSolidColorBrush(notesTemplate.noteColor);
             Bindings.Update();
         }
 
-        private static SolidColorBrush GetSolidColorBrush(string hex)
+        private static SolidColorBrush GetSolidColorBrush(long value)
         {
-            if (hex == null)
-                hex = "#fdefad" ;
+            int index = (int)value;
+            List<string> color = new List<string>()
+        { "#f8bec5", "#c6e8b7", "#fdefad", "#c3e9fd"};
+            string hex = color[index];
             hex = hex.Replace("#", string.Empty);
             byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
             byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
@@ -85,11 +123,5 @@ namespace YourNoteUWP
             SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
             return myBrush;
         }
-
-
-
-       //public event RoutedEventHandler loadOnce;
-
-
     }
 }
