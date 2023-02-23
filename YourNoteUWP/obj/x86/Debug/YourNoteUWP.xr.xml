@@ -33,11 +33,8 @@
       <RootProperty Name="PlaceholderText" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
-      <RootEvent Name="GotFocus" />
-      <RootEvent Name="LostFocus" />
       <RootEvent Name="TextChanged" />
-      <RootEvent Name="Loaded" />
-      <RootEvent Name="Unloaded" />
+      <RootEvent Name="GotFocus" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="Foreground" />
@@ -210,8 +207,7 @@
       <RootProperty Name="LineStackingStrategy" />
       <RootProperty Name="TextLineBounds" />
       <RootProperty Name="FontStyle" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
+      <RootProperty Name="HorizontalTextAlignment" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
     </RootType>
@@ -245,11 +241,11 @@
       <RootProperty Name="Children" />
       <RootProperty Name="BorderBrush" />
       <RootProperty Name="BorderThickness" />
+      <RootProperty Name="Name" />
       <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="CornerRadius" />
-      <RootProperty Name="Name" />
       <RootProperty Name="Height" />
       <RootProperty Name="Background" />
       <RootEvent Name="LostFocus" />
@@ -289,8 +285,10 @@
     </RootType>
     <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.AdaptiveGridView">
       <RootProperty Name="Name" />
-      <RootProperty Name="Padding" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="DesiredWidth" />
       <RootProperty Name="IsItemClickEnabled" />
+      <RootProperty Name="ItemHeight" />
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="ItemTemplate" />
       <RootEvent Name="ItemClick" />

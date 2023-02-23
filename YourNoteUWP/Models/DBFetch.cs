@@ -31,22 +31,22 @@ namespace YourNoteUWP
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-              
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter parameters = new SQLiteParameter("@userId", userId);
-                    command.Parameters.Add(parameters);
-                    using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameters = new SQLiteParameter("@userId", userId);
+                command.Parameters.Add(parameters);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
                     {
-                        while (sqlite_datareader.Read())
-                        {
-                            check = true;
+                        check = true;
 
-                        }
-
-                        sqlite_datareader.Close();
                     }
-                    conn.Close();
-                
+
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+
             }
             catch (Exception e) { Debug.WriteLine(e.Message); }
 
@@ -118,36 +118,36 @@ namespace YourNoteUWP
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-               
-                    SQLiteCommand command = new SQLiteCommand(query1, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[2];
-                    parameters[0] = new SQLiteParameter("@userId", loggedUserId);
-                    parameters[1] = new SQLiteParameter("@password", loggedPassword);
 
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                SQLiteCommand command = new SQLiteCommand(query1, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@userId", loggedUserId);
+                parameters[1] = new SQLiteParameter("@password", loggedPassword);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
                     {
-                        while (sqlite_datareader.Read())
-                        {
-                            string name = sqlite_datareader.GetString(0);
-                            string userId = sqlite_datareader.GetString(1);
-                            string password = sqlite_datareader.GetString(2);
-                            long loginCount = (long)sqlite_datareader.GetValue(3);
-                            userDetails = new Models.User(name, userId, password, loginCount);
-                            isExist = true;
-                        }
-
-
-                        sqlite_datareader.Close();
+                        string name = sqlite_datareader.GetString(0);
+                        string userId = sqlite_datareader.GetString(1);
+                        string password = sqlite_datareader.GetString(2);
+                        long loginCount = (long)sqlite_datareader.GetValue(3);
+                        userDetails = new Models.User(name, userId, password, loginCount);
+                        isExist = true;
                     }
 
-                    command.CommandText = query2;
-                    command.Parameters.Remove(parameters[1]);
-                    command.ExecuteNonQuery();
-                    conn.Close();
 
-                
+                    sqlite_datareader.Close();
+                }
+
+                command.CommandText = query2;
+                command.Parameters.Remove(parameters[1]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
             }
             catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
@@ -179,37 +179,36 @@ namespace YourNoteUWP
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-               
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
-                    command.Parameters.Add(parameters);
-                    using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
+                command.Parameters.Add(parameters);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
                     {
-                        while (sqlite_datareader.Read())
-                        {
-                            if (notes == null)
-                                notes = new ObservableCollection<Note>();
-                            Note note = new Note("", 0, "", "", 0, 0);
+                        if (notes == null)
+                            notes = new ObservableCollection<Note>();
+                        Note note = new Note(0, "", "", 0, "");
 
-                            note.userId = sqlite_datareader.GetString(0);
-                            note.noteId = (long)sqlite_datareader.GetValue(1);
-                            note.title = sqlite_datareader.GetString(2);
-                            note.content = sqlite_datareader.GetString(3);
-                            note.noteColor = (long)sqlite_datareader.GetValue(4);
-                            note.searchCount = (long)sqlite_datareader.GetValue(5);
-                            notes.Add(note);
+                        note.noteId = (long)sqlite_datareader.GetValue(1);
+                        note.title = sqlite_datareader.GetString(2);
+                        note.content = sqlite_datareader.GetString(3);
+                        note.noteColor = (long)sqlite_datareader.GetValue(4);
+                        note.modifiedDay = sqlite_datareader.GetString(7);
+                        notes.Add(note);
 
-                        }
-
-                        sqlite_datareader.Close();
                     }
 
-                    conn.Close();
+                    sqlite_datareader.Close();
                 }
 
+                conn.Close();
+            }
 
 
-            
+
+
             catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
@@ -228,39 +227,33 @@ namespace YourNoteUWP
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-                
-               
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
-                    command.Parameters.Add(parameters);
-                    Note note = new Note("", 0, "", "",0, 0);
-                    using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
+                command.Parameters.Add(parameters);
+
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
                     {
-                        while (sqlite_datareader.Read())
-                        {
-                            if (sharedNotes == null)
-                                sharedNotes = new ObservableCollection<Note>();
-                            note.userId = sqlite_datareader.GetString(0);
-                            note.noteId = sqlite_datareader.GetInt64(1);
-                            note.title = sqlite_datareader.GetString(2);
-                            note.content = sqlite_datareader.GetString(3);
-                            note.noteColor = (long)sqlite_datareader.GetValue(4);
-                            {
-                                if (sharedNotes == null)
-                                    sharedNotes = new ObservableCollection<Note>();
-                                sharedNotes.Add(note);
+                        if (sharedNotes == null)
+                            sharedNotes = new ObservableCollection<Note>();
+                        Note note = new Note(0, "", "", 0, "");
+                        note.noteId = (long)sqlite_datareader.GetValue(1);
+                        note.title = sqlite_datareader.GetString(2);
+                        note.content = sqlite_datareader.GetString(3);
+                        note.noteColor = (long)sqlite_datareader.GetValue(4);
+                        note.modifiedDay = sqlite_datareader.GetString(7);
 
-
-                            }
-
-
-                        }
-                        sqlite_datareader.Close();
-
-
+                        sharedNotes.Add(note);
                     }
-                    conn.Close();
-                
+                    sqlite_datareader.Close();
+
+
+                }
+                conn.Close();
+
             }
             catch (Exception e) { Debug.WriteLine(e.Message); }
             finally

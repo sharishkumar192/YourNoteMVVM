@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,21 +16,11 @@ using YourNoteUWP.Models;
 using YourNoteUWP.View;
 namespace YourNoteUWP.ViewModels
 {
-    internal class AccountPageViewModel 
+    internal class AccountPageViewModel
     {
 
 
-       
-        public AccountPageViewModel()
-        {
 
-
-        }
-        public AccountPageViewModel(Tuple<Frame, Models.User> tuple)
-        {
-         
-
-        }
         public static ObservableCollection<Note> GetPersonalNotes(User user)
         {
             return DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
@@ -42,7 +33,28 @@ namespace YourNoteUWP.ViewModels
 
         }
 
-        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
+        public static ObservableCollection<Note> GetAllNotes(ObservableCollection<Note> personal, ObservableCollection<Note> shared, Models.User user)
+        {
+            ObservableCollection<Note> allNotes = new ObservableCollection<Note>();
+            if (personal == null)
+                personal = GetPersonalNotes(user);
+            if (shared == null)
+                shared = GetSharedNotes(user);
+            if (personal != null)
+                foreach (Note notes in personal)
+                {
+                    allNotes.Add(notes);
+                }
+            if (shared != null)
+                foreach (Note notes in shared)
+                {
+                    allNotes.Add(notes);
+                }
+            return allNotes;
+
+        }
+
+        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
         {
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;
@@ -78,7 +90,7 @@ namespace YourNoteUWP.ViewModels
                 }
             }
 
-            Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple<ObservableCollection<Note>, ObservableCollection<Note>, ObservableCollection<Note>>(personalNotes, noteForSearch, recentNotes);
+            Tuple< ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple< ObservableCollection<Note>, ObservableCollection<Note>>(noteForSearch, recentNotes);
             return searchNotes;
         }
 

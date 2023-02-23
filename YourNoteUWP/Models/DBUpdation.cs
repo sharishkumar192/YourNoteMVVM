@@ -77,23 +77,28 @@ namespace YourNoteUWP {
             SQLiteConnection conn = DBCreation.OpenConnection();
 
 
-            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR) VALUES (@userId, @title, @content, @noteColor);";
+            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
 
             try
             {
 
               
                     SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[4];
+                    SQLiteParameter[] parameters = new SQLiteParameter[6];
                     parameters[0] = new SQLiteParameter("@userId", newNote.userId);
                     parameters[1] = new SQLiteParameter("@title", newNote.title);
                     parameters[2] = new SQLiteParameter("@content", newNote.content);
                     parameters[3] = new SQLiteParameter("@noteColor", newNote.noteColor);
+                    parameters[4] = new SQLiteParameter("@creationDay", newNote.creationDay);
+                    parameters[5] = new SQLiteParameter("@modifiedDay", newNote.modifiedDay);
                     command.Parameters.Add(parameters[0]);
                     command.Parameters.Add(parameters[1]);
                     command.Parameters.Add(parameters[2]);
                     command.Parameters.Add(parameters[3]);
-                    command.ExecuteNonQuery();
+                    command.Parameters.Add(parameters[4]);
+                    command.Parameters.Add(parameters[5]);
+
+                command.ExecuteNonQuery();
                     conn.Close();
 
                 

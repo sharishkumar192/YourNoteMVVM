@@ -93,9 +93,11 @@ namespace YourNoteUWP
       $"NOTEID INTEGER PRIMARY KEY AUTOINCREMENT," +
       $"TITLE VARCHAR(10000)," +
       $"CONTENT VARCHAR(1000), " +
-      $"NOTECOLOR VARCHAR(7) DEFAULT \"#c6e8b7\" ,  " +
+      $"NOTECOLOR INTEGER DEFAULT 0 ,  " +
       $"SEARCHCOUNT INTEGER DEFAULT 0  ,  " +
-      $"FOREIGN KEY(USERID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID))";
+      $"CREATIONDAY VARCHAR(27)  ,  " +
+      $"MODIFIEDDAY VARCHAR(27)  ,  " +
+      $"FOREIGN KEY(USERID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID) ON DELETE CASCADE)" ;
             SQLiteConnection conn = OpenConnection();
             try
             {
@@ -124,8 +126,8 @@ namespace YourNoteUWP
      $"(SHAREDUSERID VARCHAR(10000) ,  " +
      $"SHAREDNOTEID INTEGER ," +
      $"PRIMARY KEY (SHAREDUSERID, SHAREDNOTEID)" +
-     $" FOREIGN KEY(SHAREDUSERID) REFERENCES" + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID)" +
-       $" FOREIGN KEY(SHAREDNOTEID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName) + "(NOTEID))";
+     $" FOREIGN KEY(SHAREDUSERID) REFERENCES" + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID) ON DELETE CASCADE" +
+       $" FOREIGN KEY(SHAREDNOTEID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName) + "(NOTEID) ON DELETE CASCADE)";
             SQLiteConnection conn = OpenConnection();
             try
             {

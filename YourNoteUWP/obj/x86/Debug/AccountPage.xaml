@@ -334,7 +334,7 @@
 
 
             <!--  MAIN MENU OPTIONS  -->
-            <ListBox x:ConnectionId='53'
+            <ListBox x:ConnectionId='54'
                 Name="MainMenuOptions"
                 ItemContainerStyle="{StaticResource MainMenuItemStyle}"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -344,26 +344,26 @@
                                                                                         
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
-                <ListBoxItem x:ConnectionId='61'
-                    Name="PersonalContent"
-                    Content="Personal"
-                                                                                 />
-
                 <ListBoxItem x:ConnectionId='62'
-                    Name="Shared"
-                    Content="Shared"
+                    Name="PersonalNotes"
+                    Content="Personal"
                                                                                />
 
                 <ListBoxItem x:ConnectionId='63'
-                    Name="All"
+                    Name="SharedNotes"
+                    Content="Shared"
+                                                                             />
+
+                <ListBoxItem x:ConnectionId='64'
+                    Name="AllNotes"
                     Content="All Notes"
-                                                                              />
+                                                                          />
 
             </ListBox>
 
 
             <!--  SEARCH BOX  -->
-            <StackPanel x:ConnectionId='54'
+            <StackPanel x:ConnectionId='55'
                 Name="SearchBoxContainer"
                 Width="325"
                 Margin="0,7,5,0"
@@ -371,7 +371,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
-                <TextBox x:ConnectionId='56'
+                <TextBox x:ConnectionId='57'
                     Name="SearchTextBox"
                     Background="#f8f8f8"
                     CornerRadius="4"
@@ -381,7 +381,7 @@
                                                                   
                                                                                  />
 
-                <Popup x:ConnectionId='57'
+                <Popup x:ConnectionId='58'
                     Name="SearchPopup"
                     MaxHeight="325"
                     Margin="0,4,0,0"
@@ -395,12 +395,12 @@
                         ShadowOpacity="1"
                         Color="Black">
 
-                        <Grid x:ConnectionId='58'
+                        <Grid x:ConnectionId='59'
                             Name="PopUpContainer"
                             Width="Auto"
                             CornerRadius="4">
                             <Border CornerRadius="4">
-                                <ListBox x:ConnectionId='60'
+                                <ListBox x:ConnectionId='61'
                                     Name="RecentlySearched"
                                     Width="325"
                                     Background="White"
@@ -414,7 +414,7 @@
                                 </ListBox>
                             </Border>
 
-                            <ListView x:ConnectionId='59'
+                            <ListView x:ConnectionId='60'
                                 Name="Suggestion"
                                 Width="325"
                                 Background="White"
@@ -436,7 +436,7 @@
 
 
             <!--  SIGN OUT  -->
-            <Button x:ConnectionId='55'
+            <Button x:ConnectionId='56'
                 Name="Logout"
                 Width="35"
                 Height="31"
@@ -461,16 +461,16 @@
         <!--
             New Note   BorderBrush="#e3e3e3"
         -->
-        <Grid Grid.Row="1" Margin="10,20,0,0">
+        <Grid Grid.Row="1" Margin="10,20,0,10">
             <TextBlock x:ConnectionId='39'
                 Name="Title"
+                Margin="9,0,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="18"
                 FontWeight="SemiBold"
                 Foreground="Black"
-                Text="My Personal Notes" />
-
+                                                       />
 
             <Grid x:ConnectionId='40'
                 Name="NewNote"
@@ -485,6 +485,8 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
+
+
                 <RichEditBox x:ConnectionId='41'
                     Name="TitleOfNewNote"
                     Grid.Row="0"
@@ -492,41 +494,41 @@
                     HorizontalAlignment="Stretch"
                     FontSize="18"
                     FontWeight="SemiBold"
-                                                                           
-                                                                             
                     PlaceholderText="Title"
                     Style="{StaticResource NewNoteContextStyle}"
                                                                                  
                                                                                 />
+
+
                 <RichEditBox x:ConnectionId='42'
                     Name="ContentOfNewNote"
                     Grid.Row="1"
                     Margin="10"
                                                                              
-                                             
-                                                                               
                     PlaceholderText="Take a note..."
-                    Style="{StaticResource RichEditBoxStyle1}"
-                                                                                   
-                                                 >
+                    Style="{StaticResource NewNoteContextStyle}"
+                                                                                   >
                     <FlyoutBase.AttachedFlyout>
                         <Flyout>
                             <Button />
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </RichEditBox>
+
+
                 <Grid x:ConnectionId='43'
-                    Name="NoteStyleButton"
+                    Name="NoteStyleOptions"
                     Grid.Row="2"
                     Margin="12,0,10,10"
-                                                                                >
+                                                                                 >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
 
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel
+                    <StackPanel x:ConnectionId='44'
+                        Name="Options"
                         Grid.Column="0"
                         Padding="0,5,0,0"
                         HorizontalAlignment="Stretch"
@@ -534,14 +536,14 @@
                         CornerRadius="4"
                         Orientation="Horizontal">
 
-                        <Button x:ConnectionId='45'
+                        <Button x:ConnectionId='46'
                             Name="FontBackground"
                                                                              
                             Content="&#xE8D3;"
                             FontFamily="Segoe MDL2 Assets"
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Background Color" />
-                        <Button x:ConnectionId='46'
+                        <Button x:ConnectionId='47'
                             Name="FontIncrease"
                             Margin="5,0,0,0"
                                                                            
@@ -549,7 +551,7 @@
                             FontFamily="Segoe MDL2 Assets"
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Font Increase" />
-                        <Button x:ConnectionId='47'
+                        <Button x:ConnectionId='48'
                             Name="FontDecrease"
                             Margin="5,0,0,0"
                                                                            
@@ -558,7 +560,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Font Decrease" />
 
-                        <Button x:ConnectionId='48'
+                        <Button x:ConnectionId='49'
                             Name="SmallCaps"
                             Margin="5,0,0,0"
                                                                         
@@ -567,7 +569,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Lowercase" />
 
-                        <Button x:ConnectionId='49'
+                        <Button x:ConnectionId='50'
                             Name="AllCaps"
                             Margin="5,0,0,0"
                                                                       
@@ -576,7 +578,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Uppercase" />
 
-                        <Button x:ConnectionId='50'
+                        <Button x:ConnectionId='51'
                             Name="Strikethrough"
                             Margin="5,0,0,0"
                                                                             
@@ -587,15 +589,16 @@
 
 
 
-                        <Button x:ConnectionId='51'
+                        <Button x:ConnectionId='52'
                             Name="NoteColor"
                             Content="&#xED67;"
                             FontFamily="Segoe MDL2 Assets"
+                                                                                  
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Note Color">
                             <Button.Flyout>
-                                <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Top">
-                                    <ListBox x:ConnectionId='52'
+                                <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
+                                    <ListBox x:ConnectionId='53'
                                         Name="ColorOptions"
                                         Height="40"
                                                                                                        
@@ -623,7 +626,7 @@
                         </Button>
 
                     </StackPanel>
-                    <Button x:ConnectionId='44'
+                    <Button x:ConnectionId='45'
                         Name="CreationButton"
                         Grid.Column="1"
                         Width="60"
@@ -661,12 +664,17 @@
         </controls:AdaptiveGridView>-->
 
 
+
+
+
         <controls:AdaptiveGridView x:ConnectionId='34'
             Name="NotesData"
             Grid.Row="2"
-            Padding="7,10,0,0"
+            Margin="20,0,0,0"
+            DesiredWidth="200"
             IsItemClickEnabled="True"
                                                                 
+            ItemHeight="250"
                                                                    >
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate                       >
@@ -674,6 +682,7 @@
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
+
         <Popup x:ConnectionId='35'
             Name="NoteDisplayPopUp"
             IsLightDismissEnabled="True"
@@ -685,6 +694,7 @@
                                                                    
                                                                       />
         </Popup>
+
 
 
     </Grid>

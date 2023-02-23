@@ -8,44 +8,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Margin="10">
-        <controls:DropShadowPanel
-            BlurRadius="10"
-            ShadowOpacity="0.5"
-            Color="Black">
-            <Border
-                Name="NoteContent"
-                Background="{x:Bind NoteContentBackground, Mode=OneWay}"
-                CornerRadius="4">
-                <StackPanel Width="250" Height="250">
-                    <TextBlock
-                        Margin="0,5,0,0"
-                        Padding="10,0,0,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        FontSize="18"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                        Text="{x:Bind notesTemplate.title}"
-                        TextTrimming="CharacterEllipsis" />
-                    <TextBlock
-                        Name="contents"
-                        Grid.Row="1"
-                        Margin="20"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        FontSize="14"
-                        Foreground="Black"
-                        HorizontalTextAlignment="Left"
-                        Text="{x:Bind notesTemplate.content}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="Wrap" />
-                </StackPanel>
-            </Border>
-        </controls:DropShadowPanel>
+    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Margin="10,10,0,0"
+            FontSize="18"
+            FontWeight="SemiBold"
+            Foreground="Black"
+            Text="{x:Bind notesTemplate.title}"
+            TextTrimming="CharacterEllipsis" />
+        <TextBlock
+            Name="contents"
+            Grid.Row="1"
+            Margin="15"
+            FontSize="14"
+            Foreground="Black"
+            HorizontalTextAlignment="Left"
+            Text="{x:Bind notesTemplate.content}"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="2"
+            Margin="10,0,0,10"
+            Foreground="#000000"
+            Text="{x:Bind ShowModifiedTime(notesTemplate.modifiedDay)}" />
+    </Grid>
 
 
-    </StackPanel>
+
 
 
 

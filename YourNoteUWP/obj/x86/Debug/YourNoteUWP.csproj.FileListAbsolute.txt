@@ -10,6 +10,7 @@ D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Dictionary.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NoteContent.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\NotesDataTemplate.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\MainPage.xbf
+D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\NoteColorOptions.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignInPage.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\SignUpPage.xbf
 D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\YourNoteUWP.xr.xml
@@ -69,6 +70,8 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.g.i.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.g.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\MainPage.g.i.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\MainPage.g.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.g.i.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.g.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignInPage.g.i.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignInPage.g.cs
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignUpPage.g.i.cs
@@ -80,6 +83,7 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\Dictionary.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\MainPage.xaml
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignInPage.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignUpPage.xaml
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\App.xbf
@@ -88,6 +92,7 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\Dictionary.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NoteContent.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\NotesDataTemplate.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\MainPage.xbf
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignInPage.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\SignUpPage.xbf
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\XamlSaveStateFile.xml
@@ -131,8 +136,3 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\resources.en.resfiles.intermediate
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\ProjectArchitectures.txt
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\.winmd_cache\$Microsoft.Graphics.Canvas.winmd_637214534760000000.json
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_637424617200000000.json
-D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.g.i.cs
-D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.g.cs
-D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.xaml
-D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\NoteColorOptions.xbf
-D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\NoteColorOptions.xbf

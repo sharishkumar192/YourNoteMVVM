@@ -345,19 +345,19 @@
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
                 <ListBoxItem
-                    Name="PersonalContent"
+                    Name="PersonalNotes"
                     Content="Personal"
-                    IsSelected="{x:Bind PersonalContentIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind PersonalNotesIsSelected, Mode=TwoWay}" />
 
                 <ListBoxItem
-                    Name="Shared"
+                    Name="SharedNotes"
                     Content="Shared"
-                    IsSelected="{x:Bind SharedContentIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind SharedNotesIsSelected, Mode=TwoWay}" />
 
                 <ListBoxItem
-                    Name="All"
+                    Name="AllNotes"
                     Content="All Notes"
-                    IsSelected="{x:Bind NoteCreationIsSelected, Mode=TwoWay}" />
+                    IsSelected="{x:Bind AllNotesIsSelected, Mode=TwoWay}" />
 
             </ListBox>
 
@@ -461,16 +461,16 @@
         <!--
             New Note   BorderBrush="#e3e3e3"
         -->
-        <Grid Grid.Row="1" Margin="10,20,0,0">
+        <Grid Grid.Row="1" Margin="10,20,0,10">
             <TextBlock
                 Name="Title"
+                Margin="9,0,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="18"
                 FontWeight="SemiBold"
                 Foreground="Black"
-                Text="My Personal Notes" />
-
+                Text="{x:Bind TitleText, Mode=OneWay}" />
 
             <Grid
                 Name="NewNote"
@@ -485,6 +485,8 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
+
+
                 <RichEditBox
                     Name="TitleOfNewNote"
                     Grid.Row="0"
@@ -492,34 +494,33 @@
                     HorizontalAlignment="Stretch"
                     FontSize="18"
                     FontWeight="SemiBold"
-                    GotFocus="{x:Bind TitleOfNewNoteGotFocus, Mode=OneWay}"
-                    LostFocus="{x:Bind TitleOfNewNoteLostFocus, Mode=OneWay}"
                     PlaceholderText="Title"
                     Style="{StaticResource NewNoteContextStyle}"
                     TextChanged="{x:Bind TitleOfNewNoteTextChanged, Mode=OneWay}"
                     Visibility="{x:Bind TitleOfNewNoteVisibility, Mode=OneWay}" />
+
+
                 <RichEditBox
                     Name="ContentOfNewNote"
                     Grid.Row="1"
                     Margin="10"
                     GotFocus="{x:Bind ContentOfNewNoteGotFocus, Mode=OneWay}"
-                    Loaded="REBCustom_Loaded"
-                    LostFocus="{x:Bind ContentOfNewNoteLostFocus, Mode=OneWay}"
                     PlaceholderText="Take a note..."
-                    Style="{StaticResource RichEditBoxStyle1}"
-                    TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}"
-                    Unloaded="REBCustom_Unloaded">
+                    Style="{StaticResource NewNoteContextStyle}"
+                    TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout>
                             <Button />
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </RichEditBox>
+
+
                 <Grid
-                    Name="NoteStyleButton"
+                    Name="NoteStyleOptions"
                     Grid.Row="2"
                     Margin="12,0,10,10"
-                    Visibility="{x:Bind NoteStyleButtonVisibility, Mode=OneWay}">
+                    Visibility="{x:Bind NoteStyleOptionsVisibility, Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
@@ -527,6 +528,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel
+                        Name="Options"
                         Grid.Column="0"
                         Padding="0,5,0,0"
                         HorizontalAlignment="Stretch"
@@ -591,10 +593,11 @@
                             Name="NoteColor"
                             Content="&#xED67;"
                             FontFamily="Segoe MDL2 Assets"
+                            Foreground="{x:Bind NoteColorForeground, Mode=OneWay}"
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Note Color">
                             <Button.Flyout>
-                                <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Top">
+                                <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
                                     <ListBox
                                         Name="ColorOptions"
                                         Height="40"
@@ -661,13 +664,17 @@
         </controls:AdaptiveGridView>-->
 
 
+
+
+
         <controls:AdaptiveGridView
             Name="NotesData"
             Grid.Row="2"
+            Margin="20,0,0,0"
             DesiredWidth="200"
-            Padding="7,10,0,0"
             IsItemClickEnabled="True"
             ItemClick="{x:Bind NotesDataItemClick, Mode=OneWay}"
+            ItemHeight="250"
             ItemsSource="{x:Bind NotesDataItemSource, Mode=OneWay}">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Note">
@@ -675,6 +682,7 @@
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
+
         <Popup
             Name="NoteDisplayPopUp"
             IsLightDismissEnabled="True"
@@ -686,6 +694,7 @@
                 Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
                 Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
         </Popup>
+
 
 
     </Grid>

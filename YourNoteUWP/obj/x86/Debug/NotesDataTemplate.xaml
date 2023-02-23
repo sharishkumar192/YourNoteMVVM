@@ -8,43 +8,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Margin="10">
-        <controls:DropShadowPanel
-            BlurRadius="10"
-            ShadowOpacity="0.5"
-            Color="Black">
-            <Border x:ConnectionId='2'
-                Name="NoteContent"
-                                                                        
-                CornerRadius="4">
-                <StackPanel>
-                    <TextBlock x:ConnectionId='3'
-                        Margin="0,5,0,0"
-                        Padding="10,0,0,0"
-                        HorizontalAlignment="Left"
-                        FontSize="18"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                                                           
-                        TextTrimming="CharacterEllipsis" />
-                    <TextBlock x:ConnectionId='4'
-                        Name="contents"
-                        Grid.Row="1"
-                        Width="200"
-                        Height="200"
-                        Margin="20"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                                                             
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="Wrap" />
-                </StackPanel>
-            </Border>
-        </controls:DropShadowPanel>
+    <Grid x:ConnectionId='2'                                                         >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock x:ConnectionId='3'
+            Margin="10,10,0,0"
+            FontSize="18"
+            FontWeight="SemiBold"
+            Foreground="Black"
+                                               
+            TextTrimming="CharacterEllipsis" />
+        <TextBlock x:ConnectionId='4'
+            Name="contents"
+            Grid.Row="1"
+            Margin="15"
+            FontSize="14"
+            Foreground="Black"
+            HorizontalTextAlignment="Left"
+                                                 
+            TextWrapping="Wrap" />
+        <TextBlock x:ConnectionId='5'
+            Grid.Row="2"
+            Margin="10,0,0,10"
+            Foreground="#000000"
+                                                                        />
+    </Grid>
 
 
-    </StackPanel>
+
 
 
 

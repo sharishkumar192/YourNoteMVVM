@@ -58,8 +58,90 @@ namespace YourNoteUWP
                 OnPropertyChanged();
             }
         }
+    
+        public string ShowModifiedTime(string modifiedTime)
+        {
+            string value = "";
+
+            string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
+            DateTime currentDetail = DateTime.Parse(currentStatus);
+
+            DateTime modifiedDetail = DateTime.Parse(modifiedTime);
 
 
+
+            //string day = modifiedDetail.ToString("MMM dd yyyy");
+            //string previousDay = DateTime.Today.AddDays(-1).ToString();
+            //long hr = modifiedDetail.Hour;
+            //long min = modifiedDetail.Minute;
+            //long sec = modifiedDetail.Second;
+            //long tick = modifiedDetail.Ticks;
+
+
+            //if (currentDetail.Year == modifiedDetail.Year)
+            //{
+            //    if (currentDetail.Month == modifiedDetail.Month)
+            //    {
+
+            //        if (currentDetail.Day == modifiedDetail.Day)
+            //        {
+            //            value = "Today";
+            //        }
+            //        else if (currentDetail.Day - 1 == modifiedDetail.Day)
+            //        {
+            //            value = "Yesterday";
+            //        }
+            //        else
+            //            value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString();
+
+            //    }
+            //    else
+            //        value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString();
+            //}
+            //else
+            //    value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString() + " " + modifiedDetail.Year.ToString();
+
+            if (currentDetail.Year == modifiedDetail.Year)
+            {
+                if (currentDetail.Month == modifiedDetail.Month)
+                {
+                    if (currentDetail.Day == modifiedDetail.Day)
+                    {
+                        if (currentDetail.Hour - modifiedDetail.Hour < 1)
+                        {
+                            int minutes = currentDetail.Minute - modifiedDetail.Minute;
+                            if (minutes == 0)
+                                value = "just now";
+                            else
+                            value = minutes.ToString() + " " + "minutes ago";
+                        }
+                        else
+                        {
+                            value = modifiedDetail.ToString("hh:mm tt") ;
+                        }
+                    }
+                    else
+                    {
+                        string date = modifiedDetail.DayOfWeek.ToString();
+                        value = date.Substring(0, 3);
+                        value +=   " " + modifiedDetail.ToString("MMM") + " " + modifiedDetail.ToString("dd");
+                    }
+                }
+                else
+                {
+                    string date = modifiedDetail.DayOfWeek.ToString();
+                    value = date.Substring(0, 3);
+                    value += " " + modifiedDetail.ToString("MMM") + " " + modifiedDetail.ToString("dd");
+                }
+            }
+            else
+            {
+                value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.ToString("dd") + ", " + modifiedDetail.Year;
+            }
+
+
+            return value;
+        }
         public void SetColor()
         {
             if (this.DataContext != null)
