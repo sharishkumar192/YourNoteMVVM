@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d">
 
     <Grid x:ConnectionId='2'                                                         >
@@ -35,6 +37,7 @@
             Margin="10,0,0,10"
             Foreground="#000000"
                                                                         />
+
     </Grid>
 
 
@@ -56,7 +59,10 @@
                         <Setter Target="NotesDisplayContent.Width" Value="464" />
                     </VisualState.Setters>
                 </VisualState>
+                    <controls:DropShadowPanel
+                        MaxHeight="325"
 
+                        Color="Black">
                 <VisualState x:Name="NarrowerLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="549" />

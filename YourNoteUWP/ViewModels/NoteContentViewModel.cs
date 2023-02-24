@@ -44,18 +44,18 @@ namespace YourNoteUWP.ViewModels
         {
             DBUpdation.UpdateNoteCount(DBCreation.notesTableName, searchCount, noteId);
         }
-        public  void NoteContentUpdation(string content, long noteId)
+        public  void NoteContentUpdation(string content, long noteId, string modifiedDay)
         {
-            DBUpdation.UpdateNoteContent(DBCreation.notesTableName, content, noteId);
+            DBUpdation.UpdateNoteContent(DBCreation.notesTableName, content, noteId, modifiedDay);
         }
 
-        public void NoteUpdation(string title, string content, long noteId)
+        public void NoteUpdation(string title, string content, long noteId, string modifiedDay)
         {
-            DBUpdation.UpdateNote(DBCreation.notesTableName, title, content, noteId);
+            DBUpdation.UpdateNote(DBCreation.notesTableName, title, content, noteId, modifiedDay);
         }
-        public void NoteTitleUpdation(string title, long noteId)
+        public void NoteTitleUpdation(string title, long noteId, string modifiedDay)
         {
-            DBUpdation.UpdateNoteTitle(DBCreation.notesTableName, title, noteId);
+            DBUpdation.UpdateNoteTitle(DBCreation.notesTableName, title, noteId, modifiedDay);
         }
 
         public  void DeleteNote(long noteId)

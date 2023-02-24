@@ -15,8 +15,9 @@ using Windows.Graphics.Printing.PrintTicket;
 using Windows.System;
 using YourNoteUWP;
 using YourNoteUWP.Models;
-    
-namespace YourNoteUWP { 
+
+namespace YourNoteUWP
+{
     public class DBUpdation
     {
 
@@ -29,33 +30,33 @@ namespace YourNoteUWP {
             try
             {
 
-               
-                    //DbProviderFactory factory = DbProviderFactories.GetFactory(conn);
-                    //DbCommandBuilder commandBuilder = factory.CreateCommandBuilder();
-                    //string sanitizedTableName = commandBuilder.QuoteIdentifier(DBCreation.userTableName);
-                    SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-                    string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
+
+                //DbProviderFactory factory = DbProviderFactories.GetFactory(conn);
+                //DbCommandBuilder commandBuilder = factory.CreateCommandBuilder();
+                //string sanitizedTableName = commandBuilder.QuoteIdentifier(DBCreation.userTableName);
+                SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+                string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
 
 
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[3];
-                    //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
-                    parameters[0] = new SQLiteParameter("@name",user.name);
-                    parameters[1] = new SQLiteParameter("@userId", user.userId);
-                    parameters[2] = new SQLiteParameter("@password", user.password);
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    command.Parameters.Add(parameters[2]);
-                   // command.Parameters.Add(parameters[3]);
-                    command.ExecuteNonQuery();
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
+                parameters[0] = new SQLiteParameter("@name", user.name);
+                parameters[1] = new SQLiteParameter("@userId", user.userId);
+                parameters[2] = new SQLiteParameter("@password", user.password);
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                // command.Parameters.Add(parameters[3]);
+                command.ExecuteNonQuery();
                 conn.Close();
 
-                
+
 
 
 
             }
-           catch(Exception e) { Debug.WriteLine(e.Message); }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
                 conn.Close();
@@ -77,36 +78,36 @@ namespace YourNoteUWP {
             SQLiteConnection conn = DBCreation.OpenConnection();
 
 
-            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName)  + " (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
+            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName) + " (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
 
             try
             {
 
-              
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[6];
-                    parameters[0] = new SQLiteParameter("@userId", newNote.userId);
-                    parameters[1] = new SQLiteParameter("@title", newNote.title);
-                    parameters[2] = new SQLiteParameter("@content", newNote.content);
-                    parameters[3] = new SQLiteParameter("@noteColor", newNote.noteColor);
-                    parameters[4] = new SQLiteParameter("@creationDay", newNote.creationDay);
-                    parameters[5] = new SQLiteParameter("@modifiedDay", newNote.modifiedDay);
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    command.Parameters.Add(parameters[2]);
-                    command.Parameters.Add(parameters[3]);
-                    command.Parameters.Add(parameters[4]);
-                    command.Parameters.Add(parameters[5]);
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[6];
+                parameters[0] = new SQLiteParameter("@userId", newNote.userId);
+                parameters[1] = new SQLiteParameter("@title", newNote.title);
+                parameters[2] = new SQLiteParameter("@content", newNote.content);
+                parameters[3] = new SQLiteParameter("@noteColor", newNote.noteColor);
+                parameters[4] = new SQLiteParameter("@creationDay", newNote.creationDay);
+                parameters[5] = new SQLiteParameter("@modifiedDay", newNote.modifiedDay);
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                command.Parameters.Add(parameters[3]);
+                command.Parameters.Add(parameters[4]);
+                command.Parameters.Add(parameters[5]);
 
                 command.ExecuteNonQuery();
-                    conn.Close();
+                conn.Close();
 
-                
-               
-             
-            
-                }
-           catch(Exception e) { Debug.WriteLine(e.Message); }
+
+
+
+
+            }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
                 conn.Close();
@@ -123,28 +124,28 @@ namespace YourNoteUWP {
         public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-  string query = $"INSERT INTO " +  sqlCommandBuilder.QuoteIdentifier(sharedTableName)+ "  VALUES (@SHAREDUSERID, @NOTEID);";
+            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "  VALUES (@SHAREDUSERID, @NOTEID);";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-                
 
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[2];
-                    parameters[0] = new SQLiteParameter("@sharedUserId", sharedUserId);
-                    parameters[1] = new SQLiteParameter("@noteId", noteId);
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    command.ExecuteNonQuery();
-                    conn.Close();
 
-                
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@sharedUserId", sharedUserId);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
 
 
 
 
             }
-           catch(Exception e) { Debug.WriteLine(e.Message); }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
                 conn.Close();
@@ -152,24 +153,25 @@ namespace YourNoteUWP {
             }
         }
         //Updation of the Note
-        public static void UpdateNote(string notesTableName, string title, string content, long noteId)// Needed
+        public static void UpdateNote(string notesTableName, string title, string content, long noteId, string modifiedDay)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title , CONTENT= @content WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                SQLiteParameter[] parameters = new SQLiteParameter[4];
                 parameters[0] = new SQLiteParameter("@title", title);
-                parameters[1] = new SQLiteParameter("@content",content);
+                parameters[1] = new SQLiteParameter("@content", content);
                 parameters[2] = new SQLiteParameter("@noteId", noteId);
-
+                parameters[3] = new SQLiteParameter("@modifiedDay", modifiedDay);
 
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
                 command.Parameters.Add(parameters[2]);
+                command.Parameters.Add(parameters[3]);
                 command.ExecuteNonQuery();
                 conn.Close();
 
@@ -186,22 +188,23 @@ namespace YourNoteUWP {
 
         }
         //Updation of the Note Title
-        public static void UpdateNoteTitle(string notesTableName, string title, long noteId)// Needed
+        public static void UpdateNoteTitle(string notesTableName, string title, long noteId, string modifiedDay)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, NOTEID = @noteId  ;";
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
                 parameters[0] = new SQLiteParameter("@title", title);
-                parameters[1] = new SQLiteParameter("@noteId", noteId);
-
+                parameters[1] = new SQLiteParameter("@noteId", noteId); 
+                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
 
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
                 command.ExecuteNonQuery();
                 conn.Close();
 
@@ -248,26 +251,27 @@ namespace YourNoteUWP {
         }
 
         //Updation of the Note Content
-        public static void UpdateNoteContent(string notesTableName, string content, long noteId)// Needed
+        public static void UpdateNoteContent(string notesTableName, string content, long noteId, string modifiedDay)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query  = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  CONTENT= @content WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
-              
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    SQLiteParameter[] parameters = new SQLiteParameter[2];
-                    parameters[0] = new SQLiteParameter("@content", content);
-                    parameters[1] = new SQLiteParameter("@noteId", noteId);
 
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                parameters[0] = new SQLiteParameter("@content", content);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
 
-                    command.Parameters.Add(parameters[0]);
-                    command.Parameters.Add(parameters[1]);
-                    command.ExecuteNonQuery();
-                    conn.Close();
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                command.ExecuteNonQuery();
+                conn.Close();
             }
-           catch(Exception e) { Debug.WriteLine(e.Message); }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
                 conn.Close();
@@ -275,7 +279,7 @@ namespace YourNoteUWP {
             }
 
         }
-    
+
         //Delete the Note
         public static void DeleteNote(string notesTableName, string sharedTableName, long noteId)// Needed 
         {
@@ -288,20 +292,20 @@ namespace YourNoteUWP {
 
             try
             {
-                
-               
-                    SQLiteCommand command = new SQLiteCommand(query1, conn);
-                    SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
-                    command.Parameters.Add(parameters);
-                    command.ExecuteNonQuery();
 
-                    command.CommandText = query2;
-                    command.ExecuteNonQuery();
-                    conn.Close();
 
-                
+                SQLiteCommand command = new SQLiteCommand(query1, conn);
+                SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
+                command.Parameters.Add(parameters);
+                command.ExecuteNonQuery();
+
+                command.CommandText = query2;
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
             }
-           catch(Exception e) { Debug.WriteLine(e.Message); }
+            catch (Exception e) { Debug.WriteLine(e.Message); }
             finally
             {
                 conn.Close();
@@ -310,11 +314,7 @@ namespace YourNoteUWP {
 
         }
 
-        public static void NewNoteCreation(string tableName, Note newNote)
-        {
-            
-        }
-
+      
 
 
 

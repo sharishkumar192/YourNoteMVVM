@@ -62,44 +62,10 @@ namespace YourNoteUWP
         public string ShowModifiedTime(string modifiedTime)
         {
             string value = "";
-
             string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
             DateTime currentDetail = DateTime.Parse(currentStatus);
 
             DateTime modifiedDetail = DateTime.Parse(modifiedTime);
-
-
-
-            //string day = modifiedDetail.ToString("MMM dd yyyy");
-            //string previousDay = DateTime.Today.AddDays(-1).ToString();
-            //long hr = modifiedDetail.Hour;
-            //long min = modifiedDetail.Minute;
-            //long sec = modifiedDetail.Second;
-            //long tick = modifiedDetail.Ticks;
-
-
-            //if (currentDetail.Year == modifiedDetail.Year)
-            //{
-            //    if (currentDetail.Month == modifiedDetail.Month)
-            //    {
-
-            //        if (currentDetail.Day == modifiedDetail.Day)
-            //        {
-            //            value = "Today";
-            //        }
-            //        else if (currentDetail.Day - 1 == modifiedDetail.Day)
-            //        {
-            //            value = "Yesterday";
-            //        }
-            //        else
-            //            value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString();
-
-            //    }
-            //    else
-            //        value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString();
-            //}
-            //else
-            //    value = modifiedDetail.ToString("MMM") + " " + modifiedDetail.Day.ToString() + " " + modifiedDetail.Year.ToString();
 
             if (currentDetail.Year == modifiedDetail.Year)
             {
@@ -107,11 +73,20 @@ namespace YourNoteUWP
                 {
                     if (currentDetail.Day == modifiedDetail.Day)
                     {
-                        if (currentDetail.Hour - modifiedDetail.Hour < 1)
+                        int hours = currentDetail.Hour - modifiedDetail.Hour;
+                        if ( hours <= 1)
                         {
-                            int minutes = currentDetail.Minute - modifiedDetail.Minute;
+
+                            int minutes = Math.Abs(currentDetail.Minute - modifiedDetail.Minute);
+                                
+                            int approx = hours == 1 ? 60 : 0 ;
+                            minutes += approx;
+
                             if (minutes == 0)
                                 value = "just now";
+                            else if (minutes >= 60)
+                                value = modifiedDetail.ToString("hh:mm tt");
+
                             else
                             value = minutes.ToString() + " " + "minutes ago";
                         }

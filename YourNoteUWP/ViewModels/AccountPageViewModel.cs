@@ -18,48 +18,82 @@ namespace YourNoteUWP.ViewModels
 {
     internal class AccountPageViewModel
     {
-
-
-
-        public static ObservableCollection<Note> GetPersonalNotes(User user)
+       
+     
+        private  long GetMilliSeconds(string time)
         {
-            return DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
+            DateTimeOffset milli = DateTime.Parse(time);
+            return milli.ToUnixTimeMilliseconds();
+        }
+        private  ObservableCollection<Note> SortByModificationtime(ObservableCollection<Note> notes)
+        {
+            ObservableCollection<Note> sortedNotes = new ObservableCollection<Note>();
+            if (notes != null)
+            {
+                var result = notes.OrderByDescending(a => GetMilliSeconds(a.modifiedDay));
+               // return (ObservableCollection<Note>)result;
 
+                foreach(Note note in result)
+                {
+                    sortedNotes.Add(note);
+                }
+            }
+
+            return sortedNotes; 
         }
 
-        public static ObservableCollection<Note> GetSharedNotes(Models.User user)
+        public static ObservableCollection<Note> GetPersonalNotes(User user, bool isSort)
         {
-            return DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, user);
-
+            AccountPageViewModel apvm = new AccountPageViewModel();
+            var notes = DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
+            if (isSort == true)
+                return apvm.SortByModificationtime(notes);
+            return notes;
         }
 
-        public static ObservableCollection<Note> GetAllNotes(ObservableCollection<Note> personal, ObservableCollection<Note> shared, Models.User user)
+        public static ObservableCollection<Note> GetSharedNotes(Models.User user, bool isSort)
         {
-            ObservableCollection<Note> allNotes = new ObservableCollection<Note>();
-            if (personal == null)
-                personal = GetPersonalNotes(user);
-            if (shared == null)
-                shared = GetSharedNotes(user);
-            if (personal != null)
-                foreach (Note notes in personal)
+            AccountPageViewModel apvm = new AccountPageViewModel();
+            var  notes = DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, user);
+            if (isSort == true)
+               return apvm.SortByModificationtime(notes);
+            return notes;
+        }
+
+
+
+        public static ObservableCollection<Note> GetAllNotes(Models.User user, bool isSort)
+        {
+            AccountPageViewModel apvm = new AccountPageViewModel();
+            var allNotes = new ObservableCollection<Note>();
+        
+                var pnotes = GetPersonalNotes(user, false);
+                var snotes = GetSharedNotes(user, false);
+        
+            if (pnotes != null)
+                foreach (Note notes in pnotes)
                 {
                     allNotes.Add(notes);
                 }
-            if (shared != null)
-                foreach (Note notes in shared)
+            if (snotes!= null)
+                foreach (Note notes in snotes)
                 {
                     allNotes.Add(notes);
                 }
+
+            if (isSort == true)
+                return apvm.SortByModificationtime(allNotes);
             return allNotes;
 
         }
 
-        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(Models.User user)
+        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(User user)
         {
+            AccountPageViewModel apvm = new AccountPageViewModel();
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;
-            ObservableCollection<Note> personalNotes = GetPersonalNotes(user);
-            ObservableCollection<Note> sharedNotes = GetSharedNotes(user);
+            ObservableCollection<Note> personalNotes = GetPersonalNotes(user, false);
+            ObservableCollection<Note> sharedNotes = GetSharedNotes(user, false);
             if (personalNotes != null)
             {
                 foreach (Note note in personalNotes)
@@ -89,8 +123,11 @@ namespace YourNoteUWP.ViewModels
                     noteForSearch.Add(note);
                 }
             }
+           var x = SortByModificationtime(noteForSearch);
+           var y =  SortByModificationtime(recentNotes);
+            
 
-            Tuple< ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple< ObservableCollection<Note>, ObservableCollection<Note>>(noteForSearch, recentNotes);
+            Tuple< ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple< ObservableCollection<Note>, ObservableCollection<Note>>(x, y);
             return searchNotes;
         }
 

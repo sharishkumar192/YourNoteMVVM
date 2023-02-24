@@ -189,12 +189,13 @@ namespace YourNoteUWP
                     {
                         if (notes == null)
                             notes = new ObservableCollection<Note>();
-                        Note note = new Note(0, "", "", 0, "");
+                        Note note = new Note(0, "", "", 0, 0, "");
 
                         note.noteId = (long)sqlite_datareader.GetValue(1);
                         note.title = sqlite_datareader.GetString(2);
                         note.content = sqlite_datareader.GetString(3);
                         note.noteColor = (long)sqlite_datareader.GetValue(4);
+                        note.searchCount = (long)sqlite_datareader.GetValue(5);
                         note.modifiedDay = sqlite_datareader.GetString(7);
                         notes.Add(note);
 
@@ -239,11 +240,12 @@ namespace YourNoteUWP
                     {
                         if (sharedNotes == null)
                             sharedNotes = new ObservableCollection<Note>();
-                        Note note = new Note(0, "", "", 0, "");
+                        Note note = new Note(0, "", "", 0, 0, "");
                         note.noteId = (long)sqlite_datareader.GetValue(1);
                         note.title = sqlite_datareader.GetString(2);
                         note.content = sqlite_datareader.GetString(3);
                         note.noteColor = (long)sqlite_datareader.GetValue(4);
+                        note.searchCount = (long)sqlite_datareader.GetValue(5);
                         note.modifiedDay = sqlite_datareader.GetString(7);
 
                         sharedNotes.Add(note);

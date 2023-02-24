@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
+  
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -28,9 +29,6 @@
         NOTE CONTENT
     -->
     <Grid
-        Width="Auto"
-        Height="Auto"
-        Margin="20"
         Background="{x:Bind NoteContentBackground, Mode=OneWay}"
         CornerRadius="4">
 

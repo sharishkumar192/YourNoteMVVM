@@ -15,62 +15,6 @@
 
     <Page.Resources>
 
-
-        <DataTemplate x:Key="RecentlySuggestedA"                       >
-            <StackPanel x:ConnectionId='30'
-                Width="300"
-                Margin="0,10,0,0"
-                BorderBrush="#f1f1f1"
-                BorderThickness="0,0,0,1"
-                Orientation="Horizontal">
-                <Rectangle x:ConnectionId='31'
-                    Width="35"
-                    Height="35"
-                                                                                    />
-                <StackPanel Margin="5,0,0,5">
-                    <TextBlock x:ConnectionId='32'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                                              />
-
-                    <TextBlock x:ConnectionId='33'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                                                />
-                </StackPanel>
-            </StackPanel>
-
-        </DataTemplate>
-
-        <DataTemplate x:Key="RecentlySuggestedL"                       >
-            <StackPanel x:ConnectionId='25'
-                Width="300"
-                Margin="0,0,0,-3"
-                Orientation="Horizontal">
-                <Rectangle x:ConnectionId='26'
-                    Width="35"
-                    Height="35"
-                                                                                    />
-                <StackPanel Margin="5,0,0,0">
-                    <TextBlock x:ConnectionId='27'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                                              />
-
-                    <TextBlock x:ConnectionId='28'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                                                />
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>
-
         <DataTemplate x:Key="SearchTitleA"                       >
             <StackPanel x:ConnectionId='20'
                 Width="300"
@@ -334,7 +278,7 @@
 
 
             <!--  MAIN MENU OPTIONS  -->
-            <ListBox x:ConnectionId='54'
+            <ListBox x:ConnectionId='44'
                 Name="MainMenuOptions"
                 ItemContainerStyle="{StaticResource MainMenuItemStyle}"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -344,17 +288,17 @@
                                                                                         
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
-                <ListBoxItem x:ConnectionId='62'
+                <ListBoxItem x:ConnectionId='52'
                     Name="PersonalNotes"
                     Content="Personal"
                                                                                />
 
-                <ListBoxItem x:ConnectionId='63'
+                <ListBoxItem x:ConnectionId='53'
                     Name="SharedNotes"
                     Content="Shared"
                                                                              />
 
-                <ListBoxItem x:ConnectionId='64'
+                <ListBoxItem x:ConnectionId='54'
                     Name="AllNotes"
                     Content="All Notes"
                                                                           />
@@ -363,7 +307,7 @@
 
 
             <!--  SEARCH BOX  -->
-            <StackPanel x:ConnectionId='55'
+            <StackPanel x:ConnectionId='45'
                 Name="SearchBoxContainer"
                 Width="325"
                 Margin="0,7,5,0"
@@ -371,7 +315,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
-                <TextBox x:ConnectionId='57'
+                <TextBox x:ConnectionId='47'
                     Name="SearchTextBox"
                     Background="#f8f8f8"
                     CornerRadius="4"
@@ -381,7 +325,7 @@
                                                                   
                                                                                  />
 
-                <Popup x:ConnectionId='58'
+                <Popup x:ConnectionId='48'
                     Name="SearchPopup"
                     MaxHeight="325"
                     Margin="0,4,0,0"
@@ -395,26 +339,26 @@
                         ShadowOpacity="1"
                         Color="Black">
 
-                        <Grid x:ConnectionId='59'
+                        <Grid x:ConnectionId='49'
                             Name="PopUpContainer"
                             Width="Auto"
                             CornerRadius="4">
                             <Border CornerRadius="4">
-                                <ListBox x:ConnectionId='61'
+                                <ListView x:ConnectionId='51'
                                     Name="RecentlySearched"
                                     Width="325"
                                     Background="White"
+                                                                                               
                                                                                                   
-                                                                                                             
                                     SelectionMode="Single"
                                                                                                  >
-                                    <ListBox.ItemTemplateSelector>
-                                        <local:ItemsDataTemplateSelector AllItems="{StaticResource RecentlySuggestedA}" LastItems="{StaticResource RecentlySuggestedL}" />
-                                    </ListBox.ItemTemplateSelector>
-                                </ListBox>
+                                    <ListView.ItemTemplateSelector>
+                                        <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                    </ListView.ItemTemplateSelector>
+                                </ListView>
                             </Border>
 
-                            <ListView x:ConnectionId='60'
+                            <ListView x:ConnectionId='50'
                                 Name="Suggestion"
                                 Width="325"
                                 Background="White"
@@ -436,7 +380,7 @@
 
 
             <!--  SIGN OUT  -->
-            <Button x:ConnectionId='56'
+            <Button x:ConnectionId='46'
                 Name="Logout"
                 Width="35"
                 Height="31"
@@ -462,7 +406,7 @@
             New Note   BorderBrush="#e3e3e3"
         -->
         <Grid Grid.Row="1" Margin="10,20,0,10">
-            <TextBlock x:ConnectionId='39'
+            <TextBlock x:ConnectionId='29'
                 Name="Title"
                 Margin="9,0,0,10"
                 HorizontalAlignment="Left"
@@ -472,7 +416,7 @@
                 Foreground="Black"
                                                        />
 
-            <Grid x:ConnectionId='40'
+            <Grid x:ConnectionId='30'
                 Name="NewNote"
                 Width="500"
                 HorizontalAlignment="Center"
@@ -487,7 +431,7 @@
                 </Grid.RowDefinitions>
 
 
-                <RichEditBox x:ConnectionId='41'
+                <RichEditBox x:ConnectionId='31'
                     Name="TitleOfNewNote"
                     Grid.Row="0"
                     Margin="6,10,6,5"
@@ -500,7 +444,7 @@
                                                                                 />
 
 
-                <RichEditBox x:ConnectionId='42'
+                <RichEditBox x:ConnectionId='32'
                     Name="ContentOfNewNote"
                     Grid.Row="1"
                     Margin="10"
@@ -516,7 +460,7 @@
                 </RichEditBox>
 
 
-                <Grid x:ConnectionId='43'
+                <Grid x:ConnectionId='33'
                     Name="NoteStyleOptions"
                     Grid.Row="2"
                     Margin="12,0,10,10"
@@ -527,7 +471,7 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel x:ConnectionId='44'
+                    <StackPanel x:ConnectionId='34'
                         Name="Options"
                         Grid.Column="0"
                         Padding="0,5,0,0"
@@ -536,14 +480,14 @@
                         CornerRadius="4"
                         Orientation="Horizontal">
 
-                        <Button x:ConnectionId='46'
+                        <Button x:ConnectionId='36'
                             Name="FontBackground"
                                                                              
                             Content="&#xE8D3;"
                             FontFamily="Segoe MDL2 Assets"
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Background Color" />
-                        <Button x:ConnectionId='47'
+                        <Button x:ConnectionId='37'
                             Name="FontIncrease"
                             Margin="5,0,0,0"
                                                                            
@@ -551,7 +495,7 @@
                             FontFamily="Segoe MDL2 Assets"
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Font Increase" />
-                        <Button x:ConnectionId='48'
+                        <Button x:ConnectionId='38'
                             Name="FontDecrease"
                             Margin="5,0,0,0"
                                                                            
@@ -560,7 +504,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Font Decrease" />
 
-                        <Button x:ConnectionId='49'
+                        <Button x:ConnectionId='39'
                             Name="SmallCaps"
                             Margin="5,0,0,0"
                                                                         
@@ -569,7 +513,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Lowercase" />
 
-                        <Button x:ConnectionId='50'
+                        <Button x:ConnectionId='40'
                             Name="AllCaps"
                             Margin="5,0,0,0"
                                                                       
@@ -578,7 +522,7 @@
                             Style="{StaticResource NoteStyleButtonStyle}"
                             ToolTipService.ToolTip="Uppercase" />
 
-                        <Button x:ConnectionId='51'
+                        <Button x:ConnectionId='41'
                             Name="Strikethrough"
                             Margin="5,0,0,0"
                                                                             
@@ -589,16 +533,16 @@
 
 
 
-                        <Button x:ConnectionId='52'
+                        <Button x:ConnectionId='42'
                             Name="NoteColor"
                             Content="&#xED67;"
                             FontFamily="Segoe MDL2 Assets"
                                                                                   
-                            Style="{StaticResource NoteStyleButtonStyle}"
+                            Style="{StaticResource NoteStyleButtonStyle1}"
                             ToolTipService.ToolTip="Note Color">
                             <Button.Flyout>
                                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
-                                    <ListBox x:ConnectionId='53'
+                                    <ListBox x:ConnectionId='43'
                                         Name="ColorOptions"
                                         Height="40"
                                                                                                        
@@ -626,7 +570,7 @@
                         </Button>
 
                     </StackPanel>
-                    <Button x:ConnectionId='45'
+                    <Button x:ConnectionId='35'
                         Name="CreationButton"
                         Grid.Column="1"
                         Width="60"
@@ -667,7 +611,7 @@
 
 
 
-        <controls:AdaptiveGridView x:ConnectionId='34'
+        <controls:AdaptiveGridView x:ConnectionId='24'
             Name="NotesData"
             Grid.Row="2"
             Margin="20,0,0,0"
@@ -683,13 +627,15 @@
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
 
-        <Popup x:ConnectionId='35'
+        <Popup x:ConnectionId='25'
             Name="NoteDisplayPopUp"
-            IsLightDismissEnabled="True"
                                                                  
-            LightDismissOverlayMode="On">
+                                                                                 
+                                                                 
+            LightDismissOverlayMode="On"
+                                                                 >
 
-            <local:NoteContent x:ConnectionId='36'
+            <local:NoteContent x:ConnectionId='26'
                 x:Name="NoteContentPopUp"
                                                                    
                                                                       />

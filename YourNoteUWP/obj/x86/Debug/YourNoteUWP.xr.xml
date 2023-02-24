@@ -302,6 +302,8 @@
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
       <RootProperty Name="KeyTipPlacementMode" />
+      <RootEvent Name="Closed" />
+      <RootEvent Name="Opened" />
     </RootType>
     <RootType FullName="YourNoteUWP.NoteContent">
       <RootProperty Name="Width" />
@@ -354,12 +356,8 @@
       <RootProperty Name="Style" />
       <RootProperty Name="Items" />
       <RootProperty Name="ItemContainerStyle" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="Visibility" />
-      <RootProperty Name="ItemTemplateSelector" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Background" />
       <RootEvent Name="SelectionChanged" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
@@ -425,6 +423,7 @@
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="Visibility" />
       <RootProperty Name="ItemTemplateSelector" />
+      <RootProperty Name="SelectionMode" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Padding" />

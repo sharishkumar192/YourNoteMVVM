@@ -15,62 +15,6 @@
 
     <Page.Resources>
 
-
-        <DataTemplate x:Key="RecentlySuggestedA" x:DataType="data:Note">
-            <StackPanel
-                Width="300"
-                Margin="0,10,0,0"
-                BorderBrush="#f1f1f1"
-                BorderThickness="0,0,0,1"
-                Orientation="Horizontal">
-                <Rectangle
-                    Width="35"
-                    Height="35"
-                    Fill="{x:Bind local:AccountPage.GetSolidColorBrush(noteColor)}" />
-                <StackPanel Margin="5,0,0,5">
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                        Text="{x:Bind title}" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                        Text="{x:Bind content}" />
-                </StackPanel>
-            </StackPanel>
-
-        </DataTemplate>
-
-        <DataTemplate x:Key="RecentlySuggestedL" x:DataType="data:Note">
-            <StackPanel
-                Width="300"
-                Margin="0,0,0,-3"
-                Orientation="Horizontal">
-                <Rectangle
-                    Width="35"
-                    Height="35"
-                    Fill="{x:Bind local:AccountPage.GetSolidColorBrush(noteColor)}" />
-                <StackPanel Margin="5,0,0,0">
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                        Text="{x:Bind title}" />
-
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                        Text="{x:Bind content}" />
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>
-
         <DataTemplate x:Key="SearchTitleA" x:DataType="data:Note">
             <StackPanel
                 Width="300"
@@ -400,18 +344,18 @@
                             Width="Auto"
                             CornerRadius="4">
                             <Border CornerRadius="4">
-                                <ListBox
+                                <ListView
                                     Name="RecentlySearched"
                                     Width="325"
                                     Background="White"
+                                    ItemClick="{x:Bind RecentlySearchedItemClick, Mode=OneWay}"
                                     ItemsSource="{x:Bind RecentlySearchedItemSource, Mode=OneWay}"
-                                    SelectionChanged="{x:Bind RecentlySearchedSelectionChanged, Mode=OneWay}"
                                     SelectionMode="Single"
                                     Visibility="{x:Bind RecentlySearchedVisibility, Mode=OneWay}">
-                                    <ListBox.ItemTemplateSelector>
-                                        <local:ItemsDataTemplateSelector AllItems="{StaticResource RecentlySuggestedA}" LastItems="{StaticResource RecentlySuggestedL}" />
-                                    </ListBox.ItemTemplateSelector>
-                                </ListBox>
+                                    <ListView.ItemTemplateSelector>
+                                        <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                    </ListView.ItemTemplateSelector>
+                                </ListView>
                             </Border>
 
                             <ListView
@@ -594,7 +538,7 @@
                             Content="&#xED67;"
                             FontFamily="Segoe MDL2 Assets"
                             Foreground="{x:Bind NoteColorForeground, Mode=OneWay}"
-                            Style="{StaticResource NoteStyleButtonStyle}"
+                            Style="{StaticResource NoteStyleButtonStyle1}"
                             ToolTipService.ToolTip="Note Color">
                             <Button.Flyout>
                                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
@@ -685,9 +629,11 @@
 
         <Popup
             Name="NoteDisplayPopUp"
-            IsLightDismissEnabled="True"
+            Closed="{x:Bind NoteDisplayPopUpClosed, Mode=OneWay}"
+            IsLightDismissEnabled="{x:Bind NoteDisplayPopUpIsLight, Mode=TwoWay}"
             IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}"
-            LightDismissOverlayMode="On">
+            LightDismissOverlayMode="On"
+            Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
 
             <local:NoteContent
                 x:Name="NoteContentPopUp"

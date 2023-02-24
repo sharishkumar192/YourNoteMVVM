@@ -60,12 +60,13 @@ namespace YourNoteUWP.Models
            DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
         }
 
-     public Note(long noteId, string title, string content, long noteColor, string modifiedDay)
+     public Note(long noteId, string title, string content, long noteColor, long searchCount, string modifiedDay)
         {
             this.noteId = noteId;
             this.title = title;
             this.content = content;
             this.noteColor = noteColor;
+            this.searchCount = searchCount;
             this.modifiedDay = modifiedDay;
 
         }

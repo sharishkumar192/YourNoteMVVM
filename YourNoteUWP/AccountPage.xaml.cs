@@ -1,6 +1,7 @@
 ﻿using ColorCode.Common;
 using Microsoft.Toolkit.Uwp.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -29,8 +30,10 @@ namespace YourNoteUWP
         private Note _selectedNote = null;
         private AccountPageViewModel _accountPageViewModel;
         private Tuple<ObservableCollection<Note>, ObservableCollection<Note>> _searchNotes;
-        private DispatcherTimer _dispatcherTimer;
         private Frame _frame;
+        static Note selectedNoteFromDisplay = null;
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -44,8 +47,12 @@ namespace YourNoteUWP
         }
 
 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
+            DelUserControlMethod delUserControlMethod = new DelUserControlMethod(NoteDisplayPopUpClosed);
+            NoteContentPopUp.CallingPageMethod = delUserControlMethod;
 
             Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
             _frame = tuple.Item1;
@@ -70,7 +77,7 @@ namespace YourNoteUWP
         private void AccountPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             NoteContentPopUpHeight = Window.Current.Bounds.Height;
-            NoteContentPopUpWidth = Window.Current.Bounds.Width / 2;
+            NoteContentPopUpWidth = Window.Current.Bounds.Width/2;
         }
 
 
@@ -111,19 +118,8 @@ namespace YourNoteUWP
             return myBrush;
         }
 
-        private long GetMilliSeconds(string time)
-        {
-            DateTimeOffset milli = DateTime.Parse(time);
-            return milli.ToUnixTimeMilliseconds();
-        }
-        private void SortByModificationtime(ObservableCollection<Note> notes)
-        {
-            if (notes != null)
-            {
-                var result = notes.OrderByDescending(a => GetMilliSeconds(a.modifiedDay));
-                NotesData.ItemsSource = result;
-            }
-        }
+ 
+
 
 
 
@@ -193,17 +189,15 @@ namespace YourNoteUWP
 
             if (PersonalNotesIsSelected == true)
             {
+                _notesDataItemSource = null;
                 SharedNotesIsSelected = AllNotesIsSelected =  false;
-                
-                _sharedNotes = _allNotes = NotesDataItemSource = null;
                 TitleText = "My Personal Notes";
 
-                if (_personalNotes == null)
-                {
-                    _personalNotes = AccountPageViewModel.GetPersonalNotes(LoggedUser);
-                }
-                SortByModificationtime(_personalNotes);
-                //  NotesDataItemSource = _personalNotes;
+                if ( _notesDataItemSource == null)
+                    _notesDataItemSource = AccountPageViewModel.GetPersonalNotes(LoggedUser, true);
+                
+
+                NotesDataItemSource = _notesDataItemSource;
 
                 SearchTextBoxText = "";
                 _selectedNote = new Note("", "", "", 0);
@@ -212,14 +206,15 @@ namespace YourNoteUWP
             }
             else if (SharedNotesIsSelected == true)
             {
+                _notesDataItemSource = null;
                 TitleText = "My Shared Notes";
-                _personalNotes = _allNotes  = NotesDataItemSource = null; 
+                
                 PersonalNotesIsSelected = AllNotesIsSelected = false;
                
-                if (_sharedNotes != null)
-                    _sharedNotes = AccountPageViewModel.GetSharedNotes(LoggedUser);
+                if (_notesDataItemSource == null)
+                    _notesDataItemSource = AccountPageViewModel.GetSharedNotes(LoggedUser, true);
                 
-                NotesDataItemSource = _sharedNotes;
+                NotesDataItemSource = _notesDataItemSource;
                 
                 _selectedNote = new Note("", "", "", 0);
                 SearchTextBoxText = "";
@@ -227,10 +222,11 @@ namespace YourNoteUWP
             }
             else if (AllNotesIsSelected == true)
             {
+                _notesDataItemSource = null;
                 TitleText = "All Notes";
-                if (_allNotes == null)
-                _allNotes = AccountPageViewModel.GetAllNotes(_personalNotes, _sharedNotes, LoggedUser);
-                NotesDataItemSource = _allNotes;
+                if (_notesDataItemSource == null)
+                    _notesDataItemSource = AccountPageViewModel.GetAllNotes(LoggedUser, true);
+                NotesDataItemSource = _notesDataItemSource;
             }
         }
 
@@ -322,24 +318,17 @@ namespace YourNoteUWP
             }
         }
 
-
-
-        public void RecentlySearchedSelectionChanged()
+        public void RecentlySearchedItemClick(object sender, ItemClickEventArgs e)
         {
-            Note selectedNote = RecentlySearchedSelectedItem;
-            //    SearchTextBoxText = selectedNote.title;
-            SearchPopupIsOpen = true;
-            _selectedNote = selectedNote;
-            //   selectedNote.searchCount++;
-
-            NoteDisplayPopUpIsOpen = true;
-
-
-
-
+            selectedNoteFromDisplay = (Note)e.ClickedItem;
+            selectedNoteFromDisplay.searchCount++;
+            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            SearchPopupIsOpen = false;
+            NoteDisplayPopUpOpened();
 
 
         }
+
 
 
         private Visibility _recentlySearchedVisibility = Visibility.Visible;
@@ -356,12 +345,7 @@ namespace YourNoteUWP
 
 
 
-        private Note _recentlySearchedSelectedItem;
-        public Note RecentlySearchedSelectedItem
-        {
-            get { return _recentlySearchedSelectedItem; }
-            set { _recentlySearchedSelectedItem = value; }
-        }
+
 
 
 
@@ -371,10 +355,10 @@ namespace YourNoteUWP
 
         public void SuggestionContainerItemClick(object sender, ItemClickEventArgs e)
         {
-            Note selectedNote = (Note)e.ClickedItem;
-            selectedNote.searchCount++;
-            NoteContentPopUp.DisplayContent(selectedNote.noteId, selectedNote.title, selectedNote.content, selectedNote.searchCount, selectedNote.noteColor);
-
+            selectedNoteFromDisplay = (Note)e.ClickedItem;
+            selectedNoteFromDisplay.searchCount++;
+            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
 
@@ -695,15 +679,13 @@ namespace YourNoteUWP
                 _accountPageViewModel = new AccountPageViewModel();
                 Note newNote = new Note(LoggedUser.userId, TitleOfNewNoteText, ContentOfNewNoteText, _noteColor, creationDay, creationDay);
                 _accountPageViewModel.CreateNewNote(newNote);
-                if (_personalNotes == null)
+                if  (_notesDataItemSource == null)
                 {
-                    _personalNotes = new ObservableCollection<Note>();
+                    _notesDataItemSource = new ObservableCollection<Note>();
 
                 }
-                if (_allNotes != null)
-                    _allNotes.Add(newNote);
-                _personalNotes.Add(newNote);
-                NotesDataItemSource = _personalNotes;
+                _notesDataItemSource.Insert(0,newNote);
+                NotesDataItemSource = _notesDataItemSource;
                 ContentOfNewNoteText = "";
                 TitleOfNewNoteText = "";
                 ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
@@ -713,15 +695,11 @@ namespace YourNoteUWP
 
             TitleOfNewNoteVisibility = Visibility.Collapsed;
             NoteStyleOptionsVisibility = Visibility.Collapsed;
-
         }
 
         //----------------------------Note Grid View---------------------------------------------------
 
-        private ObservableCollection<Note> _personalNotes = null;
-        private ObservableCollection<Note> _sharedNotes = null;
-        private ObservableCollection<Note> _allNotes = null;
-
+        private ObservableCollection<Note> notesForItemSource = null;
 
         private ObservableCollection<Note> _notesDataItemSource = null;
         public ObservableCollection<Note> NotesDataItemSource
@@ -731,15 +709,15 @@ namespace YourNoteUWP
             {
                 _notesDataItemSource = value;
                 OnPropertyChanged();
-                SortByModificationtime(NotesDataItemSource);
             }
         }
 
         public void NotesDataItemClick(object sender, ItemClickEventArgs e)
         {
-            Note selectedNote = (YourNoteUWP.Models.Note)e.ClickedItem;
-            NoteContentPopUp.DisplayContent(selectedNote.noteId, selectedNote.title, selectedNote.content, selectedNote.noteColor);
             NoteDisplayPopUpOpened();
+           selectedNoteFromDisplay = (YourNoteUWP.Models.Note)e.ClickedItem;
+            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+           
         }
 
 
@@ -756,6 +734,22 @@ namespace YourNoteUWP
         }
 
         //----------------------------Note Display Popup---------------------------------------------------
+        private void IsCloseAutoSave()
+        {
+            
+        }
+
+        private bool _noteDisplayPopUpIsLight = true;
+
+        public bool NoteDisplayPopUpIsLight
+        {
+            get { return _noteDisplayPopUpIsLight; }
+            set { _noteDisplayPopUpIsLight = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private bool _noteDisplayPopUpIsOpen = false;
         public bool NoteDisplayPopUpIsOpen
         {
@@ -763,6 +757,10 @@ namespace YourNoteUWP
             set
             {
                 _noteDisplayPopUpIsOpen = value;
+                if(_noteDisplayPopUpIsOpen == false)
+                {
+                    IsCloseAutoSave();
+                }
                 OnPropertyChanged();
             }
         }
@@ -799,43 +797,55 @@ namespace YourNoteUWP
             //PopIn.Begin();
             NoteDisplayPopUpIsOpen = true;
         }
-        public void NoteDisplayPopUpClosed()
+
+        private delegate void DelUserControlMethod(object sender, object e);
+
+        private void NoteDisplayPopUpClosed(object sender, object e)
         {
-            //PopOut.Begin();
+            if (NoteContentPopUp._dispatcherTimer != null)
+            {
 
-            //    PopIn.Stop();
-
+                NoteContentPopUp.DispatcherTimer_Tick(sender, e);
+                NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
+                
+             //   NoteContentPopUp.ContentOfNoteText
+            }
+            if(NoteContentPopUp.isModified)
+            {
+                var found = NotesDataItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
+                int i = NotesDataItemSource.IndexOf(found);
+                Note note = NotesDataItemSource[i];
+                NotesDataItemSource.RemoveAt(i);
+                NotesDataItemSource.Insert(0, note);
+                note.content = NoteContentPopUp.ContentOfNoteText;
+                note.title = NoteContentPopUp.TitleOfNoteText;
+                note.modifiedDay = NoteContentPopUp.currentDay;
+            }
+            /*Remove(collection.Where(i => i.Id == instance.Id).Single());*/
             NoteDisplayPopUpIsOpen = false;
+           
         }
 
-        private void NoteDisplayPopUp_Opened(object sender, object e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NoteDisplayPopUpOpened();
-        }
+        
 
 
 
 
 
 
+        //private delegate void NoteDisplayPopUpClosed(bool value);
+        //private void NoteDisplayPopUpClosed(object sender, EventArgs e)
+        //{
+        //    NoteDisplayPopUpIsOpen = (bool)e;
+        //}
 
-
-
-
-
-
-
-
+        //   public delegate void NoteDisplayPopUpClosed(object sender, EventArgs e);
 
 
 
 
     }
+
 }
 
 

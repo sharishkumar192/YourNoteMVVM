@@ -27,7 +27,7 @@ namespace YourNoteUWP
     {
         //  private Type _parentPage;
         public event PropertyChangedEventHandler PropertyChanged;
-        private DispatcherTimer _dispatcherTimer = null;
+        public DispatcherTimer _dispatcherTimer = null;
         void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -37,10 +37,17 @@ namespace YourNoteUWP
         ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
         private long _noteId;
         private long _searchCount;
-        private bool gotCount = false;
+
+        private Page _parentPage;
+        public string currentDay = "";
+        bool contentChange = false;
+        public bool isModified = false;
+        bool textChange = false ;
         private NoteContentViewModel _noteContentViewModel;
 
-        private bool _gotCount;
+        private bool _gotCount = false;
+
+
 
         public bool  GotCount
         {
@@ -65,22 +72,38 @@ namespace YourNoteUWP
 
         }
 
-        public void DisplayContent(long noteId, string title, string content, long noteColor)
+        private void ToEnableEditMode()
+        {
+            NoteMenuOptionsContainerVisibility = Visibility.Collapsed;
+            TitleOfNoteIsReadOnly = true;
+            ContentOfNoteIsReadOnly = true;
+            TitleOfNoteIsTapped = true;
+            ContentOfNoteIsTapped = true;
+            _dispatcherTimer = null;
+            isModified = false;
+        }
+
+        public void DisplayContent(long noteId, string title, string content, long noteColor, string modifiedDay)
         {
             _noteId = noteId;
             TitleOfNoteText = title;
             ContentOfNoteText = content;
+            currentDay = modifiedDay;
             NoteContentBackground = GetSolidColorBrush(noteColor);
+            ToEnableEditMode();
+
         }
 
-        public void DisplayContent(long noteId, string title, string content, long searchCount, long noteColor)
+        public void DisplayContent(long noteId, string title, string content, long searchCount, long noteColor, string modifiedDay)
         {
             _noteId = noteId;
             TitleOfNoteText = title;
             ContentOfNoteText = content;
             _searchCount = searchCount;
-            gotCount = true;
+            GotCount = true;
+              currentDay = modifiedDay;
             NoteContentBackground = GetSolidColorBrush(noteColor);
+            ToEnableEditMode();
         }
 
 
@@ -132,16 +155,7 @@ namespace YourNoteUWP
             }
         }
 
-        public void TransparentTapped(object sender, TappedRoutedEventArgs e)
-        {
-            Popup p = this.Parent as Popup;
-            /// p.Closed;
-            // close the Popup
-            if (p != null) { p.IsOpen = false; }
-            //   NoteDisplayIsOpen = false;
-            //    this.Content = new AccountPage(noteOwner);
-        }
-
+ 
 
 
 
@@ -187,21 +201,26 @@ namespace YourNoteUWP
 
 
         //----------------------------Note Close Button ---------------------------------------------------
+        //public event EventHandler UserControlButtonClicked;
+
+        //private void OnNoteDisplayPopUpClosed(bool value)
+        //{
+        //    if (UserControlButtonClicked != null)
+        //    {
+        //        UserControlButtonClicked(this, value);
+        //    }
+        //}
+
+        private System.Delegate _delPageMethod;
+        public Delegate CallingPageMethod
+        {
+            set { _delPageMethod = value;  }
+        }
+
         public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            if(_dispatcherTimer != null)
-            {
-                DispatcherTimer_Tick(sender, e);
-                DispatcherTimerStop(_dispatcherTimer);
-
-            }
-
-            Popup p = this.Parent as Popup;
-            NoteMenuOptionsContainerVisibility = Visibility.Collapsed;
-            if (p != null) { p.IsOpen = false; }
-            AccountPageViewModel _accountPageViewModel = new AccountPageViewModel();
-            //_accountPageViewModel.
-        }
+            _delPageMethod.DynamicInvoke(null, null);
+         }
 
         //--------------------------- NoteMenuOptions List Box ------------------------------------------
         private Visibility _noteMenuOptionsContainerVisibility = Visibility.Collapsed;
@@ -295,7 +314,7 @@ namespace YourNoteUWP
 
         private void EditModeEnabled()
         {
-            if (NoteMenuOptionsContainerVisibility != Visibility.Visible)
+            if (NoteMenuOptionsContainerVisibility == Visibility.Collapsed)
                 NoteMenuOptionsContainerVisibility = Visibility.Visible;
             if (TitleOfNoteIsReadOnly == true || ContentOfNoteIsReadOnly == true)
             {
@@ -316,16 +335,17 @@ namespace YourNoteUWP
             if(dispatcherTimer !=null)
             {
                 dispatcherTimer.Tick += DispatcherTimer_Tick;
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
                 dispatcherTimer.Start();
             }
         }
-        private void DispatcherTimerStop(DispatcherTimer dispatcherTimer)
+        public void DispatcherTimerStop(DispatcherTimer dispatcherTimer)
         {
             dispatcherTimer.Tick -= DispatcherTimer_Tick;
             dispatcherTimer.Stop();
+            dispatcherTimer = null;
         }
-        private void DispatcherTimer_Tick(object sender, object e)
+       public void DispatcherTimer_Tick(object sender, object e)
         {
             bool contentChange = IsChanged(_oldContent, ContentOfNoteText);
             bool titleChange = IsChanged(_oldTitle, TitleOfNoteText);
@@ -333,23 +353,29 @@ namespace YourNoteUWP
             {
                 _oldContent = ContentOfNoteText;
                 _oldTitle = TitleOfNoteText;
-                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-                _noteContentViewModel.NoteUpdation(TitleOfNoteText, ContentOfNoteText, _noteId);
+               currentDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
 
+                _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+                _noteContentViewModel.NoteUpdation(TitleOfNoteText, ContentOfNoteText, _noteId, currentDay);
+                isModified = true;
             }
             else
             {
                 if (contentChange)
                 {
+                    currentDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
                     _oldContent = ContentOfNoteText;
                     _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-                    _noteContentViewModel.NoteContentUpdation(ContentOfNoteText, _noteId);
+                    _noteContentViewModel.NoteContentUpdation(ContentOfNoteText, _noteId, currentDay);
+                    isModified = true;
                 }
                 if (titleChange)
                 {
+                    currentDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
                     _oldTitle = TitleOfNoteText;
                     _noteContentViewModel = NoteContentViewModel.NoteViewModel;
-                    _noteContentViewModel.NoteContentUpdation(TitleOfNoteText, _noteId);
+                    _noteContentViewModel.NoteTitleUpdation(TitleOfNoteText, _noteId, currentDay);
+                    isModified = true;
                 }
             }
            
