@@ -48,7 +48,7 @@ namespace YourNoteUWP
                 conn.Close();
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
 
             finally
             {
@@ -63,6 +63,51 @@ namespace YourNoteUWP
 
         //  ----------------------------------------LOGIN IN PAGE DB FETCHES----------------------------------------
 
+        //Gets the Suggestion list
+        //public static ObservableCollection<Note> SuggestList(string tableName, string searchText)
+        //{
+
+        //    string query = $"SELECT * FROM {tableName} WHERE TITLE LIKE  " + "'%" + "@searchText" + "%'" + " ;";
+        //    ObservableCollection<Note> suggested = null;
+        //    SQLiteConnection conn = DBCreation.OpenConnection();
+        //    try
+        //    {
+        //        SQLiteCommand command = new SQLiteCommand(query, conn);
+        //        SQLiteParameter parameters = new SQLiteParameter("@searchText", searchText);
+        //        command.Parameters.Add(parameters);
+        //        using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+        //        {
+        //            while (sqlite_datareader.Read())
+        //            {
+        //                if (suggested == null)
+        //                    suggested = new ObservableCollection<Note>();
+        //                Note note = new Note(0, "", "", 0, 0, "");
+
+        //                note.noteId = (long)sqlite_datareader.GetValue(1);
+        //                note.title = sqlite_datareader.GetString(2);
+        //                note.content = sqlite_datareader.GetString(3);
+        //                note.noteColor = (long)sqlite_datareader.GetValue(4);
+        //                note.searchCount = (long)sqlite_datareader.GetValue(5);
+        //                note.modifiedDay = sqlite_datareader.GetString(7);
+        //                suggested.Add(note);
+        //            }
+
+        //            sqlite_datareader.Close();
+        //        }
+        //        conn.Close();
+
+        //    }
+
+        //    catch (Exception e) { Logger.WriteLog(e.Message); }
+        //    finally
+        //    {
+        //        conn.Close();
+
+        //    }
+
+        //    return suggested;
+
+        //}
 
         // It prints all the data of the currentUser 
         public static ObservableCollection<Models.User> FrequentLoggedUsers(string userTableName)// Needed
@@ -93,7 +138,7 @@ namespace YourNoteUWP
 
             }
 
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -149,7 +194,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -210,7 +255,7 @@ namespace YourNoteUWP
 
 
 
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -257,7 +302,7 @@ namespace YourNoteUWP
                 conn.Close();
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -272,26 +317,31 @@ namespace YourNoteUWP
         // ----------------------------------------NOTE DISPLAY PAGE DB FETCH----------------------------------------
 
 
-        //It prints all the available users to whom we can share the note 
-        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, Models.User owner, long noteId)// Needed
+        //It prints all the available suggested to whom we can share the note 
+        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId,  long noteId)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             ObservableCollection<YourNoteUWP.Models.User> userToShare = null;
-            string query = "SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " WHERE NOT EXISTS (SELECT SHAREDUSERID FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + " WHERE SHAREDNOTEID = @noteId ) ; ";
+            string query = "SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " WHERE USERID != @userId AND NOT EXISTS ( SELECT SHAREDUSERID FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + " WHERE SHAREDNOTEID = @noteId  ) ; ";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
-                command.Parameters.Add(parameters);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@userId", userId);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+
+
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                 {
                     while (sqlite_datareader.Read())
                     {
                         if (userToShare == null)
                             userToShare = new ObservableCollection<Models.User>();
-                        Models.User user = new Models.User(sqlite_datareader.GetString(0), sqlite_datareader.GetString(1),
-                            sqlite_datareader.GetString(2), (long)sqlite_datareader.GetValue(3));
+                        Models.User user = new Models.User(sqlite_datareader.GetString(0), sqlite_datareader.GetString(1));
                         userToShare.Add(user);
 
                     }
@@ -300,7 +350,7 @@ namespace YourNoteUWP
                 }
                 conn.Close();
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -312,6 +362,45 @@ namespace YourNoteUWP
             return userToShare;
         }
 
+
+        public static bool CanShareNote(string tableName, string userId, long noteId)
+        {
+            bool isOwner = false;
+            string query = "SELECT * FROM " + tableName + " WHERE USERID = @userId AND NOTEID = @noteId ; ";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@userId", userId);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        isOwner = true;
+                        break;
+
+                    }
+
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return isOwner;
+
+        }
 
     }
 }

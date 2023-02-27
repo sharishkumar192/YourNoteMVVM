@@ -254,40 +254,52 @@ namespace YourNoteUWP
 
         public void SearchTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ChangeVar())
+            try
             {
-                SearchPopupIsOpen = true;
-                TextBox contentOfTextBox = (TextBox)sender;
-                if (contentOfTextBox.Text.Length > 2)
+            //    throw new Exception();
+                if (ChangeVar())
                 {
-                    RecentlySearchedVisibility = Visibility.Collapsed;
-                    SuggestionContentVisibility = Visibility.Visible;
-                    var suitableItems = new ObservableCollection<Note>();
-                    var lowerText = contentOfTextBox.Text.ToLower();
-                    var splitText = lowerText.Split(" ");
-                    foreach (var eachNote in SuggestionContentItemSource)
+                    SearchPopupIsOpen = true;
+                    TextBox contentOfTextBox = (TextBox)sender;
+                    if (contentOfTextBox.Text.Length > 2)
                     {
-                        var found = splitText.All((key) =>
+                        SuggestionContentItemSource = SubSearchItemSource;
+                        RecentlySearchedVisibility = Visibility.Collapsed;
+                        SuggestionContentVisibility = Visibility.Visible;
+                        var suitableItems = new ObservableCollection<Note>();
+                        var lowerText = contentOfTextBox.Text.ToLower();
+                        var splitText = lowerText.Split(" ");
+
+                        foreach (var eachNote in SuggestionContentItemSource)
                         {
-                            return eachNote.title.ToLower().Contains(key);
-                        });
-                        if (found)
-                        {
-                            suitableItems.Add(eachNote);
+                            var found = splitText.All((key) =>
+                            {
+                                return eachNote.title.ToLower().Contains(key);
+                            });
+                            if (found)
+                            {
+                                suitableItems.Add(eachNote);
+                            }
                         }
+                        SuggestionContentItemSource = suitableItems;
                     }
-                    SuggestionContentItemSource = suitableItems;
+
+                    else
+                    {
+                        RecentlySearchedVisibility = Visibility.Visible;
+                        SuggestionContentVisibility = Visibility.Collapsed;
+                        SuggestionContentItemSource = SubSearchItemSource;
+
+                    }
+
                 }
-
-                else
-                {
-                    RecentlySearchedVisibility = Visibility.Visible;
-                    SuggestionContentVisibility = Visibility.Collapsed;
-                    SuggestionContentItemSource = SubSearchItemSource;
-
-                }
-
             }
+            catch(Exception m)
+            {
+                TextBox contentOfTextBox = (TextBox)sender;
+                Logger.WriteLog(m.Message);
+            }
+       
         }
 
         //----------------------------Search Popup---------------------------------------------------
@@ -322,7 +334,7 @@ namespace YourNoteUWP
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -357,7 +369,7 @@ namespace YourNoteUWP
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -684,6 +696,7 @@ namespace YourNoteUWP
                     _notesDataItemSource = new ObservableCollection<Note>();
 
                 }
+              //  newNote.noteId = _accountPageViewModel.GetNoteId(newNote.noteId, newNote.userId);
                 _notesDataItemSource.Insert(0,newNote);
                 NotesDataItemSource = _notesDataItemSource;
                 ContentOfNewNoteText = "";
@@ -716,7 +729,7 @@ namespace YourNoteUWP
         {
             NoteDisplayPopUpOpened();
            selectedNoteFromDisplay = (YourNoteUWP.Models.Note)e.ClickedItem;
-            NoteContentPopUp.DisplayContent(selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
            
         }
 
@@ -810,7 +823,7 @@ namespace YourNoteUWP
                 
              //   NoteContentPopUp.ContentOfNoteText
             }
-            if(NoteContentPopUp.isModified)
+            if (NoteContentPopUp.isModified)
             {
                 var found = NotesDataItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
                 int i = NotesDataItemSource.IndexOf(found);

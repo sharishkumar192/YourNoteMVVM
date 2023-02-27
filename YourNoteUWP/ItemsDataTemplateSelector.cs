@@ -20,20 +20,45 @@ namespace YourNoteUWP
         {
             DataTemplate _returnTemplate = new DataTemplate();
             var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
-            ObservableCollection<Note> contents = itemsControl.ItemsSource as ObservableCollection<Note>;
-            int count = contents.Count;
-        
-            var i = contents.IndexOf((Note)item);
+ 
+       
+            Type tp = item.GetType();
 
-            if (contents.Count == 1)
-                _returnTemplate = LastItems;
-            else
+            if (tp.Equals(typeof(Models.User)))
             {
-                if (i == count - 1)
+                var contents = itemsControl.ItemsSource as ObservableCollection<Models.User>;
+                int count = contents.Count;
+                var i = contents.IndexOf((Models.User)item);
+
+                if (contents.Count == 1)
                     _returnTemplate = LastItems;
                 else
-                    _returnTemplate = AllItems;
+                {
+                    if (i == count - 1)
+                        _returnTemplate = LastItems;
+                    else
+                        _returnTemplate = AllItems;
+                }
+
             }
+            else
+            {
+                var contents = itemsControl.ItemsSource as ObservableCollection<Note>;
+                int count = contents.Count;
+                var i = contents.IndexOf((Note)item);
+
+                if (contents.Count == 1)
+                    _returnTemplate = LastItems;
+                else
+                {
+                    if (i == count - 1)
+                        _returnTemplate = LastItems;
+                    else
+                        _returnTemplate = AllItems;
+                }
+            }
+
+           
          
 
 

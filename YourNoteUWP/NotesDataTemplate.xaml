@@ -10,7 +10,10 @@
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d">
 
-    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}">
+    <Grid
+        MaxHeight="500"
+        Background="{x:Bind NoteContentBackground, Mode=OneWay}"
+        BorderBrush="Red">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -23,15 +26,16 @@
             Foreground="Black"
             Text="{x:Bind notesTemplate.title}"
             TextTrimming="CharacterEllipsis" />
-        <TextBlock
-            Name="contents"
-            Grid.Row="1"
-            Margin="15"
-            FontSize="14"
-            Foreground="Black"
-            HorizontalTextAlignment="Left"
-            Text="{x:Bind notesTemplate.content}"
-            TextWrapping="Wrap" />
+        <ScrollViewer Grid.Row="1">
+            <TextBlock
+                Name="contents"
+                Margin="15"
+                FontSize="14"
+                Foreground="Black"
+                HorizontalTextAlignment="Left"
+                Text="{x:Bind notesTemplate.content}"
+                TextWrapping="Wrap" />
+        </ScrollViewer>
         <TextBlock
             Grid.Row="2"
             Margin="10,0,0,10"

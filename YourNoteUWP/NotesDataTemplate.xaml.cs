@@ -77,18 +77,13 @@ namespace YourNoteUWP
                         if ( hours <= 1)
                         {
 
-                            int minutes = Math.Abs(currentDetail.Minute - modifiedDetail.Minute);
-                                
-                            int approx = hours == 1 ? 60 : 0 ;
-                            minutes += approx;
-
-                            if (minutes == 0)
+                            int minutes = currentDetail.Minute + Math.Abs(modifiedDetail.Minute - 60);
+                            if( currentDetail.Minute == modifiedDetail.Minute)
                                 value = "just now";
-                            else if (minutes >= 60)
-                                value = modifiedDetail.ToString("hh:mm tt");
-
+                            else if (currentDetail.Minute + modifiedDetail.Minute < 60)
+                                value = minutes.ToString() + " " + "minutes ago";
                             else
-                            value = minutes.ToString() + " " + "minutes ago";
+                                value = modifiedDetail.ToString("hh:mm tt");
                         }
                         else
                         {

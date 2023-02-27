@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="ItemsDataTemplateSelector.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />

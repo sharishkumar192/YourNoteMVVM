@@ -384,7 +384,7 @@
                 Name="Logout"
                 Width="35"
                 Height="31"
-                Margin="0,0,5,0"
+                Margin="0,0,10,0"
                 Background="Red"
                 Click="{x:Bind LogoutContentTapped, Mode=OneWay}"
                 Content="&#xF3B1;"
@@ -395,6 +395,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
+                Style="{StaticResource SignOutButtonStyle}"
                 ToolTipService.Placement="Bottom"
                 ToolTipService.ToolTip="Sign Out" />
 
@@ -408,7 +409,7 @@
         <Grid Grid.Row="1" Margin="10,20,0,10">
             <TextBlock
                 Name="Title"
-                Margin="9,0,0,10"
+                Margin="0,0,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="18"
@@ -611,28 +612,35 @@
 
 
 
-        <controls:AdaptiveGridView
+        <GridView
             Name="NotesData"
             Grid.Row="2"
-            Margin="20,0,0,0"
-            DesiredWidth="200"
+            Margin="10,0,10,5"
             IsItemClickEnabled="True"
             ItemClick="{x:Bind NotesDataItemClick, Mode=OneWay}"
-            ItemHeight="250"
+            ItemContainerStyle="{StaticResource GridViewItemStyle}"
             ItemsSource="{x:Bind NotesDataItemSource, Mode=OneWay}">
-            <controls:AdaptiveGridView.ItemTemplate>
+            <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Note">
                     <local:NotesDataTemplate />
                 </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:StaggeredPanel
+                        HorizontalAlignment="Stretch"
+                        ColumnSpacing="7"
+                        DesiredColumnWidth="250"
+                        RowSpacing="7" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
 
         <Popup
             Name="NoteDisplayPopUp"
             Closed="{x:Bind NoteDisplayPopUpClosed, Mode=OneWay}"
-            IsLightDismissEnabled="{x:Bind NoteDisplayPopUpIsLight, Mode=TwoWay}"
             IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}"
-            LightDismissOverlayMode="On"
+            LightDismissOverlayMode="Off"
             Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
 
             <local:NoteContent

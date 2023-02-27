@@ -24,6 +24,12 @@ namespace YourNoteUWP.Models
             this.loginCount = loginCount;
         }
 
+        public User(string name, string userId)
+        {
+            this.name = name;
+            this.userId = userId;
+        }
+
         public User(User newUser)
         {
             this.name = newUser.name;
@@ -47,10 +53,7 @@ namespace YourNoteUWP.Models
         }
 
 
-        public static ObservableCollection<Models.User> GetUsersToShare(Models.User noteOwner, long displayNoteId)
-        {
-            return DBFetch.ValidUsersToShare(DBCreation.userTableName, DBCreation.sharedTableName, noteOwner, displayNoteId);
-        }
+
 
         public static bool CheckEmail(string userId)
         {

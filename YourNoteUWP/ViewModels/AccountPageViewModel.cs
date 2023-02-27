@@ -136,8 +136,29 @@ namespace YourNoteUWP.ViewModels
             DBUpdation.InsertNewNote(DBCreation.notesTableName, newNote);
         }
 
+        //public ObservableCollection<Note> SuggestedLists(string text)
+        //{
+        //    return DBFetch.SuggestList(DBCreation.notesTableName, text);
+        //}
 
 
+        public  ObservableCollection<Models.User> GetUsersToShare(string userId, long displayNoteId)
+        {
+            return DBFetch.ValidUsersToShare(DBCreation.userTableName, DBCreation.sharedTableName, DBCreation.notesTableName, userId, displayNoteId);
+        }
+        public bool IsOwner(string userId, long noteId)
+        {
+            return DBFetch.CanShareNote(DBCreation.notesTableName, userId, noteId);
+        }
+
+
+        public  void ShareNote(string sharedUserId, long noteId)
+        {
+            DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
+        }
+
+
+        //public long GetNoteId(string userId)
 
     }
 

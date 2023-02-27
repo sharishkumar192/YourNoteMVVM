@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
-  
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -13,24 +12,50 @@
     <UserControl.Resources>
 
         <DataTemplate x:Key="ShareUser"                       >
-            <StackPanel x:ConnectionId='3' HorizontalAlignment="Center" Orientation="Horizontal">
-                <StackPanel Margin="10">
-                    <TextBlock x:ConnectionId='4'
-                        HorizontalAlignment="Left"
-                        FontSize="25"
-                        Foreground="Red"
-                                               />
-                </StackPanel>
+
+            <StackPanel x:ConnectionId='7'>
+                <TextBlock x:ConnectionId='8'
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                                         />
+                <TextBlock x:ConnectionId='9'
+                    Margin="0,0,0,5"
+                    FontSize="14"
+                    Foreground="Black"
+                                           />
             </StackPanel>
+
         </DataTemplate>
+
+        <DataTemplate x:Key="ShareUsers"                       >
+
+            <StackPanel x:ConnectionId='3'
+                Margin="0,5,0,0"
+                BorderBrush="#f5f5f5"
+                BorderThickness="0,0,0,1">
+                <TextBlock x:ConnectionId='4'
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                                         />
+                <TextBlock x:ConnectionId='5'
+                    Margin="0,0,0,5"
+                    FontSize="14"
+                    Foreground="Black"
+                                           />
+            </StackPanel>
+
+        </DataTemplate>
+
 
     </UserControl.Resources>
     <!--
         NOTE CONTENT
     -->
-    <Grid x:ConnectionId='5'
-                                                                
-        CornerRadius="4">
+    <Grid x:ConnectionId='10'                                                          CornerRadius="4">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -40,7 +65,7 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <TextBox x:ConnectionId='12'
+            <TextBox x:ConnectionId='17'
                 Name="TitleOfNote"
                 Width="700"
                 Height="50"
@@ -61,7 +86,7 @@
                 TextAlignment="Center"
                                                                            />
 
-            <Button x:ConnectionId='13'
+            <Button x:ConnectionId='18'
                 Name="NoteCloseButton"
                 Margin="10"
                 Background="Transparent"
@@ -72,12 +97,11 @@
                 Foreground="Black"
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
-        <Grid x:ConnectionId='6'
-            
+        <Grid x:ConnectionId='11'
             Name="NoteMenuOptionsContainer"
             Grid.Row="1"
                                                                                  >
-            <ListBox x:ConnectionId='8'
+            <ListBox x:ConnectionId='13'
                 Name="NoteMenuOptions"
                 HorizontalAlignment="Center"
                 Background="Transparent"
@@ -95,7 +119,7 @@
 
 
                 <ListBoxItem>
-                    <Button x:ConnectionId='10'
+                    <Button x:ConnectionId='15'
                         Name="NoteShareButton"
                         Background="Transparent"
                                                                           
@@ -104,23 +128,23 @@
                         FontSize="16"
                         Foreground="Black">
                         <Button.Flyout>
-                            <Flyout>
+                            <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
                                 <Grid>
-                                    <ListView x:ConnectionId='11'
+                                    <ListView x:ConnectionId='16'
                                         Name="UsersToShareView"
-                                        Width="350"
-                                        Height="400"
-                                        Margin="20"
+                                        Width="150"
+                                        MaxHeight="150"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Background="Beige"
-                                        BorderBrush="Beige"
-                                        BorderThickness="10"
-                                        CornerRadius="15"
+                                        Background="#ffffff"
+                                        CornerRadius="4"
                                         IsItemClickEnabled="True"
                                                                               
-                                        ItemTemplate="{StaticResource ShareUser}"
-                                                                            />
+                                                                                        >
+                                        <ListView.ItemTemplateSelector>
+                                            <local:ItemsDataTemplateSelector AllItems="{StaticResource ShareUsers}" LastItems="{StaticResource ShareUser}" />
+                                        </ListView.ItemTemplateSelector>
+                                    </ListView>
                                 </Grid>
                             </Flyout>
                         </Button.Flyout>
@@ -128,7 +152,7 @@
                 </ListBoxItem>
 
                 <ListBoxItem>
-                    <Button x:ConnectionId='9'
+                    <Button x:ConnectionId='14'
                         Name="NoteDeleteButton"
                         Background="Transparent"
                                                                            
@@ -139,9 +163,9 @@
                 </ListBoxItem>
 
             </ListBox>
-            
+
         </Grid>
-        <TextBox x:ConnectionId='7'
+        <TextBox x:ConnectionId='12'
             Name="ContentOfNote"
             Grid.Row="2"
             Margin="10"

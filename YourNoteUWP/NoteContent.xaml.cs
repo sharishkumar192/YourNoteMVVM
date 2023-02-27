@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,15 +35,12 @@ namespace YourNoteUWP
         }
 
 
-        ObservableCollection<YourNoteUWP.Models.User> usersToShare = null;
-        private long _noteId;
+         private long _noteId;
         private long _searchCount;
-
-        private Page _parentPage;
+        private AccountPageViewModel _accountPageViewModel;
         public string currentDay = "";
-        bool contentChange = false;
+        private string _userId = "";
         public bool isModified = false;
-        bool textChange = false ;
         private NoteContentViewModel _noteContentViewModel;
 
         private bool _gotCount = false;
@@ -83,9 +81,10 @@ namespace YourNoteUWP
             isModified = false;
         }
 
-        public void DisplayContent(long noteId, string title, string content, long noteColor, string modifiedDay)
+        public void DisplayContent(string userId, long noteId, string title, string content, long noteColor, string modifiedDay)
         {
             _noteId = noteId;
+            _userId = userId;
             TitleOfNoteText = title;
             ContentOfNoteText = content;
             currentDay = modifiedDay;
@@ -94,9 +93,10 @@ namespace YourNoteUWP
 
         }
 
-        public void DisplayContent(long noteId, string title, string content, long searchCount, long noteColor, string modifiedDay)
+        public void DisplayContent(string userId, long noteId, string title, string content, long searchCount, long noteColor, string modifiedDay)
         {
             _noteId = noteId;
+            _userId = userId;
             TitleOfNoteText = title;
             ContentOfNoteText = content;
             _searchCount = searchCount;
@@ -112,11 +112,13 @@ namespace YourNoteUWP
 
 
 
-        private async void NoteShared()
+        private async void NoteShared(bool value)
         {
             MessageDialog showDialog;
-
-            showDialog = new MessageDialog("Note Has Been Shared!");
+            if(value == true)
+            showDialog = new MessageDialog("Note has been shared!");
+            else
+                showDialog = new MessageDialog("You cant share this note, as your not the owner!");
             showDialog.Commands.Add(new UICommand("Ok")
             {
                 Id = 0
@@ -237,9 +239,31 @@ namespace YourNoteUWP
 
 
         //----------------------------Note Share Button ---------------------------------------------------
+
+        private ObservableCollection<Models.User> _usersToShare;
+
+        public ObservableCollection<Models.User> UsersToShare
+        {
+            get { return _usersToShare; }
+            set { _usersToShare = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public void NoteShareButtonClick()
         {
+            _accountPageViewModel = new AccountPageViewModel();
+            if (_accountPageViewModel.IsOwner(_userId, _noteId) == true)
+            {
+                if(UsersToShare == null )
+                UsersToShare = _accountPageViewModel.GetUsersToShare(_userId, _noteId);
 
+            }
+            else
+            {
+                NoteShared(false);
+            }
         }
 
         //----------------------------Note Delete Button ---------------------------------------------------
@@ -295,8 +319,18 @@ namespace YourNoteUWP
 
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            _accountPageViewModel = new AccountPageViewModel();
+            Models.User selectedUser = (Models.User)e.ClickedItem;
+             _accountPageViewModel.ShareNote(selectedUser.userId, _noteId);
+
+            var found = UsersToShare.FirstOrDefault(x => x.userId == selectedUser.userId);
+            int i = UsersToShare.IndexOf(found);
+            UsersToShare.RemoveAt(i);
+
+            NoteShared(true);
 
         }
+
 
 
         //----------------------------------------Auto Save----------------------------------------

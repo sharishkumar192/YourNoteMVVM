@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
-  
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -13,24 +12,50 @@
     <UserControl.Resources>
 
         <DataTemplate x:Key="ShareUser" x:DataType="data:User">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <StackPanel Margin="10">
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        FontSize="25"
-                        Foreground="Red"
-                        Text="{x:Bind userId}" />
-                </StackPanel>
+
+            <StackPanel>
+                <TextBlock
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                    Text="{x:Bind name}" />
+                <TextBlock
+                    Margin="0,0,0,5"
+                    FontSize="14"
+                    Foreground="Black"
+                    Text="{x:Bind userId}" />
             </StackPanel>
+
         </DataTemplate>
+
+        <DataTemplate x:Key="ShareUsers" x:DataType="data:User">
+
+            <StackPanel
+                Margin="0,5,0,0"
+                BorderBrush="#f5f5f5"
+                BorderThickness="0,0,0,1">
+                <TextBlock
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                    Text="{x:Bind name}" />
+                <TextBlock
+                    Margin="0,0,0,5"
+                    FontSize="14"
+                    Foreground="Black"
+                    Text="{x:Bind userId}" />
+            </StackPanel>
+
+        </DataTemplate>
+
 
     </UserControl.Resources>
     <!--
         NOTE CONTENT
     -->
-    <Grid
-        Background="{x:Bind NoteContentBackground, Mode=OneWay}"
-        CornerRadius="4">
+    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}" CornerRadius="4">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -73,7 +98,6 @@
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
         <Grid
-            
             Name="NoteMenuOptionsContainer"
             Grid.Row="1"
             Visibility="{x:Bind NoteMenuOptionsContainerVisibility, Mode=OneWay}">
@@ -104,23 +128,23 @@
                         FontSize="16"
                         Foreground="Black">
                         <Button.Flyout>
-                            <Flyout>
+                            <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
                                 <Grid>
                                     <ListView
                                         Name="UsersToShareView"
-                                        Width="350"
-                                        Height="400"
-                                        Margin="20"
+                                        Width="150"
+                                        MaxHeight="150"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Background="Beige"
-                                        BorderBrush="Beige"
-                                        BorderThickness="10"
-                                        CornerRadius="15"
+                                        Background="#ffffff"
+                                        CornerRadius="4"
                                         IsItemClickEnabled="True"
                                         ItemClick="UsersToShareView_ItemClick"
-                                        ItemTemplate="{StaticResource ShareUser}"
-                                        ItemsSource="{x:Bind usersToShare}" />
+                                        ItemsSource="{x:Bind UsersToShare, Mode=OneWay}">
+                                        <ListView.ItemTemplateSelector>
+                                            <local:ItemsDataTemplateSelector AllItems="{StaticResource ShareUsers}" LastItems="{StaticResource ShareUser}" />
+                                        </ListView.ItemTemplateSelector>
+                                    </ListView>
                                 </Grid>
                             </Flyout>
                         </Button.Flyout>
@@ -139,7 +163,7 @@
                 </ListBoxItem>
 
             </ListBox>
-            
+
         </Grid>
         <TextBox
             Name="ContentOfNote"

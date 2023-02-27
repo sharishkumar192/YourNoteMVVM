@@ -384,7 +384,7 @@
                 Name="Logout"
                 Width="35"
                 Height="31"
-                Margin="0,0,5,0"
+                Margin="0,0,10,0"
                 Background="Red"
                                                                  
                 Content="&#xF3B1;"
@@ -395,6 +395,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
+                Style="{StaticResource SignOutButtonStyle}"
                 ToolTipService.Placement="Bottom"
                 ToolTipService.ToolTip="Sign Out" />
 
@@ -408,7 +409,7 @@
         <Grid Grid.Row="1" Margin="10,20,0,10">
             <TextBlock x:ConnectionId='29'
                 Name="Title"
-                Margin="9,0,0,10"
+                Margin="0,0,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="18"
@@ -611,28 +612,35 @@
 
 
 
-        <controls:AdaptiveGridView x:ConnectionId='24'
+        <GridView x:ConnectionId='24'
             Name="NotesData"
             Grid.Row="2"
-            Margin="20,0,0,0"
-            DesiredWidth="200"
+            Margin="10,0,10,5"
             IsItemClickEnabled="True"
                                                                 
-            ItemHeight="250"
+            ItemContainerStyle="{StaticResource GridViewItemStyle}"
                                                                    >
-            <controls:AdaptiveGridView.ItemTemplate>
+            <GridView.ItemTemplate>
                 <DataTemplate                       >
                     <local:NotesDataTemplate />
                 </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:StaggeredPanel
+                        HorizontalAlignment="Stretch"
+                        ColumnSpacing="7"
+                        DesiredColumnWidth="250"
+                        RowSpacing="7" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
 
         <Popup x:ConnectionId='25'
             Name="NoteDisplayPopUp"
                                                                  
-                                                                                 
                                                                  
-            LightDismissOverlayMode="On"
+            LightDismissOverlayMode="Off"
                                                                  >
 
             <local:NoteContent x:ConnectionId='26'

@@ -55,10 +55,7 @@ namespace YourNoteUWP.Models
             this.modifiedDay = modifiedDay;
         }
 
-        public static void ShareNote(string sharedUserId, long noteId)
-        {
-           DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
-        }
+
 
      public Note(long noteId, string title, string content, long noteColor, long searchCount, string modifiedDay)
         {

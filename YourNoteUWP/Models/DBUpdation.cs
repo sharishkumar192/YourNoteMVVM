@@ -56,7 +56,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -107,7 +107,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -145,7 +145,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -179,7 +179,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -212,7 +212,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -240,7 +240,7 @@ namespace YourNoteUWP
                 command.ExecuteNonQuery();
                 conn.Close();
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -271,7 +271,7 @@ namespace YourNoteUWP
                 command.ExecuteNonQuery();
                 conn.Close();
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
@@ -305,7 +305,7 @@ namespace YourNoteUWP
 
 
             }
-            catch (Exception e) { Debug.WriteLine(e.Message); }
+           catch(Exception e) { Logger.WriteLog(e.Message);  }
             finally
             {
                 conn.Close();
