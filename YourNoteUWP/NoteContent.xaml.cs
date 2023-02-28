@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
 using YourNoteUWP.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -37,10 +38,10 @@ namespace YourNoteUWP
 
          private long _noteId;
         private long _searchCount;
-        private AccountPageViewModel _accountPageViewModel;
-        public string currentDay = "";
+    public string currentDay = "";
         private string _userId = "";
         public bool isModified = false;
+        public bool isDeleted = false;
         private NoteContentViewModel _noteContentViewModel;
 
         private bool _gotCount = false;
@@ -79,6 +80,7 @@ namespace YourNoteUWP
             ContentOfNoteIsTapped = true;
             _dispatcherTimer = null;
             isModified = false;
+            isDeleted = false; 
         }
 
         public void DisplayContent(string userId, long noteId, string title, string content, long noteColor, string modifiedDay)
@@ -89,6 +91,8 @@ namespace YourNoteUWP
             ContentOfNoteText = content;
             currentDay = modifiedDay;
             NoteContentBackground = GetSolidColorBrush(noteColor);
+            TitleOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, TitleOfNoteText);
+            ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
             ToEnableEditMode();
 
         }
@@ -103,6 +107,7 @@ namespace YourNoteUWP
             GotCount = true;
               currentDay = modifiedDay;
             NoteContentBackground = GetSolidColorBrush(noteColor);
+            ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
             ToEnableEditMode();
         }
 
@@ -110,7 +115,17 @@ namespace YourNoteUWP
 
 
 
-
+        private async void NoValidUsers()
+        {
+            MessageDialog showDialog;
+                showDialog = new MessageDialog("No users available to share the note");
+             showDialog.Commands.Add(new UICommand("Ok")
+            {
+                Id = 0
+            });
+            showDialog.DefaultCommandIndex = 0;
+            var result = await showDialog.ShowAsync();
+        }
 
         private async void NoteShared(bool value)
         {
@@ -253,12 +268,14 @@ namespace YourNoteUWP
 
         public void NoteShareButtonClick()
         {
-            _accountPageViewModel = new AccountPageViewModel();
-            if (_accountPageViewModel.IsOwner(_userId, _noteId) == true)
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+            if (_noteContentViewModel.IsOwner(_userId, _noteId) == true)
             {
                 if(UsersToShare == null )
-                UsersToShare = _accountPageViewModel.GetUsersToShare(_userId, _noteId);
+                UsersToShare = _noteContentViewModel.GetUsersToShare(_userId, _noteId);
 
+                if (UsersToShare!=null && UsersToShare.Count == 0  )
+                    NoValidUsers();
             }
             else
             {
@@ -269,10 +286,12 @@ namespace YourNoteUWP
         //----------------------------Note Delete Button ---------------------------------------------------
         public void NoteDeleteButtonClick()
         {
+            
+            
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             _noteContentViewModel.DeleteNote(_noteId);
-            Popup p = this.Parent as Popup;
-            if (p != null) { p.IsOpen = false; }
+            isDeleted = true;
+            _delPageMethod.DynamicInvoke(null, null);
         }
         //----------------------------Content Text Box ---------------------------------------------------
 
@@ -319,12 +338,10 @@ namespace YourNoteUWP
 
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _accountPageViewModel = new AccountPageViewModel();
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             Models.User selectedUser = (Models.User)e.ClickedItem;
-             _accountPageViewModel.ShareNote(selectedUser.userId, _noteId);
-
-            var found = UsersToShare.FirstOrDefault(x => x.userId == selectedUser.userId);
-            int i = UsersToShare.IndexOf(found);
+            _noteContentViewModel.ShareNote(selectedUser.userId, _noteId);
+            int i = UsersToShare.IndexOf(selectedUser);
             UsersToShare.RemoveAt(i);
 
             NoteShared(true);
@@ -423,16 +440,27 @@ namespace YourNoteUWP
             return isChange;
         }
 
-        private void ContentOfNoteTextChanged(object sender, TextChangedEventArgs e)
+      
+
+        private void ContentOfNoteTextChanged(object sender, RoutedEventArgs e)
         {
-            TextBox Context = (TextBox)sender;
-            ContentOfNoteText = Context.Text;           
+            RichEditBox Context = (RichEditBox)sender;
+            string text;
+
+                Context.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf,out text)
+      ;
+            ContentOfNoteText = text;
+
         }
 
-        private void TitleOfNoteTextChanged(object sender, TextChangedEventArgs e)
+        private void TitleOfNoteTextChanged(object sender, RoutedEventArgs e)
         {
-            TextBox Context = (TextBox)sender;
-            TitleOfNoteText = Context.Text;
+            RichEditBox Context = (RichEditBox)sender;
+            string text;
+            Context.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
+            TitleOfNoteText = text;
+
+
         }
     }
 }

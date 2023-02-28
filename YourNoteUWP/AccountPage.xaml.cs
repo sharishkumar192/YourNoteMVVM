@@ -320,6 +320,32 @@ namespace YourNoteUWP
 
         //----------------------------Search -> Recently Searched List Box ---------------------------------------------------
 
+        public ObservableCollection<Note> ConvertRtfToText(ObservableCollection<Note> source)
+        {
+            ObservableCollection<Note> result = new ObservableCollection<Note>();
+            if (source == null)
+                return null;
+           
+            foreach(Note note in source)
+            {
+                RichEditBox editBox = new RichEditBox();
+                string ans = note.title;
+
+                editBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ans);
+                  Windows.UI.Text.ITextRange range = editBox.Document.GetRange(0, ans.Length - 1);
+                string title = range.Text;
+             
+                ans = note.content;
+                editBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ans);
+     range = editBox.Document.GetRange(0, title.Length - 1);
+                string content = range.Text;
+                Note nNote = new Note(note.noteId, title, content, note.noteColor, note.noteColor, note.modifiedDay);
+                result.Add(nNote);  
+            }
+            return result;
+        }
+
+
         private ObservableCollection<Note> _recentlySearchedItemSource;
         public ObservableCollection<Note> RecentlySearchedItemSource
         {
@@ -432,9 +458,11 @@ namespace YourNoteUWP
         private string TextChangedFunction(RichEditBox box)
         {
             string text;
-            box.Document.GetText(Windows.UI.Text.TextGetOptions.None, out text);
-            Windows.UI.Text.ITextRange range = box.Document.GetRange(0, text.Length - 1);
-            return range.Text;
+            box.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
+          //  Windows.UI.Text.ITextRange range = box.Document.GetRange(0, text.Length - 1);
+
+            return text;
+            //return range.Text;
         }
 
 
@@ -684,18 +712,27 @@ namespace YourNoteUWP
 
         private void CreationButtonClick()
         {
+
+
+
             if (CreationButtonContent == "Save")
             {
                 string creationDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
-
+               string x =  DateTime.Now.ToUniversalTime().ToString();
                 _accountPageViewModel = new AccountPageViewModel();
+
+
+
+                string y = DateTime.UtcNow.ToString();
+
                 Note newNote = new Note(LoggedUser.userId, TitleOfNewNoteText, ContentOfNewNoteText, _noteColor, creationDay, creationDay);
-                _accountPageViewModel.CreateNewNote(newNote);
+               long noteId =  _accountPageViewModel.CreateNewNote(newNote);
                 if  (_notesDataItemSource == null)
                 {
                     _notesDataItemSource = new ObservableCollection<Note>();
 
                 }
+                newNote.noteId = noteId;
               //  newNote.noteId = _accountPageViewModel.GetNoteId(newNote.noteId, newNote.userId);
                 _notesDataItemSource.Insert(0,newNote);
                 NotesDataItemSource = _notesDataItemSource;
@@ -703,7 +740,7 @@ namespace YourNoteUWP
                 TitleOfNewNoteText = "";
                 ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
                 TitleOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
-
+                SubSearchItemSource.Add(newNote);
             }
 
             TitleOfNewNoteVisibility = Visibility.Collapsed;
@@ -815,24 +852,47 @@ namespace YourNoteUWP
 
         private void NoteDisplayPopUpClosed(object sender, object e)
         {
+
+            NoteContentPopUp.UsersToShare = null; 
             if (NoteContentPopUp._dispatcherTimer != null)
             {
+                    if(NoteContentPopUp.isDeleted)
+                {
+                    NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
+                }
+                    else
+                {
+                    NoteContentPopUp.DispatcherTimer_Tick(sender, e);
+                    NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
 
-                NoteContentPopUp.DispatcherTimer_Tick(sender, e);
-                NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
-                
-             //   NoteContentPopUp.ContentOfNoteText
+                }
+
+
+
+
+                //   NoteContentPopUp.ContentOfNoteText
             }
-            if (NoteContentPopUp.isModified)
+            if(NoteContentPopUp.isDeleted)
             {
-                var found = NotesDataItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
-                int i = NotesDataItemSource.IndexOf(found);
+                int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
+                int j = SubSearchItemSource.IndexOf(selectedNoteFromDisplay);
+                if(i !=-1 )
+                NotesDataItemSource.RemoveAt(i);
+                if( j != -1 )
+                SubSearchItemSource.RemoveAt(j);
+            }
+                if (NoteContentPopUp.isDeleted == false && NoteContentPopUp.isModified)
+            {
+
+                var found = SubSearchItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
+                int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
+                int j = SubSearchItemSource.IndexOf(found);
                 Note note = NotesDataItemSource[i];
                 NotesDataItemSource.RemoveAt(i);
                 NotesDataItemSource.Insert(0, note);
-                note.content = NoteContentPopUp.ContentOfNoteText;
-                note.title = NoteContentPopUp.TitleOfNoteText;
-                note.modifiedDay = NoteContentPopUp.currentDay;
+               SubSearchItemSource[j].content = note.content = NoteContentPopUp.ContentOfNoteText;
+                SubSearchItemSource[j].title = note.title = NoteContentPopUp.TitleOfNoteText;
+                SubSearchItemSource[j].modifiedDay = note.modifiedDay = NoteContentPopUp.currentDay;
             }
             /*Remove(collection.Where(i => i.Id == instance.Id).Single());*/
             NoteDisplayPopUpIsOpen = false;

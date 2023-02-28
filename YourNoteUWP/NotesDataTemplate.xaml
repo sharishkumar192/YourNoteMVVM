@@ -19,21 +19,21 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock
+        <RichEditBox
+            Name="Titles"
             Margin="10,10,0,0"
             FontSize="18"
             FontWeight="SemiBold"
             Foreground="Black"
-            Text="{x:Bind notesTemplate.title}"
-            TextTrimming="CharacterEllipsis" />
+            Style="{StaticResource NoteDisplayTemplate}" />
         <ScrollViewer Grid.Row="1">
-            <TextBlock
-                Name="contents"
+            <RichEditBox
+                Name="Contents"
                 Margin="15"
                 FontSize="14"
                 Foreground="Black"
                 HorizontalTextAlignment="Left"
-                Text="{x:Bind notesTemplate.content}"
+                Style="{StaticResource NoteDisplayTemplate}"
                 TextWrapping="Wrap" />
         </ScrollViewer>
         <TextBlock

@@ -349,7 +349,7 @@
                                     Width="325"
                                     Background="White"
                                                                                                
-                                                                                                  
+                                                                                                                    
                                     SelectionMode="Single"
                                                                                                  >
                                     <ListView.ItemTemplateSelector>
@@ -365,7 +365,7 @@
                                 IsItemClickEnabled="True"
                                                                                               
                                 ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
-                                                                                               
+                                                                                                                 
                                                                                               >
                                 <ListView.ItemTemplateSelector>
                                     <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />

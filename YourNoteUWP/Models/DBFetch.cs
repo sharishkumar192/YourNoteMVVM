@@ -220,7 +220,7 @@ namespace YourNoteUWP
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
 
 
-            string query = $"SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(noteTableName) + " WHERE USERID = @userId ORDER BY SEARCHCOUNT DESC  ";
+            string query = $"SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(noteTableName) + " WHERE USERID = @userId   ";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -276,8 +276,8 @@ namespace YourNoteUWP
 
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
-                command.Parameters.Add(parameters);
+                SQLiteParameter parameter = new SQLiteParameter("@userId", loggedUser.userId);
+                command.Parameters.Add(parameter);
 
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                 {
@@ -316,34 +316,68 @@ namespace YourNoteUWP
 
         // ----------------------------------------NOTE DISPLAY PAGE DB FETCH----------------------------------------
 
-
-        //It prints all the available suggested to whom we can share the note 
-        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId,  long noteId)// Needed
+        public static Dictionary<string, bool> AlreadySharedUsers (string tableName, long noteId)
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            ObservableCollection<YourNoteUWP.Models.User> userToShare = null;
-            string query = "SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " WHERE USERID != @userId AND NOT EXISTS ( SELECT SHAREDUSERID FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + " WHERE SHAREDNOTEID = @noteId  ) ; ";
+            Dictionary<string, bool> sharedUserIds = null;
+
+            string query = $"SELECT SHAREDUSERID FROM {tableName} WHERE SHAREDNOTEID = @noteId ; "; 
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[2];
-                parameters[0] = new SQLiteParameter("@userId", userId);
-                parameters[1] = new SQLiteParameter("@noteId", noteId);
+                SQLiteParameter parameter = new SQLiteParameter("@noteId", noteId);
 
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameter);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        if (sharedUserIds == null)
+                            sharedUserIds = new Dictionary<string, bool>();
+                        sharedUserIds.Add(sqlite_datareader.GetString(0), true);
+                    }
 
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return sharedUserIds;
+
+        }
+        //It prints all the available suggested to whom we can share the note 
+        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId,  long noteId)// Needed
+        {
+            Dictionary<string, bool> sharedUserIds = AlreadySharedUsers(sharedTableName, noteId);
+            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
+            ObservableCollection<YourNoteUWP.Models.User> userToShare = new ObservableCollection<Models.User>(); ;
+            string query = "SELECT * FROM " + sqlCommandBuilder.QuoteIdentifier(userTableName) + " WHERE USERID != @userId ; ";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameter =  new SQLiteParameter("@userId", userId);
+             
+                command.Parameters.Add(parameter);
 
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                 {
                     while (sqlite_datareader.Read())
                     {
-                        if (userToShare == null)
-                            userToShare = new ObservableCollection<Models.User>();
-                        Models.User user = new Models.User(sqlite_datareader.GetString(0), sqlite_datareader.GetString(1));
-                        userToShare.Add(user);
+                        string name = sqlite_datareader.GetString(0);
+                        string validUserId = sqlite_datareader.GetString(1);
 
+                        if ( (sharedUserIds != null && !sharedUserIds.ContainsKey(validUserId) ) || sharedUserIds == null )
+                        {
+                            Models.User user = new Models.User(name, validUserId);
+                            userToShare.Add(user);
+                        }
                     }
 
                     sqlite_datareader.Close();

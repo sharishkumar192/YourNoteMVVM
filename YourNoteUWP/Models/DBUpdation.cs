@@ -71,20 +71,18 @@ namespace YourNoteUWP
         // ----------------------------------------ACCOUNT PAGE DB UPDATION----------------------------------------
 
         //Creates new note 
-        public static void InsertNewNote(string tableName, Note newNote)// Needed 
+        public static long InsertNewNote(string tableName, Note newNote)// Needed 
         {
 
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             SQLiteConnection conn = DBCreation.OpenConnection();
-
-
-            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(tableName) + " (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
-
+            long noteId = 0;
+            string query1 = $"INSERT INTO {tableName}  (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
+            string query2 = $"SELECT seq FROM sqlite_sequence where name =  '{tableName}' ; ";
             try
             {
 
 
-                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteCommand command = new SQLiteCommand(query1, conn);
                 SQLiteParameter[] parameters = new SQLiteParameter[6];
                 parameters[0] = new SQLiteParameter("@userId", newNote.userId);
                 parameters[1] = new SQLiteParameter("@title", newNote.title);
@@ -100,9 +98,20 @@ namespace YourNoteUWP
                 command.Parameters.Add(parameters[5]);
 
                 command.ExecuteNonQuery();
+
+                command.Parameters.Remove(parameters[0]);
+                command.Parameters.Remove(parameters[1]);
+                command.Parameters.Remove(parameters[2]);
+                command.Parameters.Remove(parameters[3]);
+                command.Parameters.Remove(parameters[4]);
+                command.Parameters.Remove(parameters[5]);
+              //  string query3 = "SELECT seq FROM  sqlite_sequence where name = 'NotesTable' ";
+                command.CommandText = query2;
+
+                noteId = (long)command.ExecuteScalar();
+
+
                 conn.Close();
-
-
 
 
 
@@ -113,7 +122,7 @@ namespace YourNoteUWP
                 conn.Close();
 
             }
-
+            return noteId;
 
         }
 
@@ -286,21 +295,18 @@ namespace YourNoteUWP
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
 
 
-            string query1 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "WHERE SHAREDNOTEID  = @noteId ; ";
-            string query2 = $"DELETE FROM " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + "WHERE NOTEID  = @noteId ; ";
+            string query = $"DELETE FROM {notesTableName} WHERE NOTEID  = @noteId ; ";
+         
             SQLiteConnection conn = DBCreation.OpenConnection();
 
             try
             {
 
 
-                SQLiteCommand command = new SQLiteCommand(query1, conn);
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
                 command.Parameters.Add(parameters);
-                command.ExecuteNonQuery();
-
-                command.CommandText = query2;
-                command.ExecuteNonQuery();
+                command.ExecuteNonQuery();                
                 conn.Close();
 
 

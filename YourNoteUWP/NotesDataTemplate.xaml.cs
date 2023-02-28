@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -33,34 +35,45 @@ namespace YourNoteUWP
         public static string NotePreview(string title, string content)
         {
             string text = "";
-            if(title != "")
+            if (title != "")
             {
                 text = text + title + "\r\n";
-              
+
 
             }
-            if(content != "")
+            if (content != "")
             {
                 text += content;
             }
-            if(title == "")
+            if (title == "")
                 text = "(Empty Note)";
             return text;
         }
 
 
-        private SolidColorBrush _noteContentBackground ;
+        private SolidColorBrush _noteContentBackground;
 
         public SolidColorBrush NoteContentBackground
         {
             get { return _noteContentBackground; }
-            set { _noteContentBackground = value;
+            set
+            {
+                _noteContentBackground = value;
                 OnPropertyChanged();
             }
         }
-    
+
+        
+
         public string ShowModifiedTime(string modifiedTime)
         {
+            Titles.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.title);
+            Contents.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.content);
+
+            Titles.IsReadOnly = true;
+            Contents.IsReadOnly = true;
+            Titles.IsTapEnabled = false;
+            Contents.IsTapEnabled = false;
             string value = "";
             string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
             DateTime currentDetail = DateTime.Parse(currentStatus);
@@ -73,28 +86,51 @@ namespace YourNoteUWP
                 {
                     if (currentDetail.Day == modifiedDetail.Day)
                     {
-                        int hours = currentDetail.Hour - modifiedDetail.Hour;
-                        if ( hours <= 1)
-                        {
+                        int minutes = Math.Abs(currentDetail.Hour * 60 + currentDetail.Minute - (modifiedDetail.Hour * 60 + modifiedDetail.Minute));
 
-                            int minutes = currentDetail.Minute + Math.Abs(modifiedDetail.Minute - 60);
-                            if( currentDetail.Minute == modifiedDetail.Minute)
-                                value = "just now";
-                            else if (currentDetail.Minute + modifiedDetail.Minute < 60)
-                                value = minutes.ToString() + " " + "minutes ago";
+                        if (minutes == 0)
+                            value = "just now";
+                        else if (minutes <= 60)
+                        {
+                            if(minutes <= 30)
+                                value = modifiedDetail.Minute.ToString() + " " + "minutes ago";
                             else
-                                value = modifiedDetail.ToString("hh:mm tt");
+
+                            value = (60 - modifiedDetail.Minute).ToString() + " " + "minutes ago";
                         }
                         else
                         {
-                            value = modifiedDetail.ToString("hh:mm tt") ;
+                            value = modifiedDetail.ToString("hh:mm tt");
+
                         }
+
+                        //int hours = currentDetail.Hour - modifiedDetail.Hour;
+                        //if ( hours <= 1)
+                        //{
+
+                        //    int minutes;
+
+                        //    if (hours == 1)
+                        //        minutes = currentDetail.Minute + modifiedDetail.Minute;
+                        //    else
+                        //        minutes = modifiedDetail.Minute > 30 ? 60 - modifiedDetail.Minute  : modifiedDetail.Minute;
+                        //    if ( currentDetail.Minute == modifiedDetail.Minute)
+                        //        value = "just now";
+                        //    else if (minutes < 60)
+                        //        value = minutes.ToString() + " " + "minutes ago";
+                        //    else
+                        //        value = modifiedDetail.ToString("hh:mm tt");
+                        //}
+                        //else
+                        //{
+                        //    value = modifiedDetail.ToString("hh:mm tt") ;
+                        //}
                     }
                     else
                     {
                         string date = modifiedDetail.DayOfWeek.ToString();
                         value = date.Substring(0, 3);
-                        value +=   " " + modifiedDetail.ToString("MMM") + " " + modifiedDetail.ToString("dd");
+                        value += " " + modifiedDetail.ToString("MMM") + " " + modifiedDetail.ToString("dd");
                     }
                 }
                 else

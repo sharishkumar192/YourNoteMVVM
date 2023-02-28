@@ -33,8 +33,20 @@
       <RootProperty Name="PlaceholderText" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="Foreground" />
+      <RootProperty Name="IsReadOnly" />
+      <RootProperty Name="IsTapEnabled" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="HorizontalTextAlignment" />
+      <RootProperty Name="TextAlignment" />
       <RootEvent Name="TextChanged" />
       <RootEvent Name="GotFocus" />
+      <RootEvent Name="Tapped" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="Foreground" />
@@ -123,8 +135,8 @@
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="Visibility" />
       <RootProperty Name="ColumnDefinitions" />
-      <RootProperty Name="Resources" />
       <RootProperty Name="Background" />
+      <RootProperty Name="Resources" />
       <RootProperty Name="Height" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Padding" />
@@ -166,8 +178,8 @@
       <RootProperty Name="LineStackingStrategy" />
       <RootProperty Name="TextLineBounds" />
       <RootProperty Name="OpticalMarginAlignment" />
-      <RootProperty Name="FontSize" />
       <RootProperty Name="Style" />
+      <RootProperty Name="FontSize" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Border">
       <RootProperty Name="MinWidth" />
@@ -207,7 +219,6 @@
       <RootProperty Name="LineStackingStrategy" />
       <RootProperty Name="TextLineBounds" />
       <RootProperty Name="FontStyle" />
-      <RootProperty Name="HorizontalTextAlignment" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
     </RootType>
@@ -402,19 +413,8 @@
       <RootProperty Name="Header" />
       <RootProperty Name="PlaceholderText" />
       <RootProperty Name="UseSystemFocusVisuals" />
-      <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="IsReadOnly" />
-      <RootProperty Name="IsTapEnabled" />
-      <RootProperty Name="TextWrapping" />
-      <RootProperty Name="Height" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="HorizontalTextAlignment" />
-      <RootProperty Name="TextAlignment" />
       <RootEvent Name="TextChanged" />
-      <RootEvent Name="Tapped" />
     </RootType>
     <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel">
       <RootProperty Name="MaxHeight" />

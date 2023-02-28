@@ -40,7 +40,7 @@ namespace YourNoteUWP
                 if (_sQLiteConnection == null)
                 {
                     StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                    _sQLiteConnection = new SQLiteConnection("Data Source=" + localFolder.Path + "\\database.db; Version = 3; New = True; Compress = True; ");
+                    _sQLiteConnection = new SQLiteConnection("Data Source=" + localFolder.Path + "\\database.db;foreign keys=true; Version = 3; New = True; Compress = True; ");
 
                 }
                 return _sQLiteConnection;
@@ -92,7 +92,7 @@ namespace YourNoteUWP
       $"(USERID VARCHAR(10000)," +
       $"NOTEID INTEGER PRIMARY KEY AUTOINCREMENT," +
       $"TITLE VARCHAR(10000)," +
-      $"CONTENT VARCHAR(1000), " +
+      $"CONTENT TEXT, " +
       $"NOTECOLOR INTEGER DEFAULT 0 ,  " +
       $"SEARCHCOUNT INTEGER DEFAULT 0  ,  " +
       $"CREATIONDAY VARCHAR(27)  ,  " +

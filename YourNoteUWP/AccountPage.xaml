@@ -349,7 +349,7 @@
                                     Width="325"
                                     Background="White"
                                     ItemClick="{x:Bind RecentlySearchedItemClick, Mode=OneWay}"
-                                    ItemsSource="{x:Bind RecentlySearchedItemSource, Mode=OneWay}"
+                                    ItemsSource="{x:Bind ConvertRtfToText(RecentlySearchedItemSource), Mode=OneWay}"
                                     SelectionMode="Single"
                                     Visibility="{x:Bind RecentlySearchedVisibility, Mode=OneWay}">
                                     <ListView.ItemTemplateSelector>
@@ -365,7 +365,7 @@
                                 IsItemClickEnabled="True"
                                 ItemClick="{x:Bind SuggestionContainerItemClick, Mode=OneWay}"
                                 ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
-                                ItemsSource="{x:Bind SuggestionContentItemSource, Mode=OneWay}"
+                                ItemsSource="{x:Bind ConvertRtfToText(SuggestionContentItemSource), Mode=OneWay}"
                                 Visibility="{x:Bind SuggestionContentVisibility, Mode=OneWay}">
                                 <ListView.ItemTemplateSelector>
                                     <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />

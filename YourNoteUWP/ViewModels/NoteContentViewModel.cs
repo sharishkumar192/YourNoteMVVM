@@ -11,6 +11,7 @@ using YourNoteUWP.Models;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using Windows.Storage;
+using System.Collections.ObjectModel;
 
 namespace YourNoteUWP.ViewModels
 {
@@ -64,10 +65,22 @@ namespace YourNoteUWP.ViewModels
         }
 
 
+        public bool IsOwner(string userId, long noteId)
+        {
+            return DBFetch.CanShareNote(DBCreation.notesTableName, userId, noteId);
+        }
 
 
+        public void ShareNote(string sharedUserId, long noteId)
+        {
+            DBUpdation.InsertSharedNote(DBCreation.sharedTableName, sharedUserId, noteId);
+        }
 
 
+        public ObservableCollection<Models.User> GetUsersToShare(string userId, long displayNoteId)
+        {
+            return DBFetch.ValidUsersToShare(DBCreation.userTableName, DBCreation.sharedTableName, DBCreation.notesTableName, userId, displayNoteId);
+        }
 
 
 

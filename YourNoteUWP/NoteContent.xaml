@@ -65,13 +65,12 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <TextBox
+            <RichEditBox
                 Name="TitleOfNote"
                 Width="700"
                 Height="50"
                 Margin="10"
                 Padding="0,10,0,0"
-                Background="Red"
                 BorderBrush="Black"
                 BorderThickness="0,0,0,1"
                 FontSize="28"
@@ -80,9 +79,8 @@
                 IsReadOnly="{x:Bind TitleOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="{x:Bind TitleOfNoteIsTapped, Mode=OneWay}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Style="{StaticResource NoteContentStyle}"
+                Style="{StaticResource NoteDisplayTemplate}"
                 Tapped="{x:Bind TitleOfNoteTapped, Mode=OneWay}"
-                Text="{x:Bind TitleOfNoteText, Mode=OneWay}"
                 TextAlignment="Center"
                 TextChanged="{x:Bind TitleOfNoteTextChanged, Mode=OneWay}" />
 
@@ -105,6 +103,7 @@
                 Name="NoteMenuOptions"
                 HorizontalAlignment="Center"
                 Background="Transparent"
+                ItemContainerStyle="{StaticResource NoteMenuOptionsItemStyle}"
                 Style="{StaticResource NoteMenuOptionsStyle}">
 
                 <!--<ListBoxItem>
@@ -126,7 +125,9 @@
                         Content="&#xE72D;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
-                        Foreground="Black">
+                        Foreground="Black"
+                        Style="{StaticResource NoteStyleButtonStyle}"
+                        ToolTipService.ToolTip="Share">
                         <Button.Flyout>
                             <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
                                 <Grid>
@@ -159,13 +160,15 @@
                         Content="&#xE107;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="16"
-                        Foreground="Black" />
+                        Foreground="Red"
+                        Style="{StaticResource NoteStyleButtonStyle1}"
+                        ToolTipService.ToolTip="Delete" />
                 </ListBoxItem>
 
             </ListBox>
 
         </Grid>
-        <TextBox
+        <RichEditBox
             Name="ContentOfNote"
             Grid.Row="2"
             Margin="10"
@@ -177,9 +180,8 @@
             Foreground="Black"
             IsReadOnly="{x:Bind ContentOfNoteIsReadOnly, Mode=OneWay}"
             IsTapEnabled="{x:Bind ContentOfNoteIsTapped, Mode=OneWay}"
-            Style="{StaticResource NoteContentStyle}"
+            Style="{StaticResource NoteDisplayTemplate}"
             Tapped="{x:Bind ContentOfNoteTapped, Mode=OneWay}"
-            Text="{x:Bind ContentOfNoteText, Mode=OneWay}"
             TextChanged="{x:Bind ContentOfNoteTextChanged, Mode=OneWay}"
             TextWrapping="Wrap" />
     </Grid>
