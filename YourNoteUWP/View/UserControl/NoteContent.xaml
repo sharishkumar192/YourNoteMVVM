@@ -65,9 +65,9 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <RichEditBox
+            <TextBox
                 Name="TitleOfNote"
-                Width="700"
+                Width="675"
                 Height="50"
                 Margin="10"
                 Padding="0,10,0,0"
@@ -79,8 +79,9 @@
                 IsReadOnly="{x:Bind TitleOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="{x:Bind TitleOfNoteIsTapped, Mode=OneWay}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Style="{StaticResource NoteDisplayTemplate}"
+                Style="{StaticResource NewNoteTitleStyle}"
                 Tapped="{x:Bind TitleOfNoteTapped, Mode=OneWay}"
+                Text="{x:Bind TitleOfNoteText, Mode=OneWay}"
                 TextAlignment="Center"
                 TextChanged="{x:Bind TitleOfNoteTextChanged, Mode=OneWay}" />
 
@@ -95,79 +96,23 @@
                 Foreground="Black"
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
-        <Grid
-            Name="NoteMenuOptionsContainer"
+
+        <Border
             Grid.Row="1"
-            Visibility="{x:Bind NoteMenuOptionsContainerVisibility, Mode=OneWay}">
-            <ListBox
-                Name="NoteMenuOptions"
-                HorizontalAlignment="Center"
-                Background="Transparent"
-                ItemContainerStyle="{StaticResource NoteMenuOptionsItemStyle}"
-                Style="{StaticResource NoteMenuOptionsStyle}">
-
-                <!--<ListBoxItem>
-                    <Button
-
-                        Background="Transparent"
-                        Content="&#xE1A2;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Black" />
-                </ListBoxItem>-->
+            HorizontalAlignment="Center"
+            Background="#ffffff"
+            CornerRadius="4">
+            <local:NoteEditOptionsControl
+                x:Name="NoteMenuOptionsContainer"
+                Margin="5,0,5,5"
+                EditOptions="NoteMenuOptionsContainer_EditOptions"
+                Visibility="{x:Bind NoteMenuOptionsContainerVisibility, Mode=OneWay}" />
+        </Border>
 
 
-                <ListBoxItem>
-                    <Button
-                        Name="NoteShareButton"
-                        Background="Transparent"
-                        Click="{x:Bind NoteShareButtonClick, Mode=OneWay}"
-                        Content="&#xE72D;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Black"
-                        Style="{StaticResource NoteStyleButtonStyle}"
-                        ToolTipService.ToolTip="Share">
-                        <Button.Flyout>
-                            <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
-                                <Grid>
-                                    <ListView
-                                        Name="UsersToShareView"
-                                        Width="150"
-                                        MaxHeight="150"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="#ffffff"
-                                        CornerRadius="4"
-                                        IsItemClickEnabled="True"
-                                        ItemClick="UsersToShareView_ItemClick"
-                                        ItemsSource="{x:Bind UsersToShare, Mode=OneWay}">
-                                        <ListView.ItemTemplateSelector>
-                                            <local:ItemsDataTemplateSelector AllItems="{StaticResource ShareUsers}" LastItems="{StaticResource ShareUser}" />
-                                        </ListView.ItemTemplateSelector>
-                                    </ListView>
-                                </Grid>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </ListBoxItem>
 
-                <ListBoxItem>
-                    <Button
-                        Name="NoteDeleteButton"
-                        Background="Transparent"
-                        Click="{x:Bind NoteDeleteButtonClick, Mode=OneWay}"
-                        Content="&#xE107;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Red"
-                        Style="{StaticResource NoteStyleButtonStyle1}"
-                        ToolTipService.ToolTip="Delete" />
-                </ListBoxItem>
 
-            </ListBox>
 
-        </Grid>
         <RichEditBox
             Name="ContentOfNote"
             Grid.Row="2"

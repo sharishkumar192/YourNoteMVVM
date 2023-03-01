@@ -65,9 +65,9 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <RichEditBox x:ConnectionId='17'
+            <TextBox x:ConnectionId='13'
                 Name="TitleOfNote"
-                Width="700"
+                Width="675"
                 Height="50"
                 Margin="10"
                 Padding="0,10,0,0"
@@ -79,12 +79,13 @@
                                                                         
                                                                         
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Style="{StaticResource NoteDisplayTemplate}"
+                Style="{StaticResource NewNoteTitleStyle}"
                                                                 
+                                                            
                 TextAlignment="Center"
                                                                            />
 
-            <Button x:ConnectionId='18'
+            <Button x:ConnectionId='14'
                 Name="NoteCloseButton"
                 Margin="10"
                 Background="Transparent"
@@ -95,80 +96,24 @@
                 Foreground="Black"
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
-        <Grid x:ConnectionId='11'
-            Name="NoteMenuOptionsContainer"
+
+        <Border
             Grid.Row="1"
-                                                                                 >
-            <ListBox x:ConnectionId='13'
-                Name="NoteMenuOptions"
-                HorizontalAlignment="Center"
-                Background="Transparent"
-                ItemContainerStyle="{StaticResource NoteMenuOptionsItemStyle}"
-                Style="{StaticResource NoteMenuOptionsStyle}">
-
-                <!--<ListBoxItem>
-                    <Button
-
-                        Background="Transparent"
-                        Content="&#xE1A2;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Black" />
-                </ListBoxItem>-->
+            HorizontalAlignment="Center"
+            Background="#ffffff"
+            CornerRadius="4">
+            <local:NoteEditOptionsControl x:ConnectionId='12'
+                x:Name="NoteMenuOptionsContainer"
+                Margin="5,0,5,5"
+                                                                  
+                                                                                      />
+        </Border>
 
 
-                <ListBoxItem>
-                    <Button x:ConnectionId='15'
-                        Name="NoteShareButton"
-                        Background="Transparent"
-                                                                          
-                        Content="&#xE72D;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Black"
-                        Style="{StaticResource NoteStyleButtonStyle}"
-                        ToolTipService.ToolTip="Share">
-                        <Button.Flyout>
-                            <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
-                                <Grid>
-                                    <ListView x:ConnectionId='16'
-                                        Name="UsersToShareView"
-                                        Width="150"
-                                        MaxHeight="150"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="#ffffff"
-                                        CornerRadius="4"
-                                        IsItemClickEnabled="True"
-                                                                              
-                                                                                        >
-                                        <ListView.ItemTemplateSelector>
-                                            <local:ItemsDataTemplateSelector AllItems="{StaticResource ShareUsers}" LastItems="{StaticResource ShareUser}" />
-                                        </ListView.ItemTemplateSelector>
-                                    </ListView>
-                                </Grid>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </ListBoxItem>
 
-                <ListBoxItem>
-                    <Button x:ConnectionId='14'
-                        Name="NoteDeleteButton"
-                        Background="Transparent"
-                                                                           
-                        Content="&#xE107;"
-                        FontFamily="Segoe MDL2 Assets"
-                        FontSize="16"
-                        Foreground="Red"
-                        Style="{StaticResource NoteStyleButtonStyle1}"
-                        ToolTipService.ToolTip="Delete" />
-                </ListBoxItem>
 
-            </ListBox>
 
-        </Grid>
-        <RichEditBox x:ConnectionId='12'
+        <RichEditBox x:ConnectionId='11'
             Name="ContentOfNote"
             Grid.Row="2"
             Margin="10"

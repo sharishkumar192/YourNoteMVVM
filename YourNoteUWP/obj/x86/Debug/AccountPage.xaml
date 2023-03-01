@@ -2,13 +2,12 @@
     x:Class="YourNoteUWP.AccountPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:View="using:YourNoteUWP.View"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:util="using:YourNoteUWP.Util"
     Background="#ffffff"
     mc:Ignorable="d">
 
@@ -16,229 +15,45 @@
     <Page.Resources>
 
         <DataTemplate x:Key="SearchTitleA"                       >
-            <StackPanel x:ConnectionId='20'
+            <StackPanel x:ConnectionId='7'
                 Width="300"
                 Margin="0,10,0,0"
                 BorderBrush="#f1f1f1"
                 BorderThickness="0,0,0,1"
                 Orientation="Horizontal">
-                <Rectangle x:ConnectionId='21'
+                <Rectangle x:ConnectionId='8'
                     Width="35"
                     Height="35"
-                                                                                    />
-                <StackPanel Margin="5,0,0,5">
-                    <TextBlock x:ConnectionId='22'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                                              />
-
-                    <TextBlock x:ConnectionId='23'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                                                />
-                </StackPanel>
+                                                                                      />
+                <TextBlock x:ConnectionId='9'
+                    Margin="5,0,0,5"
+                    HorizontalAlignment="Left"
+                    FontSize="14"
+                    Foreground="Black"
+                                          />
             </StackPanel>
 
         </DataTemplate>
 
         <DataTemplate x:Key="SearchTitleL"                       >
-            <StackPanel x:ConnectionId='15'
+            <StackPanel x:ConnectionId='3'
                 Width="300"
                 Margin="0,10,0,10"
                 Orientation="Horizontal">
-                <Rectangle x:ConnectionId='16'
+                <Rectangle x:ConnectionId='4'
                     Width="35"
                     Height="35"
-                                                                                    />
-                <StackPanel Margin="5,0,0,5">
-                    <TextBlock x:ConnectionId='17'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="Black"
-                                              />
+                                                                                      />
 
-                    <TextBlock x:ConnectionId='18'
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="Black"
-                                                />
-                </StackPanel>
+                <TextBlock x:ConnectionId='5'
+                    Margin="5,5,0,5"
+                    HorizontalAlignment="Left"
+                    FontSize="14"
+                    Foreground="Black"
+                                          />
+
             </StackPanel>
         </DataTemplate>
-
-        <Style x:Key="RichEditBoxStyle1" TargetType="RichEditBox">
-            <Setter Property="Foreground" Value="#000000" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}" />
-            <Setter Property="ContentLinkBackgroundColor" Value="{ThemeResource ContentLinkBackgroundColor}" />
-            <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}" />
-            <Setter Property="BorderBrush" Value="{ThemeResource TextControlBorderBrush}" />
-            <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}" />
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="Padding" Value="{ThemeResource TextControlThemePadding}" />
-            <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource IsApplicationFocusVisualKindReveal}" />
-            <Setter Property="ContextFlyout" Value="{StaticResource TextControlCommandBarContextFlyout}" />
-            <Setter Property="SelectionFlyout" Value="{StaticResource TextControlCommandBarSelectionFlyout}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RichEditBox">
-                        <Grid
-                            Width="475"
-                            MaxHeight="125"
-                            CornerRadius="7">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <ContentPresenter
-                                x:Name="HeaderContentPresenter"
-                                Grid.Row="0"
-                                Margin="{ThemeResource RichEditBoxTopHeaderMargin}"
-                                VerticalAlignment="Top"
-                                x:DeferLoadStrategy="Lazy"
-                                Content="{TemplateBinding Header}"
-                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                FontWeight="Normal"
-                                Foreground="{ThemeResource TextControlHeaderForeground}"
-                                TextWrapping="Wrap"
-                                Visibility="Collapsed" />
-                            <Border
-                                x:Name="BorderElement"
-                                Grid.Row="1"
-                                Grid.RowSpan="1"
-                                MinWidth="{ThemeResource TextControlThemeMinWidth}"
-                                MinHeight="{ThemeResource TextControlThemeMinHeight}"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
-                            <ScrollViewer
-                                x:Name="ContentElement"
-                                Grid.Row="1"
-                                Margin="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                AutomationProperties.AccessibilityView="Raw"
-                                Content="{TemplateBinding DataContext}"
-                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
-                                IsTabStop="False"
-                                IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
-                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                ZoomMode="Disabled" />
-                            <TextBlock
-                                x:Name="PlaceholderTextContentPresenter"
-                                Grid.Row="1"
-                                Margin="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                FontWeight="Normal"
-                                Foreground="#000000"
-                                IsHitTestVisible="False"
-                                Text="{TemplateBinding PlaceholderText}"
-                                TextAlignment="{TemplateBinding TextAlignment}"
-                                TextWrapping="{TemplateBinding TextWrapping}" />
-                            <ContentPresenter
-                                x:Name="DescriptionPresenter"
-                                Grid.Row="2"
-                                x:Load="False"
-                                AutomationProperties.AccessibilityView="Raw"
-                                Content="{TemplateBinding Description}"
-                                Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}" />
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Normal">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Focused">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#000000" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="RequestedTheme">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Light" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
 
     </Page.Resources>
@@ -278,7 +93,7 @@
 
 
             <!--  MAIN MENU OPTIONS  -->
-            <ListBox x:ConnectionId='44'
+            <ListBox x:ConnectionId='22'
                 Name="MainMenuOptions"
                 ItemContainerStyle="{StaticResource MainMenuItemStyle}"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -288,17 +103,17 @@
                                                                                         
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
-                <ListBoxItem x:ConnectionId='52'
+                <ListBoxItem x:ConnectionId='30'
                     Name="PersonalNotes"
                     Content="Personal"
                                                                                />
 
-                <ListBoxItem x:ConnectionId='53'
+                <ListBoxItem x:ConnectionId='31'
                     Name="SharedNotes"
                     Content="Shared"
                                                                              />
 
-                <ListBoxItem x:ConnectionId='54'
+                <ListBoxItem x:ConnectionId='32'
                     Name="AllNotes"
                     Content="All Notes"
                                                                           />
@@ -307,7 +122,7 @@
 
 
             <!--  SEARCH BOX  -->
-            <StackPanel x:ConnectionId='45'
+            <StackPanel x:ConnectionId='23'
                 Name="SearchBoxContainer"
                 Width="325"
                 Margin="0,7,5,0"
@@ -315,7 +130,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
-                <TextBox x:ConnectionId='47'
+                <TextBox x:ConnectionId='25'
                     Name="SearchTextBox"
                     Background="#f8f8f8"
                     CornerRadius="4"
@@ -325,7 +140,7 @@
                                                                   
                                                                                  />
 
-                <Popup x:ConnectionId='48'
+                <Popup x:ConnectionId='26'
                     Name="SearchPopup"
                     MaxHeight="325"
                     Margin="0,4,0,0"
@@ -339,17 +154,17 @@
                         ShadowOpacity="1"
                         Color="Black">
 
-                        <Grid x:ConnectionId='49'
+                        <Grid x:ConnectionId='27'
                             Name="PopUpContainer"
                             Width="Auto"
                             CornerRadius="4">
                             <Border CornerRadius="4">
-                                <ListView x:ConnectionId='51'
+                                <ListView x:ConnectionId='29'
                                     Name="RecentlySearched"
                                     Width="325"
                                     Background="White"
                                                                                                
-                                                                                                                    
+                                                                                                  
                                     SelectionMode="Single"
                                                                                                  >
                                     <ListView.ItemTemplateSelector>
@@ -358,14 +173,14 @@
                                 </ListView>
                             </Border>
 
-                            <ListView x:ConnectionId='50'
+                            <ListView x:ConnectionId='28'
                                 Name="Suggestion"
                                 Width="325"
                                 Background="White"
                                 IsItemClickEnabled="True"
                                                                                               
                                 ItemContainerStyle="{StaticResource SearchContainerItemStyle}"
-                                                                                                                 
+                                                                                               
                                                                                               >
                                 <ListView.ItemTemplateSelector>
                                     <local:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
@@ -380,7 +195,7 @@
 
 
             <!--  SIGN OUT  -->
-            <Button x:ConnectionId='46'
+            <Button x:ConnectionId='24'
                 Name="Logout"
                 Width="35"
                 Height="31"
@@ -407,7 +222,7 @@
             New Note   BorderBrush="#e3e3e3"
         -->
         <Grid Grid.Row="1" Margin="10,20,0,10">
-            <TextBlock x:ConnectionId='29'
+            <TextBlock x:ConnectionId='15'
                 Name="Title"
                 Margin="0,0,0,10"
                 HorizontalAlignment="Left"
@@ -416,176 +231,88 @@
                 FontWeight="SemiBold"
                 Foreground="Black"
                                                        />
-
-            <Grid x:ConnectionId='30'
-                Name="NewNote"
+            <controls:DropShadowPanel
                 Width="500"
                 HorizontalAlignment="Center"
-                BorderBrush="#000000"
-                BorderThickness="0.5"
-                CornerRadius="7"
-                                                                    >
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                BlurRadius="10">
+                <Grid x:ConnectionId='16'
+                    Name="NewNote"
+                    Background="White"
+                    CornerRadius="7"
+                                                                        >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
 
-                <RichEditBox x:ConnectionId='31'
-                    Name="TitleOfNewNote"
-                    Grid.Row="0"
-                    Margin="6,10,6,5"
-                    HorizontalAlignment="Stretch"
-                    FontSize="18"
-                    FontWeight="SemiBold"
-                    PlaceholderText="Title"
-                    Style="{StaticResource NewNoteContextStyle}"
-                                                                                 
-                                                                                />
-
-
-                <RichEditBox x:ConnectionId='32'
-                    Name="ContentOfNewNote"
-                    Grid.Row="1"
-                    Margin="10"
-                                                                             
-                    PlaceholderText="Take a note..."
-                    Style="{StaticResource NewNoteContextStyle}"
-                                                                                   >
-                    <FlyoutBase.AttachedFlyout>
-                        <Flyout>
-                            <Button />
-                        </Flyout>
-                    </FlyoutBase.AttachedFlyout>
-                </RichEditBox>
-
-
-                <Grid x:ConnectionId='33'
-                    Name="NoteStyleOptions"
-                    Grid.Row="2"
-                    Margin="12,0,10,10"
-                                                                                 >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel x:ConnectionId='34'
-                        Name="Options"
-                        Grid.Column="0"
-                        Padding="0,5,0,0"
+                    <TextBox x:ConnectionId='17'
+                        Name="TitleOfNewNote"
+                        Grid.Row="0"
+                        Width="470"
+                        Margin="6,10,6,5"
+                        Padding="8,0,0,0"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        CornerRadius="4"
-                        Orientation="Horizontal">
+                        FontSize="16"
+                        PlaceholderText="Title"
+                        Style="{StaticResource NewNoteTitleStyle}"
+                                                                       
+                                                                                     
+                        TextWrapping="Wrap"
+                                                                                    />
 
-                        <Button x:ConnectionId='36'
-                            Name="FontBackground"
+
+                    <RichEditBox x:ConnectionId='18'
+                        Name="ContentOfNewNote"
+                        Grid.Row="1"
+                        Margin="10"
+                                                                                 
+                        PlaceholderText="Take a note..."
+                        Style="{StaticResource NewNoteContextStyle}"
+                                                                                       >
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout>
+                                <Button />
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </RichEditBox>
+
+
+                    <Grid x:ConnectionId='19'
+                        Name="NoteStyleOptions"
+                        Grid.Row="2"
+                        Margin="12,0,10,10"
+                                                                                     >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <local:NoteEditOptionsControl x:ConnectionId='20'
+                            x:Name="NoteEditOptions"
+                            Grid.Column="0"
+                                                                      />
+
+                        <Button x:ConnectionId='21'
+                            Name="CreationButton"
+                            Grid.Column="1"
+                            Width="60"
+                            Margin="10,10,3.5,10"
+                            Background="#e3e3e3"
                                                                              
-                            Content="&#xE8D3;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Background Color" />
-                        <Button x:ConnectionId='37'
-                            Name="FontIncrease"
-                            Margin="5,0,0,0"
-                                                                           
-                            Content="&#xE1C7;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Font Increase" />
-                        <Button x:ConnectionId='38'
-                            Name="FontDecrease"
-                            Margin="5,0,0,0"
-                                                                           
-                            Content="&#xE1C6;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Font Decrease" />
+                                                                                 
+                            CornerRadius="4"
+                            FontSize="14"
+                            Foreground="#000000"
+                            Style="{StaticResource NoteStyleButtonStyle}" />
+                    </Grid>
 
-                        <Button x:ConnectionId='39'
-                            Name="SmallCaps"
-                            Margin="5,0,0,0"
-                                                                        
-                            Content="&#xE84A;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Lowercase" />
-
-                        <Button x:ConnectionId='40'
-                            Name="AllCaps"
-                            Margin="5,0,0,0"
-                                                                      
-                            Content="&#xE84B;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Uppercase" />
-
-                        <Button x:ConnectionId='41'
-                            Name="Strikethrough"
-                            Margin="5,0,0,0"
-                                                                            
-                            Content="&#xEDE0;"
-                            FontFamily="Segoe MDL2 Assets"
-                            Style="{StaticResource NoteStyleButtonStyle}"
-                            ToolTipService.ToolTip="Strikethrough" />
-
-
-
-                        <Button x:ConnectionId='42'
-                            Name="NoteColor"
-                            Content="&#xED67;"
-                            FontFamily="Segoe MDL2 Assets"
-                                                                                  
-                            Style="{StaticResource NoteStyleButtonStyle1}"
-                            ToolTipService.ToolTip="Note Color">
-                            <Button.Flyout>
-                                <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
-                                    <ListBox x:ConnectionId='43'
-                                        Name="ColorOptions"
-                                        Height="40"
-                                                                                                       
-                                                                                                             
-                                        SelectionMode="Single"
-                                        Style="{StaticResource NoteColorOptionStyle}">
-                                        <FontIcon Foreground="#f8bec5" Style="{StaticResource ColorIcons}" />
-
-                                        <ListBoxItem>
-                                            <FontIcon Foreground="#c6e8b7" Style="{StaticResource ColorIcons}" />
-                                        </ListBoxItem>
-
-                                        <ListBoxItem>
-                                            <FontIcon Foreground="#fdefad" Style="{StaticResource ColorIcons}" />
-                                        </ListBoxItem>
-
-                                        <ListBoxItem>
-                                            <FontIcon Foreground="#c3e9fd" Style="{StaticResource ColorIcons}" />
-                                        </ListBoxItem>
-
-                                    </ListBox>
-                                </Flyout>
-
-                            </Button.Flyout>
-                        </Button>
-
-                    </StackPanel>
-                    <Button x:ConnectionId='35'
-                        Name="CreationButton"
-                        Grid.Column="1"
-                        Width="60"
-                        Margin="10,10,3.5,10"
-                        Background="#e3e3e3"
-                                                                         
-                                                                             
-                        CornerRadius="4"
-                        FontSize="14"
-                        Foreground="#000000"
-                        Style="{StaticResource NoteStyleButtonStyle}" />
                 </Grid>
-
-            </Grid>
+            </controls:DropShadowPanel>
 
         </Grid>
         <!--  NOTES DISPLAY  -->
@@ -612,7 +339,7 @@
 
 
 
-        <GridView x:ConnectionId='24'
+        <GridView x:ConnectionId='10'
             Name="NotesData"
             Grid.Row="2"
             Margin="10,0,10,5"
@@ -636,14 +363,14 @@
             </GridView.ItemsPanel>
         </GridView>
 
-        <Popup x:ConnectionId='25'
+        <Popup x:ConnectionId='11'
             Name="NoteDisplayPopUp"
                                                                  
                                                                  
             LightDismissOverlayMode="Off"
                                                                  >
 
-            <local:NoteContent x:ConnectionId='26'
+            <local:NoteContent x:ConnectionId='12'
                 x:Name="NoteContentPopUp"
                                                                    
                                                                       />

@@ -55,11 +55,12 @@ Assets\Wide310x150Logo.scale-400.png
 AccountPage.xbf
 App.xbf
 Dictionary.xbf
-NoteContent.xbf
-NotesDataTemplate.xbf
 View\MainPage.xbf
 View\NoteColorOptions.xbf
 View\SignInPage.xbf
 View\SignUpPage.xbf
+View\UserControl\NoteContent.xbf
+View\UserControl\NoteEditOptionsControl.xbf
+View\UserControl\NotesDataTemplate.xbf
 YourNoteUWP.xr.xml
 Properties\Default.rd.xml

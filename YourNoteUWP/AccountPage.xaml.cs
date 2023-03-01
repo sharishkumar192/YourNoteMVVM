@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
+using YourNoteUWP.Util;
 using YourNoteUWP.ViewModels;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -46,14 +48,32 @@ namespace YourNoteUWP
             this.SizeChanged += AccountPage_SizeChanged;
         }
 
+        //protected EventHandlerList listEventDelegates = new EventHandlerList();
+
+        //readonly object fontBackgroundKey = new object();
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+
+        //private void OnFontBackground(RoutedEventArgs e)
+        //{
+        //    EventHandler fontBackgroundDelegate = (EventHandler)listEventDelegates[fontBackgroundKey];
+        //    FontBackgroundClick(this, e);
+        //}
+
+
+        private void DelegateIntialize()
         {
-
             DelUserControlMethod delUserControlMethod = new DelUserControlMethod(NoteDisplayPopUpClosed);
             NoteContentPopUp.CallingPageMethod = delUserControlMethod;
 
+
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            DelegateIntialize();
+
+            NoteEditOptions.NoteDeleteButtonVisibility = NoteEditOptions.NoteShareButtonVisibility = Visibility.Collapsed;
             Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
@@ -104,19 +124,7 @@ namespace YourNoteUWP
             return true;
         }
 
-        public static SolidColorBrush GetSolidColorBrush(long value)
-        {
-            int index = (int)value;
-            List<string> color = new List<string>()
-        { "#f8bec5", "#c6e8b7", "#fdefad", "#c3e9fd"};
-            string hex = color[index];
-            hex = hex.Replace("#", string.Empty);
-            byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
-            byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
-            byte b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
-            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
-            return myBrush;
-        }
+
 
  
 
@@ -320,30 +328,7 @@ namespace YourNoteUWP
 
         //----------------------------Search -> Recently Searched List Box ---------------------------------------------------
 
-        public ObservableCollection<Note> ConvertRtfToText(ObservableCollection<Note> source)
-        {
-            ObservableCollection<Note> result = new ObservableCollection<Note>();
-            if (source == null)
-                return null;
-           
-            foreach(Note note in source)
-            {
-                RichEditBox editBox = new RichEditBox();
-                string ans = note.title;
-
-                editBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ans);
-                  Windows.UI.Text.ITextRange range = editBox.Document.GetRange(0, ans.Length - 1);
-                string title = range.Text;
-             
-                ans = note.content;
-                editBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ans);
-     range = editBox.Document.GetRange(0, title.Length - 1);
-                string content = range.Text;
-                Note nNote = new Note(note.noteId, title, content, note.noteColor, note.noteColor, note.modifiedDay);
-                result.Add(nNote);  
-            }
-            return result;
-        }
+     
 
 
         private ObservableCollection<Note> _recentlySearchedItemSource;
@@ -459,8 +444,9 @@ namespace YourNoteUWP
         {
             string text;
             box.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
-          //  Windows.UI.Text.ITextRange range = box.Document.GetRange(0, text.Length - 1);
-
+            Windows.UI.Text.ITextRange range = box.Document.GetRange(0, text.Length - 1);
+            if (range.Text == "\r")
+                return "";
             return text;
             //return range.Text;
         }
@@ -517,7 +503,8 @@ namespace YourNoteUWP
 
         private void TitleOfNewNoteTextChanged(object sender, RoutedEventArgs e)
         {
-            TitleOfNewNoteText = TextChangedFunction(TitleOfNewNote);
+            TextBox box = (TextBox)sender;
+            TitleOfNewNoteText = box.Text;
             SaveOrClose(TitleOfNewNoteText, ContentOfNewNoteText);
         }
 
@@ -563,140 +550,43 @@ namespace YourNoteUWP
         }
 
         //----Note Font Background
-
+      
         private void FontBackgroundClick(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Text.ITextSelection selectedText = ContentOfNewNote.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                if (charFormatting.BackgroundColor.R == 0 && charFormatting.BackgroundColor.G == 0 && charFormatting.BackgroundColor.B == 0)
-                {
-                    charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(255, 255, 255, 255);
-                    charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
-                }
-                else
-                {
-                    charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
-                    charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 255, 255, 255);
-                }
-
-            }
+            NotesUtilities.FontBackgroundClick(ContentOfNewNote, null);
         }
 
         //----Note Font Increase
-        private void FontIncreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
-        {
-            Windows.UI.Text.ITextCharacterFormat charFormatting;
-            if (selectedText != null)
-            {
-                charFormatting = selectedText.CharacterFormat;
-                string text = selectedText.Text;
-                float size = charFormatting.Size;
-                if (!String.IsNullOrEmpty(text) && size < limit)
-                {
-                    charFormatting.Size += value;
-                }
-            }
-        }
         private void FontIncreaseClick(object sender, RoutedEventArgs e)
         {
-            FontIncreaseFunc(ContentOfNewNote.Document.Selection, (float)10.5, (float)0.5);
+            NotesUtilities.FontIncreaseClick(ContentOfNewNote, null);
         }
 
         //----Note Font Decrease
-        private void FontDecreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
-        {
-            Windows.UI.Text.ITextCharacterFormat charFormatting;
-            if (selectedText != null)
-            {
-                charFormatting = selectedText.CharacterFormat;
-                string text = selectedText.Text;
-                float size = charFormatting.Size;
-                if (!String.IsNullOrEmpty(text) && size > limit)
-                {
-                    charFormatting.Size -= value;
-                }
-            }
-        }
-
         private void FontDecreaseClick(object sender, RoutedEventArgs e)
         {
-            FontDecreaseFunc(ContentOfNewNote.Document.Selection, (float)7.5, (float)0.5);
+            NotesUtilities.FontDecreaseClick(ContentOfNewNote, null);
         }
+    
 
         //----Note Small Caps
         private void SmallCapsClick(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Text.ITextSelection selectedText = ContentOfNewNote.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.SmallCaps = Windows.UI.Text.FormatEffect.Toggle;
-            }
-
+        NotesUtilities.SmallCapsClick(ContentOfNewNote, null);
         }
+
 
         //----Note All Caps
         private void AllCapsClick(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Text.ITextSelection selectedText = ContentOfNewNote.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.AllCaps = Windows.UI.Text.FormatEffect.Toggle;
-            }
-
-        }
+        NotesUtilities.AllCapsClick(ContentOfNewNote, null);
+    }
 
         //----Note Strikethrough
         private void StrikethroughClick(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Text.ITextSelection selectedText = ContentOfNewNote.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.Strikethrough = Windows.UI.Text.FormatEffect.Toggle;
-            }
+            NotesUtilities.StrikethroughClick(ContentOfNewNote, null);
         }
-
-        //----Note Color Button
-
-        private SolidColorBrush _noteColorForeground = GetSolidColorBrush(0);
-        public SolidColorBrush NoteColorForeground
-        {
-            get { return _noteColorForeground; }
-            set
-            {
-                _noteColorForeground = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private long _noteColor = 0;
-        private int _colorOptionsSelectedIndex = 0;
-
-        public int ColorOptionsSelectedIndex
-        {
-            get { return _colorOptionsSelectedIndex; }
-            set
-            {
-                _colorOptionsSelectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private void ColorOptionsSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListBox box = (ListBox)sender;
-            _noteColor = box.SelectedIndex;
-            ColorOptionsSelectedIndex = box.SelectedIndex;
-            NoteColorForeground = GetSolidColorBrush(box.SelectedIndex);
-
-        }
-
         //------------Creation/Close Button-------------------------
 
         private string _creationButtonContent = "Close";
@@ -709,23 +599,36 @@ namespace YourNoteUWP
                 OnPropertyChanged();
             }
         }
+        private async void NoTitle()
+        {
+            MessageDialog showDialog;
+           
+                showDialog = new MessageDialog("To create a note, please give a title!");
+            showDialog.Commands.Add(new UICommand("Ok")
+            {
+                Id = 0
+            });
+            showDialog.DefaultCommandIndex = 0;
+            var result = await showDialog.ShowAsync();
+        }
 
         private void CreationButtonClick()
         {
-
-
-
             if (CreationButtonContent == "Save")
             {
+
+
+                if (String.IsNullOrEmpty(TitleOfNewNoteText) )
+                {
+                    NoTitle();
+                    return;
+
+                }
+
+
                 string creationDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
-               string x =  DateTime.Now.ToUniversalTime().ToString();
                 _accountPageViewModel = new AccountPageViewModel();
-
-
-
-                string y = DateTime.UtcNow.ToString();
-
-                Note newNote = new Note(LoggedUser.userId, TitleOfNewNoteText, ContentOfNewNoteText, _noteColor, creationDay, creationDay);
+                Note newNote = new Note(LoggedUser.userId, TitleOfNewNoteText, ContentOfNewNoteText, NoteEditOptions.ColorOptionsSelectedIndex, creationDay, creationDay);
                long noteId =  _accountPageViewModel.CreateNewNote(newNote);
                 if  (_notesDataItemSource == null)
                 {
@@ -739,17 +642,18 @@ namespace YourNoteUWP
                 ContentOfNewNoteText = "";
                 TitleOfNewNoteText = "";
                 ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
-                TitleOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
                 SubSearchItemSource.Add(newNote);
             }
 
-            TitleOfNewNoteVisibility = Visibility.Collapsed;
-            NoteStyleOptionsVisibility = Visibility.Collapsed;
+
+      
+                TitleOfNewNoteVisibility = Visibility.Collapsed;
+                NoteStyleOptionsVisibility = Visibility.Collapsed;
+            
+
         }
 
         //----------------------------Note Grid View---------------------------------------------------
-
-        private ObservableCollection<Note> notesForItemSource = null;
 
         private ObservableCollection<Note> _notesDataItemSource = null;
         public ObservableCollection<Note> NotesDataItemSource
@@ -899,7 +803,25 @@ namespace YourNoteUWP
            
         }
 
-        
+        private void NoteEditOptions_EditOptions(string btnName)
+        {
+ 
+            switch(btnName)
+            {
+                case "FontBackground": FontBackgroundClick(null, null); break;
+                case "FontIncrease": FontIncreaseClick(null, null); break;
+                case "FontDecrease": FontDecreaseClick(null, null); break;
+                case "SmallCaps": SmallCapsClick(null, null); break;
+                case "AllCaps": AllCapsClick(null, null); break;
+                case "Strikethrough": StrikethroughClick(null, null); break;
+                default: return;
+            }
+                
+        }
+
+    
+
+
 
 
 

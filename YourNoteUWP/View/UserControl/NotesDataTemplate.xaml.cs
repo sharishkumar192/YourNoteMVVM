@@ -67,13 +67,10 @@ namespace YourNoteUWP
 
         public string ShowModifiedTime(string modifiedTime)
         {
-            Titles.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.title);
             Contents.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.content);
 
             Titles.IsReadOnly = true;
-            Contents.IsReadOnly = true;
-            Titles.IsTapEnabled = false;
-            Contents.IsTapEnabled = false;
+        
             string value = "";
             string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
             DateTime currentDetail = DateTime.Parse(currentStatus);

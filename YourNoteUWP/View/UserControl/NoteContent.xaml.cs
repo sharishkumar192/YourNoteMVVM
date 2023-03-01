@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using YourNoteUWP.Models;
+using YourNoteUWP.Util;
 using YourNoteUWP.ViewModels;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -61,6 +62,10 @@ namespace YourNoteUWP
                 _noteContentViewModel = NoteContentViewModel.NoteViewModel;
                 _noteContentViewModel.UpdateCount(_searchCount, _noteId);
         }
+
+        private delegate ObservableCollection<Models.User> NoteContentUserControl(object sender, RoutedEventArgs e);
+
+
         public NoteContent()
         {
             this.InitializeComponent();
@@ -68,6 +73,10 @@ namespace YourNoteUWP
 
             TitleOfNote.AddHandler(TappedEvent, new TappedEventHandler(TitleOfNoteTapped), TitleOfNoteIsTapped);
             ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), ContentOfNoteIsTapped);
+
+
+            NoteContentUserControl delUserControlMethod = new NoteContentUserControl(NoteShareButtonClick);
+            NoteMenuOptionsContainer.CallingPageMethod = delUserControlMethod;
 
         }
 
@@ -80,7 +89,8 @@ namespace YourNoteUWP
             ContentOfNoteIsTapped = true;
             _dispatcherTimer = null;
             isModified = false;
-            isDeleted = false; 
+            isDeleted = false;
+           
         }
 
         public void DisplayContent(string userId, long noteId, string title, string content, long noteColor, string modifiedDay)
@@ -90,8 +100,11 @@ namespace YourNoteUWP
             TitleOfNoteText = title;
             ContentOfNoteText = content;
             currentDay = modifiedDay;
-            NoteContentBackground = GetSolidColorBrush(noteColor);
-            TitleOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, TitleOfNoteText);
+            NoteContentBackground =NotesUtilities.GetSolidColorBrush(noteColor);
+
+            NoteMenuOptionsContainer.NoteColorForeground = NotesUtilities.GetSolidColorBrush(noteColor);
+            NoteMenuOptionsContainer.ColorOptionsSelectedIndex = (int)noteColor;
+            //TitleOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, TitleOfNoteText);
             ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
             ToEnableEditMode();
 
@@ -106,7 +119,9 @@ namespace YourNoteUWP
             _searchCount = searchCount;
             GotCount = true;
               currentDay = modifiedDay;
-            NoteContentBackground = GetSolidColorBrush(noteColor);
+            NoteMenuOptionsContainer.NoteColorForeground = NotesUtilities.GetSolidColorBrush(noteColor);
+            NoteMenuOptionsContainer.ColorOptionsSelectedIndex = (int)noteColor;
+            NoteContentBackground = NotesUtilities.GetSolidColorBrush(noteColor);
             ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
             ToEnableEditMode();
         }
@@ -115,17 +130,6 @@ namespace YourNoteUWP
 
 
 
-        private async void NoValidUsers()
-        {
-            MessageDialog showDialog;
-                showDialog = new MessageDialog("No users available to share the note");
-             showDialog.Commands.Add(new UICommand("Ok")
-            {
-                Id = 0
-            });
-            showDialog.DefaultCommandIndex = 0;
-            var result = await showDialog.ShowAsync();
-        }
 
         private async void NoteShared(bool value)
         {
@@ -142,22 +146,20 @@ namespace YourNoteUWP
             var result = await showDialog.ShowAsync();
         }
 
-
-
-
-        private static SolidColorBrush GetSolidColorBrush(long value)
+        private async void NoValidUsers()
         {
-            int index = (int)value;
-            List<string> color = new List<string>()
-        { "#f8bec5", "#c6e8b7", "#fdefad", "#c3e9fd"};
-            string hex = color[index];
-            hex = hex.Replace("#", string.Empty);
-            byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
-            byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
-            byte b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
-            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
-            return myBrush;
+            MessageDialog showDialog;
+            showDialog = new MessageDialog("No users available to share the note");
+            showDialog.Commands.Add(new UICommand("Ok")
+            {
+                Id = 0
+            });
+            showDialog.DefaultCommandIndex = 0;
+            var result = await showDialog.ShowAsync();
         }
+
+
+
 
         //---------------------------Note Background--------------------------------------------------
         private SolidColorBrush _noteContentBackground;
@@ -264,27 +266,26 @@ namespace YourNoteUWP
                 OnPropertyChanged();
             }
         }
-
-
-        public void NoteShareButtonClick()
+     
+        public ObservableCollection<Models.User> NoteShareButtonClick(object sender, RoutedEventArgs e)
         {
+            ObservableCollection<Models.User> notes = null;
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             if (_noteContentViewModel.IsOwner(_userId, _noteId) == true)
             {
-                if(UsersToShare == null )
-                UsersToShare = _noteContentViewModel.GetUsersToShare(_userId, _noteId);
+          notes = _noteContentViewModel.GetUsersToShare(_userId, _noteId);
 
-                if (UsersToShare!=null && UsersToShare.Count == 0  )
-                    NoValidUsers();
             }
             else
             {
                 NoteShared(false);
             }
+
+            return notes;
         }
 
         //----------------------------Note Delete Button ---------------------------------------------------
-        public void NoteDeleteButtonClick()
+        public void NoteDeleteButtonClick(object sender, RoutedEventArgs e)
         {
             
             
@@ -455,12 +456,38 @@ namespace YourNoteUWP
 
         private void TitleOfNoteTextChanged(object sender, RoutedEventArgs e)
         {
-            RichEditBox Context = (RichEditBox)sender;
-            string text;
-            Context.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out text);
-            TitleOfNoteText = text;
 
+            TextBox box = (TextBox)sender;
+            TitleOfNoteText = box.Text;
+           
 
         }
+        
+        private void NoteBackgroundColor()
+        {
+
+            NoteContentBackground = NoteMenuOptionsContainer.NoteColorForeground;
+
+        }
+
+        private void NoteMenuOptionsContainer_EditOptions(string name)
+        {
+            switch (name)
+            {
+                case "FontBackground":NotesUtilities.FontBackgroundClick(ContentOfNote, null); break;
+                case "FontIncrease": NotesUtilities.FontIncreaseClick(ContentOfNote, null); break;
+                case "FontDecrease": NotesUtilities.FontDecreaseClick(ContentOfNote, null); break;
+                case "SmallCaps": NotesUtilities.SmallCapsClick(ContentOfNote, null); break;
+                case "AllCaps": NotesUtilities.AllCapsClick(ContentOfNote, null); break;
+                case "Strikethrough": NotesUtilities.StrikethroughClick(ContentOfNote, null); break;
+                case "ColorOptions": NoteBackgroundColor(); break;
+                case "NoteDeleteButton": NoteDeleteButtonClick(null, null); break;
+                case "UsersToShareView":  UsersToShareView_ItemClick(null, null); break;
+                case "NoValidUsers": NoValidUsers(); break;
+                default: return;
+            }
+        }
+
+
     }
 }
