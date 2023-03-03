@@ -117,11 +117,19 @@
         <Button
             Name="NoteColor"
             Margin="5,0,0,0"
-            Content="&#xED67;"
-            FontFamily="Segoe MDL2 Assets"
-            Foreground="{x:Bind NoteColorForeground, Mode=OneWay}"
-            Style="{StaticResource NoteStyleButtonStyle1}"
+            Style="{StaticResource NoteColorButtonStyle}"
             ToolTipService.ToolTip="Note Color">
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="20">
+                <Rectangle
+                    Width="14"
+                    Height="14"
+                    Fill="{x:Bind NoteColorForeground, Mode=OneWay}"
+                    RadiusX="20"
+                    RadiusY="20" />
+            </Border>
             <Button.Flyout>
                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
                     <ListBox
@@ -155,12 +163,12 @@
         <Button
             Name="NoteShareButton"
             Margin="5,0,0,0"
-            Visibility="{x:Bind NoteShareButtonVisibility, Mode=OneWay}"
             Click="{x:Bind NoteShareButtonClick, Mode=OneWay}"
             Content="&#xE72D;"
             FontFamily="Segoe MDL2 Assets"
             Style="{StaticResource NoteStyleButtonStyle}"
-            ToolTipService.ToolTip="Share">
+            ToolTipService.ToolTip="Share"
+            Visibility="{x:Bind NoteShareButtonVisibility, Mode=OneWay}">
             <Button.Flyout>
                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
                     <Grid>
@@ -188,14 +196,13 @@
         <Button
             Name="NoteDeleteButton"
             Margin="5,0,0,0"
-               Visibility="{x:Bind NoteDeleteButtonVisibility, Mode=OneWay}"
-        
             Click="{x:Bind NoteDeleteButtonClick, Mode=OneWay}"
             Content="&#xE107;"
             FontFamily="Segoe MDL2 Assets"
             Foreground="Red"
-            Style="{StaticResource NoteStyleButtonStyle1}"
-            ToolTipService.ToolTip="Delete" />
+            Style="{StaticResource NoteColorButtonStyle}"
+            ToolTipService.ToolTip="Delete"
+            Visibility="{x:Bind NoteDeleteButtonVisibility, Mode=OneWay}" />
 
         <!--<Button
             Name="NoteDeleteButton"

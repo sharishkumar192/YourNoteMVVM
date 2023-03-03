@@ -48,7 +48,7 @@ namespace YourNoteUWP
                 conn.Close();
 
             }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
 
             finally
             {
@@ -138,7 +138,7 @@ namespace YourNoteUWP
 
             }
 
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
                 conn.Close();
@@ -194,7 +194,7 @@ namespace YourNoteUWP
 
 
             }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
                 conn.Close();
@@ -255,7 +255,7 @@ namespace YourNoteUWP
 
 
 
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
                 conn.Close();
@@ -302,7 +302,7 @@ namespace YourNoteUWP
                 conn.Close();
 
             }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
                 conn.Close();
@@ -316,11 +316,11 @@ namespace YourNoteUWP
 
         // ----------------------------------------NOTE DISPLAY PAGE DB FETCH----------------------------------------
 
-        public static Dictionary<string, bool> AlreadySharedUsers (string tableName, long noteId)
+        public static Dictionary<string, bool> AlreadySharedUsers(string tableName, long noteId)
         {
             Dictionary<string, bool> sharedUserIds = null;
 
-            string query = $"SELECT SHAREDUSERID FROM {tableName} WHERE SHAREDNOTEID = @noteId ; "; 
+            string query = $"SELECT SHAREDUSERID FROM {tableName} WHERE SHAREDNOTEID = @noteId ; ";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -352,7 +352,7 @@ namespace YourNoteUWP
 
         }
         //It prints all the available suggested to whom we can share the note 
-        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId,  long noteId)// Needed
+        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId, long noteId)// Needed
         {
             Dictionary<string, bool> sharedUserIds = AlreadySharedUsers(sharedTableName, noteId);
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
@@ -362,8 +362,8 @@ namespace YourNoteUWP
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameter =  new SQLiteParameter("@userId", userId);
-             
+                SQLiteParameter parameter = new SQLiteParameter("@userId", userId);
+
                 command.Parameters.Add(parameter);
 
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
@@ -373,7 +373,7 @@ namespace YourNoteUWP
                         string name = sqlite_datareader.GetString(0);
                         string validUserId = sqlite_datareader.GetString(1);
 
-                        if ( (sharedUserIds != null && !sharedUserIds.ContainsKey(validUserId) ) || sharedUserIds == null )
+                        if ((sharedUserIds != null && !sharedUserIds.ContainsKey(validUserId)) || sharedUserIds == null)
                         {
                             Models.User user = new Models.User(name, validUserId);
                             userToShare.Add(user);
@@ -384,7 +384,7 @@ namespace YourNoteUWP
                 }
                 conn.Close();
             }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
                 conn.Close();
@@ -435,6 +435,10 @@ namespace YourNoteUWP
             return isOwner;
 
         }
+
+
+      
+
 
     }
 }

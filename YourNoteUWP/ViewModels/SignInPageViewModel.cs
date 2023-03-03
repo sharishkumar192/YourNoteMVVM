@@ -367,7 +367,7 @@ namespace YourNoteUWP.ViewModels
                 {
 
                     Tuple<Frame, Models.User> tuple = new Tuple<Frame, Models.User>(_frame, validation.Item1);
-                    _frame.Navigate(typeof(AccountPage), tuple, new DrillInNavigationTransitionInfo());
+                    _frame.Navigate(typeof(HomePage), tuple);
 
                 }
                 else

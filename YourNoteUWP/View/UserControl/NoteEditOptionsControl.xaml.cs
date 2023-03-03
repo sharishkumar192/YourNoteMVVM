@@ -46,6 +46,15 @@ namespace YourNoteUWP
             set { _delPageMethod = value; }
         }
 
+        private Delegate _toShare;
+        public Delegate ToShare
+        {
+            set { _toShare = value; }
+        }
+
+
+
+
 
         private string ButtonName(object sender)
         {
@@ -94,7 +103,7 @@ namespace YourNoteUWP
 
         //----Note Color Button
 
-        private SolidColorBrush _noteColorForeground = NotesUtilities.GetSolidColorBrush(0);
+        private SolidColorBrush _noteColorForeground ;
         public SolidColorBrush NoteColorForeground
         {
             get { return _noteColorForeground; }
@@ -102,6 +111,17 @@ namespace YourNoteUWP
             {
                 _noteColorForeground = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private void ChangeNoteColor()
+        {
+            if (NoteShareButtonVisibility == Visibility.Visible && NoteDeleteButtonVisibility == Visibility.Visible)
+            {
+                Style style1 = Application.Current.Resources[NotesUtilities.noteColorStyle[ColorOptionsSelectedIndex]] as Style;
+                Style style2 = Application.Current.Resources[NotesUtilities.noteColorButtonStyle[ColorOptionsSelectedIndex]] as Style;
+                FontBackground.Style = FontIncrease.Style = FontDecrease.Style = SmallCaps.Style = AllCaps.Style = Strikethrough.Style = NoteShareButton.Style = style1;
+                NoteColor.Style = NoteDeleteButton.Style = style2;
             }
         }
 
@@ -115,6 +135,7 @@ namespace YourNoteUWP
             {
                 _colorOptionsSelectedIndex = value;
                 OnPropertyChanged();
+                ChangeNoteColor();
             }
         }
 
@@ -127,9 +148,10 @@ namespace YourNoteUWP
             NoteColorForeground = NotesUtilities.GetSolidColorBrush(box.SelectedIndex);
 
             EditOptions?.Invoke(box.Name);
-
+            ChangeNoteColor();
+          
         }
-
+        
 
         public void NoteDeleteButtonClick(object sender, RoutedEventArgs e)
         { 
@@ -146,18 +168,27 @@ namespace YourNoteUWP
                 NoValidUsers();
         }
 
-
-
         private  void NoValidUsers()
         {
-            EditOptions?.Invoke(ButtonName("NoValidUsers"));
+            EditOptions?.Invoke("NoValidUsers");
         }
 
 
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
         {
             ListView view = (ListView)sender;
+            _toShare.DynamicInvoke(view.Name, e);
+
+            int i = UsersToShare.IndexOf((Models.User)e.ClickedItem);
+            UsersToShare.RemoveAt(i);
+
+            NoteShared(true);
             //EditOptions?.Invoke(view.name,e);
+        }
+
+        private  void NoteShared(bool value)
+        {
+            EditOptions?.Invoke(value.ToString());
         }
 
         private ObservableCollection<Models.User> _usersToShare;

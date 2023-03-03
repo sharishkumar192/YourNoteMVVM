@@ -18,21 +18,19 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:ConnectionId='3'
+        <TextBlock x:ConnectionId='3'
             Name="Titles"
             Margin="10,10,0,0"
             FontSize="18"
             FontWeight="SemiBold"
             Foreground="Black"
-            Style="{StaticResource NewNoteTitleStyle}"
+            TextTrimming="CharacterEllipsis"
                                                              />
         <ScrollViewer Grid.Row="1">
             <RichEditBox x:ConnectionId='5'
                 Name="Contents"
                 Margin="15"
-                
                 FontSize="14"
-                Foreground="Black"
                 HorizontalTextAlignment="Left"
                 Style="{StaticResource NoteDisplayTemplate}"
                 TextWrapping="Wrap" />

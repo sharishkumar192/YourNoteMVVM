@@ -16,7 +16,7 @@ using YourNoteUWP.Models;
 using YourNoteUWP.View;
 namespace YourNoteUWP.ViewModels
 {
-    internal class AccountPageViewModel
+    internal class HomePageViewModel
     {
        
      
@@ -44,7 +44,7 @@ namespace YourNoteUWP.ViewModels
 
         public static ObservableCollection<Note> GetPersonalNotes(User user, bool isSort)
         {
-            AccountPageViewModel apvm = new AccountPageViewModel();
+            HomePageViewModel apvm = new HomePageViewModel();
             var notes = DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
             if (isSort == true)
                 return apvm.SortByModificationtime(notes);
@@ -53,7 +53,7 @@ namespace YourNoteUWP.ViewModels
 
         public static ObservableCollection<Note> GetSharedNotes(Models.User user, bool isSort)
         {
-            AccountPageViewModel apvm = new AccountPageViewModel();
+            HomePageViewModel apvm = new HomePageViewModel();
             var  notes = DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, user);
             if (isSort == true)
                return apvm.SortByModificationtime(notes);
@@ -64,7 +64,7 @@ namespace YourNoteUWP.ViewModels
 
         public static ObservableCollection<Note> GetAllNotes(Models.User user, bool isSort)
         {
-            AccountPageViewModel apvm = new AccountPageViewModel();
+            HomePageViewModel apvm = new HomePageViewModel();
             var allNotes = new ObservableCollection<Note>();
         
                 var pnotes = GetPersonalNotes(user, false);
@@ -89,7 +89,7 @@ namespace YourNoteUWP.ViewModels
 
         public Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(User user)
         {
-            AccountPageViewModel apvm = new AccountPageViewModel();
+            HomePageViewModel apvm = new HomePageViewModel();
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;
             ObservableCollection<Note> personalNotes = GetPersonalNotes(user, false);

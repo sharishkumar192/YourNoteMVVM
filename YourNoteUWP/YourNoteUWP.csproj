@@ -123,14 +123,18 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="ItemsDataTemplateSelector.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Models\ItemsDataTemplateSelector.cs" />
+    <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />
     <Compile Include="Models\ExceptionHandlerService.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Util\ToastNotifications.cs" />
+    <Compile Include="View\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControl\NoteContent.xaml.cs">
       <DependentUpon>NoteContent.xaml</DependentUpon>
     </Compile>
@@ -143,7 +147,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleData.cs" />
     <Compile Include="Util\NotesUtilities.cs" />
-    <Compile Include="ViewModels\AccountPageViewModel.cs" />
+    <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\IEmail.cs" />
     <Compile Include="ViewModels\IEmailExt.cs" />
     <Compile Include="ViewModels\INullorEmpty.cs" />
@@ -241,6 +245,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControl\NoteContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,7 +292,6 @@
       <Version>1.0.116</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

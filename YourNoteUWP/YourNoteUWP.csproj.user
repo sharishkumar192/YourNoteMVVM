@@ -10,4 +10,11 @@
     <SplashScreenSource>E:\OD\shopping-list.png</SplashScreenSource>
     <PackageLogoSource>E:\OD\shopping-list.png</PackageLogoSource>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugEngines>
+    </DebugEngines>
+    <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
+    <BackgroundTaskDebugEngines>
+    </BackgroundTaskDebugEngines>
+  </PropertyGroup>
 </Project>

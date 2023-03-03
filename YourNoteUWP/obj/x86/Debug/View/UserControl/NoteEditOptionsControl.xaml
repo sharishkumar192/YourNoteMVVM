@@ -117,14 +117,22 @@
         <Button x:ConnectionId='17'
             Name="NoteColor"
             Margin="5,0,0,0"
-            Content="&#xED67;"
-            FontFamily="Segoe MDL2 Assets"
-                                                                  
-            Style="{StaticResource NoteStyleButtonStyle1}"
+            Style="{StaticResource NoteColorButtonStyle}"
             ToolTipService.ToolTip="Note Color">
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="20">
+                <Rectangle x:ConnectionId='21'
+                    Width="14"
+                    Height="14"
+                                                                    
+                    RadiusX="20"
+                    RadiusY="20" />
+            </Border>
             <Button.Flyout>
                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="Bottom">
-                    <ListBox x:ConnectionId='21'
+                    <ListBox x:ConnectionId='22'
                         Name="ColorOptions"
                         Height="40"
                                                                                        
@@ -155,12 +163,12 @@
         <Button x:ConnectionId='18'
             Name="NoteShareButton"
             Margin="5,0,0,0"
-                                                                        
                                                               
             Content="&#xE72D;"
             FontFamily="Segoe MDL2 Assets"
             Style="{StaticResource NoteStyleButtonStyle}"
-            ToolTipService.ToolTip="Share">
+            ToolTipService.ToolTip="Share"
+                                                                        >
             <Button.Flyout>
                 <Flyout FlyoutPresenterStyle="{StaticResource NoteColorFlyout}" Placement="BottomEdgeAlignedLeft">
                     <Grid>
@@ -188,14 +196,13 @@
         <Button x:ConnectionId='19'
             Name="NoteDeleteButton"
             Margin="5,0,0,0"
-                                                                            
-        
                                                                
             Content="&#xE107;"
             FontFamily="Segoe MDL2 Assets"
             Foreground="Red"
-            Style="{StaticResource NoteStyleButtonStyle1}"
-            ToolTipService.ToolTip="Delete" />
+            Style="{StaticResource NoteColorButtonStyle}"
+            ToolTipService.ToolTip="Delete"
+                                                                          />
 
         <!--<Button
             Name="NoteDeleteButton"

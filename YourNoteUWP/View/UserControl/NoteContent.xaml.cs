@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Protection;
 using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -47,7 +48,7 @@ namespace YourNoteUWP
 
         private bool _gotCount = false;
 
-
+        public long _noteColorChosen = 0;
 
         public bool  GotCount
         {
@@ -76,37 +77,56 @@ namespace YourNoteUWP
 
 
             NoteContentUserControl delUserControlMethod = new NoteContentUserControl(NoteShareButtonClick);
-            NoteMenuOptionsContainer.CallingPageMethod = delUserControlMethod;
+            NoteMenuOptions.CallingPageMethod = delUserControlMethod;
+
+            ToShareView itemClick = new ToShareView(UsersToShareView_ItemClick);
+            NoteMenuOptions.ToShare = itemClick;
 
         }
-
+        public void ChangesOnClosing()
+        {
+            ContentOfNoteIsReadOnly = false;
+        }
         private void ToEnableEditMode()
         {
-            NoteMenuOptionsContainerVisibility = Visibility.Collapsed;
+            NoteMenuOptionsVisibility = Visibility.Collapsed;
             TitleOfNoteIsReadOnly = true;
             ContentOfNoteIsReadOnly = true;
             TitleOfNoteIsTapped = true;
             ContentOfNoteIsTapped = true;
             _dispatcherTimer = null;
             isModified = false;
+            NoteMenuOptions.UsersToShare = null;
             isDeleted = false;
-           
+     
+
         }
 
+        private void TakeNoteColor(long color)
+        {
+            NoteContentBackground = NotesUtilities.GetSolidColorBrush(color);
+            NoteMenuOptions.NoteColorForeground = NotesUtilities.GetSolidColorBrush(color);
+            NoteMenuOptions.ColorOptionsSelectedIndex = (int)color;
+        }
         public void DisplayContent(string userId, long noteId, string title, string content, long noteColor, string modifiedDay)
         {
+            try { 
             _noteId = noteId;
             _userId = userId;
             TitleOfNoteText = title;
             ContentOfNoteText = content;
             currentDay = modifiedDay;
-            NoteContentBackground =NotesUtilities.GetSolidColorBrush(noteColor);
+                _noteColorChosen = noteColor;
 
-            NoteMenuOptionsContainer.NoteColorForeground = NotesUtilities.GetSolidColorBrush(noteColor);
-            NoteMenuOptionsContainer.ColorOptionsSelectedIndex = (int)noteColor;
-            //TitleOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, TitleOfNoteText);
-            ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
-            ToEnableEditMode();
+              
+             ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
+                TakeNoteColor(noteColor);
+                ToEnableEditMode();
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
+            }   
 
         }
 
@@ -119,9 +139,7 @@ namespace YourNoteUWP
             _searchCount = searchCount;
             GotCount = true;
               currentDay = modifiedDay;
-            NoteMenuOptionsContainer.NoteColorForeground = NotesUtilities.GetSolidColorBrush(noteColor);
-            NoteMenuOptionsContainer.ColorOptionsSelectedIndex = (int)noteColor;
-            NoteContentBackground = NotesUtilities.GetSolidColorBrush(noteColor);
+            TakeNoteColor(noteColor);
             ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
             ToEnableEditMode();
         }
@@ -162,6 +180,16 @@ namespace YourNoteUWP
 
 
         //---------------------------Note Background--------------------------------------------------
+
+        private void NoteColorChosenChanged()
+        {
+            _noteContentViewModel = NoteContentViewModel.NoteViewModel;
+              _noteColorChosen = NoteMenuOptions.ColorOptionsSelectedIndex;
+        isModified = true;
+            currentDay = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
+            _noteContentViewModel.ChangeNoteColor(_noteId, _noteColorChosen, currentDay);
+        }
+        
         private SolidColorBrush _noteContentBackground;
         public SolidColorBrush NoteContentBackground
         {
@@ -169,7 +197,9 @@ namespace YourNoteUWP
             set
             {
                 _noteContentBackground = value;
+              
                 OnPropertyChanged();
+                NoteColorChosenChanged();
 
             }
         }
@@ -236,24 +266,34 @@ namespace YourNoteUWP
             set { _delPageMethod = value;  }
         }
 
+
         public void NoteCloseButtonClick(object sender, RoutedEventArgs e)
         {
+   
             _delPageMethod.DynamicInvoke(null, null);
+            
          }
 
-        //--------------------------- NoteMenuOptions List Box ------------------------------------------
-        private Visibility _noteMenuOptionsContainerVisibility = Visibility.Collapsed;
+        //--------------------------- NoteMenuOptions  ------------------------------------------
+        private Visibility _NoteMenuOptionsVisibility = Visibility.Collapsed;
 
-        public Visibility NoteMenuOptionsContainerVisibility
+        public Visibility NoteMenuOptionsVisibility
         {
-            get { return _noteMenuOptionsContainerVisibility; }
+            get { return _NoteMenuOptionsVisibility; }
             set
             {
-                _noteMenuOptionsContainerVisibility = value;
+                _NoteMenuOptionsVisibility = value;
                 OnPropertyChanged();
             }
         }
 
+        //private SolidColorBrush _noteMenuOptionsContainerBackground;
+
+        //public SolidColorBrush NoteMenuOptionsContainerBackground
+        //{
+        //    get { return NoteMenuOptionsContainerBackground; }
+        //    set { NoteMenuOptionsContainerBackground = value; }
+        //}
 
         //----------------------------Note Share Button ---------------------------------------------------
 
@@ -336,16 +376,12 @@ namespace YourNoteUWP
 
 
 
-
+        delegate void ToShareView(object sender, ItemClickEventArgs e);
         private void UsersToShareView_ItemClick(object sender, ItemClickEventArgs e)
         {
             _noteContentViewModel = NoteContentViewModel.NoteViewModel;
             Models.User selectedUser = (Models.User)e.ClickedItem;
             _noteContentViewModel.ShareNote(selectedUser.userId, _noteId);
-            int i = UsersToShare.IndexOf(selectedUser);
-            UsersToShare.RemoveAt(i);
-
-            NoteShared(true);
 
         }
 
@@ -366,8 +402,8 @@ namespace YourNoteUWP
 
         private void EditModeEnabled()
         {
-            if (NoteMenuOptionsContainerVisibility == Visibility.Collapsed)
-                NoteMenuOptionsContainerVisibility = Visibility.Visible;
+            if (NoteMenuOptionsVisibility == Visibility.Collapsed)
+                NoteMenuOptionsVisibility = Visibility.Visible;
             if (TitleOfNoteIsReadOnly == true || ContentOfNoteIsReadOnly == true)
             {
                 TitleOfNoteIsReadOnly = false;
@@ -398,7 +434,7 @@ namespace YourNoteUWP
             dispatcherTimer = null;
         }
        public void DispatcherTimer_Tick(object sender, object e)
-        {
+       {
             bool contentChange = IsChanged(_oldContent, ContentOfNoteText);
             bool titleChange = IsChanged(_oldTitle, TitleOfNoteText);
             if (contentChange && titleChange)
@@ -462,15 +498,18 @@ namespace YourNoteUWP
            
 
         }
-        
+        public long GetNoteColor()
+        {
+            return NoteMenuOptions.ColorOptionsSelectedIndex;
+        }
         private void NoteBackgroundColor()
         {
 
-            NoteContentBackground = NoteMenuOptionsContainer.NoteColorForeground;
-
+              NoteContentBackground = NoteMenuOptions.NoteColorForeground;
+           
         }
 
-        private void NoteMenuOptionsContainer_EditOptions(string name)
+        private void NoteMenuOptions_EditOptions(string name)
         {
             switch (name)
             {
@@ -482,8 +521,17 @@ namespace YourNoteUWP
                 case "Strikethrough": NotesUtilities.StrikethroughClick(ContentOfNote, null); break;
                 case "ColorOptions": NoteBackgroundColor(); break;
                 case "NoteDeleteButton": NoteDeleteButtonClick(null, null); break;
-                case "UsersToShareView":  UsersToShareView_ItemClick(null, null); break;
                 case "NoValidUsers": NoValidUsers(); break;
+                case "True":
+                case "False":
+                    {
+                        if ("True" == name)
+                            NoteShared(true);
+                        else
+                            NoteShared(false);
+                        break;
+
+                    }
                 default: return;
             }
         }

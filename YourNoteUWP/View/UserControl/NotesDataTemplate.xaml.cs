@@ -63,14 +63,14 @@ namespace YourNoteUWP
             }
         }
 
-        
+
 
         public string ShowModifiedTime(string modifiedTime)
         {
             Contents.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.content);
 
-            Titles.IsReadOnly = true;
-        
+          
+
             string value = "";
             string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
             DateTime currentDetail = DateTime.Parse(currentStatus);
@@ -83,17 +83,12 @@ namespace YourNoteUWP
                 {
                     if (currentDetail.Day == modifiedDetail.Day)
                     {
-                        int minutes = Math.Abs(currentDetail.Hour * 60 + currentDetail.Minute - (modifiedDetail.Hour * 60 + modifiedDetail.Minute));
-
+                        int minutes = Math.Abs((currentDetail.Hour * 60 + currentDetail.Minute) - (modifiedDetail.Hour * 60 + modifiedDetail.Minute));
                         if (minutes == 0)
                             value = "just now";
-                        else if (minutes <= 60)
+                        else if (minutes < 60)
                         {
-                            if(minutes <= 30)
-                                value = modifiedDetail.Minute.ToString() + " " + "minutes ago";
-                            else
-
-                            value = (60 - modifiedDetail.Minute).ToString() + " " + "minutes ago";
+                            value = minutes.ToString() + " " + "minutes ago";
                         }
                         else
                         {

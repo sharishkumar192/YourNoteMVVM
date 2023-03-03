@@ -82,7 +82,11 @@ namespace YourNoteUWP.ViewModels
             return DBFetch.ValidUsersToShare(DBCreation.userTableName, DBCreation.sharedTableName, DBCreation.notesTableName, userId, displayNoteId);
         }
 
+        public void ChangeNoteColor(long noteId, long noteColor, string modifiedDay)
+        {
+            DBUpdation.UpdateNoteColor(DBCreation.notesTableName, noteId, noteColor, modifiedDay);
 
+        }
 
 
 

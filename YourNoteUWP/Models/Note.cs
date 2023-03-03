@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System;
 
 namespace YourNoteUWP.Models
 {
@@ -65,10 +66,19 @@ namespace YourNoteUWP.Models
             this.noteColor = noteColor;
             this.searchCount = searchCount;
             this.modifiedDay = modifiedDay;
-
         }
 
-      
+        public Note(string userId, long noteId, string title, string content, long noteColor, string modifiedDay)
+        {
+            this.userId = userId;
+            this.noteId = noteId;
+            this.title = title;
+            this.content = content;
+            this.noteColor = noteColor;
+            this.modifiedDay = modifiedDay;
+        }
+ 
+
 
     }
 

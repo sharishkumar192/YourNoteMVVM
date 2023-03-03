@@ -55,7 +55,7 @@
     <!--
         NOTE CONTENT
     -->
-    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}" CornerRadius="4">
+    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -98,15 +98,16 @@
         </RelativePanel>
 
         <Border
+            Name="NoteMenuOptionsContainer"
             Grid.Row="1"
             HorizontalAlignment="Center"
-            Background="#ffffff"
+            Background="Transparent"
             CornerRadius="4">
             <local:NoteEditOptionsControl
-                x:Name="NoteMenuOptionsContainer"
+                x:Name="NoteMenuOptions"
                 Margin="5,0,5,5"
-                EditOptions="NoteMenuOptionsContainer_EditOptions"
-                Visibility="{x:Bind NoteMenuOptionsContainerVisibility, Mode=OneWay}" />
+                EditOptions="NoteMenuOptions_EditOptions"
+                Visibility="{x:Bind NoteMenuOptionsVisibility, Mode=OneWay}" />
         </Border>
 
 

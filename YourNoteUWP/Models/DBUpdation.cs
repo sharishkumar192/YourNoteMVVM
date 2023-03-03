@@ -174,8 +174,9 @@ namespace YourNoteUWP
                 SQLiteParameter[] parameters = new SQLiteParameter[4];
                 parameters[0] = new SQLiteParameter("@title", title);
                 parameters[1] = new SQLiteParameter("@content", content);
-                parameters[2] = new SQLiteParameter("@noteId", noteId);
-                parameters[3] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[3] = new SQLiteParameter("@noteId", noteId);
+
 
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
@@ -208,8 +209,9 @@ namespace YourNoteUWP
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 SQLiteParameter[] parameters = new SQLiteParameter[3];
                 parameters[0] = new SQLiteParameter("@title", title);
-                parameters[1] = new SQLiteParameter("@noteId", noteId); 
-                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[2] = new SQLiteParameter("@noteId", noteId); 
+
 
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
@@ -271,8 +273,9 @@ namespace YourNoteUWP
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 SQLiteParameter[] parameters = new SQLiteParameter[3];
                 parameters[0] = new SQLiteParameter("@content", content);
-                parameters[1] = new SQLiteParameter("@noteId", noteId);
-                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[2] = new SQLiteParameter("@noteId", noteId);
+
 
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
@@ -320,7 +323,35 @@ namespace YourNoteUWP
 
         }
 
-      
+        public static void UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
+        {
+            string query = $"UPDATE  {tableName} SET NOTECOLOR = @noteColor, MODIFIEDDAY = @modifiedDay  WHERE NOTEID = @noteId ; ";
+            SQLiteConnection conn = DBCreation.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                parameters[0] = new SQLiteParameter("@noteColor", noteColor);
+                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[2] = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+
+        }
+
 
 
 

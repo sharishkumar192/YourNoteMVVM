@@ -141,3 +141,8 @@ D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\resources.en.resfiles.intermediate
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\ProjectArchitectures.txt
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\.winmd_cache\$Microsoft.Graphics.Canvas.winmd_637214534760000000.json
 D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_637424617200000000.json
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\HomePage.g.i.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\HomePage.g.cs
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\HomePage.xaml
+D:\YourNoteUWP\YourNoteUWP\obj\x86\Debug\View\HomePage.xbf
+D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\View\HomePage.xbf

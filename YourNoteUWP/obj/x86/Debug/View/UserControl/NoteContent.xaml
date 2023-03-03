@@ -55,7 +55,7 @@
     <!--
         NOTE CONTENT
     -->
-    <Grid x:ConnectionId='10'                                                          CornerRadius="4">
+    <Grid x:ConnectionId='10'                                                         >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -65,7 +65,7 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
-            <TextBox x:ConnectionId='13'
+            <TextBox x:ConnectionId='14'
                 Name="TitleOfNote"
                 Width="675"
                 Height="50"
@@ -85,7 +85,7 @@
                 TextAlignment="Center"
                                                                            />
 
-            <Button x:ConnectionId='14'
+            <Button x:ConnectionId='15'
                 Name="NoteCloseButton"
                 Margin="10"
                 Background="Transparent"
@@ -97,23 +97,24 @@
                 RelativePanel.AlignRightWithPanel="True" />
         </RelativePanel>
 
-        <Border
+        <Border x:ConnectionId='11'
+            Name="NoteMenuOptionsContainer"
             Grid.Row="1"
             HorizontalAlignment="Center"
-            Background="#ffffff"
+            Background="Transparent"
             CornerRadius="4">
-            <local:NoteEditOptionsControl x:ConnectionId='12'
-                x:Name="NoteMenuOptionsContainer"
+            <local:NoteEditOptionsControl x:ConnectionId='13'
+                x:Name="NoteMenuOptions"
                 Margin="5,0,5,5"
-                                                                  
-                                                                                      />
+                                                         
+                                                                             />
         </Border>
 
 
 
 
 
-        <RichEditBox x:ConnectionId='11'
+        <RichEditBox x:ConnectionId='12'
             Name="ContentOfNote"
             Grid.Row="2"
             Margin="10"

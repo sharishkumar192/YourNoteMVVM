@@ -12,6 +12,24 @@ namespace YourNoteUWP.Util
     internal class NotesUtilities
     {
 
+        public static Dictionary<int, string> noteColorStyle = new Dictionary<int, string>()
+        {
+            {0, "RedNoteColor" },
+              {1, "GreenNoteColor" },
+                {2, "YellowNoteColor" },
+                  {3, "BlueNoteColor" }
+
+        };
+        public static Dictionary<int, string> noteColorButtonStyle = new Dictionary<int, string>()
+        {
+            {0, "RedColorNoteButton" },
+              {1, "GreenColorNoteButton" },
+                {2, "YellowColorNoteButton" },
+                  {3, "BlueColorNoteButton" }
+
+        };
+
+
         public static SolidColorBrush GetSolidColorBrush(long value)
         {
             int index = (int)value;
