@@ -81,6 +81,7 @@
                                                                         
                                                                         
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Style="{StaticResource TitleDisplayStyle}"
                                                                 
                                                             
                 TextAlignment="Center"
@@ -89,6 +90,7 @@
             <Button x:ConnectionId='15'
                 Name="NoteCloseButton"
                 Margin="10"
+                Style="{StaticResource CloseButton}"
                 Background="Transparent"
                                                                   
                 Content="&#xE106;"
@@ -107,7 +109,7 @@
             <local:NoteEditOptionsControl x:ConnectionId='13'
                 x:Name="NoteMenuOptions"
                 Margin="5,0,5,5"
-                                                         
+                                                                              
                                                                              />
         </Border>
 
@@ -127,13 +129,14 @@
             Foreground="Black"
                                                                       
                                                                       
+            Style="{StaticResource RichEditStyle}"
                                                               
                                                                         
             TextWrapping="Wrap" />
 
 
 
-        <Button />
+
     </Grid>
 
 

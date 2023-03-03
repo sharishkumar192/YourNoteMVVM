@@ -81,6 +81,7 @@
                 IsReadOnly="{x:Bind TitleOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="{x:Bind TitleOfNoteIsTapped, Mode=OneWay}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Style="{StaticResource TitleDisplayStyle}"
                 Tapped="{x:Bind TitleOfNoteTapped, Mode=OneWay}"
                 Text="{x:Bind TitleOfNoteText, Mode=OneWay}"
                 TextAlignment="Center"
@@ -89,6 +90,7 @@
             <Button
                 Name="NoteCloseButton"
                 Margin="10"
+                Style="{StaticResource CloseButton}"
                 Background="Transparent"
                 Click="{x:Bind NoteCloseButtonClick, Mode=OneWay}"
                 Content="&#xE106;"
@@ -107,7 +109,7 @@
             <local:NoteEditOptionsControl
                 x:Name="NoteMenuOptions"
                 Margin="5,0,5,5"
-                EditOptions="NoteMenuOptions_EditOptions"
+                EditOptions="{x:Bind NoteMenuOptionsEditOptions, Mode=OneWay}"
                 Visibility="{x:Bind NoteMenuOptionsVisibility, Mode=OneWay}" />
         </Border>
 
@@ -127,13 +129,14 @@
             Foreground="Black"
             IsReadOnly="{x:Bind ContentOfNoteIsReadOnly, Mode=OneWay}"
             IsTapEnabled="{x:Bind ContentOfNoteIsTapped, Mode=OneWay}"
+            Style="{StaticResource RichEditStyle}"
             Tapped="{x:Bind ContentOfNoteTapped, Mode=OneWay}"
             TextChanged="{x:Bind ContentOfNoteTextChanged, Mode=OneWay}"
             TextWrapping="Wrap" />
 
 
 
-        <Button />
+
     </Grid>
 
 

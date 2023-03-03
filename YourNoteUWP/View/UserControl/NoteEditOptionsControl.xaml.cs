@@ -54,51 +54,55 @@ namespace YourNoteUWP
 
 
 
-
-
-        private string ButtonName(object sender)
+        string ReturnNameOfButton(object sender)
         {
-            Button button = (Button)sender;
+            Button button = sender as Button;
             return button.Name;
         }
+
+        //private string ReturnNameOfButton(object sender)
+        //{
+        //    Button button = (Button)sender;
+        //    return button.Name;
+        //}
 
         //----Note Font Background
 
         private void FontBackgroundClick(object sender, RoutedEventArgs e)
         {
 
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note Font Increase
         private void FontIncreaseClick(object sender, RoutedEventArgs e)
         {
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note Font Decrease
 
         private void FontDecreaseClick(object sender, RoutedEventArgs e)
         {
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note Small Caps
         private void SmallCapsClick(object sender, RoutedEventArgs e)
         {
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note All Caps
         private void AllCapsClick(object sender, RoutedEventArgs e)
         {
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note Strikethrough
         private void StrikethroughClick(object sender, RoutedEventArgs e)
         {
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
 
         //----Note Color Button
@@ -155,7 +159,7 @@ namespace YourNoteUWP
 
         public void NoteDeleteButtonClick(object sender, RoutedEventArgs e)
         { 
-            EditOptions?.Invoke(ButtonName(sender));
+            EditOptions?.Invoke(ReturnNameOfButton(sender));
         }
         public void NoteShareButtonClick(object sender, RoutedEventArgs e)
         {

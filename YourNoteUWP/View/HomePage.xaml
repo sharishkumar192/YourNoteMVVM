@@ -246,6 +246,7 @@
                         HorizontalAlignment="Stretch"
                         BorderBrush="Transparent"
                         FontSize="16"
+                        Style="{StaticResource NewNoteTitleStyle}"
                         PlaceholderText="Title"
                         Text="{x:Bind TitleOfNewNoteText, Mode=OneWay}"
                         TextChanged="{x:Bind TitleOfNewNoteTextChanged, Mode=OneWay}"
@@ -257,6 +258,7 @@
                         Name="ContentOfNewNote"
                         Grid.Row="1"
                         Margin="10"
+                        Style="{StaticResource NewNoteContextStyle}"
                         GotFocus="{x:Bind ContentOfNewNoteGotFocus, Mode=OneWay}"
                         PlaceholderText="Take a note..."
                         TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}" />

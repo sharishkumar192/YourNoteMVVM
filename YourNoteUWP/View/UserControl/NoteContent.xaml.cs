@@ -509,7 +509,7 @@ namespace YourNoteUWP
            
         }
 
-        private void NoteMenuOptions_EditOptions(string name)
+        private void NoteMenuOptionsEditOptions(string name)
         {
             switch (name)
             {

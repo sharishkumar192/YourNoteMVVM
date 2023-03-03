@@ -53,6 +53,7 @@ namespace YourNoteUWP.View
         private void DelegateIntialize()
         {
             DelUserControlMethod delUserControlMethod = new DelUserControlMethod(NoteDisplayPopUpClosed);
+            NoteContentPopUp.CallingPageMethod = delUserControlMethod;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -244,7 +245,7 @@ namespace YourNoteUWP.View
             set
             {
                 _searchTextBoxText = value;
-                // SuggestionLostFocus();
+     
                 OnPropertyChanged();
             }
         }

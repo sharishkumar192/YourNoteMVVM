@@ -24,14 +24,15 @@
             FontSize="18"
             FontWeight="SemiBold"
             Foreground="Black"
-            TextTrimming="CharacterEllipsis"
-                                                             />
+                                                            
+            TextTrimming="CharacterEllipsis" />
         <ScrollViewer Grid.Row="1">
             <RichEditBox x:ConnectionId='5'
                 Name="Contents"
                 Margin="15"
                 FontSize="14"
                 HorizontalTextAlignment="Left"
+                Style="{StaticResource NotesDataRichEdit}"
                 TextWrapping="Wrap" />
         </ScrollViewer>
         <TextBlock x:ConnectionId='4'

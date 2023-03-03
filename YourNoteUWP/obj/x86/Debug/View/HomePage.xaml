@@ -246,6 +246,7 @@
                         HorizontalAlignment="Stretch"
                         BorderBrush="Transparent"
                         FontSize="16"
+                        Style="{StaticResource NewNoteTitleStyle}"
                         PlaceholderText="Title"
                                                                        
                                                                                      
@@ -257,6 +258,7 @@
                         Name="ContentOfNewNote"
                         Grid.Row="1"
                         Margin="10"
+                        Style="{StaticResource NewNoteContextStyle}"
                                                                                  
                         PlaceholderText="Take a note..."
                                                                                         />

@@ -117,7 +117,7 @@
         <Button
             Name="NoteColor"
             Margin="5,0,0,0"
-            Style="{StaticResource NoteColorButtonStyle}"
+            Style="{StaticResource NoteStyleButtonStyle}"
             ToolTipService.ToolTip="Note Color">
             <Border
                 BorderBrush="Black"
@@ -200,7 +200,7 @@
             Content="&#xE107;"
             FontFamily="Segoe MDL2 Assets"
             Foreground="Red"
-            Style="{StaticResource NoteColorButtonStyle}"
+            Style="{StaticResource NoteStyleButtonStyle}"
             ToolTipService.ToolTip="Delete"
             Visibility="{x:Bind NoteDeleteButtonVisibility, Mode=OneWay}" />
 

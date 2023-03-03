@@ -24,14 +24,15 @@
             FontSize="18"
             FontWeight="SemiBold"
             Foreground="Black"
-            TextTrimming="CharacterEllipsis"
-            Text="{x:Bind notesTemplate.title, Mode=OneWay}" />
+            Text="{x:Bind notesTemplate.title, Mode=OneWay}"
+            TextTrimming="CharacterEllipsis" />
         <ScrollViewer Grid.Row="1">
             <RichEditBox
                 Name="Contents"
                 Margin="15"
                 FontSize="14"
                 HorizontalTextAlignment="Left"
+                Style="{StaticResource NotesDataRichEdit}"
                 TextWrapping="Wrap" />
         </ScrollViewer>
         <TextBlock
