@@ -65,7 +65,7 @@ namespace YourNoteUWP.View
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
             _homePageViewModel = new HomePageViewModel();
-    //        _searchNotes = _homePageViewModel.GetSearchNotes(LoggedUser);
+            _searchNotes = _homePageViewModel.GetSearchNotes(LoggedUser);
 
             if (_searchNotes.Item1 != null)
             {
@@ -191,8 +191,8 @@ namespace YourNoteUWP.View
                 SharedNotesIsSelected = AllNotesIsSelected = false;
                 TitleText = "My Personal Notes";
 
-         //       if (_notesDataItemSource == null)
-         //           _notesDataItemSource = HomePageViewModel.GetPersonalNotes(LoggedUser, true);
+                if (_notesDataItemSource == null)
+                    _notesDataItemSource = HomePageViewModel.GetPersonalNotes(LoggedUser, true);
 
 
                 NotesDataItemSource = _notesDataItemSource;
@@ -209,8 +209,8 @@ namespace YourNoteUWP.View
 
                 PersonalNotesIsSelected = AllNotesIsSelected = false;
 
-         //       if (_notesDataItemSource == null)
-         //           _notesDataItemSource = HomePageViewModel.GetSharedNotes(LoggedUser, true);
+                if (_notesDataItemSource == null)
+                    _notesDataItemSource = HomePageViewModel.GetSharedNotes(LoggedUser, true);
 
                 NotesDataItemSource = _notesDataItemSource;
 
@@ -222,8 +222,8 @@ namespace YourNoteUWP.View
             {
                 _notesDataItemSource = null;
                 TitleText = "All Notes";
-         //       if (_notesDataItemSource == null)
-        //            _notesDataItemSource = HomePageViewModel.GetAllNotes(LoggedUser, true);
+                if (_notesDataItemSource == null)
+                    _notesDataItemSource = HomePageViewModel.GetAllNotes(LoggedUser, true);
                 NotesDataItemSource = _notesDataItemSource;
             }
         }
@@ -335,7 +335,7 @@ namespace YourNoteUWP.View
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-            //  NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -370,7 +370,7 @@ namespace YourNoteUWP.View
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-            //    NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+          //      NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -632,7 +632,7 @@ namespace YourNoteUWP.View
                 NotesDataItemSource = _notesDataItemSource;
                 ContentOfNewNoteText = "";
                 TitleOfNewNoteText = "";
-                ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
+               ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
                 SubSearchItemSource.Add(newNote);
             }
 
@@ -661,7 +661,7 @@ namespace YourNoteUWP.View
         {
             NoteDisplayPopUpOpened();
             selectedNoteFromDisplay = (YourNoteUWP.Models.Note)e.ClickedItem;
-            //   NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+               NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
 
 
         }
@@ -697,10 +697,10 @@ namespace YourNoteUWP.View
             set
             {
                 _noteDisplayPopUpIsOpen = value;
-                if (_noteDisplayPopUpIsOpen == false)
-                {
-                    IsCloseAutoSave();
-                }
+                //if (_noteDisplayPopUpIsOpen == false)
+                //{
+                //    IsCloseAutoSave();
+                //}
                 OnPropertyChanged();
             }
         }
@@ -733,24 +733,24 @@ namespace YourNoteUWP.View
 
         private void NoteDisplayPopUp_LayoutUpdated(object sender, object e)
         {
-            //if (NoteContentPopUp.ActualWidth == 0 && NoteContentPopUp.ActualHeight == 0)
-            //{
-            //    return;
-            //}
+            if (NoteContentPopUp.ActualWidth == 0 && NoteContentPopUp.ActualHeight == 0)
+            {
+                return;
+            }
 
-            //var coordinates = NoteDisplayPopUp.TransformToVisual(Window.Current.Content).TransformPoint(new Windows.Foundation.Point(0, 0));
+            var coordinates = NoteDisplayPopUp.TransformToVisual(Window.Current.Content).TransformPoint(new Windows.Foundation.Point(0, 0));
 
-            //double ActualHorizontalOffset = NoteDisplayPopUp.HorizontalOffset;
-            //double ActualVerticalOffset = NoteDisplayPopUp.VerticalOffset;
+            double ActualHorizontalOffset = NoteDisplayPopUp.HorizontalOffset;
+            double ActualVerticalOffset = NoteDisplayPopUp.VerticalOffset;
 
-            //double NewHorizontalOffset = ((Window.Current.Bounds.Width - NoteContentPopUp.ActualWidth) / 2) - coordinates.X;
-            //double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight) / 2) - coordinates.Y;
+            double NewHorizontalOffset = ((Window.Current.Bounds.Width - NoteContentPopUp.ActualWidth) / 2) - coordinates.X;
+            double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight) / 2) - coordinates.Y;
 
-            //if (ActualHorizontalOffset != NewHorizontalOffset || ActualVerticalOffset != NewVerticalOffset)
-            //{
-            //    this.NoteDisplayPopUp.HorizontalOffset = NewHorizontalOffset;
-            //    this.NoteDisplayPopUp.VerticalOffset = NewVerticalOffset;
-            //}
+            if (ActualHorizontalOffset != NewHorizontalOffset || ActualVerticalOffset != NewVerticalOffset)
+            {
+                this.NoteDisplayPopUp.HorizontalOffset = NewHorizontalOffset;
+                this.NoteDisplayPopUp.VerticalOffset = NewVerticalOffset;
+            }
         }
 
 
@@ -764,54 +764,54 @@ namespace YourNoteUWP.View
 
         private void NoteDisplayPopUpClosed(object sender, object e)
         {
-        //    NoteContentPopUp.ChangesOnClosing();
+            NoteContentPopUp.ChangesOnClosing();
 
-        //    NoteContentPopUp.UsersToShare = null;
-        //    if (NoteContentPopUp._dispatcherTimer != null)
-        //    {
-        //        if (NoteContentPopUp.isDeleted)
-        //        {
-        //            NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
-        //        }
-        //        else
-        //        {
-        //            NoteContentPopUp.DispatcherTimer_Tick(sender, e);
-        //            NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
+            NoteContentPopUp.UsersToShare = null;
+            if (NoteContentPopUp._dispatcherTimer != null)
+            {
+                if (NoteContentPopUp.isDeleted)
+                {
+                    NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
+                }
+                else
+                {
+                    NoteContentPopUp.DispatcherTimer_Tick(sender, e);
+                    NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
 
-        //        }
-
-
+                }
 
 
-        //        //   NoteContentPopUp.ContentOfNoteText
-        //    }
-        //    if (NoteContentPopUp.isDeleted)
-        //    {
-        //        int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
-        //        int j = SubSearchItemSource.IndexOf(selectedNoteFromDisplay);
-        //        if (i != -1)
-        //            NotesDataItemSource.RemoveAt(i);
-        //        if (j != -1)
-        //            SubSearchItemSource.RemoveAt(j);
-        //    }
-        //    if (NoteContentPopUp.isDeleted == false && NoteContentPopUp.isModified)
-        //    {
-
-        //        var found = SubSearchItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
-        //        int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
-        //        int j = SubSearchItemSource.IndexOf(found);
-        //        Note note = NotesDataItemSource[i];
-        //        NotesDataItemSource.RemoveAt(i);
-        //        SubSearchItemSource[j].content = note.content = NoteContentPopUp.ContentOfNoteText;
-        //        SubSearchItemSource[j].title = note.title = NoteContentPopUp.TitleOfNoteText;
-        //        SubSearchItemSource[j].modifiedDay = note.modifiedDay = NoteContentPopUp.currentDay;
-        //        SubSearchItemSource[j].noteColor = note.noteColor = NoteContentPopUp.GetNoteColor();
 
 
-        //        NotesDataItemSource.Insert(0, note);
-        //    }
-        //    /*Remove(collection.Where(i => i.Id == instance.Id).Single());*/
-        //    NoteDisplayPopUpIsOpen = false;
+                //   NoteContentPopUp.ContentOfNoteText
+            }
+            if (NoteContentPopUp.isDeleted)
+            {
+                int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
+                int j = SubSearchItemSource.IndexOf(selectedNoteFromDisplay);
+                if (i != -1)
+                    NotesDataItemSource.RemoveAt(i);
+                if (j != -1)
+                    SubSearchItemSource.RemoveAt(j);
+            }
+            if (NoteContentPopUp.isDeleted == false && NoteContentPopUp.isModified)
+            {
+
+                var found = SubSearchItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
+                int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
+                int j = SubSearchItemSource.IndexOf(found);
+                Note note = NotesDataItemSource[i];
+                NotesDataItemSource.RemoveAt(i);
+                SubSearchItemSource[j].content = note.content = NoteContentPopUp.ContentOfNoteText;
+                SubSearchItemSource[j].title = note.title = NoteContentPopUp.TitleOfNoteText;
+                SubSearchItemSource[j].modifiedDay = note.modifiedDay = NoteContentPopUp.currentDay;
+                SubSearchItemSource[j].noteColor = note.noteColor = NoteContentPopUp.GetNoteColor();
+
+
+                NotesDataItemSource.Insert(0, note);
+            }
+            /*Remove(collection.Where(i => i.Id == instance.Id).Single());*/
+            NoteDisplayPopUpIsOpen = false;
 
         }
 

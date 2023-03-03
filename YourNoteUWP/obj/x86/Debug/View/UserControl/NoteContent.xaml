@@ -63,6 +63,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+
+
         <!--  NOTE CONTENT  -->
         <RelativePanel>
             <TextBox x:ConnectionId='14'
@@ -79,7 +81,6 @@
                                                                         
                                                                         
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Style="{StaticResource NewNoteTitleStyle}"
                                                                 
                                                             
                 TextAlignment="Center"
@@ -126,10 +127,13 @@
             Foreground="Black"
                                                                       
                                                                       
-            Style="{StaticResource NoteDisplayTemplate}"
                                                               
                                                                         
             TextWrapping="Wrap" />
+
+
+
+        <Button />
     </Grid>
 
 

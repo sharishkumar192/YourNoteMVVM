@@ -152,7 +152,7 @@
     <build:Item Name="VisualStudio" Version="17.0" />
     <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Community 2022" />
     <build:Item Name="OperatingSystem" Version="10.0.19041.1 (WinBuild.160101.0800)" />
-    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="17.3.32728.75" />
+    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="17.5.33424.131" />
     <build:Item Name="ProjectGUID" Value="{2E6F831B-5E27-405D-807C-6EFB8A983450}" />
     <build:Item Name="OptimizingToolset" Value="None" />
     <build:Item Name="TargetRuntime" Value="Managed" />

@@ -73,11 +73,11 @@ namespace YourNoteUWP
 
 
             TitleOfNote.AddHandler(TappedEvent, new TappedEventHandler(TitleOfNoteTapped), TitleOfNoteIsTapped);
-            ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), ContentOfNoteIsTapped);
+              ContentOfNote.AddHandler(TappedEvent, new TappedEventHandler(ContentOfNoteTapped), ContentOfNoteIsTapped);
 
 
             NoteContentUserControl delUserControlMethod = new NoteContentUserControl(NoteShareButtonClick);
-            NoteMenuOptions.CallingPageMethod = delUserControlMethod;
+           NoteMenuOptions.CallingPageMethod = delUserControlMethod;
 
             ToShareView itemClick = new ToShareView(UsersToShareView_ItemClick);
             NoteMenuOptions.ToShare = itemClick;
@@ -118,7 +118,7 @@ namespace YourNoteUWP
             currentDay = modifiedDay;
                 _noteColorChosen = noteColor;
 
-              
+             
              ContentOfNote.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, ContentOfNoteText);
                 TakeNoteColor(noteColor);
                 ToEnableEditMode();
@@ -287,13 +287,13 @@ namespace YourNoteUWP
             }
         }
 
-        //private SolidColorBrush _noteMenuOptionsContainerBackground;
+        private SolidColorBrush _noteMenuOptionsContainerBackground;
 
-        //public SolidColorBrush NoteMenuOptionsContainerBackground
-        //{
-        //    get { return NoteMenuOptionsContainerBackground; }
-        //    set { NoteMenuOptionsContainerBackground = value; }
-        //}
+        public SolidColorBrush NoteMenuOptionsContainerBackground
+        {
+            get { return NoteMenuOptionsContainerBackground; }
+            set { NoteMenuOptionsContainerBackground = value; }
+        }
 
         //----------------------------Note Share Button ---------------------------------------------------
 
@@ -500,12 +500,12 @@ namespace YourNoteUWP
         }
         public long GetNoteColor()
         {
+          
             return NoteMenuOptions.ColorOptionsSelectedIndex;
         }
         private void NoteBackgroundColor()
         {
-
-              NoteContentBackground = NoteMenuOptions.NoteColorForeground;
+            NoteContentBackground = NoteMenuOptions.NoteColorForeground;
            
         }
 
@@ -513,7 +513,7 @@ namespace YourNoteUWP
         {
             switch (name)
             {
-                case "FontBackground":NotesUtilities.FontBackgroundClick(ContentOfNote, null); break;
+                case "FontBackground": NotesUtilities.FontBackgroundClick(ContentOfNote, null); break;
                 case "FontIncrease": NotesUtilities.FontIncreaseClick(ContentOfNote, null); break;
                 case "FontDecrease": NotesUtilities.FontDecreaseClick(ContentOfNote, null); break;
                 case "SmallCaps": NotesUtilities.SmallCapsClick(ContentOfNote, null); break;

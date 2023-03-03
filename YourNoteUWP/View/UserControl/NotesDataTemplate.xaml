@@ -32,7 +32,6 @@
                 Margin="15"
                 FontSize="14"
                 HorizontalTextAlignment="Left"
-                Style="{StaticResource NoteDisplayTemplate}"
                 TextWrapping="Wrap" />
         </ScrollViewer>
         <TextBlock

@@ -7,8 +7,8 @@
     xmlns:data="using:YourNoteUWP.Models"
     xmlns:local="using:YourNoteUWP.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:userControl="using:YourNoteUWP"
     xmlns:util="using:YourNoteUWP.Util"
+    xmlns:view="using:YourNoteUWP"
     mc:Ignorable="d">
     <Page.Resources>
 
@@ -162,7 +162,7 @@
                                     SelectionMode="Single"
                                     Visibility="{x:Bind RecentlySearchedVisibility, Mode=OneWay}">
                                     <ListView.ItemTemplateSelector>
-                                        <userControl:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                        <view:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
                                     </ListView.ItemTemplateSelector>
                                 </ListView>
                             </Border>
@@ -177,7 +177,7 @@
                                 ItemsSource="{x:Bind SuggestionContentItemSource, Mode=OneWay}"
                                 Visibility="{x:Bind SuggestionContentVisibility, Mode=OneWay}">
                                 <ListView.ItemTemplateSelector>
-                                    <userControl:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                    <view:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
                                 </ListView.ItemTemplateSelector>
                             </ListView>
 
@@ -247,7 +247,6 @@
                         BorderBrush="Transparent"
                         FontSize="16"
                         PlaceholderText="Title"
-                        Style="{StaticResource NewNoteTitleStyle}"
                         Text="{x:Bind TitleOfNewNoteText, Mode=OneWay}"
                         TextChanged="{x:Bind TitleOfNewNoteTextChanged, Mode=OneWay}"
                         TextWrapping="Wrap"
@@ -260,14 +259,9 @@
                         Margin="10"
                         GotFocus="{x:Bind ContentOfNewNoteGotFocus, Mode=OneWay}"
                         PlaceholderText="Take a note..."
-                        Style="{StaticResource NewNoteContextStyle}"
-                        TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                <Button />
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
-                    </RichEditBox>
+                        TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}" />
+
+
 
 
                     <Grid
@@ -283,7 +277,7 @@
 
 
 
-                        <userControl:NoteEditOptionsControl
+                        <view:NoteEditOptionsControl
                             x:Name="NoteEditOptions"
                             Grid.Column="0"
                             EditOptions="NoteEditOptions_EditOptions" />
@@ -308,7 +302,7 @@
         </Grid>
 
 
-        <!--<GridView
+        <GridView
             Name="NotesData"
             Grid.Row="2"
             Margin="10,0,10,5"
@@ -318,7 +312,7 @@
             ItemsSource="{x:Bind NotesDataItemSource, Mode=OneWay}">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Note">
-                    <userControl:NotesDataTemplate />
+                    <view:NotesDataTemplate />
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
@@ -335,20 +329,18 @@
 
         <Popup
             Name="NoteDisplayPopUp"
-            HorizontalAlignment="Right"
             Closed="{x:Bind NoteDisplayPopUpClosed, Mode=OneWay}"
-            HorizontalOffset="0"
-            IsLightDismissEnabled="False"
+            IsLightDismissEnabled="True"
             IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}"
             LayoutUpdated="NoteDisplayPopUp_LayoutUpdated"
-            LightDismissOverlayMode="Off"
+            LightDismissOverlayMode="On"
             Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
 
-            <userControl:NoteContent
+            <view:NoteContent
                 x:Name="NoteContentPopUp"
-                Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
-                Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
-        </Popup>-->
+                Width="800"
+                Height="1000" />
+        </Popup>
 
 
 
@@ -362,3 +354,12 @@
 
 
 </Page>
+
+
+<!--
+    Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
+    Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}"
+-->
+
+
+
