@@ -31,11 +31,7 @@ namespace YourNoteUWP
             {
 
 
-                //DbProviderFactory factory = DbProviderFactories.GetFactory(conn);
-                //DbCommandBuilder commandBuilder = factory.CreateCommandBuilder();
-                //string sanitizedTableName = commandBuilder.QuoteIdentifier(DBCreation.userTableName);
-                SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-                string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + " (NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
+                   string query = $"INSERT INTO {DBCreation.userTableName}(NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
 
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -132,8 +128,7 @@ namespace YourNoteUWP
         //Creates a new entry for the shared note
         public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"INSERT INTO " + sqlCommandBuilder.QuoteIdentifier(sharedTableName) + "  VALUES (@SHAREDUSERID, @NOTEID);";
+            string query = $"INSERT INTO {sharedTableName} VALUES (@SHAREDUSERID, @NOTEID);";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -164,8 +159,7 @@ namespace YourNoteUWP
         //Updation of the Note
         public static void UpdateNote(string notesTableName, string title, string content, long noteId, string modifiedDay)// Needed
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE {notesTableName} SET TITLE = @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -200,8 +194,7 @@ namespace YourNoteUWP
         //Updation of the Note Title
         public static void UpdateNoteTitle(string notesTableName, string title, long noteId, string modifiedDay)// Needed
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE {notesTableName} SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -234,8 +227,7 @@ namespace YourNoteUWP
 
         public static void UpdateNoteCount(string notesTableName, long searchCount, long noteId)
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE {notesTableName} SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {
@@ -264,8 +256,7 @@ namespace YourNoteUWP
         //Updation of the Note Content
         public static void UpdateNoteContent(string notesTableName, string content, long noteId, string modifiedDay)// Needed
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"UPDATE " + sqlCommandBuilder.QuoteIdentifier(notesTableName) + " SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
+            string query = $"UPDATE {notesTableName} SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
             {

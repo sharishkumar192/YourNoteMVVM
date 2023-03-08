@@ -136,16 +136,13 @@
 
                 <Popup
                     Name="SearchPopup"
-                    MaxHeight="325"
+                    MaxHeight="100"
                     Margin="0,4,0,0"
                     IsLightDismissEnabled="False"
                     IsOpen="{x:Bind SearchPopupIsOpen, Mode=OneWay}"
                     KeyTipPlacementMode="Bottom">
 
-                    <controls:DropShadowPanel
-                        MaxHeight="325"
-                        BlurRadius="10"
-                        Color="Gray">
+                    <controls:DropShadowPanel BlurRadius="10" Color="Gray">
 
                         <Grid
                             Name="PopUpContainer"
@@ -339,10 +336,9 @@
             Closed="{x:Bind NoteDisplayPopUpClosed, Mode=OneWay}"
             IsLightDismissEnabled="True"
             IsOpen="{x:Bind NoteDisplayPopUpIsOpen, Mode=OneWay}"
-            LayoutUpdated="NoteDisplayPopUp_LayoutUpdated"
+            LayoutUpdated="{x:Bind NoteDisplayPopUpLayoutUpdated, Mode=OneWay}"
             LightDismissOverlayMode="On"
             Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
-
             <view:NoteContent x:Name="NoteContentPopUp" Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
         </Popup>
 

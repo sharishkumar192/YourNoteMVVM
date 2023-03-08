@@ -87,8 +87,7 @@ namespace YourNoteUWP
 
         public static void CreateNotesTable()
         {
-            SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"CREATE TABLE IF NOT EXISTS " + sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName) +
+            string query = $"CREATE TABLE IF NOT EXISTS {DBCreation.notesTableName}" +
       $"(USERID VARCHAR(10000)," +
       $"NOTEID INTEGER PRIMARY KEY AUTOINCREMENT," +
       $"TITLE VARCHAR(10000)," +
@@ -97,7 +96,7 @@ namespace YourNoteUWP
       $"SEARCHCOUNT INTEGER DEFAULT 0  ,  " +
       $"CREATIONDAY VARCHAR(27)  ,  " +
       $"MODIFIEDDAY VARCHAR(27)  ,  " +
-      $"FOREIGN KEY(USERID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID) ON DELETE CASCADE)" ;
+      $"FOREIGN KEY(USERID) REFERENCES  { DBCreation.userTableName} (USERID) ON DELETE CASCADE)" ;
             SQLiteConnection conn = OpenConnection();
             try
             {
@@ -122,12 +121,12 @@ namespace YourNoteUWP
         public static void SharedNotesTableCreation()
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
-            string query = $"CREATE TABLE IF NOT EXISTS " + sqlCommandBuilder.QuoteIdentifier(DBCreation.sharedTableName) +
+            string query = $"CREATE TABLE IF NOT EXISTS {DBCreation.sharedTableName}" +
      $"(SHAREDUSERID VARCHAR(10000) ,  " +
      $"SHAREDNOTEID INTEGER ," +
      $"PRIMARY KEY (SHAREDUSERID, SHAREDNOTEID)" +
-     $" FOREIGN KEY(SHAREDUSERID) REFERENCES" + sqlCommandBuilder.QuoteIdentifier(DBCreation.userTableName) + "(USERID) ON DELETE CASCADE" +
-       $" FOREIGN KEY(SHAREDNOTEID) REFERENCES " + sqlCommandBuilder.QuoteIdentifier(DBCreation.notesTableName) + "(NOTEID) ON DELETE CASCADE)";
+     $" FOREIGN KEY(SHAREDUSERID) REFERENCES { DBCreation.userTableName} (USERID) ON DELETE CASCADE" +
+       $" FOREIGN KEY(SHAREDNOTEID) REFERENCES {DBCreation.notesTableName} (NOTEID) ON DELETE CASCADE)";
             SQLiteConnection conn = OpenConnection();
             try
             {

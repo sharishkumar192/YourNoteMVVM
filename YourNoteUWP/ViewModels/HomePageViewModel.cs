@@ -86,9 +86,19 @@ namespace YourNoteUWP.ViewModels
             return allNotes;
 
         }
-
-        public Tuple<ObservableCollection<Note>, ObservableCollection<Note>> GetSearchNotes(User user)
+        public ObservableCollection<Note> GetRecentNotes(string userId)
         {
+            return DBFetch.GetRecentNotes(DBCreation.notesTableName, userId);
+        }
+
+        public ObservableCollection<Note> GetSuggestedNote(string userId, string title)
+        {
+           return SortByModificationtime(DBFetch.GetSuggestedNotes(DBCreation.notesTableName, userId, title));
+        }
+
+        public ObservableCollection<Note> GetSearchNotes(User user)
+        {
+           
             HomePageViewModel apvm = new HomePageViewModel();
             ObservableCollection<Note> noteForSearch = null;
             ObservableCollection<Note> recentNotes = null;
@@ -127,7 +137,7 @@ namespace YourNoteUWP.ViewModels
            var y =  SortByModificationtime(recentNotes);
             
 
-            Tuple< ObservableCollection<Note>, ObservableCollection<Note>> searchNotes = new Tuple< ObservableCollection<Note>, ObservableCollection<Note>>(x, y);
+            ObservableCollection<Note> searchNotes = y;
             return searchNotes;
         }
 

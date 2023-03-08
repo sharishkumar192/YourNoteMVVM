@@ -550,7 +550,6 @@
       <RootProperty Name="BlurRadius" />
       <RootProperty Name="Color" />
       <RootProperty Name="Content" />
-      <RootProperty Name="MaxHeight" />
       <RootProperty Name="VerticalAlignment" />
     </RootType>
     <RootType FullName="YourNoteUWP.NoteEditOptionsControl">

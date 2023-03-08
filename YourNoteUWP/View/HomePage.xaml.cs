@@ -31,7 +31,6 @@ namespace YourNoteUWP.View
     {
         private Frame _frame;
         private Note _selectedNote = null;
-        private Tuple<ObservableCollection<Note>, ObservableCollection<Note>> _searchNotes;
         private HomePageViewModel _homePageViewModel;
         static Note selectedNoteFromDisplay = null;
 
@@ -66,21 +65,6 @@ namespace YourNoteUWP.View
             Tuple<Frame, Models.User> tuple = (Tuple<Frame, Models.User>)e.Parameter;
             _frame = tuple.Item1;
             LoggedUser = tuple.Item2;
-            _homePageViewModel = new HomePageViewModel();
-            _searchNotes = _homePageViewModel.GetSearchNotes(LoggedUser);
-
-            if (_searchNotes.Item1 != null)
-            {
-                SuggestionContentItemSource = _searchNotes.Item1;
-                SubSearchItemSource = _searchNotes.Item1;
-
-            }
-
-
-            if (_searchNotes.Item2 != null && _searchNotes.Item2.Count > 0)
-            {
-                RecentlySearchedItemSource = _searchNotes.Item2;
-            }
         }
 
 
@@ -234,7 +218,6 @@ namespace YourNoteUWP.View
         public void SearchBoxContainerLostFocus()
         {
             SearchPopupIsOpen = false;
-            SuggestionContentItemSource = SubSearchItemSource;
         }
 
 
@@ -246,7 +229,7 @@ namespace YourNoteUWP.View
             set
             {
                 _searchTextBoxText = value;
-     
+
                 OnPropertyChanged();
             }
         }
@@ -261,34 +244,21 @@ namespace YourNoteUWP.View
                 {
                     SearchPopupIsOpen = true;
                     TextBox contentOfTextBox = (TextBox)sender;
-                    if (contentOfTextBox.Text.Length <=2 )
+                    _homePageViewModel = new HomePageViewModel();
+                    if (contentOfTextBox.Text.Length <= 2)
                     {
                         RecentlySearchedVisibility = Visibility.Visible;
                         SuggestionContentVisibility = Visibility.Collapsed;
-                        SuggestionContentItemSource = SubSearchItemSource;
+                        RecentlySearchedItemSource = _homePageViewModel.GetRecentNotes(LoggedUser.userId); 
                     }
 
                     else
                     {
-                        SuggestionContentItemSource = SubSearchItemSource;
+                       
                         RecentlySearchedVisibility = Visibility.Collapsed;
                         SuggestionContentVisibility = Visibility.Visible;
-                        var suitableItems = new ObservableCollection<Note>();
                         var lowerText = contentOfTextBox.Text.ToLower();
-                        var splitText = lowerText.Split(" ");
-
-                        foreach (var eachNote in SuggestionContentItemSource)
-                        {
-                            var found = splitText.All((key) =>
-                            {
-                                return eachNote.title.ToLower().Contains(key);
-                            });
-                            if (found)
-                            {
-                                suitableItems.Add(eachNote);
-                            }
-                        }
-                        SuggestionContentItemSource = suitableItems;
+                        SuggestionContentItemSource = _homePageViewModel.GetSuggestedNote(LoggedUser.userId, lowerText);
 
                     }
 
@@ -319,10 +289,6 @@ namespace YourNoteUWP.View
 
 
         //----------------------------Search -> Recently Searched List Box ---------------------------------------------------
-
-
-
-
         private ObservableCollection<Note> _recentlySearchedItemSource;
         public ObservableCollection<Note> RecentlySearchedItemSource
         {
@@ -330,6 +296,7 @@ namespace YourNoteUWP.View
             set
             {
                 _recentlySearchedItemSource = value;
+                OnPropertyChanged();
             }
         }
 
@@ -372,7 +339,7 @@ namespace YourNoteUWP.View
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-                NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -394,18 +361,7 @@ namespace YourNoteUWP.View
 
 
 
-        //Temp Original Content of SuggestionContent ItemSource
-        private ObservableCollection<Note> _subSearchItemSource;
-        public ObservableCollection<Note> SubSearchItemSource
-        {
-            get { return _subSearchItemSource; }
-            set
-            {
-                _subSearchItemSource = value;
-                OnPropertyChanged();
 
-            }
-        }
 
 
 
@@ -634,8 +590,7 @@ namespace YourNoteUWP.View
                 NotesDataItemSource = _notesDataItemSource;
                 ContentOfNewNoteText = "";
                 TitleOfNewNoteText = "";
-               ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
-                SubSearchItemSource.Add(newNote);
+                ContentOfNewNote.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
             }
 
 
@@ -663,7 +618,7 @@ namespace YourNoteUWP.View
         {
             NoteDisplayPopUpOpened();
             selectedNoteFromDisplay = (YourNoteUWP.Models.Note)e.ClickedItem;
-               NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+            NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
 
 
         }
@@ -733,7 +688,7 @@ namespace YourNoteUWP.View
             }
         }
 
-        private void NoteDisplayPopUp_LayoutUpdated(object sender, object e)
+        private void NoteDisplayPopUpLayoutUpdated(object sender, object e)
         {
             NoteContentPopUpHeight = Window.Current.Bounds.Height;
             if (NoteContentPopUp.ActualWidth == 0 && NoteContentPopUp.ActualHeight == 0)
@@ -747,7 +702,7 @@ namespace YourNoteUWP.View
             double ActualVerticalOffset = NoteDisplayPopUp.VerticalOffset;
 
             double NewHorizontalOffset = ((Window.Current.Bounds.Width - NoteContentPopUp.ActualWidth) / 2) - coordinates.X;
-            double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight)/2) - coordinates.Y;
+            double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight) / 2) - coordinates.Y;
 
             if (ActualHorizontalOffset != NewHorizontalOffset || ActualVerticalOffset != NewVerticalOffset)
             {
@@ -759,8 +714,6 @@ namespace YourNoteUWP.View
 
         public void NoteDisplayPopUpOpened()
         {
-            //  PopOut.Stop();
-            //PopIn.Begin();
             NoteDisplayPopUpIsOpen = true;
         }
 
@@ -782,38 +735,28 @@ namespace YourNoteUWP.View
                     NoteContentPopUp.DispatcherTimerStop(NoteContentPopUp._dispatcherTimer);
 
                 }
-
-
-
-
-                //   NoteContentPopUp.ContentOfNoteText
             }
             if (NoteContentPopUp.isDeleted)
             {
                 int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
-                int j = SubSearchItemSource.IndexOf(selectedNoteFromDisplay);
                 if (i != -1)
                     NotesDataItemSource.RemoveAt(i);
-                if (j != -1)
-                    SubSearchItemSource.RemoveAt(j);
             }
             if (NoteContentPopUp.isDeleted == false && NoteContentPopUp.isModified)
             {
 
-                var found = SubSearchItemSource.FirstOrDefault(x => x.noteId == selectedNoteFromDisplay.noteId);
                 int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
-                int j = SubSearchItemSource.IndexOf(found);
+
                 Note note = NotesDataItemSource[i];
                 NotesDataItemSource.RemoveAt(i);
-                SubSearchItemSource[j].content = note.content = NoteContentPopUp.ContentOfNoteText;
-                SubSearchItemSource[j].title = note.title = NoteContentPopUp.TitleOfNoteText;
-                SubSearchItemSource[j].modifiedDay = note.modifiedDay = NoteContentPopUp.currentDay;
-                SubSearchItemSource[j].noteColor = note.noteColor = NoteContentPopUp.GetNoteColor();
+                note.content = NoteContentPopUp.ContentOfNoteText;
+                note.title = NoteContentPopUp.TitleOfNoteText;
+                note.modifiedDay = NoteContentPopUp.currentDay;
+                note.noteColor = NoteContentPopUp.GetNoteColor();
 
 
                 NotesDataItemSource.Insert(0, note);
             }
-            /*Remove(collection.Where(i => i.Id == instance.Id).Single());*/
             NoteDisplayPopUpIsOpen = false;
 
         }

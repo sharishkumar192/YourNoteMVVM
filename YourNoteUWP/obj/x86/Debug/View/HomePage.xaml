@@ -136,16 +136,13 @@
 
                 <Popup x:ConnectionId='26'
                     Name="SearchPopup"
-                    MaxHeight="325"
+                    MaxHeight="100"
                     Margin="0,4,0,0"
                     IsLightDismissEnabled="False"
                                                                     
                     KeyTipPlacementMode="Bottom">
 
-                    <controls:DropShadowPanel
-                        MaxHeight="325"
-                        BlurRadius="10"
-                        Color="Gray">
+                    <controls:DropShadowPanel BlurRadius="10" Color="Gray">
 
                         <Grid x:ConnectionId='27'
                             Name="PopUpContainer"
@@ -339,10 +336,9 @@
                                                                  
             IsLightDismissEnabled="True"
                                                                  
-                                                          
+                                                                               
             LightDismissOverlayMode="On"
                                                                  >
-
             <view:NoteContent x:ConnectionId='12' x:Name="NoteContentPopUp"                                                       />
         </Popup>
 
