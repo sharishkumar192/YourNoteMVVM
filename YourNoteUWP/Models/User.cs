@@ -55,23 +55,14 @@ namespace YourNoteUWP.Models
 
 
 
-        public static bool CheckEmail(string userId)
-        {
-            return DBFetch.CheckValidEmail(DBCreation.userTableName, userId);
-        }
+
 
         public static ObservableCollection<Models.User> GetFrequentUsers()
         {
            return DBFetch.FrequentLoggedUsers(DBCreation.userTableName);
         }
 
-        public static void NewUserInsertion(string name, string userId, string password)
-        {
-            User newUser = new User(name, userId, password);
-            DBUpdation.InsertNewUser(newUser);
-
-        }
-
+  
         public static Tuple<Models.User, bool>  ValidateLogInUser(string userId, string password)
         {
             return DBFetch.ValidateUser(DBCreation.userTableName, userId, password);

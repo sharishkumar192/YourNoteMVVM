@@ -145,27 +145,25 @@
                     <controls:DropShadowPanel
                         MaxHeight="325"
                         BlurRadius="10"
-                        ShadowOpacity="1"
-                        Color="Black">
+                        Color="Gray">
 
                         <Grid
                             Name="PopUpContainer"
                             Width="Auto"
                             CornerRadius="4">
-                            <Border CornerRadius="4">
-                                <ListView
-                                    Name="RecentlySearched"
-                                    Width="325"
-                                    Background="White"
-                                    ItemClick="{x:Bind RecentlySearchedItemClick, Mode=OneWay}"
-                                    ItemsSource="{x:Bind RecentlySearchedItemSource, Mode=OneWay}"
-                                    SelectionMode="Single"
-                                    Visibility="{x:Bind RecentlySearchedVisibility, Mode=OneWay}">
-                                    <ListView.ItemTemplateSelector>
-                                        <view:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
-                                    </ListView.ItemTemplateSelector>
-                                </ListView>
-                            </Border>
+
+                            <ListView
+                                Name="RecentlySearched"
+                                Width="325"
+                                Background="White"
+                                CornerRadius="4"
+                                IsItemClickEnabled="True"
+                                ItemClick="{x:Bind RecentlySearchedItemClick, Mode=OneWay}"
+                                ItemsSource="{x:Bind RecentlySearchedItemSource, Mode=OneWay}">
+                                <ListView.ItemTemplateSelector>
+                                    <view:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
+                                </ListView.ItemTemplateSelector>
+                            </ListView>
 
                             <ListView
                                 Name="Suggestion"
@@ -180,6 +178,10 @@
                                     <view:ItemsDataTemplateSelector AllItems="{StaticResource SearchTitleA}" LastItems="{StaticResource SearchTitleL}" />
                                 </ListView.ItemTemplateSelector>
                             </ListView>
+
+
+
+
 
                         </Grid>
                     </controls:DropShadowPanel>
@@ -211,7 +213,7 @@
 
 
 
-        <Grid Grid.Row="1" Margin="10,20,0,10">
+        <Grid Grid.Row="1" Margin="10,20,0,15">
             <TextBlock
                 Name="Title"
                 Margin="0,0,0,10"
@@ -224,7 +226,8 @@
             <controls:DropShadowPanel
                 Width="500"
                 HorizontalAlignment="Center"
-                BlurRadius="10">
+                BlurRadius="10"
+                Color="Gray">
                 <Grid
                     Name="NewNote"
                     Background="White"
@@ -246,8 +249,8 @@
                         HorizontalAlignment="Stretch"
                         BorderBrush="Transparent"
                         FontSize="16"
-                        Style="{StaticResource NewNoteTitleStyle}"
                         PlaceholderText="Title"
+                        Style="{StaticResource NewNoteTitleStyle}"
                         Text="{x:Bind TitleOfNewNoteText, Mode=OneWay}"
                         TextChanged="{x:Bind TitleOfNewNoteTextChanged, Mode=OneWay}"
                         TextWrapping="Wrap"
@@ -258,9 +261,9 @@
                         Name="ContentOfNewNote"
                         Grid.Row="1"
                         Margin="10"
-                        Style="{StaticResource NewNoteContextStyle}"
                         GotFocus="{x:Bind ContentOfNewNoteGotFocus, Mode=OneWay}"
                         PlaceholderText="Take a note..."
+                        Style="{StaticResource NewNoteContextStyle}"
                         TextChanged="{x:Bind ContentOfNewNoteTextChanged, Mode=OneWay}" />
 
 
@@ -314,7 +317,9 @@
             ItemsSource="{x:Bind NotesDataItemSource, Mode=OneWay}">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Note">
-                    <view:NotesDataTemplate />
+                    <Border CornerRadius="4">
+                        <view:NotesDataTemplate />
+                    </Border>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
@@ -338,10 +343,7 @@
             LightDismissOverlayMode="On"
             Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
 
-            <view:NoteContent
-                x:Name="NoteContentPopUp"
-                Width="800"
-                Height="1000" />
+            <view:NoteContent x:Name="NoteContentPopUp" Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
         </Popup>
 
 
@@ -356,12 +358,3 @@
 
 
 </Page>
-
-
-<!--
-    Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
-    Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}"
--->
-
-
-

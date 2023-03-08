@@ -9,6 +9,7 @@
     <AppIconSource>E:\OD\shopping-list.png</AppIconSource>
     <SplashScreenSource>E:\OD\shopping-list.png</SplashScreenSource>
     <PackageLogoSource>E:\OD\shopping-list.png</PackageLogoSource>
+    <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugEngines>

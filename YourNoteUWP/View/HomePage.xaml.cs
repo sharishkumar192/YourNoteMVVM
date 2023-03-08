@@ -48,6 +48,7 @@ namespace YourNoteUWP.View
             this.InitializeComponent();
         }
 
+
         private delegate void DelUserControlMethod(object sender, object e);
 
         private void DelegateIntialize()
@@ -260,7 +261,14 @@ namespace YourNoteUWP.View
                 {
                     SearchPopupIsOpen = true;
                     TextBox contentOfTextBox = (TextBox)sender;
-                    if (contentOfTextBox.Text.Length >= 3)
+                    if (contentOfTextBox.Text.Length <=2 )
+                    {
+                        RecentlySearchedVisibility = Visibility.Visible;
+                        SuggestionContentVisibility = Visibility.Collapsed;
+                        SuggestionContentItemSource = SubSearchItemSource;
+                    }
+
+                    else
                     {
                         SuggestionContentItemSource = SubSearchItemSource;
                         RecentlySearchedVisibility = Visibility.Collapsed;
@@ -281,13 +289,6 @@ namespace YourNoteUWP.View
                             }
                         }
                         SuggestionContentItemSource = suitableItems;
-                    }
-
-                    else
-                    {
-                        RecentlySearchedVisibility = Visibility.Visible;
-                        SuggestionContentVisibility = Visibility.Collapsed;
-                        SuggestionContentItemSource = SubSearchItemSource;
 
                     }
 
@@ -371,7 +372,7 @@ namespace YourNoteUWP.View
         {
             selectedNoteFromDisplay = (Note)e.ClickedItem;
             selectedNoteFromDisplay.searchCount++;
-          //      NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
+                NoteContentPopUp.DisplayContent(LoggedUser.userId, selectedNoteFromDisplay.noteId, selectedNoteFromDisplay.title, selectedNoteFromDisplay.content, selectedNoteFromDisplay.searchCount, selectedNoteFromDisplay.noteColor, selectedNoteFromDisplay.modifiedDay);
             SearchPopupIsOpen = false;
             NoteDisplayPopUpOpened();
 
@@ -734,6 +735,7 @@ namespace YourNoteUWP.View
 
         private void NoteDisplayPopUp_LayoutUpdated(object sender, object e)
         {
+            NoteContentPopUpHeight = Window.Current.Bounds.Height;
             if (NoteContentPopUp.ActualWidth == 0 && NoteContentPopUp.ActualHeight == 0)
             {
                 return;
@@ -745,7 +747,7 @@ namespace YourNoteUWP.View
             double ActualVerticalOffset = NoteDisplayPopUp.VerticalOffset;
 
             double NewHorizontalOffset = ((Window.Current.Bounds.Width - NoteContentPopUp.ActualWidth) / 2) - coordinates.X;
-            double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight) / 2) - coordinates.Y;
+            double NewVerticalOffset = ((Window.Current.Bounds.Height - NoteContentPopUp.ActualHeight)/2) - coordinates.Y;
 
             if (ActualHorizontalOffset != NewHorizontalOffset || ActualVerticalOffset != NewVerticalOffset)
             {

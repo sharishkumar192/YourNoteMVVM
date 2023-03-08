@@ -69,7 +69,7 @@ namespace YourNoteUWP
         {
             Contents.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, notesTemplate.content);
 
-          
+            Contents.IsEnabled = false;
 
             string value = "";
             string currentStatus = DateTime.Now.ToString("MMM/dd/yyyy hh:mm:ss.fff tt");
@@ -95,28 +95,6 @@ namespace YourNoteUWP
                             value = modifiedDetail.ToString("hh:mm tt");
 
                         }
-
-                        //int hours = currentDetail.Hour - modifiedDetail.Hour;
-                        //if ( hours <= 1)
-                        //{
-
-                        //    int minutes;
-
-                        //    if (hours == 1)
-                        //        minutes = currentDetail.Minute + modifiedDetail.Minute;
-                        //    else
-                        //        minutes = modifiedDetail.Minute > 30 ? 60 - modifiedDetail.Minute  : modifiedDetail.Minute;
-                        //    if ( currentDetail.Minute == modifiedDetail.Minute)
-                        //        value = "just now";
-                        //    else if (minutes < 60)
-                        //        value = minutes.ToString() + " " + "minutes ago";
-                        //    else
-                        //        value = modifiedDetail.ToString("hh:mm tt");
-                        //}
-                        //else
-                        //{
-                        //    value = modifiedDetail.ToString("hh:mm tt") ;
-                        //}
                     }
                     else
                     {

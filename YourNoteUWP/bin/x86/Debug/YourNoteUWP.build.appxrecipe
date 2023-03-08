@@ -342,9 +342,6 @@
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\AccountPage.xbf">
-      <PackagePath>AccountPage.xbf</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\YourNoteUWP\YourNoteUWP\bin\x86\Debug\Dictionary.xbf">
       <PackagePath>Dictionary.xbf</PackagePath>
     </AppxPackagedFile>
