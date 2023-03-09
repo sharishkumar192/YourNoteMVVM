@@ -55,7 +55,7 @@
     <!--
         NOTE CONTENT
     -->
-    <Grid Background="{x:Bind NoteContentBackground, Mode=OneWay}">
+    <Grid IsTapEnabled="{x:Bind NoteContentIsTapped,Mode=OneWay}" Tapped="{x:Bind NoteContentTapped, Mode=OneWay}" Background="{x:Bind NoteContentBackground, Mode=OneWay}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -67,20 +67,22 @@
 
         <!--  NOTE CONTENT  -->
         <RelativePanel>
+
             <TextBox
                 Name="TitleOfNote"
-                Width="675"
                 Height="50"
-                Margin="10"
+                MaxWidth="500"
+                Margin="15,10,10,10"
                 Padding="0,10,0,0"
-                BorderBrush="Black"
-                BorderThickness="0,0,0,1"
+                HorizontalAlignment="Center"
                 FontSize="28"
                 Foreground="Black"
                 HorizontalTextAlignment="Center"
                 IsReadOnly="{x:Bind TitleOfNoteIsReadOnly, Mode=OneWay}"
                 IsTapEnabled="{x:Bind TitleOfNoteIsTapped, Mode=OneWay}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.LeftOf="NoteCloseButton"
                 Style="{StaticResource TitleDisplayStyle}"
                 Tapped="{x:Bind TitleOfNoteTapped, Mode=OneWay}"
                 Text="{x:Bind TitleOfNoteText, Mode=OneWay}"
@@ -89,15 +91,15 @@
 
             <Button
                 Name="NoteCloseButton"
-                Margin="10"
-                Style="{StaticResource CloseButton}"
+                Margin="0,10,10,10"
                 Background="Transparent"
                 Click="{x:Bind NoteCloseButtonClick, Mode=OneWay}"
                 Content="&#xE106;"
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="16"
                 Foreground="Black"
-                RelativePanel.AlignRightWithPanel="True" />
+                RelativePanel.AlignRightWithPanel="True"
+                Style="{StaticResource CloseButton}" />
         </RelativePanel>
 
         <Border
@@ -126,7 +128,6 @@
             VerticalAlignment="Stretch"
             BorderThickness="0"
             FontSize="20"
-            Foreground="Black"
             IsReadOnly="{x:Bind ContentOfNoteIsReadOnly, Mode=OneWay}"
             IsTapEnabled="{x:Bind ContentOfNoteIsTapped, Mode=OneWay}"
             Style="{StaticResource RichEditStyle}"

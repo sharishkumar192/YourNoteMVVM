@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,14 +26,13 @@ namespace YourNoteUWP.ViewModels
             DateTimeOffset milli = DateTime.Parse(time);
             return milli.ToUnixTimeMilliseconds();
         }
+
         private  ObservableCollection<Note> SortByModificationtime(ObservableCollection<Note> notes)
         {
             ObservableCollection<Note> sortedNotes = new ObservableCollection<Note>();
             if (notes != null)
             {
                 var result = notes.OrderByDescending(a => GetMilliSeconds(a.modifiedDay));
-               // return (ObservableCollection<Note>)result;
-
                 foreach(Note note in result)
                 {
                     sortedNotes.Add(note);
@@ -42,19 +42,19 @@ namespace YourNoteUWP.ViewModels
             return sortedNotes; 
         }
 
-        public static ObservableCollection<Note> GetPersonalNotes(User user, bool isSort)
+        public static ObservableCollection<Note> GetPersonalNotes(string userId, bool isSort)
         {
             HomePageViewModel apvm = new HomePageViewModel();
-            var notes = DBFetch.GetPersonalNotes(DBCreation.notesTableName, user);
+            var notes = DBFetch.GetPersonalNotes(DBCreation.notesTableName, userId);
             if (isSort == true)
                 return apvm.SortByModificationtime(notes);
             return notes;
         }
 
-        public static ObservableCollection<Note> GetSharedNotes(Models.User user, bool isSort)
+        public static ObservableCollection<Note> GetSharedNotes(string userId, bool isSort)
         {
             HomePageViewModel apvm = new HomePageViewModel();
-            var  notes = DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, user);
+            var  notes = DBFetch.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
             if (isSort == true)
                return apvm.SortByModificationtime(notes);
             return notes;
@@ -62,13 +62,13 @@ namespace YourNoteUWP.ViewModels
 
 
 
-        public static ObservableCollection<Note> GetAllNotes(Models.User user, bool isSort)
+        public static ObservableCollection<Note> GetAllNotes(string userId, bool isSort)
         {
             HomePageViewModel apvm = new HomePageViewModel();
             var allNotes = new ObservableCollection<Note>();
         
-                var pnotes = GetPersonalNotes(user, false);
-                var snotes = GetSharedNotes(user, false);
+                var pnotes = GetPersonalNotes(userId, false);
+                var snotes = GetSharedNotes(userId, false);
         
             if (pnotes != null)
                 foreach (Note notes in pnotes)
@@ -88,76 +88,38 @@ namespace YourNoteUWP.ViewModels
         }
         public ObservableCollection<Note> GetRecentNotes(string userId)
         {
-            return DBFetch.GetRecentNotes(DBCreation.notesTableName, userId);
+            ObservableCollection<Note> recentNotes = null;
+            ObservableCollection<Note> personalNotes = GetPersonalNotes(userId, false);
+            ObservableCollection<Note> sharedNotes = GetSharedNotes(userId, false);
+            if (personalNotes == null)
+                    personalNotes = new ObservableCollection<Note>();
+            if (sharedNotes != null)
+            {
+                foreach (Note note in sharedNotes)
+                    personalNotes.Add(note);
+            }
+            personalNotes.OrderByDescending(note => note.searchCount);
+            foreach (Note note in personalNotes)
+            {
+                if (note.searchCount > 0)
+                {
+                    if(recentNotes == null)
+                        recentNotes = new ObservableCollection<Note>();  
+                    recentNotes.Add(note);
+                }
+                    
+            }
+            return recentNotes;
         }
 
         public ObservableCollection<Note> GetSuggestedNote(string userId, string title)
         {
            return SortByModificationtime(DBFetch.GetSuggestedNotes(DBCreation.notesTableName, userId, title));
         }
-
-        public ObservableCollection<Note> GetSearchNotes(User user)
-        {
-           
-            HomePageViewModel apvm = new HomePageViewModel();
-            ObservableCollection<Note> noteForSearch = null;
-            ObservableCollection<Note> recentNotes = null;
-            ObservableCollection<Note> personalNotes = GetPersonalNotes(user, false);
-            ObservableCollection<Note> sharedNotes = GetSharedNotes(user, false);
-            if (personalNotes != null)
-            {
-                foreach (Note note in personalNotes)
-                {
-                    if (noteForSearch == null)
-                        noteForSearch = new ObservableCollection<Note>();
-                    if (recentNotes == null)
-                        recentNotes = new ObservableCollection<Note>();
-                    noteForSearch.Add(note);
-                    if (recentNotes.Count < 6 && note.searchCount != 0)
-                        recentNotes.Add(note);
-                }
-            }
-
-            if (sharedNotes != null)
-            {
-                foreach (Note note in sharedNotes)
-                {
-                    if (noteForSearch == null)
-                        noteForSearch = new ObservableCollection<Note>();
-                    if (recentNotes == null)
-                        recentNotes = new ObservableCollection<Note>();
-
-                    if (recentNotes.Count < 6 && note.searchCount != 0)
-                        recentNotes.Add(note);
-
-                    noteForSearch.Add(note);
-                }
-            }
-           var x = SortByModificationtime(noteForSearch);
-           var y =  SortByModificationtime(recentNotes);
-            
-
-            ObservableCollection<Note> searchNotes = y;
-            return searchNotes;
-        }
-
         public long CreateNewNote(Note newNote)
         {
           return DBUpdation.InsertNewNote(DBCreation.notesTableName, newNote);
         }
-
-        //public ObservableCollection<Note> SuggestedLists(string text)
-        //{
-        //    return DBFetch.SuggestList(DBCreation.notesTableName, text);
-        //}
-
-
-   
-
-
-
-        //public long GetNoteId(string userId)
-
     }
 
 

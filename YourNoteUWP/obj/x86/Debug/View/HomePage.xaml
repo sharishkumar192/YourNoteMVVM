@@ -87,7 +87,7 @@
             </StackPanel>
 
             <!--  MAIN MENU OPTIONS  -->
-            <ListBox x:ConnectionId='22'
+            <ListBox x:ConnectionId='24'
                 Name="MainMenuOptions"
                 ItemContainerStyle="{StaticResource MainMenuItemStyle}"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -97,17 +97,17 @@
                                                                                         
                 SelectionMode="Single"
                 Style="{StaticResource MainMenuStyle}">
-                <ListBoxItem x:ConnectionId='30'
+                <ListBoxItem x:ConnectionId='32'
                     Name="PersonalNotes"
                     Content="Personal"
                                                                                />
 
-                <ListBoxItem x:ConnectionId='31'
+                <ListBoxItem x:ConnectionId='33'
                     Name="SharedNotes"
                     Content="Shared"
                                                                              />
 
-                <ListBoxItem x:ConnectionId='32'
+                <ListBoxItem x:ConnectionId='34'
                     Name="AllNotes"
                     Content="All Notes"
                                                                           />
@@ -116,7 +116,7 @@
 
 
             <!--  SEARCH BOX  -->
-            <StackPanel x:ConnectionId='23'
+            <StackPanel x:ConnectionId='25'
                 Name="SearchBoxContainer"
                 Width="325"
                 Margin="0,7,5,0"
@@ -124,7 +124,7 @@
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.LeftOf="Logout">
-                <TextBox x:ConnectionId='25'
+                <TextBox x:ConnectionId='27'
                     Name="SearchTextBox"
                     Background="#f8f8f8"
                     CornerRadius="4"
@@ -134,7 +134,7 @@
                                                                   
                                                                                  />
 
-                <Popup x:ConnectionId='26'
+                <Popup x:ConnectionId='28'
                     Name="SearchPopup"
                     MaxHeight="100"
                     Margin="0,4,0,0"
@@ -144,12 +144,12 @@
 
                     <controls:DropShadowPanel BlurRadius="10" Color="Gray">
 
-                        <Grid x:ConnectionId='27'
+                        <Grid x:ConnectionId='29'
                             Name="PopUpContainer"
                             Width="Auto"
                             CornerRadius="4">
 
-                            <ListView x:ConnectionId='28'
+                            <ListView x:ConnectionId='30'
                                 Name="RecentlySearched"
                                 Width="325"
                                 Background="White"
@@ -162,7 +162,7 @@
                                 </ListView.ItemTemplateSelector>
                             </ListView>
 
-                            <ListView x:ConnectionId='29'
+                            <ListView x:ConnectionId='31'
                                 Name="Suggestion"
                                 Width="325"
                                 Background="White"
@@ -188,7 +188,7 @@
 
 
             <!--  SIGN OUT  -->
-            <Button x:ConnectionId='24'
+            <Button x:ConnectionId='26'
                 Name="Logout"
                 Width="35"
                 Height="31"
@@ -211,7 +211,7 @@
 
 
         <Grid Grid.Row="1" Margin="10,20,0,15">
-            <TextBlock x:ConnectionId='15'
+            <TextBlock x:ConnectionId='17'
                 Name="Title"
                 Margin="0,0,0,10"
                 HorizontalAlignment="Left"
@@ -225,7 +225,7 @@
                 HorizontalAlignment="Center"
                 BlurRadius="10"
                 Color="Gray">
-                <Grid x:ConnectionId='16'
+                <Grid x:ConnectionId='18'
                     Name="NewNote"
                     Background="White"
                     CornerRadius="7"
@@ -237,7 +237,7 @@
                     </Grid.RowDefinitions>
 
 
-                    <TextBox x:ConnectionId='17'
+                    <TextBox x:ConnectionId='19'
                         Name="TitleOfNewNote"
                         Grid.Row="0"
                         Width="470"
@@ -254,7 +254,7 @@
                                                                                     />
 
 
-                    <RichEditBox x:ConnectionId='18'
+                    <RichEditBox x:ConnectionId='20'
                         Name="ContentOfNewNote"
                         Grid.Row="1"
                         Margin="10"
@@ -266,7 +266,7 @@
 
 
 
-                    <Grid x:ConnectionId='19'
+                    <Grid x:ConnectionId='21'
                         Name="NoteStyleOptions"
                         Grid.Row="2"
                         Margin="12,0,10,10"
@@ -279,12 +279,12 @@
 
 
 
-                        <view:NoteEditOptionsControl x:ConnectionId='20'
+                        <view:NoteEditOptionsControl x:ConnectionId='22'
                             x:Name="NoteEditOptions"
                             Grid.Column="0"
                                                                       />
 
-                        <Button x:ConnectionId='21'
+                        <Button x:ConnectionId='23'
                             Name="CreationButton"
                             Grid.Column="1"
                             Width="60"
@@ -339,7 +339,20 @@
                                                                                
             LightDismissOverlayMode="On"
                                                                  >
-            <view:NoteContent x:ConnectionId='12' x:Name="NoteContentPopUp"                                                       />
+            <view:NoteContent x:ConnectionId='12'
+                x:Name="NoteContentPopUp"
+                                                                             
+                                                                     
+                                                                   
+                                                                      />
+            <Popup.Resources>
+                <Storyboard x:ConnectionId='13' x:Name="PopIn">
+                    <PopInThemeAnimation  Storyboard.TargetName="NoteDisplayPopUp" />
+                </Storyboard>
+                <Storyboard x:ConnectionId='14' x:Name="PopOut">
+                    <PopOutThemeAnimation  Storyboard.TargetName="NoteDisplayPopUp" />
+                </Storyboard>
+            </Popup.Resources>
         </Popup>
 
 

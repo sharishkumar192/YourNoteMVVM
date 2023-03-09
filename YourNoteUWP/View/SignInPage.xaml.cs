@@ -43,12 +43,9 @@ namespace YourNoteUWP.View
             {
                 FrequentEmailBoxVisibility = Visibility.Collapsed;
             }
-
             else
             {
-                //Column1.Visibility = Visibility.Collapsed;
                 FrequentEmailBoxVisibility = Visibility.Visible;
-
             }
 
 
@@ -61,6 +58,7 @@ namespace YourNoteUWP.View
         }
 
         //----------------------------Column Divider---------------------------------------------------
+
         private Visibility _columnDividerVisibility = Visibility.Collapsed;
 
         public Visibility ColumnDividerVisibility

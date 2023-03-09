@@ -339,7 +339,20 @@
             LayoutUpdated="{x:Bind NoteDisplayPopUpLayoutUpdated, Mode=OneWay}"
             LightDismissOverlayMode="On"
             Opened="{x:Bind NoteDisplayPopUpOpened, Mode=OneWay}">
-            <view:NoteContent x:Name="NoteContentPopUp" Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
+            <view:NoteContent
+                x:Name="NoteContentPopUp"
+                IsTapEnabled="{x:Bind NoteContentPopUpIsTapped, Mode=OneWay}"
+                Tapped="{x:Bind NoteContentPopUpTapped, Mode=OneWay}"
+                Width="{x:Bind NoteContentPopUpWidth, Mode=OneWay}"
+                Height="{x:Bind NoteContentPopUpHeight, Mode=OneWay}" />
+            <Popup.Resources>
+                <Storyboard x:Name="PopIn">
+                    <PopInThemeAnimation  Storyboard.TargetName="NoteDisplayPopUp" />
+                </Storyboard>
+                <Storyboard x:Name="PopOut">
+                    <PopOutThemeAnimation  Storyboard.TargetName="NoteDisplayPopUp" />
+                </Storyboard>
+            </Popup.Resources>
         </Popup>
 
 

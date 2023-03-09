@@ -211,53 +211,6 @@ namespace YourNoteUWP
 
         //  ----------------------------------------HOME PAGE DB FETCHES----------------------------------------  
 
-        // Get Recent Notes
-        public static ObservableCollection<Note> GetRecentNotes(string tableName, string userId)
-        {
-            ObservableCollection<Note> notes = null;
-            string query = $"SELECT * FROM {tableName} where USERID = @userId ORDER BY SEARCHCOUNT DESC;";
-            SQLiteConnection conn = DBCreation.OpenConnection();
-            try
-            {
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameters = new SQLiteParameter("@userId", userId);
-
-                command.Parameters.Add(parameters);
-                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
-                {
-                    while (sqlite_datareader.Read())
-                    {
-                        if (notes == null)
-                            notes = new ObservableCollection<Note>();
-                        Note note = new Note(0, "", "", 0, 0, "");
-                        if (notes.Count > 5)
-                            break;
-                        if ((long)sqlite_datareader.GetValue(5) <= 3)
-                            continue;
-                        note.noteId = (long)sqlite_datareader.GetValue(1);
-                        note.title = sqlite_datareader.GetString(2);
-                        note.content = sqlite_datareader.GetString(3);
-                        note.noteColor = (long)sqlite_datareader.GetValue(4);
-                        note.searchCount = (long)sqlite_datareader.GetValue(5);
-                        note.modifiedDay = sqlite_datareader.GetString(7);
-                        
-                        notes.Add(note);
-
-                    }
-                }
-
-                conn.Close();
-            }
-            catch (Exception e) { Logger.WriteLog(e.Message); }
-            finally
-            {
-                conn.Close();
-
-            }
-            return notes;
-
-        }
-
         //Get Suggested Notes
         public static ObservableCollection<Note> GetSuggestedNotes(string tableName, string userId, string title)
         {
@@ -308,7 +261,7 @@ namespace YourNoteUWP
 
         //Get Personal Notes
 
-        public static ObservableCollection<Note> GetPersonalNotes(string noteTableName, Models.User loggedUser)// Needed
+        public static ObservableCollection<Note> GetPersonalNotes(string noteTableName, string userId)// Needed
         {
             ObservableCollection<Note> notes = null;
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
@@ -320,7 +273,7 @@ namespace YourNoteUWP
             {
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameters = new SQLiteParameter("@userId", loggedUser.userId);
+                SQLiteParameter parameters = new SQLiteParameter("@userId", userId);
                 command.Parameters.Add(parameters);
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
                 {
@@ -359,7 +312,7 @@ namespace YourNoteUWP
         }
 
         //Get Shared Notes
-        public static ObservableCollection<Note> GetSharedNotes(string notesTableName, string sharedTableName, Models.User loggedUser)// Needed
+        public static ObservableCollection<Note> GetSharedNotes(string notesTableName, string sharedTableName, string userId)// Needed
         {
             SQLiteCommandBuilder sqlCommandBuilder = new SQLiteCommandBuilder();
             ObservableCollection<Note> sharedNotes = null;
@@ -370,7 +323,7 @@ namespace YourNoteUWP
 
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameter = new SQLiteParameter("@userId", loggedUser.userId);
+                SQLiteParameter parameter = new SQLiteParameter("@userId", userId);
                 command.Parameters.Add(parameter);
 
                 using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())

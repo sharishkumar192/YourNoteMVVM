@@ -17,11 +17,6 @@
 
 
     <Page.Resources>
-
-
-
-
-
         <DataTemplate x:Key="emailIdOfUsers" x:DataType="data:User">
             <StackPanel
                 Width="Auto"

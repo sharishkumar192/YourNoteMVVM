@@ -178,7 +178,7 @@ namespace YourNoteUWP.View
                 TitleText = "My Personal Notes";
 
                 if (_notesDataItemSource == null)
-                    _notesDataItemSource = HomePageViewModel.GetPersonalNotes(LoggedUser, true);
+                    _notesDataItemSource = HomePageViewModel.GetPersonalNotes(LoggedUser.userId, true);
 
 
                 NotesDataItemSource = _notesDataItemSource;
@@ -196,7 +196,7 @@ namespace YourNoteUWP.View
                 PersonalNotesIsSelected = AllNotesIsSelected = false;
 
                 if (_notesDataItemSource == null)
-                    _notesDataItemSource = HomePageViewModel.GetSharedNotes(LoggedUser, true);
+                    _notesDataItemSource = HomePageViewModel.GetSharedNotes(LoggedUser.userId, true);
 
                 NotesDataItemSource = _notesDataItemSource;
 
@@ -209,7 +209,7 @@ namespace YourNoteUWP.View
                 _notesDataItemSource = null;
                 TitleText = "All Notes";
                 if (_notesDataItemSource == null)
-                    _notesDataItemSource = HomePageViewModel.GetAllNotes(LoggedUser, true);
+                    _notesDataItemSource = HomePageViewModel.GetAllNotes(LoggedUser.userId, true);
                 NotesDataItemSource = _notesDataItemSource;
             }
         }
@@ -691,6 +691,7 @@ namespace YourNoteUWP.View
         private void NoteDisplayPopUpLayoutUpdated(object sender, object e)
         {
             NoteContentPopUpHeight = Window.Current.Bounds.Height;
+            NoteContentPopUpWidth = Window.Current.Bounds.Width/2;
             if (NoteContentPopUp.ActualWidth == 0 && NoteContentPopUp.ActualHeight == 0)
             {
                 return;
@@ -714,12 +715,20 @@ namespace YourNoteUWP.View
 
         public void NoteDisplayPopUpOpened()
         {
-            NoteDisplayPopUpIsOpen = true;
+            // PopOut.Stop();
+             if (!NoteDisplayPopUpIsOpen)
+            {
+                NoteContentPopUpIsTapped = true;
+
+                NoteDisplayPopUpIsOpen = true;
+              //  PopIn.Begin();
+            }
         }
 
 
         private void NoteDisplayPopUpClosed(object sender, object e)
         {
+            //PopIn.Stop();
             NoteContentPopUp.ChangesOnClosing();
 
             NoteContentPopUp.UsersToShare = null;
@@ -746,7 +755,6 @@ namespace YourNoteUWP.View
             {
 
                 int i = NotesDataItemSource.IndexOf(selectedNoteFromDisplay);
-
                 Note note = NotesDataItemSource[i];
                 NotesDataItemSource.RemoveAt(i);
                 note.content = NoteContentPopUp.ContentOfNoteText;
@@ -760,6 +768,32 @@ namespace YourNoteUWP.View
             NoteDisplayPopUpIsOpen = false;
 
         }
+
+
+
+
+        private bool _noteContentPopUpIsTapped = true;
+
+        public bool NoteContentPopUpIsTapped
+        {
+            get { return _noteContentPopUpIsTapped; }
+            set
+            {
+                _noteContentPopUpIsTapped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void NoteContentPopUpTapped()
+        {
+            if (NoteContentPopUpIsTapped)
+            {
+                NoteContentPopUpIsTapped = false;
+                NoteContentPopUp.EditModeEnabled();
+            }
+                
+        }
+
 
 
         private void NoteEditOptions_EditOptions(string btnName)

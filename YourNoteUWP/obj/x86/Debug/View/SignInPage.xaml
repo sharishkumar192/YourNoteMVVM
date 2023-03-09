@@ -17,11 +17,6 @@
 
 
     <Page.Resources>
-
-
-
-
-
         <DataTemplate x:Key="emailIdOfUsers"                       >
             <StackPanel x:ConnectionId='3'
                 Width="Auto"

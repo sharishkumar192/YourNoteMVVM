@@ -204,8 +204,22 @@ namespace YourNoteUWP
             }
         }
 
- 
 
+        private bool _noteContentIsTapped = true;
+
+        public bool NoteContentIsTapped
+        {
+            get { return _noteContentIsTapped; }
+            set { _noteContentIsTapped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void NoteContentTapped()
+        {
+            if (NoteContentIsTapped)
+                EditModeEnabled();
+        }
 
 
 
@@ -400,7 +414,7 @@ namespace YourNoteUWP
             EditModeEnabled();
         }
 
-        private void EditModeEnabled()
+        public void EditModeEnabled()
         {
             if (NoteMenuOptionsVisibility == Visibility.Collapsed)
                 NoteMenuOptionsVisibility = Visibility.Visible;
@@ -411,6 +425,7 @@ namespace YourNoteUWP
 
                 TitleOfNoteIsTapped = false;
                 ContentOfNoteIsTapped = false;
+                NoteContentIsTapped = false;
 
                 _oldContent = ContentOfNoteText;
                 _oldTitle = TitleOfNoteText;
